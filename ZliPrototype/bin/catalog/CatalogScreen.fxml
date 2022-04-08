@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+
+<HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane fx:id="catalogGrid" alignment="CENTER" prefHeight="600.0" prefWidth="900.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="catalogLbl" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" text="Catalog" GridPane.columnIndex="1">
+               <padding>
+                  <Insets bottom="40.0" left="40.0" />
+               </padding>
+               <font>
+                  <Font size="65.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="productImage3" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="90.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../resources/products/3.jpg" />
+               </image>
+            </ImageView>
+            <Button fx:id="addProductBtn3" mnemonicParsing="false" text="Add To Cat" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="120.0" top="120.0" />
+               </GridPane.margin>
+            </Button>
+            <ImageView fx:id="productImage1" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="80.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../resources/products/1.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="addProductBtn1" mnemonicParsing="false" text="Add To Cat" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="120.0" top="120.0" />
+               </GridPane.margin>
+            </Button>
+            <ImageView fx:id="productImage2" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="90.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../resources/products/2.jpg" />
+               </image>
+            </ImageView>
+            <Button fx:id="addProductBtn2" mnemonicParsing="false" text="Add To Cat" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="120.0" top="120.0" />
+               </GridPane.margin>
+            </Button>
+            <ImageView fx:id="productImage4" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="80.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../resources/products/4.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="productImage5" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="95.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../resources/products/5.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="productImage6" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="80.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../resources/products/6.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="productImage7" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="80.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../resources/products/7.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="productImage8" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="80.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../resources/products/8.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="productImage9" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="80.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../resources/products/9.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="addProductBtn4" mnemonicParsing="false" text="Add To Cat" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="120.0" top="120.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="addProductBtn5" mnemonicParsing="false" text="Add To Cat" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="120.0" top="120.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="addProductBtn7" mnemonicParsing="false" text="Add To Cat" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="120.0" top="120.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="addProductBtn8" mnemonicParsing="false" text="Add To Cat" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="120.0" top="120.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="addProductBtn9" mnemonicParsing="false" text="Add To Cat" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="120.0" top="120.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="addProductBtn6" mnemonicParsing="false" text="Add To Cat" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="120.0" top="120.0" />
+               </GridPane.margin>
+            </Button>
+            <ImageView fx:id="homeImage" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+               <GridPane.margin>
+                  <Insets bottom="50.0" left="100.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../resources/catalog/home.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cartImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+               <GridPane.margin>
+                  <Insets bottom="50.0" left="100.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../resources/catalog/cart.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="productLbl1" text="Product 1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="130.0" left="130.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="productLbl2" text="Product 2" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="130.0" left="130.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="productLbl7" text="Product 7" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets bottom="130.0" left="130.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="productLbl6" text="Product 6" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets bottom="130.0" left="130.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="productLbl5" text="Product 5" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets bottom="130.0" left="130.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="productLbl4" text="Product 4" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets bottom="130.0" left="130.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="productLbl3" text="Product 3" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="130.0" left="130.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="productLbl9" text="Product 9" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets bottom="130.0" left="130.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="productLbl8" text="Product 8" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets bottom="130.0" left="130.0" />
+               </GridPane.margin>
+            </Label>
+         </children>
+      </GridPane>
+      <ScrollBar fx:id="scrollBar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="450.0" prefWidth="14.0">
+         <HBox.margin>
+            <Insets top="125.0" />
+         </HBox.margin>
+      </ScrollBar>
+   </children>
+</HBox>
