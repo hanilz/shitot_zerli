@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: &quot;gray&quot;;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox layoutX="39.0" layoutY="23.0" prefHeight="563.0" prefWidth="918.0">
@@ -21,7 +20,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="103.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../resources/catalog/home.png" />
+                        <Image url="@../../../resources/catalog/home.png" />
                      </image>
                      <HBox.margin>
                         <Insets right="297.0" />
@@ -48,7 +47,7 @@
                            <children>
                               <ImageView fitHeight="80.0" fitWidth="103.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../resources/products/1.png" />
+                                    <Image url="@../../../resources/products/1.png" />
                                  </image>
                                  <HBox.margin>
                                     <Insets left="10.0" top="10.0" />
@@ -112,7 +111,7 @@
                            <children>
                               <ImageView fitHeight="80.0" fitWidth="103.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../resources/products/6.png" />
+                                    <Image url="@../../../resources/products/6.png" />
                                  </image>
                                  <HBox.margin>
                                     <Insets left="10.0" top="10.0" />
@@ -176,7 +175,7 @@
                            <children>
                               <ImageView fitHeight="80.0" fitWidth="103.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../resources/products/7.png" />
+                                    <Image url="@../../../resources/products/7.png" />
                                  </image>
                                  <HBox.margin>
                                     <Insets left="10.0" top="10.0" />
@@ -240,7 +239,7 @@
                            <children>
                               <ImageView fitHeight="80.0" fitWidth="103.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../resources/products/8.png" />
+                                    <Image url="@../../../resources/products/8.png" />
                                  </image>
                                  <HBox.margin>
                                     <Insets left="10.0" top="10.0" />
@@ -304,7 +303,7 @@
                            <children>
                               <ImageView fitHeight="80.0" fitWidth="103.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../resources/products/1.png" />
+                                    <Image url="@../../../resources/products/4.jpg" />
                                  </image>
                                  <HBox.margin>
                                     <Insets left="10.0" top="10.0" />
