@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class mysqlConnection {
+public class MySqlConnection {
 	// make singleton
 	private static Connection conn = null;
 	
