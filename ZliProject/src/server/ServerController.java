@@ -47,6 +47,7 @@ public class ServerController extends AbstractServer implements Runnable {
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
 		//connectionTable.getItems().add(new ConnectionDetails(ip, client.toString(), "Connected"));
+		return;
 	}
 
 	/**
@@ -93,5 +94,7 @@ public class ServerController extends AbstractServer implements Runnable {
 			this.status = status;
 		}
 	}
+
+	
 
 }
