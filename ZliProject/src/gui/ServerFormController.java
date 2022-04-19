@@ -61,14 +61,25 @@ public class ServerFormController {
 		
 		DataBaseController.setConnection(connectionArray);
 		sv = new ServerController(Integer.parseInt(port), ip);
-		String result = sv.connectToDB();
-		consoleField.setText(result);
+		StringBuffer buff = new StringBuffer();
+		buff.append(sv.connectToDB());
+		//String result = sv.connectToDB();
+		//consoleField.setText(result);
 		try {
-			result = sv.runServer();
-			consoleField.setText(result);
+			String result = sv.runServer();
+			buff.append(result);
+			
+			//consoleField.setText(resultFromServer);
+			//connectButton.setDisable(true);
 		} catch (Exception e) {
-			consoleField.setText("ERROR - Could not listen for clients!\n");
+			System.out.println("ex???");
+			buff.append("ERROR - Could not listen for clients!\n");
+			//consoleField.setText("ERROR - Could not listen for clients!\n");
+			//connectButton.setDisable(false);
 		}
+		consoleField.setText(buff.toString());
+		//System.out.println("For the gui: " + result);
+
 	}
 
 	@FXML
