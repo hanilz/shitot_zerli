@@ -60,9 +60,15 @@ public class ServerFormController {
 		List<String> connectionArray = Arrays.asList(stringArray);
 		
 		DataBaseController.setConnection(connectionArray);
-		sv = new ServerController(Integer.parseInt(port),ip, consoleField, connectionTable);
-		//connectionArray.clear();
-		//clearFields();
+		sv = new ServerController(Integer.parseInt(port), ip);
+		String result = sv.connectToDB();
+		consoleField.setText(result);
+		try {
+			result = sv.runServer();
+			consoleField.setText(result);
+		} catch (Exception e) {
+			consoleField.setText("ERROR - Could not listen for clients!\n");
+		}
 	}
 
 	@FXML
