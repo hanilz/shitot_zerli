@@ -14,6 +14,8 @@ public class DataBaseController {
 	private static Connection conn = null;
 	
 	private static List<String> args = new ArrayList<>();
+	
+	public static boolean isConnected = false;
 
 	public static void setConnection(List<String> args) {
 		DataBaseController.args.clear();
@@ -35,8 +37,10 @@ public class DataBaseController {
 			conn = DriverManager.getConnection("jdbc:mysql://" + ip + "/" + dbName + "?serverTimezone=IST",
 					dbUsername, dbPassword);
 			buff.append("\nDatabase connection succeeded!\n");
+			isConnected = true;
 		} catch(SQLException e) {
 			buff.append("\nDatabase connection failed!\n");
+			isConnected = false;
 		}
 		return buff.toString();
 	}
