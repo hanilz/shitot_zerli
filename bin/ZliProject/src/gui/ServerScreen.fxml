@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ServerFormController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-image: url('file:D:/EclipseProjects/shitot_zerli/src/resources/serverScreenBackground.png');" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ServerFormController">
    <children>
       <HBox alignment="CENTER" layoutX="33.0" layoutY="51.0" prefHeight="516.0" prefWidth="920.0" spacing="327.0" AnchorPane.leftAnchor="33.0">
          <children>
@@ -32,7 +32,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="IPTextField" text="localhost" />
+                        <TextField fx:id="IPTextField" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="87.0">
@@ -42,7 +42,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="portTextField" text="5555" />
+                        <TextField fx:id="portTextField" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="45.0">
@@ -52,7 +52,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="DBNameField" text="zli" />
+                        <TextField fx:id="DBNameField" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="54.0">
@@ -62,7 +62,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="DBUserTextField" text="root" />
+                        <TextField fx:id="DBUserTextField" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="19.0">
@@ -79,7 +79,7 @@
                      <children>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="53.0">
                            <children>
-                              <Button fx:id="connectButton" mnemonicParsing="false" onMousePressed="#clickOnConnect" text="Connect" />
+                              <Button fx:id="connectButton" mnemonicParsing="false" onMouseClicked="#clickOnConnect" text="Connect" />
                               <Button fx:id="disconnectButton" mnemonicParsing="false" onMouseClicked="#clickOnDisconnect" text="Disconnect" />
                            </children>
                         </HBox>
