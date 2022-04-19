@@ -10,26 +10,26 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ViewOrdersController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewOrdersController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="1000.0">
          <children>
             <Label alignment="CENTER" text="ViewOrders" />
-            <TableView>
+            <TableView fx:id="OrderTable">
               <columns>
-                <TableColumn prefWidth="102.0" text="orderNumber" />
-                <TableColumn prefWidth="89.0" text="price" />
-                  <TableColumn prefWidth="99.0" text="greetingCard" />
-                  <TableColumn prefWidth="60.0" text="color" />
-                  <TableColumn prefWidth="78.0" text="dOrder" />
-                  <TableColumn prefWidth="56.0" text="shop" />
-                  <TableColumn prefWidth="61.0" text="date" />
-                  <TableColumn minWidth="-1.0" prefWidth="110.0" text="orderDate" />
+                <TableColumn fx:id="orderNumber" prefWidth="102.0" text="orderNumber" />
+                <TableColumn fx:id="price" prefWidth="89.0" text="price" />
+                  <TableColumn fx:id="greetingCard" prefWidth="99.0" text="greetingCard" />
+                  <TableColumn fx:id="color" prefWidth="60.0" text="color" />
+                  <TableColumn fx:id="dOrder" prefWidth="78.0" text="dOrder" />
+                  <TableColumn fx:id="shop" prefWidth="56.0" text="shop" />
+                  <TableColumn fx:id="date" prefWidth="61.0" text="date" />
+                  <TableColumn fx:id="orderDate" minWidth="-1.0" prefWidth="110.0" text="orderDate" />
               </columns>
             </TableView>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Label text="orderNumber" />
+                  <Label text="orderNumber:" />
                   <TextField fx:id="orderNumber" />
                   <Label text="date:" />
                   <TextField fx:id="dateField" />
