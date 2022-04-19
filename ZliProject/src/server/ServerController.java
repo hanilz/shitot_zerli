@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
+import util.ClientDetails;
 import util.DataBaseController;
 
 public class ServerController extends AbstractServer implements Runnable {
@@ -27,6 +28,8 @@ public class ServerController extends AbstractServer implements Runnable {
 
 	private Object monitor = new Object();
 
+	public static final ObservableList<ClientDetails> clients = FXCollections.observableArrayList();
+
 	public ServerController(int port, String ip) {
 		super(port);
 		this.port = port;
@@ -35,8 +38,6 @@ public class ServerController extends AbstractServer implements Runnable {
 
 	public String connectToDB() {
 		return DataBaseController.connect();
-		// if (isConnected.contains("Driver definition failed") ||
-		// isConnected.contains("Database connection failed!"))
 	}
 
 	@Override
@@ -65,8 +66,6 @@ public class ServerController extends AbstractServer implements Runnable {
 			connectedMessage = "Server listening for connections on port " + getPort();
 			monitor.notifyAll();
 		}
-		// consoleField.setText("Server listening for connections on port " +
-		// getPort());
 	}
 
 	/**
@@ -77,9 +76,39 @@ public class ServerController extends AbstractServer implements Runnable {
 			connectedMessage = "Server has stopped listening for connections.";
 			monitor.notifyAll();
 		}
+	}
 
-		// isStopped = true;
-		// consoleField.setText("Server has stopped listening for connections.");
+	@Override
+	protected void clientConnected(ConnectionToClient client) {
+		String clientAddress = client.getInetAddress().toString();
+		boolean isExists = false;
+		for (ClientDetails currentClient : clients) {
+			if (currentClient.getClient().equals(clientAddress)) {
+				System.out.println("Client already exists!");
+				currentClient.setStatus("Connected");
+				isExists = true;
+				break;
+			}
+		}
+		if (!isExists) {
+			System.out.println("Client connected");
+			ClientDetails newClient = new ClientDetails(ip, clientAddress, "Connected");
+
+			clients.add(newClient);
+			System.out.println(newClient);
+		}
+	}
+
+	synchronized protected void clientDisconnected(ConnectionToClient client) {
+		String clientAddress = client.getInetAddress().toString();
+		System.out.println("Hi! I disconnected =)");
+
+		for (ClientDetails currentClient : clients) {
+			if (currentClient.getClient().equals(clientAddress)) {
+				System.out.println("Client found - disconnecting.");
+				currentClient.setStatus("Disconnected");
+			}
+		}
 	}
 
 	public String runServer() throws Exception {
@@ -87,37 +116,20 @@ public class ServerController extends AbstractServer implements Runnable {
 		try {
 			listen(); // Start listening for connections in separate thread
 		} catch (Exception e) {
-			close();
-			return "yayyy";
-			//return "ERROR - Could not listen for clients!\n";
+			disconnectServer();
+			return "";
 		}
 		if (DataBaseController.isConnected) {
 			System.out.println(DataBaseController.isConnected);
 			synchronized (monitor) {
-				if(connectedMessage.isEmpty()) connectedMessage = null;
+				if (connectedMessage.isEmpty())
+					connectedMessage = null;
 				while (connectedMessage == null)
 					monitor.wait();
 			}
 		}
 		System.out.println(connectedMessage);
 		return connectedMessage;
-	}
-
-//	private void resetFlags() {
-//		isStarted = false;
-//		isStopped = false;
-//	}
-
-	private class ConnectionDetails {
-		private String ip;
-		private String client;
-		private String status;
-
-		public ConnectionDetails(String ip, String client, String status) {
-			this.ip = ip;
-			this.client = client;
-			this.status = status;
-		}
 	}
 
 }
