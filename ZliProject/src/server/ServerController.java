@@ -17,7 +17,7 @@ public class ServerController extends AbstractServer implements Runnable {
 	 */
 	final public static int DEFAULT_PORT = 5555;
 
-	private static boolean isConnected;
+	private static String isConnected;
 	
 	private TextArea consoleField;
 	
@@ -37,7 +37,7 @@ public class ServerController extends AbstractServer implements Runnable {
 		this.connectionTable = connectionTable;
 		db = new DataBaseController(consoleField);
 		isConnected = db.connect();
-		if (!isConnected) {
+		if (isConnected.equals("") || isConnected.equals("Driver definition failed")) {
 			return;
 		}
 		runServer();

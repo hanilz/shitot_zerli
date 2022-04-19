@@ -56,13 +56,13 @@ public class ServerFormController {
 		String dbPassword = DBPasswordTextField.getText();
 		String[] stringArray = new String[] { ip, dbName, dbUsername, dbPassword };
 		
-		if(!checkParameters()) return;
+		if(!checkParameters()) return; 
 		List<String> connectionArray = Arrays.asList(stringArray);
 		
 		DataBaseController.setConnection(connectionArray);
 		sv = new ServerController(Integer.parseInt(port),ip, consoleField, connectionTable);
-		
-		clearFields();
+		//connectionArray.clear();
+		//clearFields();
 	}
 
 	@FXML

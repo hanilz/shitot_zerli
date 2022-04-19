@@ -25,10 +25,11 @@ public class DataBaseController {
 			DataBaseController.args.add(args.get(i));
 	}
 
-	public boolean connect() {
+	public String connect() {
 		StringBuffer buff = new StringBuffer();
 		if(!configDriver(buff))
-			return false;
+			return "";
+			//return false;
 		String ip = args.get(0);
 		String dbName = args.get(1);
 		String dbUsername = args.get(2);
@@ -38,13 +39,14 @@ public class DataBaseController {
 			conn = DriverManager.getConnection("jdbc:mysql://" + ip + "/" + dbName + "?serverTimezone=IST",
 					dbUsername, dbPassword);
 			buff.append("\nDatabase connection succeeded!\n");
-			consoleField.setText(buff.toString());
-			return true;
+			//consoleField.setText(buff.toString());
+			//return true;
 		} catch(SQLException e) {
 			buff.append("\nDatabase connection failed!\n");
-			consoleField.setText(buff.toString());
-			return false;
+			//consoleField.setText(buff.toString());
+			//return false;
 		}
+		return buff.toString();
 	}
 
 	private boolean configDriver(StringBuffer buff) {
