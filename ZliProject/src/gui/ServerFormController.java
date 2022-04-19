@@ -24,7 +24,7 @@ import server.ServerController;
 import util.ClientDetails;
 import util.DataBaseController;
 
-public class ServerFormController implements Initializable{
+public class ServerFormController implements Initializable {
 
 	@FXML
 	private TextField DBNameField;
@@ -89,8 +89,7 @@ public class ServerFormController implements Initializable{
 			if (result.contains("Server listening for connections on port")) {
 				connectButton.setDisable(true);
 				disconnectButton.setDisable(false);
-				ServerController.clients.add(new ClientDetails("test","test","test"));
-				ServerController.clients.add(new ClientDetails("test","test","test"));
+				connectionTable.getItems().addAll(ServerController.clients);
 
 			} else {
 				sv.close();
@@ -99,9 +98,8 @@ public class ServerFormController implements Initializable{
 			buff.append("ERROR - Could not listen for clients!\n");
 		}
 		consoleField.setText(buff.toString());
-		
-		
-		connectionTable.getItems().addAll(ServerController.clients);
+
+		// connectionTable.getItems().addAll(ServerController.clients);
 	}
 
 	@FXML
@@ -131,22 +129,15 @@ public class ServerFormController implements Initializable{
 		return true;
 	}
 
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		/*connectionTable = new TableView<>();
-		ipCol = new TableColumn<>();
-		hostCol = new TableColumn<>();
-		statusCol = new TableColumn<>();*/
-		
-		/*ipCol.setCellValueFactory(new PropertyValueFactory<>("IP"));
-		hostCol.setCellValueFactory(new PropertyValueFactory<>("Host"));
-		statusCol.setCellValueFactory(new PropertyValueFactory<>("Status"));*/
-		
-		ServerController.clients.add(new ClientDetails("test","test","test"));
-		ServerController.clients.add(new ClientDetails("test","test","test"));
+		//setCellValueFactory: set for each attribute the cell in the table! so we can present the data in the table.
+		ipCol.setCellValueFactory(new PropertyValueFactory<>("ip"));
+		hostCol.setCellValueFactory(new PropertyValueFactory<>("client"));
+		statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
+
 		connectionTable.setItems(ServerController.clients);
-		
+
 	}
 
 }
