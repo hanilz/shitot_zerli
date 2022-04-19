@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -63,33 +64,43 @@ public class ServerFormController {
 		sv = new ServerController(Integer.parseInt(port), ip);
 		StringBuffer buff = new StringBuffer();
 		buff.append(sv.connectToDB());
-		//String result = sv.connectToDB();
-		//consoleField.setText(result);
 		try {
 			String result = sv.runServer();
 			buff.append(result);
-			
-			//consoleField.setText(resultFromServer);
-			//connectButton.setDisable(true);
+			if(result.contains("Server listening for connections on port")) {
+				connectButton.setDisable(true);
+				disconnectButton.setDisable(false);
+			}
+			else {
+				sv.close();
+				System.out.println("Closed Shita Bepita");
+			}
 		} catch (Exception e) {
-			System.out.println("ex???");
 			buff.append("ERROR - Could not listen for clients!\n");
-			//consoleField.setText("ERROR - Could not listen for clients!\n");
-			//connectButton.setDisable(false);
 		}
 		consoleField.setText(buff.toString());
-		//System.out.println("For the gui: " + result);
 
 	}
 
 	@FXML
-	void clickOnDisconnect(MouseEvent event) {
-
-	}
+    void clickOnDisconnect(MouseEvent event) {
+		try {
+			sv.close();
+			System.out.println("Closed WOOHOO");
+		} catch (IOException e) {
+			System.out.println("Can't close");
+			e.printStackTrace();
+		}
+		
+		connectButton.setDisable(false);
+		disconnectButton.setDisable(true);
+		consoleField.setText("Server has disconnected.");
+    }
 
 	@FXML
 	void closeWindow(MouseEvent event) {
-
+		System.out.println("Dasvidanya");
+		System.exit(0);
 	}
 	
 	private boolean checkParameters() {
@@ -99,16 +110,5 @@ public class ServerFormController {
 		}
 		return true;
 	}
-	
-	private void clearFields() {
-		portTextField.setText("");
-		IPTextField.setText("");
-		DBNameField.setText("");
-		DBUserTextField.setText("");
-		DBPasswordTextField.setText("");
-		//consoleField.setText("");
-	}
-	
-
 
 }

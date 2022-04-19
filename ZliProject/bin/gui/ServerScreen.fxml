@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ServerFormController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ServerFormController">
    <children>
       <HBox alignment="CENTER" layoutX="33.0" layoutY="51.0" prefHeight="516.0" prefWidth="920.0" spacing="327.0" AnchorPane.leftAnchor="33.0">
          <children>
@@ -80,7 +80,7 @@
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="53.0">
                            <children>
                               <Button fx:id="connectButton" mnemonicParsing="false" onMousePressed="#clickOnConnect" text="Connect" />
-                              <Button fx:id="disconnectButton" mnemonicParsing="false" onMouseClicked="#clickOnDisconnect" text="Disconnect" />
+                              <Button fx:id="disconnectButton" disable="true" mnemonicParsing="false" onMousePressed="#clickOnDisconnect" text="Disconnect" />
                            </children>
                         </HBox>
                      </children>
@@ -118,6 +118,6 @@
             </VBox>
          </children>
       </HBox>
-      <Button fx:id="closeButton" layoutX="18.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#closeWindow" prefHeight="32.0" prefWidth="33.0" text="X" />
+      <Button fx:id="closeButton" layoutX="18.0" layoutY="17.0" mnemonicParsing="false" onMousePressed="#closeWindow" prefHeight="32.0" prefWidth="33.0" text="X" />
    </children>
 </AnchorPane>
