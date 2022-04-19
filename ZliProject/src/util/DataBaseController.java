@@ -12,12 +12,8 @@ import javafx.scene.control.TextArea;
 public class DataBaseController {
 	// make singleton
 	private static Connection conn = null;
-	private static List<String> args = new ArrayList<>();
-	private TextArea consoleField;
 	
-	public DataBaseController(TextArea consoleField) {
-		this.consoleField = consoleField;
-	}
+	private static List<String> args = new ArrayList<>();
 
 	public static void setConnection(List<String> args) {
 		DataBaseController.args.clear();
@@ -25,11 +21,11 @@ public class DataBaseController {
 			DataBaseController.args.add(args.get(i));
 	}
 
-	public String connect() {
+	public static String connect() {
 		StringBuffer buff = new StringBuffer();
-		if(!configDriver(buff))
-			return "";
-			//return false;
+		buff.append(configDriver());
+		if(buff.toString().equals("\nDriver definition failed\n"))
+			return buff.toString();
 		String ip = args.get(0);
 		String dbName = args.get(1);
 		String dbUsername = args.get(2);
@@ -39,25 +35,19 @@ public class DataBaseController {
 			conn = DriverManager.getConnection("jdbc:mysql://" + ip + "/" + dbName + "?serverTimezone=IST",
 					dbUsername, dbPassword);
 			buff.append("\nDatabase connection succeeded!\n");
-			//consoleField.setText(buff.toString());
-			//return true;
 		} catch(SQLException e) {
 			buff.append("\nDatabase connection failed!\n");
-			//consoleField.setText(buff.toString());
-			//return false;
 		}
 		return buff.toString();
 	}
 
-	private boolean configDriver(StringBuffer buff) {
+	private static String configDriver() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-			buff.append("\nDriver definition succeed\n");
-			return true;
+			return "\nDriver definition succeed\n";
 		} catch (Exception ex) {
 			/* handle the error */
-			buff.append("\nDriver definition failed\n");
-			return false;
+			return "\nDriver definition failed\n";
 		}
 	}
 

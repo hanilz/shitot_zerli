@@ -18,30 +18,22 @@ public class ServerController extends AbstractServer implements Runnable {
 	final public static int DEFAULT_PORT = 5555;
 
 	private static String isConnected;
-	
-	private TextArea consoleField;
-	
-	private TableView<?> connectionTable;
-	
+		
 	private int port;
 	
 	private String ip;
 	
 	private List<?> connections = new ArrayList<>();
 
-	public ServerController(int port, String ip, TextArea consoleField, TableView<?> connectionTable) {
+	public ServerController(int port, String ip) {
 		super(port);
 		this.port = port;
 		this.ip = ip;
-		this.consoleField = consoleField;
-		this.connectionTable = connectionTable;
-		db = new DataBaseController(consoleField);
-		isConnected = db.connect();
-		if (isConnected.equals("") || isConnected.equals("Driver definition failed")) {
-			return;
-		}
-		runServer();
+	}
 
+	public String connectToDB() {
+		return DataBaseController.connect();
+		//if (isConnected.contains("Driver definition failed") || isConnected.contains("Database connection failed!"))
 	}
 
 	@Override
@@ -65,23 +57,30 @@ public class ServerController extends AbstractServer implements Runnable {
 	 * Server started.
 	 */
 	protected void serverStarted() {
-		consoleField.setText("Server listening for connections on port " + getPort());
+		isConnected = "Server listening for connections on port " + getPort();	
+		//consoleField.setText("Server listening for connections on port " + getPort());
 	}
 
 	/**
 	 * Server stopped.
 	 */
 	protected void serverStopped() {
-		consoleField.setText("Server has stopped listening for connections.");
+		isConnected = "Server has stopped listening for connections.";	
+
+		//isStopped = true;
+		//consoleField.setText("Server has stopped listening for connections.");
 	}
 	
-	public void runServer() {
-		try {
-			listen(); // Start listening for connections
-		} catch (Exception ex) {
-			consoleField.setText("ERROR - Could not listen for clients!\n");
-		}
+	public String runServer() throws Exception {
+		isConnected = "ERROR - Could not listen for clients!\n";
+		listen(); // Start listening for connections in separate thread
+		return isConnected;
 	}
+
+//	private void resetFlags() {
+//		isStarted = false;
+//		isStopped = false;
+//	}
 	
 	private class ConnectionDetails {
 		private String ip;
