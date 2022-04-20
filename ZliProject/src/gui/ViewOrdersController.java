@@ -14,10 +14,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import server.ServerController;
 
 public class ViewOrdersController implements Initializable {
+	private static final ObservableList<Order> orders = FXCollections.observableArrayList();
+	
 	@FXML
-	private TableView<Order> OrderTable = new TableView<Order>();
+	private TableView<Order> OrderTable;
 
 	@FXML
 	private TextField colorField;
@@ -32,49 +35,47 @@ public class ViewOrdersController implements Initializable {
 	private Button updateButton;
 
 	@FXML
-	private TableColumn<Order, String> orderNumbers;
+	private TableColumn<Order, String> orderNumberCol;
 
 	@FXML
-	private TableColumn<Order, String> price;
+	private TableColumn<Order, String> priceCol;
 
 	@FXML
-	private TableColumn<Order, String> greetingCard;
+	private TableColumn<Order, String> greetingCardCol;
 
 	@FXML
-	private TableColumn<Order, String> color;
+	private TableColumn<Order, String> colorCol;
 
 	@FXML
-	private TableColumn<Order, String> dOrder;
+	private TableColumn<Order, String> dOrderCol;
 
 	@FXML
-	private TableColumn<Order, String> shop;
+	private TableColumn<Order, String> shopCol;
+	
 	@FXML
-	private TableColumn<Order, String> date;
+	private TableColumn<Order, String> dateCol;
+	
 	@FXML
-	private TableColumn<Order, String> orderDate;
+	private TableColumn<Order, String> orderDateCol;
 
 	@FXML
 	void updateDateColor(ActionEvent event) {
-		//initialize(null,null);
-		// OrderTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		
 	}
 
-	ObservableList<Order> orders = FXCollections.observableArrayList();
 
-	
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-
-		orderNumbers.setCellValueFactory(new PropertyValueFactory<Order, String>("orderNumbers"));
-		price.setCellValueFactory(new PropertyValueFactory<Order, String>("price"));
-		greetingCard.setCellValueFactory(new PropertyValueFactory<Order, String>("greetingCard"));
-		color.setCellValueFactory(new PropertyValueFactory<Order, String>("color"));
-		dOrder.setCellValueFactory(new PropertyValueFactory<Order, String>("dOrder"));
-		shop.setCellValueFactory(new PropertyValueFactory<Order, String>("shop"));
-		date.setCellValueFactory(new PropertyValueFactory<Order, String>("date"));
-		orderDate.setCellValueFactory(new PropertyValueFactory<Order, String>("orderDate"));
-		orders.add(new Order("1", "22", "null", "blue", "null", "temp", "2022-05-24 12:45:30", "33"));
-		orders.add(new Order("2", "33", "sdfsad", "blue", "null", "temp", "2022-05-24 12:45:30", "4554"));
+	public void initialize(URL location, ResourceBundle resources) {
+		orders.add(new Order("1", "22", "sadas", "blue", "dsfsd", "dsfa", "2022-05-24 12:45:30", "33"));
+		orders.add(new Order("2", "33", "sdfsad", "blue", "sdfds", "temp", "2022-05-24 12:45:30", "4554"));
+		orderNumberCol.setCellValueFactory(new PropertyValueFactory<>("orderNumber"));
+		priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+		greetingCardCol.setCellValueFactory(new PropertyValueFactory<>("greetingCard"));
+		colorCol.setCellValueFactory(new PropertyValueFactory<>("color"));
+		dOrderCol.setCellValueFactory(new PropertyValueFactory<>("DOrder"));
+		shopCol.setCellValueFactory(new PropertyValueFactory<>("shop"));
+		dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+		orderDateCol.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
 		OrderTable.setItems(orders);
 	}
 }
