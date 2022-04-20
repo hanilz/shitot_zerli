@@ -15,7 +15,7 @@
       <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="1000.0">
          <children>
             <Label alignment="CENTER" text="ViewOrders" />
-            <TableView fx:id="OrderTable">
+            <TableView fx:id="OrderTable" prefHeight="400.0" prefWidth="988.0">
               <columns>
                 <TableColumn fx:id="orderNumberCol" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="orderNumber" />
                 <TableColumn fx:id="priceCol" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="price" />
@@ -24,18 +24,18 @@
                   <TableColumn fx:id="dOrderCol" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="dOrder" />
                   <TableColumn fx:id="shopCol" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="shop" />
                   <TableColumn fx:id="dateCol" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="-1.0" text="date" />
-                  <TableColumn fx:id="orderDateCol" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="-1.0" text="orderDate" />
+                  <TableColumn fx:id="orderDateCol" maxWidth="1.7976931348623157E308" minWidth="193.0" prefWidth="-1.0" text="orderDate" />
               </columns>
             </TableView>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
                   <Label text="orderNumber:" />
-                  <TextField fx:id="orderNumber" />
+                  <TextField fx:id="orderNumberTextField" />
                   <Label text="date:" />
-                  <TextField fx:id="dateField" />
+                  <TextField fx:id="dateTextField" />
                   <Label text="color:" />
-                  <TextField fx:id="colorField" />
-                  <Button fx:id="updateButton" mnemonicParsing="false" onAction="#updateDateColor" text="Update" />
+                  <TextField fx:id="colorTextField" />
+                  <Button fx:id="updateButton" mnemonicParsing="false" onMousePressed="#updateDateColor" text="Update" />
                </children>
                <opaqueInsets>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
