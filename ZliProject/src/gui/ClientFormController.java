@@ -46,28 +46,16 @@ public class ClientFormController {
 		} catch (IOException e) {
 			System.out.println("Shita");
 			errorLabel.setVisible(true);
+			return;
 		}
-
+		changeSceneToViewOrders();
 	}
 
-//	public void stop() {
-//		System.out.println("Stage is closing");
-//	}
-
-//	@FXML
-//	public void exitApplication(ActionEvent event) {
-//		if (client != null) {
-//			try {
-//				client.closeConnection();
-//				System.out.println("disconnected! yayyyy");
-//
-//			} catch (IOException e) {
-//				System.out.println("Oh no!");
-//				e.printStackTrace();
-//			}
-//		}
-//			
-//		Platform.exit();
-//	}
-
+	private void changeSceneToViewOrders() {
+		try {
+			ClientMain.changeScene(getClass().getResource("ViewOrders.fxml"), "View Orders");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

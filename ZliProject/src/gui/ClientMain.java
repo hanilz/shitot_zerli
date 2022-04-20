@@ -1,6 +1,7 @@
 package gui;
 
 import java.io.IOException;
+import java.net.URL;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -31,14 +32,20 @@ public class ClientMain extends Application {
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		clientStage = primaryStage;
-//		ClientMain.clientStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-//		    @Override
-//		    public void handle(WindowEvent e) {
-//		        // SHOW A DIALOG HERE
-//		    	System.out.println("Bye bye!");
-//		        System.exit(0);
-//		    }
-//		});
 		primaryStage.show();
+	}
+	
+	public static void changeScene(URL url, String title) throws Exception {
+		FXMLLoader loader = new FXMLLoader();
+		try {
+			loader = new FXMLLoader(url);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Parent root = loader.load();
+		Scene scene = new Scene(root);
+		clientStage.setScene(scene);
+		clientStage.setTitle(title);
+		clientStage.show();
 	}
 }

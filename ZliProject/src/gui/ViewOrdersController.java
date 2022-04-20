@@ -14,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import server.ServerController;
 
 public class ViewOrdersController implements Initializable {
@@ -23,13 +24,13 @@ public class ViewOrdersController implements Initializable {
 	private TableView<Order> OrderTable;
 
 	@FXML
-	private TextField colorField;
+    private TextField colorTextField;
+	
+	@FXML
+    private TextField dateTextField;
 
 	@FXML
-	private TextField dateField;
-
-	@FXML
-	private TextField orderNumber;
+    private TextField orderNumberTextField;
 
 	@FXML
 	private Button updateButton;
@@ -59,9 +60,9 @@ public class ViewOrdersController implements Initializable {
 	private TableColumn<Order, String> orderDateCol;
 
 	@FXML
-	void updateDateColor(ActionEvent event) {
-		
-	}
+    void updateDateColor(MouseEvent event) {
+	
+    }
 
 
 	@Override
