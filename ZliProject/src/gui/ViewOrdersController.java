@@ -73,7 +73,6 @@ public class ViewOrdersController implements Initializable {
 		shop.setCellValueFactory(new PropertyValueFactory<Order, String>("shop"));
 		date.setCellValueFactory(new PropertyValueFactory<Order, String>("date"));
 		orderDate.setCellValueFactory(new PropertyValueFactory<Order, String>("orderDate"));
-		OrderTable.getColumns().setAll(orderNumber, price, greetingCard, color, dOrder, shop, date, orderDate);
 		orders.add(new Order("1", "22", "null", "blue", "null", "temp", "2022-05-24 12:45:30", "33"));
 		orders.add(new Order("2", "33", "sdfsad", "blue", "null", "temp", "2022-05-24 12:45:30", "4554"));
 		OrderTable.setItems(orders);

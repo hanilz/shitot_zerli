@@ -25,7 +25,6 @@ public class ServerScreen extends Application {
 			e.printStackTrace();
 			return;
 		}
-		
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.show();
