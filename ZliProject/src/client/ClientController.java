@@ -5,21 +5,15 @@ package client;
 
 import java.io.*;
 import ocsf.client.AbstractClient;
+import server.ServerController;
 
 public class ClientController extends AbstractClient {
-	// Class variables *************************************************
-
 	/**
 	 * The default port to connect on.
 	 */
 	final public static int DEFAULT_PORT = 5555;
-
-	// Instance variables **********************************************
-
-	/**
-	 * The instance of the client that created this ConsoleChat.
-	 */
-	// Constructors ****************************************************
+	
+	private ServerController sv;
 
 	/**
 	 * Constructs an instance of the ClientConsole UI.
@@ -33,6 +27,14 @@ public class ClientController extends AbstractClient {
 		openConnection();
 	}
 
+	@Override
+	protected void connectionClosed() {
+		return;
+		
+		
+	}
+
+	
 	// Instance methods ************************************************
 
 	/**

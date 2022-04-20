@@ -1,33 +1,36 @@
 package util;
 
 public class ClientDetails {
-	private String ip;
-	private String client;
+	private String serverIP;
+	private String clientIP;
 	private String status;
 
-	public ClientDetails(String ip, String client, String status) {
-		this.ip = ip;
-		this.client = client;
+	public ClientDetails(String serverIP, String clientIP, String status) {
+		this.serverIP = serverIP;
+		this.clientIP = clientIP;
 		this.status = status;
 	}
 
-	public String getClient() {
-		return client;
+	public String getServerIP() {
+		return serverIP;
 	}
+	
+	
+	public String getClientIP() {
+		return clientIP;
+	}
+	
+	
+	public String getStatus() {
+		return status;
+	}
+	
 
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	public String getIp() {
-		return ip;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
 	public String toString() {
-		return ("This client details: Server IP: " + ip + " Client IP: " + client + " Status: " + status);
+		return ("This client details: Server IP: " + serverIP + " Client IP: " + clientIP + " Status: " + status);
 	}
 }

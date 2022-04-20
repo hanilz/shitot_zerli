@@ -24,8 +24,6 @@ public class ServerController extends AbstractServer implements Runnable {
 
 	private String ip;
 
-	private List<?> connections = new ArrayList<>();
-
 	private Object monitor = new Object();
 
 	public static final ObservableList<ClientDetails> clients = FXCollections.observableArrayList();
@@ -53,6 +51,8 @@ public class ServerController extends AbstractServer implements Runnable {
 	public void disconnectServer() {
 		try {
 			close();
+			disconnectAllClients();
+			System.out.println("disconnected server");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -83,7 +83,7 @@ public class ServerController extends AbstractServer implements Runnable {
 		String clientAddress = client.getInetAddress().toString();
 		boolean isExists = false;
 		for (ClientDetails currentClient : clients) {
-			if (currentClient.getClient().equals(clientAddress)) {
+			if (currentClient.getClientIP().equals(clientAddress)) {
 				System.out.println("Client already exists!");
 				currentClient.setStatus("Connected");
 				isExists = true;
@@ -99,14 +99,33 @@ public class ServerController extends AbstractServer implements Runnable {
 		}
 	}
 
+	/**
+	   * Hook method called each time a client disconnects.
+	   * The default implementation does nothing. The method
+	   * may be overridden by subclasses but should remains synchronized.
+	   *
+	   * @param client the connection with the client.
+	   */
+	@Override
 	synchronized protected void clientDisconnected(ConnectionToClient client) {
-		String clientAddress = client.getInetAddress().toString();
+		System.out.println("client has disconnected! (from clientDisconnected) ");
+	}
+	  
+	private void disconnectAllClients() {
+		System.out.println("Disconnecting all clients!");
+		for (ClientDetails currentClient : clients) 
+			disconnectClient(currentClient);
+	}
+	
+	private void disconnectClient(ClientDetails client) {
+		String clientAddress = client.getClientIP();
 		System.out.println("Hi! I disconnected =)");
 
 		for (ClientDetails currentClient : clients) {
-			if (currentClient.getClient().equals(clientAddress)) {
-				System.out.println("Client found - disconnecting.");
+			if (currentClient.getClientIP().equals(clientAddress)) {
+				System.out.println("Client " + currentClient.getClientIP() + " found - disconnecting.");
 				currentClient.setStatus("Disconnected");
+				System.out.println("Client " + currentClient.getClientIP() + " status is - " + currentClient.getStatus());
 			}
 		}
 	}
