@@ -104,15 +104,12 @@ public class ServerFormController implements Initializable {
 
 	@FXML
 	void clickOnDisconnect(MouseEvent event) {
-		try {
-			sv.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		sv.disconnectServer();
 
 		connectButton.setDisable(false);
 		disconnectButton.setDisable(true);
 		consoleField.setText("Server has disconnected.");
+		connectionTable.refresh();
 	}
 
 	@FXML
@@ -128,13 +125,13 @@ public class ServerFormController implements Initializable {
 		}
 		return true;
 	}
-
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//setCellValueFactory: set for each attribute the cell in the table! so we can present the data in the table.
-		ipCol.setCellValueFactory(new PropertyValueFactory<>("ip"));
-		hostCol.setCellValueFactory(new PropertyValueFactory<>("client"));
-		statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
+		ipCol.setCellValueFactory(new PropertyValueFactory<>("clientIP"));  // ip is client IP address
+		hostCol.setCellValueFactory(new PropertyValueFactory<>("serverIP"));  // host is server IP address
+		statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));  // can be either "connected" or "disconnected"
 
 		connectionTable.setItems(ServerController.clients);
 

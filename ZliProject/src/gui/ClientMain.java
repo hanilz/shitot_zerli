@@ -3,12 +3,16 @@ package gui;
 import java.io.IOException;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class ClientMain extends Application {
+	public static Stage clientStage;
+	
 	public static void main(String args[]) throws Exception {
 		launch(args);
 	}
@@ -26,6 +30,15 @@ public class ClientMain extends Application {
 		}
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
+		clientStage = primaryStage;
+//		ClientMain.clientStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+//		    @Override
+//		    public void handle(WindowEvent e) {
+//		        // SHOW A DIALOG HERE
+//		    	System.out.println("Bye bye!");
+//		        System.exit(0);
+//		    }
+//		});
 		primaryStage.show();
 	}
 }
