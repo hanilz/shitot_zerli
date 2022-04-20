@@ -31,7 +31,7 @@ public class Order {
 		return color;
 	}
 
-	public String getdOrder() {
+	public String getDOrder() {
 		return dOrder;
 	}
 
@@ -46,5 +46,39 @@ public class Order {
 	public String getOrderDate() {
 		return orderDate;
 	}
+
+	public void setOrderNumber(String orderNumber) {
+		this.orderNumber = orderNumber;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
+
+	public void setGreetingCard(String greetingCard) {
+		this.greetingCard = greetingCard;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public void setdOrder(String dOrder) {
+		this.dOrder = dOrder;
+	}
+
+	public void setShop(String shop) {
+		this.shop = shop;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public void setOrderDate(String orderDate) {
+		this.orderDate = orderDate;
+	}
+	
+	
 
 }

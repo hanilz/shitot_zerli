@@ -17,14 +17,14 @@
             <Label alignment="CENTER" text="ViewOrders" />
             <TableView fx:id="OrderTable">
               <columns>
-                <TableColumn fx:id="orderNumber" prefWidth="102.0" text="orderNumber" />
-                <TableColumn fx:id="price" prefWidth="89.0" text="price" />
-                  <TableColumn fx:id="greetingCard" prefWidth="99.0" text="greetingCard" />
-                  <TableColumn fx:id="color" prefWidth="60.0" text="color" />
-                  <TableColumn fx:id="dOrder" prefWidth="78.0" text="dOrder" />
-                  <TableColumn fx:id="shop" prefWidth="56.0" text="shop" />
-                  <TableColumn fx:id="date" prefWidth="61.0" text="date" />
-                  <TableColumn fx:id="orderDate" minWidth="-1.0" prefWidth="110.0" text="orderDate" />
+                <TableColumn fx:id="orderNumberCol" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="orderNumber" />
+                <TableColumn fx:id="priceCol" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="price" />
+                  <TableColumn fx:id="greetingCardCol" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="greetingCard" />
+                  <TableColumn fx:id="colorCol" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="color" />
+                  <TableColumn fx:id="dOrderCol" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="dOrder" />
+                  <TableColumn fx:id="shopCol" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="shop" />
+                  <TableColumn fx:id="dateCol" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="-1.0" text="date" />
+                  <TableColumn fx:id="orderDateCol" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="-1.0" text="orderDate" />
               </columns>
             </TableView>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
