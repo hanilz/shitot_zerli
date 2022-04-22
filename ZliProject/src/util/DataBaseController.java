@@ -1,12 +1,16 @@
-package src.util;
+package util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import entities.Order;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class DataBaseController {
 	// make singleton
@@ -16,9 +20,9 @@ public class DataBaseController {
 
 	public static boolean isConnected = false;
 
-	//private static PreparedStatement ps = null;
-	
-	//private static ResultSet rs = null;
+	// private static PreparedStatement ps = null;
+
+	// private static ResultSet rs = null;
 
 	public static void setConnection(List<String> args) {
 		DataBaseController.args.clear();
@@ -36,8 +40,8 @@ public class DataBaseController {
 		String dbUsername = args.get(2);
 		String dbPassword = args.get(3);
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://" + ip + "/" + dbName + "?serverTimezone=IST&useSSL=false", dbUsername,
-					dbPassword);//URL, Username, Password+changed url with message "&useSSL=false"
+			conn = DriverManager.getConnection("jdbc:mysql://" + ip + "/" + dbName + "?serverTimezone=IST&useSSL=false",
+					dbUsername, dbPassword); // URL, Username, Password+changed url with message "&useSSL=false"
 			buff.append("\nDatabase connection succeeded!\n");
 			isConnected = true;
 		} catch (SQLException e) {
@@ -46,7 +50,6 @@ public class DataBaseController {
 		}
 		return buff.toString();
 	}
-
 
 	private static String configDriver() {
 		try {
@@ -58,7 +61,7 @@ public class DataBaseController {
 		}
 	}
 
-	public static boolean Disconnect() {//not looking only for SQLException 
+	public static boolean Disconnect() {// not looking only for SQLException
 		if (!isConnected)
 			return true;// server was not connected to begin with
 //		if (rs != null) {
@@ -75,13 +78,36 @@ public class DataBaseController {
 //		}
 		if (conn != null) {
 			try {
-				conn.close();//closing database connection
+				conn.close();// closing database connection
 			} catch (Exception e) {
-				}
+			}
 		}
 		isConnected = false;
 		return true;
+	}
 
+	public static ArrayList<Order> selectAllOrders() {
+		ArrayList<Order> orders  = new ArrayList<>();
+		orders.add(new Order(-1, 0.0, "", "", "", "", "", ""));
+		try {
+			Statement selectStmt = conn.createStatement();
+			ResultSet rs = selectStmt.executeQuery("SELECT * FROM orders;");
+			while(rs.next()) {
+				int orderNumber = rs.getInt(1);
+				double price = rs.getDouble(2);
+				String greetingCard = rs.getString(3);
+				String color = rs.getString(4);
+				String dOrder = rs.getString(5);
+				String shop = rs.getString(6);
+				String date = rs.getString(7);
+				String orderDate = rs.getString(8);
+				Order resultOrder = new Order(orderNumber, price, greetingCard, color, dOrder, shop, date, orderDate);
+				orders.add(resultOrder);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return orders;
 	}
 
 }

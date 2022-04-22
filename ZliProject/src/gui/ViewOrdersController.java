@@ -1,24 +1,23 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import entities.Order;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import server.ServerController;
 
 public class ViewOrdersController implements Initializable {
-	private static final ObservableList<Order> orders = FXCollections.observableArrayList();
+	private static ObservableList<Order> orders = FXCollections.observableArrayList();
 	
 	@FXML
 	private TableView<Order> OrderTable;
@@ -36,10 +35,10 @@ public class ViewOrdersController implements Initializable {
 	private Button updateButton;
 
 	@FXML
-	private TableColumn<Order, String> orderNumberCol;
+	private TableColumn<Order, Integer> orderNumberCol;
 
 	@FXML
-	private TableColumn<Order, String> priceCol;
+	private TableColumn<Order, Double> priceCol;
 
 	@FXML
 	private TableColumn<Order, String> greetingCardCol;
@@ -63,12 +62,14 @@ public class ViewOrdersController implements Initializable {
     void updateDateColor(MouseEvent event) {
 	
     }
-
+	
+	@SuppressWarnings("unchecked")
+	private void fetchAllOrders() {
+		orders = (ObservableList<Order>)ClientFormController.client.accept("fetch orders");
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		orders.add(new Order("1", "22", "sadas", "blue", "dsfsd", "dsfa", "2022-05-24 12:45:30", "33"));
-		orders.add(new Order("2", "33", "sdfsad", "blue", "sdfds", "temp", "2022-05-24 12:45:30", "4554"));
 		orderNumberCol.setCellValueFactory(new PropertyValueFactory<>("orderNumber"));
 		priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 		greetingCardCol.setCellValueFactory(new PropertyValueFactory<>("greetingCard"));
@@ -77,6 +78,7 @@ public class ViewOrdersController implements Initializable {
 		shopCol.setCellValueFactory(new PropertyValueFactory<>("shop"));
 		dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
 		orderDateCol.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
+		fetchAllOrders();
 		OrderTable.setItems(orders);
 	}
 }
