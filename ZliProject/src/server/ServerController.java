@@ -1,31 +1,30 @@
-package server;
+package src.server;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import ocsf.server.AbstractServer;
-import ocsf.server.ConnectionToClient;
-import util.DataBaseController;
+import src.ocsf.server.AbstractServer;
+import src.ocsf.server.ConnectionToClient;
+import src.util.DataBaseController;
 
 public class ServerController extends AbstractServer implements Runnable {
+
 	private DataBaseController db;
 	/**
 	 * The default port to listen on.
 	 */
 	final public static int DEFAULT_PORT = 5555;
 
-	private static String connectedMessage;
+	//private static String connectedMessage;
 
 	private int port;
 
 	private String ip;
 
-	private List<?> connections = new ArrayList<>();
+	//private List<?> connections = new ArrayList<>();
 
-	private Object monitor = new Object();
+	//private Object monitor = new Object();
 
 	public ServerController(int port, String ip) {
 		super(port);
@@ -35,14 +34,11 @@ public class ServerController extends AbstractServer implements Runnable {
 
 	public String connectToDB() {
 		return DataBaseController.connect();
-		// if (isConnected.contains("Driver definition failed") ||
-		// isConnected.contains("Database connection failed!"))
+
 	}
 
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
-		// connectionTable.getItems().add(new ConnectionDetails(ip, client.toString(),
-		// "Connected"));
 		return;
 	}
 
@@ -57,56 +53,19 @@ public class ServerController extends AbstractServer implements Runnable {
 		}
 	}
 
-	/**
-	 * Server started.
-	 */
-	protected void serverStarted() {
-		synchronized (monitor) {
-			connectedMessage = "Server listening for connections on port " + getPort();
-			monitor.notifyAll();
-		}
-		// consoleField.setText("Server listening for connections on port " +
-		// getPort());
-	}
-
-	/**
-	 * Server stopped.
-	 */
-	protected void serverStopped() {
-		synchronized (monitor) {
-			connectedMessage = "Server has stopped listening for connections.";
-			monitor.notifyAll();
-		}
-
-		// isStopped = true;
-		// consoleField.setText("Server has stopped listening for connections.");
-	}
-
 	public String runServer() throws Exception {
-		connectedMessage = "";
-		try {
-			listen(); // Start listening for connections in separate thread
-		} catch (Exception e) {
-			close();
-			return "yayyy";
-			//return "ERROR - Could not listen for clients!\n";
-		}
-		if (DataBaseController.isConnected) {
-			System.out.println(DataBaseController.isConnected);
-			synchronized (monitor) {
-				if(connectedMessage.isEmpty()) connectedMessage = null;
-				while (connectedMessage == null)
-					monitor.wait();
-			}
-		}
-		System.out.println(connectedMessage);
-		return connectedMessage;
-	}
 
-//	private void resetFlags() {
-//		isStarted = false;
-//		isStopped = false;
-//	}
+		if (!isListening())// if server not already running start it
+			try {
+				listen();
+			} catch (Exception e) {
+				close();
+				System.out.println(e.getMessage());
+				return "Can not listen";
+			}
+		return isListening() ? "Server listening for connections on port " + getPort()
+				: "Server has stopped listening for connections.";
+	}
 
 	private class ConnectionDetails {
 		private String ip;
