@@ -1,19 +1,19 @@
-package src.server;
+package server;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
-import src.ocsf.server.AbstractServer;
-import src.ocsf.server.ConnectionToClient;
-import src.util.DataBaseController;
+import entities.Order;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import ocsf.server.AbstractServer;
+import ocsf.server.ConnectionToClient;
+import util.ClientDetails;
+import util.DataBaseController;
 
 
 public class ServerController extends AbstractServer implements Runnable {
 
-	private DataBaseController db;
 	/**
 	 * The default port to listen on.
 	 */
@@ -40,6 +40,17 @@ public class ServerController extends AbstractServer implements Runnable {
 
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
+		if (msg instanceof String) {
+			if (msg.equals("fetch orders")) {
+				ArrayList<Order> orders = DataBaseController.selectAllOrders();
+				try {
+					client.sendToClient(orders);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		return;
 	}
 

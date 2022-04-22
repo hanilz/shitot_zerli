@@ -1,4 +1,4 @@
-package src.gui;
+package gui;
 
 import java.io.IOException;
 import java.net.URL;
@@ -7,10 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
@@ -19,8 +16,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import src.server.ServerController;
-import src.util.DataBaseController;
+import server.ServerController;
+import util.ClientDetails;
+import util.DataBaseController;
 
 
 public class ServerFormController implements Initializable {
@@ -147,17 +145,14 @@ public class ServerFormController implements Initializable {
 	 */
 	@FXML
 	void clickOnDisconnect(MouseEvent event) {
-
-		try {
-			sv.close();
-			System.out.println("Server is closed");
-			DataBaseController.Disconnect();
-			System.out.println("Database is closed");
-		} catch (IOException e) {
-		}
+		sv.disconnectServer();
+		System.out.println("Server is closed");
+		DataBaseController.Disconnect();
+		System.out.println("Database is closed");
 		connectButton.setDisable(false);
 		disconnectButton.setDisable(true);
 		consoleField.setText("Server and Database have disconnected.");
+		connectionTable.refresh();
 	}
 
 	@FXML

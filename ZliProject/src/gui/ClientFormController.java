@@ -22,8 +22,11 @@ public class ClientFormController {
 	@FXML
 	private Label errorLabel;
 
-	private ClientController client = null;
+	public static ClientController client = null;
 
+	/**
+	 * @param event
+	 */
 	@FXML
 	void clickOnConnectButton(MouseEvent event) {
 		String ip = ipTextField.getText();
