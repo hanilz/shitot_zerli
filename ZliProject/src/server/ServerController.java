@@ -1,30 +1,30 @@
-package server;
+package src.server;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import src.ocsf.server.AbstractServer;
+import src.ocsf.server.ConnectionToClient;
+import src.util.DataBaseController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import ocsf.server.AbstractServer;
-import ocsf.server.ConnectionToClient;
-import util.ClientDetails;
-import util.DataBaseController;
+
 
 public class ServerController extends AbstractServer implements Runnable {
+
 	private DataBaseController db;
 	/**
 	 * The default port to listen on.
 	 */
 	final public static int DEFAULT_PORT = 5555;
 
-	private static String connectedMessage;
+	//private static String connectedMessage;
 
 	private int port;
 
 	private String ip;
 
-	private Object monitor = new Object();
 
 	public static final ObservableList<ClientDetails> clients = FXCollections.observableArrayList();
 
@@ -40,8 +40,6 @@ public class ServerController extends AbstractServer implements Runnable {
 
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
-		// connectionTable.getItems().add(new ConnectionDetails(ip, client.toString(),
-		// "Connected"));
 		return;
 	}
 
@@ -58,26 +56,21 @@ public class ServerController extends AbstractServer implements Runnable {
 		}
 	}
 
-	/**
-	 * Server started.
-	 */
-	protected void serverStarted() {
-		synchronized (monitor) {
-			connectedMessage = "Server listening for connections on port " + getPort();
-			monitor.notifyAll();
-		}
+
+	public String runServer() throws Exception {
+		if (!isListening())// if server not already running start it
+			try {
+				listen();
+			} catch (Exception e) {
+				close();
+				System.out.println(e.getMessage());
+				return "Can not listen";
+        			}
+		return isListening() ? "Server listening for connections on port " + getPort()
+				: "Server has stopped listening for connections.";
 	}
 
-	/**
-	 * Server stopped.
-	 */
-	protected void serverStopped() {
-		synchronized (monitor) {
-			connectedMessage = "Server has stopped listening for connections.";
-			monitor.notifyAll();
-		}
-	}
-
+	
 	@Override
 	protected void clientConnected(ConnectionToClient client) {
 		String clientAddress = client.getInetAddress().toString();
@@ -130,25 +123,6 @@ public class ServerController extends AbstractServer implements Runnable {
 		}
 	}
 
-	public String runServer() throws Exception {
-		connectedMessage = "";
-		try {
-			listen(); // Start listening for connections in separate thread
-		} catch (Exception e) {
-			disconnectServer();
-			return "";
-		}
-		if (DataBaseController.isConnected) {
-			System.out.println(DataBaseController.isConnected);
-			synchronized (monitor) {
-				if (connectedMessage.isEmpty())
-					connectedMessage = null;
-				while (connectedMessage == null)
-					monitor.wait();
-			}
-		}
-		System.out.println(connectedMessage);
-		return connectedMessage;
-	}
+
 
 }
