@@ -7,6 +7,9 @@ import java.util.List;
 import src.ocsf.server.AbstractServer;
 import src.ocsf.server.ConnectionToClient;
 import src.util.DataBaseController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 
 public class ServerController extends AbstractServer implements Runnable {
 
@@ -22,9 +25,8 @@ public class ServerController extends AbstractServer implements Runnable {
 
 	private String ip;
 
-	//private List<?> connections = new ArrayList<>();
 
-	//private Object monitor = new Object();
+	public static final ObservableList<ClientDetails> clients = FXCollections.observableArrayList();
 
 	public ServerController(int port, String ip) {
 		super(port);
@@ -34,7 +36,6 @@ public class ServerController extends AbstractServer implements Runnable {
 
 	public String connectToDB() {
 		return DataBaseController.connect();
-
 	}
 
 	@Override
@@ -48,13 +49,15 @@ public class ServerController extends AbstractServer implements Runnable {
 	public void disconnectServer() {
 		try {
 			close();
+			disconnectAllClients();
+			System.out.println("disconnected server");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public String runServer() throws Exception {
 
+	public String runServer() throws Exception {
 		if (!isListening())// if server not already running start it
 			try {
 				listen();
@@ -62,21 +65,64 @@ public class ServerController extends AbstractServer implements Runnable {
 				close();
 				System.out.println(e.getMessage());
 				return "Can not listen";
-			}
+        			}
 		return isListening() ? "Server listening for connections on port " + getPort()
 				: "Server has stopped listening for connections.";
 	}
 
-	private class ConnectionDetails {
-		private String ip;
-		private String client;
-		private String status;
+	
+	@Override
+	protected void clientConnected(ConnectionToClient client) {
+		String clientAddress = client.getInetAddress().toString();
+		boolean isExists = false;
+		for (ClientDetails currentClient : clients) {
+			if (currentClient.getClientIP().equals(clientAddress)) {
+				System.out.println("Client already exists!");
+				currentClient.setStatus("Connected");
+				isExists = true;
+				break;
+			}
+		}
+		if (!isExists) {
+			System.out.println("Client connected");
+			ClientDetails newClient = new ClientDetails(ip, clientAddress, "Connected");
 
-		public ConnectionDetails(String ip, String client, String status) {
-			this.ip = ip;
-			this.client = client;
-			this.status = status;
+			clients.add(newClient);
+			System.out.println(newClient);
 		}
 	}
+
+	/**
+	   * Hook method called each time a client disconnects.
+	   * The default implementation does nothing. The method
+	   * may be overridden by subclasses but should remains synchronized.
+	   *
+	   * @param client the connection with the client.
+	   */
+	@Override
+	synchronized protected void clientDisconnected(ConnectionToClient client) {
+		System.out.println("client has disconnected! (from clientDisconnected) ");
+	}
+	  
+	private void disconnectAllClients() {
+		System.out.println("Disconnecting all clients!");
+		for (ClientDetails currentClient : clients) 
+			disconnectClient(currentClient);
+	}
+	
+	private void disconnectClient(ClientDetails client) {
+		String clientAddress = client.getClientIP();
+		System.out.println("Hi! I disconnected =)");
+
+		for (ClientDetails currentClient : clients) {
+			if (currentClient.getClientIP().equals(clientAddress)) {
+				System.out.println("Client " + currentClient.getClientIP() + " found - disconnecting.");
+				currentClient.setStatus("Disconnected");
+				System.out.println("Client " + currentClient.getClientIP() + " status is - " + currentClient.getStatus());
+			}
+		}
+	}
+
+
 
 }

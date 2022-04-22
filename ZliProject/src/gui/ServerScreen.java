@@ -15,7 +15,6 @@ public class ServerScreen extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		// AnchorPane anchorPane;
 		Parent root;
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("ServerScreen.fxml"));

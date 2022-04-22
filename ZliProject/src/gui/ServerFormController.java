@@ -1,26 +1,36 @@
 package src.gui;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import src.server.ServerController;
 import src.util.DataBaseController;
 
-public class ServerFormController {
+
+public class ServerFormController implements Initializable {
 
 	/**
 	 * contains database name in gui
 	 */
 	@FXML
 	private TextField DBNameField;
+
 
 	/**
 	 * contains database password name in gui
@@ -74,8 +84,15 @@ public class ServerFormController {
 	 * table contaning all connections
 	 */
 	@FXML
-	private TableView<?> connectionTable;
+	private TableView<ClientDetails> connectionTable;
 
+	@FXML
+	private TableColumn<ClientDetails, String> ipCol;
+
+	@FXML
+	private TableColumn<ClientDetails, String> hostCol;
+	@FXML
+	private TableColumn<ClientDetails, String> statusCol;
 	/**
 	 * Server controller to enable action with server
 	 */
@@ -94,6 +111,7 @@ public class ServerFormController {
 		String dbPassword = DBPasswordTextField.getText();
 		String[] stringArray = new String[] { ip, dbName, dbUsername, dbPassword };
 		String result = "";
+
 		if (!checkParameters())
 			return;
 		List<String> connectionArray = Arrays.asList(stringArray);
@@ -121,6 +139,7 @@ public class ServerFormController {
 		}
 		consoleField.setText(buff.toString());
 
+		// connectionTable.getItems().addAll(ServerController.clients);
 	}
 
 	/**
@@ -128,6 +147,7 @@ public class ServerFormController {
 	 */
 	@FXML
 	void clickOnDisconnect(MouseEvent event) {
+
 		try {
 			sv.close();
 			System.out.println("Server is closed");
@@ -152,6 +172,17 @@ public class ServerFormController {
 			return false;
 		}
 		return true;
+	}
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		//setCellValueFactory: set for each attribute the cell in the table! so we can present the data in the table.
+		ipCol.setCellValueFactory(new PropertyValueFactory<>("clientIP"));  // ip is client IP address
+		hostCol.setCellValueFactory(new PropertyValueFactory<>("serverIP"));  // host is server IP address
+		statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));  // can be either "connected" or "disconnected"
+
+		connectionTable.setItems(ServerController.clients);
+
 	}
 
 }
