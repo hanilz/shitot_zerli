@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -51,8 +52,13 @@ public class ClientMain extends Application {
 		}
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
-		clientStage.setScene(scene);
-		clientStage.setTitle(title);
-		clientStage.show();
+		Platform.runLater(new Runnable() {  // this thread will help us change between scenes and avoid exceptions
+		    @Override
+		    public void run() {
+		    	clientStage.setScene(scene);
+				clientStage.setTitle(title);
+				clientStage.show();		    
+			}
+		});
 	}
 }

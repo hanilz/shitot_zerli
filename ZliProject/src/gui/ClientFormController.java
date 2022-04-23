@@ -46,8 +46,12 @@ public class ClientFormController {
 				@Override
 				public void handle(WindowEvent e) {
 					try {
-						client.closeConnection();
-						System.out.println("disconnected! yayyyy");
+						if(client.isConnected()) {
+							Object response = ClientFormController.client.accept("client disconnected");
+							client.closeConnection();
+							System.out.println("disconnected! yayyyy");
+						}
+						else {System.out.println("not connected to anything - babye!");}
 
 					} catch (IOException ex) {
 						System.out.println("Oh no!");

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import client.ClientController;
 import entities.Order;
+import gui.ClientMain;
 import javafx.collections.FXCollections;
 
 /**
@@ -30,16 +31,22 @@ public class MessageController implements Serializable {
 		if(msg instanceof String) {
 			String checkMsg = (String)msg;
 			String[] checkFlag = checkMsg.split(" ");
-			if(checkMsg.contains("update orders") && checkFlag[2].equals("true")) {
-				response = "DB updated";
-				ClientController.setResponse(response);
+			if(checkMsg.contains("server disconnected")) {
+				changeSceneToMainClient();
 			}
-			else {
+			else if(checkMsg.contains("client disconnected")) {
+				ClientController.setResponse("client disconnected");
+			}
+			else if(checkMsg.contains("update failed")) {
 				response = "update failed";
 				ClientController.setResponse(response);
 			}
+			else if(checkMsg.contains("update orders") && checkFlag[2].equals("true")) {
+				response = "DB updated";
+				ClientController.setResponse(response);
+			}
 		}
-		if (msg instanceof ArrayList) {
+		else if(msg instanceof ArrayList) {
 			if (!((ArrayList<?>) msg).isEmpty()) {
 				Object message = ((ArrayList<?>) msg).get(0);
 				if (message instanceof Order) {
@@ -56,6 +63,17 @@ public class MessageController implements Serializable {
 					}
 				}
 			}
+		}
+	}
+	
+	/**
+	 * This function will help us to switch between the screens after the user connected to the server-ip
+	 */
+	private void changeSceneToMainClient() {
+		try {
+			ClientMain.changeScene(ClientMain.class.getResource("ClientScreen.fxml"), "Zli Client");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }
