@@ -10,9 +10,11 @@ import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 import util.ClientDetails;
 import util.DataBaseController;
+import util.InputChecker;
 
 /**
- * ServerController extends the superclass AbstractServer for implementing and overriding the functions for our server-client project (zli)
+ * ServerController extends the superclass AbstractServer for implementing and
+ * overriding the functions for our server-client project (zli)
  */
 public class ServerController extends AbstractServer implements Runnable {
 
@@ -34,7 +36,8 @@ public class ServerController extends AbstractServer implements Runnable {
 	private String ip;
 
 	/**
-	 * Saving all the client that connected to the server so the server screen will present the clients
+	 * Saving all the client that connected to the server so the server screen will
+	 * present the clients
 	 */
 	public static final ObservableList<ClientDetails> clients = FXCollections.observableArrayList();
 
@@ -44,7 +47,10 @@ public class ServerController extends AbstractServer implements Runnable {
 		this.ip = ip;
 	}
 
-	/**This method will connect to the database will the parameters that given by the user/gui
+	/**
+	 * This method will connect to the database will the parameters that given by
+	 * the user/gui
+	 * 
 	 * @return
 	 */
 	public String connectToDB() {
@@ -61,6 +67,7 @@ public class ServerController extends AbstractServer implements Runnable {
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
 		if (msg instanceof String) {
+			String message = (String) msg;
 			if (msg.equals("fetch orders")) { // if the string equals to fetch orders -> execute the select * query from
 												// table orders
 				ArrayList<Order> orders = DataBaseController.selectAllOrders();
@@ -70,9 +77,26 @@ public class ServerController extends AbstractServer implements Runnable {
 					e.printStackTrace();
 				}
 			}
+			if (message.contains("update orders")) {
+				String[] messagesFromClient = message.split(" ");
+				String sendDate = messagesFromClient[3] + " " + messagesFromClient[4];
+				if(!InputChecker.checkDateFormat(sendDate)) {
+					System.out.println("The date format is invalid");
+					return;
+				}
+				DataBaseController.updateOrder(messagesFromClient[2], sendDate, messagesFromClient[5]);
+				if(DataBaseController.isUpdated) {
+					message = messagesFromClient[0] + " " + messagesFromClient[1] + " true";
+					DataBaseController.isUpdated = false;
+				}
+				try {
+					client.sendToClient(message);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
-
-		return;
 	}
 
 	/**
@@ -88,7 +112,10 @@ public class ServerController extends AbstractServer implements Runnable {
 		}
 	}
 
-	/**runServer will start listening to the server after clicking on the connect button with the right information
+	/**
+	 * runServer will start listening to the server after clicking on the connect
+	 * button with the right information
+	 * 
 	 * @return message depending on the try-catch
 	 * @throws Exception
 	 */
@@ -139,7 +166,8 @@ public class ServerController extends AbstractServer implements Runnable {
 	}
 
 	/**
-	 * disconnectAllClients helps us disconnect all the clients that connected to the server
+	 * disconnectAllClients helps us disconnect all the clients that connected to
+	 * the server
 	 */
 	private void disconnectAllClients() {
 		System.out.println("Disconnecting all clients!");
@@ -147,8 +175,11 @@ public class ServerController extends AbstractServer implements Runnable {
 			disconnectClient(currentClient);
 	}
 
-	/**TODO: we need to fix this! it's not working if the client disconnecting from the server
-	 * If the client disconnected from the server, it will update the table in the server screen
+	/**
+	 * TODO: we need to fix this! it's not working if the client disconnecting from
+	 * the server If the client disconnected from the server, it will update the
+	 * table in the server screen
+	 * 
 	 * @param client
 	 */
 	private void disconnectClient(ClientDetails client) {

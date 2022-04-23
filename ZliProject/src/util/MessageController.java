@@ -21,17 +21,24 @@ public class MessageController implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * clientController will help us set the response after executing the command
-	 */
-	private ClientController clientController;
-
-	/**
 	 * handleMessages handles the messages that the client send to the server.
 	 * This function will execute the correct command that been sent.
 	 * @param msg
 	 */
 	public void handleMessages(Object msg) {
-		Object response;
+		Object response = null;
+		if(msg instanceof String) {
+			String checkMsg = (String)msg;
+			String[] checkFlag = checkMsg.split(" ");
+			if(checkMsg.contains("update orders") && checkFlag[2].equals("true")) {
+				response = "DB updated";
+				ClientController.setResponse(response);
+			}
+			else {
+				response = "update failed";
+				ClientController.setResponse(response);
+			}
+		}
 		if (msg instanceof ArrayList) {
 			if (!((ArrayList<?>) msg).isEmpty()) {
 				Object message = ((ArrayList<?>) msg).get(0);
@@ -44,7 +51,8 @@ public class MessageController implements Serializable {
 						case -1: // is fetch all orders
 							ordersList.remove(0); // get rid of indicative order
 							response = FXCollections.observableArrayList(ordersList); // cast to ObservableList
-							clientController.setResponse(response);
+							ClientController.setResponse(response);
+							break;
 					}
 				}
 			}

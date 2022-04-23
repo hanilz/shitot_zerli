@@ -21,7 +21,7 @@ import javafx.scene.input.MouseEvent;
  */
 public class ViewOrdersController implements Initializable {
 	private static ObservableList<Order> orders = FXCollections.observableArrayList();
-	
+
 	/**
 	 * contains all the order table from the database
 	 */
@@ -32,17 +32,18 @@ public class ViewOrdersController implements Initializable {
 	 * for updating the color from the existing orders from the database
 	 */
 	@FXML
-    private TextField colorTextField;
-	
+	private TextField colorTextField;
+
 	/**
 	 * for updating the date from the existing orders from the database
 	 */
 	@FXML
-    private TextField dateTextField;
+	private TextField dateTextField;
 
-	//TODO: why do we need orderNumber field? we need to find the primary by ourself!
+	// TODO: why do we need orderNumber field? we need to find the primary by
+	// ourself!
 	@FXML
-    private TextField orderNumberTextField;
+	private TextField orderNumberTextField;
 
 	/**
 	 * updateButton will update the order table
@@ -67,28 +68,41 @@ public class ViewOrdersController implements Initializable {
 
 	@FXML
 	private TableColumn<Order, String> shopCol;
-	
+
 	@FXML
 	private TableColumn<Order, String> dateCol;
-	
+
 	@FXML
 	private TableColumn<Order, String> orderDateCol;
 
 	@FXML
-    void updateDateColor(MouseEvent event) {
-	
-    }
-	
-	/**
-	 * fetchAllOrder will send the message to the server for fetching all the order table from the database
-	 */
-	@SuppressWarnings("unchecked")
-	private void fetchAllOrders() {
-		orders = (ObservableList<Order>)ClientFormController.client.accept("fetch orders");
+	void updateDateColor(MouseEvent event) {
+		String orderNumber = orderNumberTextField.getText(); // index 2 after split
+		String date = dateTextField.getText(); // index 3+4 after split
+		String color = colorTextField.getText(); // index 5 after split
+		StringBuffer buff = new StringBuffer();
+		buff.append("update orders " + orderNumber + " " + date + " " + color);
+		Object response = ClientFormController.client.accept(buff.toString());
+		if (response.equals("DB updated")) {
+			fetchAllOrders();
+			OrderTable.setItems(orders);
+		}
+		else
+			System.out.println("Update failed! check the input");
 	}
 
 	/**
-	 *by using the initialize function, it will initial the table and the context of the table
+	 * fetchAllOrder will send the message to the server for fetching all the order
+	 * table from the database
+	 */
+	@SuppressWarnings("unchecked")
+	private void fetchAllOrders() {
+		orders = (ObservableList<Order>) ClientFormController.client.accept("fetch orders");
+	}
+
+	/**
+	 * by using the initialize function, it will initial the table and the context
+	 * of the table
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
