@@ -76,6 +76,14 @@ public class ViewOrdersController implements Initializable {
 	private TableColumn<Order, String> orderDateCol;
 
 	@FXML
+    private Button refreshButton;
+
+    @FXML
+    void clickOnRefreshButton(MouseEvent event) {
+		fetchAllOrders();
+		OrderTable.setItems(orders);
+    }
+	@FXML
 	void updateDateColor(MouseEvent event) {
 		String orderNumber = orderNumberTextField.getText(); // index 2 after split
 		String date = dateTextField.getText(); // index 3+4 after split
