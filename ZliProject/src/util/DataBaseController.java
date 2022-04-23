@@ -2,6 +2,7 @@ package util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,7 +12,8 @@ import java.util.List;
 import entities.Order;
 
 /**
- * DataBaseController will configure the connection and will handle all the queries that the server requests.
+ * DataBaseController will configure the connection and will handle all the
+ * queries that the server requests.
  *
  */
 public class DataBaseController {
@@ -27,12 +29,16 @@ public class DataBaseController {
 	 * status of the connection of the database
 	 */
 	public static boolean isConnected = false;
+	
+	public static boolean isUpdated = false;
 
 	// private static PreparedStatement ps = null;
 
 	// private static ResultSet rs = null;
 
-	/**Clearing the current args from the list and adding the new information
+	/**
+	 * Clearing the current args from the list and adding the new information
+	 * 
 	 * @param args
 	 */
 	public static void setConnection(List<String> args) {
@@ -41,8 +47,10 @@ public class DataBaseController {
 			DataBaseController.args.add(args.get(i));
 	}
 
-	/**connecting to the database with the correct information that given from the server screen.
-	 * if the information is incorrect, it will throw SQLException.
+	/**
+	 * connecting to the database with the correct information that given from the
+	 * server screen. if the information is incorrect, it will throw SQLException.
+	 * 
 	 * @return string depending on the information
 	 */
 	public static String connect() {
@@ -76,7 +84,9 @@ public class DataBaseController {
 		}
 	}
 
-	/**This function will disconnect from the database
+	/**
+	 * This function will disconnect from the database
+	 * 
 	 * @return true or false
 	 */
 	public static boolean Disconnect() {// not looking only for SQLException
@@ -104,16 +114,44 @@ public class DataBaseController {
 		return true;
 	}
 
-	/**selectAllOrder will execute select * from the order table for presenting the data to the client screen
+	public static void updateOrder(String orderNumber, String date, String color) {
+		try {
+			System.out.println("test test before if " + orderNumber);
+			int sendOrderNumberDB = Integer.parseInt(orderNumber);
+			/*if (!InputChecker.checkDateFormat(date)) {
+				System.out.println("format is invalid");
+				return;
+			}*/
+			// setting the format HH:mm:ss for the given date by the user
+			PreparedStatement stmt = conn
+					.prepareStatement("update orders set color = ?, date = ? where orderNumber = ?");
+			stmt.setString(1, color);
+			stmt.setString(2, date);
+			stmt.setInt(3, sendOrderNumberDB);
+
+			isUpdated = true;
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			isUpdated = false;
+			return;
+		}
+		System.out.println("First init of the flag: "+isUpdated);
+	}
+
+	/**
+	 * selectAllOrder will execute select * from the order table for presenting the
+	 * data to the client screen
+	 * 
 	 * @return
 	 */
 	public static ArrayList<Order> selectAllOrders() {
-		ArrayList<Order> orders  = new ArrayList<>();
+		ArrayList<Order> orders = new ArrayList<>();
 		orders.add(new Order(-1, 0.0, "", "", "", "", "", ""));
 		try {
 			Statement selectStmt = conn.createStatement();
 			ResultSet rs = selectStmt.executeQuery("SELECT * FROM orders;");
-			while(rs.next()) {
+			while (rs.next()) {
 				int orderNumber = rs.getInt(1);
 				double price = rs.getDouble(2);
 				String greetingCard = rs.getString(3);

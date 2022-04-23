@@ -1,9 +1,15 @@
 package entities;
 
+import java.io.Serializable;
+
 /**
  * for sending as message between client <-> server
  */
-public class Order {
+public class Order implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int orderNumber;
 	private double price; 
 	private String greetingCard;

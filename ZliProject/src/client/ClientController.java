@@ -20,7 +20,7 @@ public class ClientController extends AbstractClient {
 	/**
 	 * The response object that we got from the server after executing the query/command
 	 */
-	private Object response;
+	private static Object response;
 
 	/**
 	 * waiting for response after the client sent the message
@@ -110,7 +110,7 @@ public class ClientController extends AbstractClient {
 	/**Setting the response after the MessageController handled the message that been sent.
 	 * @param response
 	 */
-	public void setResponse(Object response) {
-		this.response = response;
+	public static void setResponse(Object response) {
+		ClientController.response = response;
 	}
 }
