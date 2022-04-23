@@ -11,7 +11,9 @@ import ocsf.server.ConnectionToClient;
 import util.ClientDetails;
 import util.DataBaseController;
 
-
+/**
+ * ServerController extends the superclass AbstractServer for implementing and overriding the functions for our server-client project (zli)
+ */
 public class ServerController extends AbstractServer implements Runnable {
 
 	/**
@@ -19,13 +21,21 @@ public class ServerController extends AbstractServer implements Runnable {
 	 */
 	final public static int DEFAULT_PORT = 5555;
 
-	//private static String connectedMessage;
+	// private static String connectedMessage;
 
+	/**
+	 * Saving the port of the server
+	 */
 	private int port;
 
+	/**
+	 * Saving the ip of the server
+	 */
 	private String ip;
 
-
+	/**
+	 * Saving all the client that connected to the server so the server screen will present the clients
+	 */
 	public static final ObservableList<ClientDetails> clients = FXCollections.observableArrayList();
 
 	public ServerController(int port, String ip) {
@@ -34,28 +44,39 @@ public class ServerController extends AbstractServer implements Runnable {
 		this.ip = ip;
 	}
 
+	/**This method will connect to the database will the parameters that given by the user/gui
+	 * @return
+	 */
 	public String connectToDB() {
 		return DataBaseController.connect();
 	}
 
+	/**
+	 * This method handles any messages received from the client.
+	 *
+	 * @param msg    The message received from the client.
+	 * @param client The connection from which the message originated.
+	 * @param
+	 */
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
 		if (msg instanceof String) {
-			if (msg.equals("fetch orders")) {
+			if (msg.equals("fetch orders")) { // if the string equals to fetch orders -> execute the select * query from
+												// table orders
 				ArrayList<Order> orders = DataBaseController.selectAllOrders();
 				try {
-					client.sendToClient(orders);
+					client.sendToClient(orders); // send the list to fetch all the orders to the server
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		}
-		
+
 		return;
 	}
 
 	/**
-	 * Disconnect server from the connection.
+	 * Disconnect server from the connection and disconnecting all the clients.
 	 */
 	public void disconnectServer() {
 		try {
@@ -67,7 +88,10 @@ public class ServerController extends AbstractServer implements Runnable {
 		}
 	}
 
-
+	/**runServer will start listening to the server after clicking on the connect button with the right information
+	 * @return message depending on the try-catch
+	 * @throws Exception
+	 */
 	public String runServer() throws Exception {
 		if (!isListening())// if server not already running start it
 			try {
@@ -76,12 +100,11 @@ public class ServerController extends AbstractServer implements Runnable {
 				close();
 				System.out.println(e.getMessage());
 				return "Can not listen";
-        			}
+			}
 		return isListening() ? "Server listening for connections on port " + getPort()
 				: "Server has stopped listening for connections.";
 	}
 
-	
 	@Override
 	protected void clientConnected(ConnectionToClient client) {
 		String clientAddress = client.getInetAddress().toString();
@@ -104,23 +127,30 @@ public class ServerController extends AbstractServer implements Runnable {
 	}
 
 	/**
-	   * Hook method called each time a client disconnects.
-	   * The default implementation does nothing. The method
-	   * may be overridden by subclasses but should remains synchronized.
-	   *
-	   * @param client the connection with the client.
-	   */
+	 * Hook method called each time a client disconnects. The default implementation
+	 * does nothing. The method may be overridden by subclasses but should remains
+	 * synchronized.
+	 *
+	 * @param client the connection with the client.
+	 */
 	@Override
 	synchronized protected void clientDisconnected(ConnectionToClient client) {
 		System.out.println("client has disconnected! (from clientDisconnected) ");
 	}
-	  
+
+	/**
+	 * disconnectAllClients helps us disconnect all the clients that connected to the server
+	 */
 	private void disconnectAllClients() {
 		System.out.println("Disconnecting all clients!");
-		for (ClientDetails currentClient : clients) 
+		for (ClientDetails currentClient : clients)
 			disconnectClient(currentClient);
 	}
-	
+
+	/**TODO: we need to fix this! it's not working if the client disconnecting from the server
+	 * If the client disconnected from the server, it will update the table in the server screen
+	 * @param client
+	 */
 	private void disconnectClient(ClientDetails client) {
 		String clientAddress = client.getClientIP();
 		System.out.println("Hi! I disconnected =)");
@@ -129,11 +159,10 @@ public class ServerController extends AbstractServer implements Runnable {
 			if (currentClient.getClientIP().equals(clientAddress)) {
 				System.out.println("Client " + currentClient.getClientIP() + " found - disconnecting.");
 				currentClient.setStatus("Disconnected");
-				System.out.println("Client " + currentClient.getClientIP() + " status is - " + currentClient.getStatus());
+				System.out
+						.println("Client " + currentClient.getClientIP() + " status is - " + currentClient.getStatus());
 			}
 		}
 	}
-
-
 
 }

@@ -4,12 +4,10 @@ import java.io.IOException;
 import java.net.URL;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 public class ClientMain extends Application {
 	public static Stage clientStage;
@@ -18,6 +16,9 @@ public class ClientMain extends Application {
 		launch(args);
 	}
 
+	/**
+	 *Initialize the screen from the fxml file and presenting the screen after the initial from the fxml file
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Parent root;
@@ -35,6 +36,12 @@ public class ClientMain extends Application {
 		primaryStage.show();
 	}
 	
+	/**
+	 * This method will help us to switch between the screens
+	 * @param url
+	 * @param title
+	 * @throws Exception
+	 */
 	public static void changeScene(URL url, String title) throws Exception {
 		FXMLLoader loader = new FXMLLoader();
 		try {

@@ -9,27 +9,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entities.Order;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
+/**
+ * DataBaseController will configure the connection and will handle all the queries that the server requests.
+ *
+ */
 public class DataBaseController {
-	// make singleton
+	// TODO: make singleton
 	private static Connection conn = null;
 
+	/**
+	 * For saving the information that been given from the server screen
+	 */
 	private static List<String> args = new ArrayList<>();
 
+	/**
+	 * status of the connection of the database
+	 */
 	public static boolean isConnected = false;
 
 	// private static PreparedStatement ps = null;
 
 	// private static ResultSet rs = null;
 
+	/**Clearing the current args from the list and adding the new information
+	 * @param args
+	 */
 	public static void setConnection(List<String> args) {
 		DataBaseController.args.clear();
 		for (int i = 0; i < args.size(); i++)
 			DataBaseController.args.add(args.get(i));
 	}
 
+	/**connecting to the database with the correct information that given from the server screen.
+	 * if the information is incorrect, it will throw SQLException.
+	 * @return string depending on the information
+	 */
 	public static String connect() {
 		StringBuffer buff = new StringBuffer();
 		buff.append(configDriver());
@@ -61,6 +76,9 @@ public class DataBaseController {
 		}
 	}
 
+	/**This function will disconnect from the database
+	 * @return true or false
+	 */
 	public static boolean Disconnect() {// not looking only for SQLException
 		if (!isConnected)
 			return true;// server was not connected to begin with
@@ -86,6 +104,9 @@ public class DataBaseController {
 		return true;
 	}
 
+	/**selectAllOrder will execute select * from the order table for presenting the data to the client screen
+	 * @return
+	 */
 	public static ArrayList<Order> selectAllOrders() {
 		ArrayList<Order> orders  = new ArrayList<>();
 		orders.add(new Order(-1, 0.0, "", "", "", "", "", ""));

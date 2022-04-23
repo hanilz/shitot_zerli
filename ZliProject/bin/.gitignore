@@ -1,6 +1,5 @@
-/client/
-/gui/
-/resources/
 /server/
+/client/
 /util/
 /entities/
+/gui/

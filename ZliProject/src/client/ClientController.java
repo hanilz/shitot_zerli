@@ -3,27 +3,36 @@
 // license found at www.lloseng.com 
 package client;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.IOException;
 
-import entities.Order;
-import javafx.collections.ObservableList;
-import javafx.collections.FXCollections;
 import ocsf.client.AbstractClient;
-import server.ServerController;
+import util.MessageController;
 
-
+/**
+ * ClientController extends the superclass AbstractClient for implementing and overriding the functions for our server-client project (zli)
+ */
 public class ClientController extends AbstractClient {
 	/**
 	 * The default port to connect on.
 	 */
 	final public static int DEFAULT_PORT = 5555;
-	
-	private static Object response; 
-	
+
+	/**
+	 * The response object that we got from the server after executing the query/command
+	 */
+	private Object response;
+
+	/**
+	 * waiting for response after the client sent the message
+	 */
 	public static boolean awaitResponse = false;
 	
-	private ServerController sv;
+	/**
+	 * Will help us the send the messages for handling different type of commands that been sent by the client
+	 */
+	private MessageController messageController;
+
+	// private ServerController sv;
 
 	/**
 	 * Constructs an instance of the ClientConsole UI.
@@ -34,6 +43,7 @@ public class ClientController extends AbstractClient {
 	 */
 	public ClientController(String host) throws IOException {
 		super(host, DEFAULT_PORT);
+		messageController = new MessageController();
 		openConnection();
 	}
 
@@ -52,16 +62,16 @@ public class ClientController extends AbstractClient {
 	}
 
 	/**
-	   * This method handles all data coming from the UI            
-	   *
-	   * @param message The message from the UI.    
-	   */
-	  
-	  public void handleMessageFromClientUI(Object message) {
-	    try {
-	    	openConnection();//in order to send more than one message
-	       	awaitResponse = true;
-	    	sendToServer(message);
+	 * This method handles all data coming from the UI
+	 *
+	 * @param message The message from the UI.
+	 */
+
+	public void handleMessageFromClientUI(Object message) {
+		try {
+			openConnection();// in order to send more than one message
+			awaitResponse = true;
+			sendToServer(message);
 			// wait for response
 			while (awaitResponse) {
 				try {
@@ -70,44 +80,37 @@ public class ClientController extends AbstractClient {
 					e.printStackTrace();
 				}
 			}
-	    }
-	    catch(IOException e) {
-	    	e.printStackTrace();
-	    }
-	  }
-	
-	  /**
-	   * This method handles all data that comes in from the server.
-	   *
-	   * @param msg The message from the server.
-	   */
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * This method handles all data that comes in from the server.
+	 *
+	 * @param msg The message from the server.
+	 */
 	@Override
 	protected void handleMessageFromServer(Object msg) {
 		awaitResponse = false;
-		
-		if(msg instanceof ArrayList) {
-			if(!((ArrayList<?>)msg).isEmpty()) {
-				Object message = ((ArrayList<?>)msg).get(0);
-				if(message instanceof Order) {
-					ArrayList<Order> messageOrders = (ArrayList<Order>) msg;  // list of orders
-					Order messageOrder = (Order)message;
-					int orderNumber = messageOrder.getOrderNumber();
-					if(orderNumber == -1) { // is fetch all orders
-						messageOrders.remove(0);  // get rid of indicative order
-						response = FXCollections.observableArrayList(messageOrders);  // cast to ObservableList
-					}
-				}
-			}
-		}
+		messageController.handleMessages(msg);
 	}
-	
+
 	/**
-	   * This method terminates the client.
-	   */
+	 * This method terminates the client.
+	 */
 	public void quit() {
 		try {
 			closeConnection();
-	    } catch(IOException e) {}
-	    System.exit(0);
-	  }
+		} catch (IOException e) {
+		}
+		System.exit(0);
+	}
+
+	/**Setting the response after the MessageController handled the message that been sent.
+	 * @param response
+	 */
+	public void setResponse(Object response) {
+		this.response = response;
+	}
 }
