@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import entities.Order;
+import gui.ServerFormController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import ocsf.server.AbstractServer;
@@ -77,11 +78,17 @@ public class ServerController extends AbstractServer implements Runnable {
 					e.printStackTrace();
 				}
 			}
-			if (message.contains("update orders")) {
+			else if (message.contains("update orders")) {
 				String[] messagesFromClient = message.split(" ");
 				String sendDate = messagesFromClient[3] + " " + messagesFromClient[4];
 				if(!InputChecker.checkDateFormat(sendDate)) {
 					System.out.println("The date format is invalid");
+					try {
+						client.sendToClient("update orders failed: datetime format is invalid");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					return;
 				}
 				DataBaseController.updateOrder(messagesFromClient[2], sendDate, messagesFromClient[5]);
@@ -89,8 +96,26 @@ public class ServerController extends AbstractServer implements Runnable {
 					message = messagesFromClient[0] + " " + messagesFromClient[1] + " true";
 					DataBaseController.isUpdated = false;
 				}
+				else {
+					message = messagesFromClient[0] + " " + messagesFromClient[1] + " false";
+				}
 				try {
 					client.sendToClient(message);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			else if(message.equals("client disconnected")) {
+				String clientIP = client.getInetAddress().toString();
+				System.out.println("client disconnected detected: ip is " + clientIP);
+				for (ClientDetails currentClient : clients) {
+					if (clientIP.equals(currentClient.getClientIP())) {
+						disconnectClient(currentClient);
+						break;
+					}
+				}
+				try {
+					client.sendToClient("client disconnected");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -104,6 +129,7 @@ public class ServerController extends AbstractServer implements Runnable {
 	 */
 	public void disconnectServer() {
 		try {
+			sendToAllClients("server disconnected");  // make all clients go back to main client screen
 			close();
 			disconnectAllClients();
 			System.out.println("disconnected server");
@@ -141,6 +167,7 @@ public class ServerController extends AbstractServer implements Runnable {
 				System.out.println("Client already exists!");
 				currentClient.setStatus("Connected");
 				isExists = true;
+				ServerFormController.get().refreshClientsTable();
 				break;
 			}
 		}
@@ -194,6 +221,6 @@ public class ServerController extends AbstractServer implements Runnable {
 						.println("Client " + currentClient.getClientIP() + " status is - " + currentClient.getStatus());
 			}
 		}
+		ServerFormController.get().refreshClientsTable();
 	}
-
 }

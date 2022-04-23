@@ -98,6 +98,8 @@ public class ServerFormController implements Initializable {
 	 * Server controller to enable action with server
 	 */
 	private ServerController sv;
+	
+	private static ServerFormController sfc;
 
 	/**
 	 * By clicking on "Connect" button initialize connecting to Database and then to
@@ -148,10 +150,7 @@ public class ServerFormController implements Initializable {
 	 */
 	@FXML
 	void clickOnDisconnect(MouseEvent event) {
-		sv.disconnectServer();
-		System.out.println("Server is closed");
-		DataBaseController.Disconnect();
-		System.out.println("Database is closed");
+		disconnectServerAndDB();
 		connectButton.setDisable(false);
 		disconnectButton.setDisable(true);
 		consoleField.setText("Server and Database have disconnected.");
@@ -163,8 +162,14 @@ public class ServerFormController implements Initializable {
 	 */
 	@FXML
 	void closeWindow(MouseEvent event) {
+		disconnectServerAndDB();
 		System.out.println("Dasvidanya ");
 		System.exit(0);
+	}
+
+	private void disconnectServerAndDB() {
+		sv.disconnectServer();
+		DataBaseController.Disconnect();
 	}
 
 	/**Checking the parameters that been given by the user.
@@ -184,13 +189,23 @@ public class ServerFormController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		sfc = this;
 		//setCellValueFactory: set for each attribute the cell in the table! so we can present the data in the table.
 		ipCol.setCellValueFactory(new PropertyValueFactory<>("clientIP"));  // ip is client IP address
 		hostCol.setCellValueFactory(new PropertyValueFactory<>("serverIP"));  // host is server IP address
 		statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));  // can be either "connected" or "disconnected"
 
 		connectionTable.setItems(ServerController.clients);
-
 	}
-
+	
+	/**
+	 * Refresh clients table after client connection/disconnection
+	 */
+	public static ServerFormController get() {
+		return sfc;
+	}
+	
+	public void refreshClientsTable() {
+		connectionTable.refresh();
+	}
 }

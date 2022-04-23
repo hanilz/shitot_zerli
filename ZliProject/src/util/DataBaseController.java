@@ -116,15 +116,9 @@ public class DataBaseController {
 
 	public static void updateOrder(String orderNumber, String date, String color) {
 		try {
-			System.out.println("test test before if " + orderNumber);
 			int sendOrderNumberDB = Integer.parseInt(orderNumber);
-			/*if (!InputChecker.checkDateFormat(date)) {
-				System.out.println("format is invalid");
-				return;
-			}*/
-			// setting the format HH:mm:ss for the given date by the user
 			PreparedStatement stmt = conn
-					.prepareStatement("update orders set color = ?, date = ? where orderNumber = ?");
+					.prepareStatement("UPDATE orders SET color = ?, date = ? WHERE orderNumber = ?");
 			stmt.setString(1, color);
 			stmt.setString(2, date);
 			stmt.setInt(3, sendOrderNumberDB);
@@ -136,7 +130,6 @@ public class DataBaseController {
 			isUpdated = false;
 			return;
 		}
-		System.out.println("First init of the flag: "+isUpdated);
 	}
 
 	/**
