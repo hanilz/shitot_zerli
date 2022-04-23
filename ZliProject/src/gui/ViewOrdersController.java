@@ -1,6 +1,5 @@
 package gui;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -16,21 +15,38 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * ViewOrdersController will handle all the events from the gui
+ *
+ */
 public class ViewOrdersController implements Initializable {
 	private static ObservableList<Order> orders = FXCollections.observableArrayList();
 	
+	/**
+	 * contains all the order table from the database
+	 */
 	@FXML
 	private TableView<Order> OrderTable;
 
+	/**
+	 * for updating the color from the existing orders from the database
+	 */
 	@FXML
     private TextField colorTextField;
 	
+	/**
+	 * for updating the date from the existing orders from the database
+	 */
 	@FXML
     private TextField dateTextField;
 
+	//TODO: why do we need orderNumber field? we need to find the primary by ourself!
 	@FXML
     private TextField orderNumberTextField;
 
+	/**
+	 * updateButton will update the order table
+	 */
 	@FXML
 	private Button updateButton;
 
@@ -63,11 +79,17 @@ public class ViewOrdersController implements Initializable {
 	
     }
 	
+	/**
+	 * fetchAllOrder will send the message to the server for fetching all the order table from the database
+	 */
 	@SuppressWarnings("unchecked")
 	private void fetchAllOrders() {
 		orders = (ObservableList<Order>)ClientFormController.client.accept("fetch orders");
 	}
 
+	/**
+	 *by using the initialize function, it will initial the table and the context of the table
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		orderNumberCol.setCellValueFactory(new PropertyValueFactory<>("orderNumber"));

@@ -13,6 +13,9 @@ public class ServerScreen extends Application {
 		launch(args);
 	}
 
+	/**
+	 *Initialize the screen from the fxml file and presenting the screen after the initial from the fxml file
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Parent root;

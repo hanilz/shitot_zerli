@@ -1,6 +1,5 @@
 package gui;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -21,6 +20,10 @@ import util.ClientDetails;
 import util.DataBaseController;
 
 
+/**
+ * ServerFormController will handle all the events from the gui
+ *
+ */
 public class ServerFormController implements Initializable {
 
 	/**
@@ -79,7 +82,7 @@ public class ServerFormController implements Initializable {
 	private TextArea consoleField;
 
 	/**
-	 * table contaning all connections
+	 * table containing all connections
 	 */
 	@FXML
 	private TableView<ClientDetails> connectionTable;
@@ -141,7 +144,7 @@ public class ServerFormController implements Initializable {
 	}
 
 	/**
-	 * 
+	 * When the user will click on the disconnect button, it will close the server, the database connection and will close all the users that connected to the client.
 	 */
 	@FXML
 	void clickOnDisconnect(MouseEvent event) {
@@ -155,12 +158,19 @@ public class ServerFormController implements Initializable {
 		connectionTable.refresh();
 	}
 
+	/**Clicking on the exit button, will close the applications and the running threads.
+	 * @param event
+	 */
 	@FXML
 	void closeWindow(MouseEvent event) {
 		System.out.println("Dasvidanya ");
 		System.exit(0);
 	}
 
+	/**Checking the parameters that been given by the user.
+	 * (Depending if the user inserted the right information).
+	 * @return true or false
+	 */
 	private boolean checkParameters() {
 		if (!portTextField.getText().matches("-?\\d+")) { // if the string is an integer, throw Exception
 			consoleField.setText("ERROR - Could not connect!");
@@ -169,6 +179,9 @@ public class ServerFormController implements Initializable {
 		return true;
 	}
 	
+	/**
+	 *by using the initialize function, it will initial the table and the context of the table
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//setCellValueFactory: set for each attribute the cell in the table! so we can present the data in the table.
