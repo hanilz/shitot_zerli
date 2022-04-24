@@ -104,7 +104,7 @@
                         <Label text="Connnected Clients" />
                         <TableView fx:id="connectionTable" prefHeight="146.0" prefWidth="261.0">
                           <columns>
-                            <TableColumn fx:id="ipCol" prefWidth="75.0" text="IP" />
+                            <TableColumn fx:id="ipCol" minWidth="50.0" prefWidth="75.0" text="IP" />
                             <TableColumn fx:id="hostCol" prefWidth="75.0" text="Host" />
                               <TableColumn fx:id="statusCol" prefWidth="110.0" text="Status" />
                           </columns>
