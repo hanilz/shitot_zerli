@@ -24,6 +24,10 @@ import util.DataBaseController;
  * ServerFormController will handle all the events from the gui
  *
  */
+/**
+ * @author Dolev
+ *
+ */
 public class ServerFormController implements Initializable {
 
 	/**
@@ -162,7 +166,18 @@ public class ServerFormController implements Initializable {
 	 */
 	@FXML
 	void closeWindow(MouseEvent event) {
-		disconnectServerAndDB();
+		closeServerWindow();
+	}
+	
+	
+	/**will close the applications and the running threads.
+	 * 
+	 */
+	public void closeServerWindow() {
+		if(sv!=null && sv.isListening())
+			disconnectServerAndDB();
+		else
+			System.out.println("Server wasn't running");
 		System.out.println("Dasvidanya ");
 		System.exit(0);
 	}

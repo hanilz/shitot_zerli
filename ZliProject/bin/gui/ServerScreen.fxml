@@ -8,13 +8,20 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-image: url(&quot;serverScreenBackground.png&quot;);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ServerFormController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ServerFormController">
    <children>
+      <ImageView fitHeight="600.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/serverScreenBackground.png" />
+         </image>
+      </ImageView>
       <HBox alignment="CENTER" layoutX="33.0" layoutY="51.0" prefHeight="516.0" prefWidth="920.0" spacing="327.0" AnchorPane.leftAnchor="33.0">
          <children>
             <VBox alignment="CENTER" prefHeight="594.0" prefWidth="293.0">
