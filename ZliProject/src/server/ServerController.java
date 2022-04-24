@@ -24,8 +24,6 @@ public class ServerController extends AbstractServer implements Runnable {
 	 */
 	final public static int DEFAULT_PORT = 5555;
 
-	// private static String connectedMessage;
-
 	/**
 	 * Saving the port of the server
 	 */
