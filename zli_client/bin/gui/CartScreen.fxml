@@ -12,15 +12,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: &quot;gray&quot;;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox layoutX="39.0" layoutY="23.0" prefHeight="563.0" prefWidth="918.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="46.0" prefWidth="894.0" style="-fx-background-color: orange;">
+            <HBox alignment="CENTER" prefHeight="46.0" prefWidth="894.0">
                <children>
                   <ImageView fitHeight="80.0" fitWidth="103.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../resources/catalog/home.png" />
+                        <Image url="@../resources/catalog/home.png" />
                      </image>
                      <HBox.margin>
                         <Insets right="297.0" />
@@ -39,15 +39,15 @@
                   </Label>
                </children>
             </HBox>
-            <ScrollPane prefHeight="386.0" prefWidth="894.0" style="-fx-background-color: gray;">
+            <ScrollPane prefHeight="386.0" prefWidth="894.0">
                <content>
                   <VBox prefHeight="514.0" prefWidth="903.0">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="99.0" style="-fx-background-color: gray;">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="99.0">
                            <children>
                               <ImageView fitHeight="80.0" fitWidth="103.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../resources/products/1.png" />
+                                    <Image url="@../resources/products/1.png" />
                                  </image>
                                  <HBox.margin>
                                     <Insets left="10.0" top="10.0" />
@@ -107,17 +107,17 @@
                               <Insets right="7.0" />
                            </padding>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="99.0" style="-fx-background-color: gray;">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="99.0">
                            <children>
                               <ImageView fitHeight="80.0" fitWidth="103.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../resources/products/6.png" />
+                                    <Image url="@../resources/products/2.jpg" />
                                  </image>
                                  <HBox.margin>
                                     <Insets left="10.0" top="10.0" />
                                  </HBox.margin>
                               </ImageView>
-                              <Label alignment="CENTER" layoutX="47.0" prefHeight="50.0" prefWidth="240.0" text="Lilacs" textAlignment="CENTER">
+                              <Label alignment="CENTER" layoutX="47.0" prefHeight="50.0" prefWidth="240.0" text="Orchids - Pink" textAlignment="CENTER">
                                  <font>
                                     <Font size="30.0" />
                                  </font>
@@ -138,8 +138,14 @@
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <TextField text="1" />
+                                    <TextField text="1">
+                                       <VBox.margin>
+                                          <Insets right="-6.0" />
+                                       </VBox.margin></TextField>
                                  </children>
+                                 <padding>
+                                    <Insets left="14.0" />
+                                 </padding>
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="100.0" prefWidth="127.0">
                                  <children>
@@ -171,11 +177,11 @@
                               <Insets right="7.0" />
                            </padding>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="99.0" style="-fx-background-color: gray;">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="99.0">
                            <children>
                               <ImageView fitHeight="80.0" fitWidth="103.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../resources/products/7.png" />
+                                    <Image url="@../resources/products/7.png" />
                                  </image>
                                  <HBox.margin>
                                     <Insets left="10.0" top="10.0" />
@@ -235,11 +241,11 @@
                               <Insets right="7.0" />
                            </padding>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="99.0" style="-fx-background-color: gray;">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="99.0">
                            <children>
                               <ImageView fitHeight="80.0" fitWidth="103.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../resources/products/8.png" />
+                                    <Image url="@../resources/products/8.png" />
                                  </image>
                                  <HBox.margin>
                                     <Insets left="10.0" top="10.0" />
@@ -303,7 +309,7 @@
                            <children>
                               <ImageView fitHeight="80.0" fitWidth="103.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../resources/products/4.jpg" />
+                                    <Image url="@../resources/products/9.png" />
                                  </image>
                                  <HBox.margin>
                                     <Insets left="10.0" top="10.0" />
@@ -367,14 +373,13 @@
                   </VBox>
                </content>
             </ScrollPane>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="51.0" style="-fx-background-color: orange;">
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="51.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="179.0" text="Back To Catalog">
+                  <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="127.0" text="Back To Catalog">
                      <HBox.margin>
-                        <Insets right="301.0" />
+                        <Insets right="349.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="210.0" text="Add Greeting Card" />
                   <VBox alignment="CENTER" prefHeight="99.0" prefWidth="173.0" spacing="5.0">
                      <children>
                         <Label text="Total Price">
@@ -389,7 +394,7 @@
                         </Label>
                      </children>
                   </VBox>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Checkout">
+                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="Buy">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>

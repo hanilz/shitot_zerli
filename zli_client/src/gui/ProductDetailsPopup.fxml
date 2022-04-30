@@ -55,7 +55,7 @@
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                      <children>
-                        <Label text="Lilachs">
+                        <Label text="Tulips">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -73,7 +73,7 @@
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <Label text="Lilachs">
+                        <Label text="Tulips">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -109,7 +109,7 @@
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
-                        <Label text="A beautiful bouquet of red roses." wrapText="true">
+                        <Label text="A beautiful bouquet of pink tulips." wrapText="true">
                            <font>
                               <Font size="20.0" />
                            </font>
