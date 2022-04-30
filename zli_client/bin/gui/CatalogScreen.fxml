@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="602.0" prefWidth="783.0">
          <children>
@@ -78,7 +78,7 @@
                               <Image url="@../resources/products/3.jpg" />
                            </image>
                         </ImageView>
-                        <Button fx:id="addProductBtn3" mnemonicParsing="false" text="Add To Cat" GridPane.columnIndex="2">
+                        <Button fx:id="addProductBtn3" mnemonicParsing="false" text="Add To Cart" GridPane.columnIndex="2">
                            <GridPane.margin>
                               <Insets left="120.0" top="120.0" />
                            </GridPane.margin>
@@ -91,7 +91,7 @@
                               <Image url="@../resources/products/1.png" />
                            </image>
                         </ImageView>
-                        <Button fx:id="addProductBtn1" mnemonicParsing="false" text="Add To Cat">
+                        <Button fx:id="addProductBtn1" mnemonicParsing="false" text="Add To Cart">
                            <GridPane.margin>
                               <Insets left="120.0" top="120.0" />
                            </GridPane.margin>
@@ -104,7 +104,7 @@
                               <Image url="@../resources/products/2.jpg" />
                            </image>
                         </ImageView>
-                        <Button fx:id="addProductBtn2" mnemonicParsing="false" text="Add To Cat" GridPane.columnIndex="1">
+                        <Button fx:id="addProductBtn2" mnemonicParsing="false" text="Add To Cart" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets left="120.0" top="120.0" />
                            </GridPane.margin>
@@ -157,12 +157,12 @@
                               <Image url="@../resources/products/9.png" />
                            </image>
                         </ImageView>
-                        <Button fx:id="addProductBtn4" mnemonicParsing="false" text="Add To Cat" GridPane.rowIndex="1">
+                        <Button fx:id="addProductBtn4" mnemonicParsing="false" text="Add To Cart" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="120.0" top="120.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button fx:id="addProductBtn5" mnemonicParsing="false" text="Add To Cat" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Button fx:id="addProductBtn5" mnemonicParsing="false" text="Add To Cart" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="120.0" top="120.0" />
                            </GridPane.margin>
@@ -182,7 +182,7 @@
                               <Insets left="120.0" top="120.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button fx:id="addProductBtn6" mnemonicParsing="false" text="Add To Cat" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <Button fx:id="addProductBtn6" mnemonicParsing="false" text="Add To Cart" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="120.0" top="120.0" />
                            </GridPane.margin>
@@ -235,8 +235,17 @@
                      </children>
                   </GridPane>
                </content>
+               <padding>
+                  <Insets bottom="15.0" />
+               </padding>
             </ScrollPane>
          </children>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+         <padding>
+            <Insets bottom="10.0" />
+         </padding>
       </VBox>
    </children>
 </HBox>
