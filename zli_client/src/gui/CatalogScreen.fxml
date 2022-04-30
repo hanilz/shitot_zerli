@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="602.0" prefWidth="783.0">
          <children>
@@ -56,7 +56,7 @@
                   </ImageView>
                </children>
             </GridPane>
-            <ScrollPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="491.0" prefWidth="777.0">
+            <ScrollPane minHeight="-Infinity" minWidth="-Infinity" pannable="true" prefHeight="484.0" prefWidth="744.0" style="-fx-border-color: transparent;">
                <content>
                   <GridPane fx:id="catalogGrid" alignment="CENTER" prefHeight="769.0" prefWidth="768.0">
                     <columnConstraints>
@@ -65,178 +65,225 @@
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="235.0" minHeight="10.0" prefHeight="235.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="472.0" minHeight="10.0" prefHeight="242.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="310.0" minHeight="10.0" prefHeight="292.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <ImageView fx:id="productImage3" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label fx:id="productLbl1" text="Tulips">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fx:id="productImage1" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/products/1.png" />
+                                 </image>
+                              </ImageView>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="26.0">
+                                 <children>
+                                    <Label fx:id="productLbl16" text="Price:">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="productLbl161" text="200 ILS">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <Button fx:id="addProductBtn1" mnemonicParsing="false" text="Add To Cart" />
+                           </children>
                            <GridPane.margin>
-                              <Insets left="90.0" />
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </GridPane.margin>
-                           <image>
-                              <Image url="@../resources/products/3.jpg" />
-                           </image>
-                        </ImageView>
-                        <Button fx:id="addProductBtn3" mnemonicParsing="false" text="Add To Cat" GridPane.columnIndex="2">
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+                           <children>
+                              <Label fx:id="productLbl11" text="Orchids - Pink">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fx:id="productImage11" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/products/2.jpg" />
+                                 </image>
+                              </ImageView>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="26.0">
+                                 <children>
+                                    <Label fx:id="productLbl161" text="Price:">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="productLbl1611" text="50 ILS">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <Button fx:id="addProductBtn11" mnemonicParsing="false" text="Add To Cart" />
+                           </children>
                            <GridPane.margin>
-                              <Insets left="120.0" top="120.0" />
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </GridPane.margin>
-                        </Button>
-                        <ImageView fx:id="productImage1" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
+                           <children>
+                              <Label fx:id="productLbl12" text="Roses">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fx:id="productImage12" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/products/7.png" />
+                                 </image>
+                              </ImageView>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="26.0">
+                                 <children>
+                                    <Label fx:id="productLbl161" text="Price:">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="productLbl1612" text="250 ILS">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <Button fx:id="addProductBtn12" mnemonicParsing="false" text="Add To Cart" />
+                           </children>
                            <GridPane.margin>
-                              <Insets left="80.0" />
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </GridPane.margin>
-                           <image>
-                              <Image url="@../resources/products/1.png" />
-                           </image>
-                        </ImageView>
-                        <Button fx:id="addProductBtn1" mnemonicParsing="false" text="Add To Cat">
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="240.0" prefWidth="254.0" GridPane.rowIndex="1">
+                           <children>
+                              <Label fx:id="productLbl13" text="Lily - Orange">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fx:id="productImage13" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/products/4.jpg" />
+                                 </image>
+                              </ImageView>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="26.0">
+                                 <children>
+                                    <Label fx:id="productLbl161" text="Price:">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="productLbl1613" text="150 ILS">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <Button fx:id="addProductBtn13" mnemonicParsing="false" text="Add To Cart" />
+                           </children>
                            <GridPane.margin>
-                              <Insets left="120.0" top="120.0" />
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </GridPane.margin>
-                        </Button>
-                        <ImageView fx:id="productImage2" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <Label fx:id="productLbl14" text="Orchids - White">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fx:id="productImage14" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/products/5.jpg" />
+                                 </image>
+                              </ImageView>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="26.0">
+                                 <children>
+                                    <Label fx:id="productLbl161" text="Price:">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="productLbl1614" text="40 ILS">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <Button fx:id="addProductBtn14" mnemonicParsing="false" text="Add To Cart" />
+                           </children>
                            <GridPane.margin>
-                              <Insets left="90.0" />
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </GridPane.margin>
-                           <image>
-                              <Image url="@../resources/products/2.jpg" />
-                           </image>
-                        </ImageView>
-                        <Button fx:id="addProductBtn2" mnemonicParsing="false" text="Add To Cat" GridPane.columnIndex="1">
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <children>
+                              <Label fx:id="productLbl15" text="Lily - White">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fx:id="productImage15" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/products/6.png" />
+                                 </image>
+                              </ImageView>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="26.0">
+                                 <children>
+                                    <Label fx:id="productLbl161" text="Price:">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="productLbl1615" text="100 ILS">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <Button fx:id="addProductBtn15" mnemonicParsing="false" text="Add To Cart" />
+                           </children>
                            <GridPane.margin>
-                              <Insets left="120.0" top="120.0" />
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </GridPane.margin>
-                        </Button>
-                        <ImageView fx:id="productImage4" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="80.0" />
-                           </GridPane.margin>
-                           <image>
-                              <Image url="@../resources/products/4.jpg" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="productImage5" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="95.0" />
-                           </GridPane.margin>
-                           <image>
-                              <Image url="@../resources/products/5.jpg" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="productImage6" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="80.0" />
-                           </GridPane.margin>
-                           <image>
-                              <Image url="@../resources/products/6.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="productImage7" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets left="80.0" />
-                           </GridPane.margin>
-                           <image>
-                              <Image url="@../resources/products/7.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="productImage8" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets left="80.0" />
-                           </GridPane.margin>
-                           <image>
-                              <Image url="@../resources/products/8.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="productImage9" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets left="80.0" />
-                           </GridPane.margin>
-                           <image>
-                              <Image url="@../resources/products/9.png" />
-                           </image>
-                        </ImageView>
-                        <Button fx:id="addProductBtn4" mnemonicParsing="false" text="Add To Cat" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="120.0" top="120.0" />
-                           </GridPane.margin>
-                        </Button>
-                        <Button fx:id="addProductBtn5" mnemonicParsing="false" text="Add To Cat" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="120.0" top="120.0" />
-                           </GridPane.margin>
-                        </Button>
-                        <Button fx:id="addProductBtn7" mnemonicParsing="false" text="Add To Cat" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets left="120.0" top="120.0" />
-                           </GridPane.margin>
-                        </Button>
-                        <Button fx:id="addProductBtn8" mnemonicParsing="false" text="Add To Cat" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets left="120.0" top="120.0" />
-                           </GridPane.margin>
-                        </Button>
-                        <Button fx:id="addProductBtn9" mnemonicParsing="false" text="Add To Cat" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets left="120.0" top="120.0" />
-                           </GridPane.margin>
-                        </Button>
-                        <Button fx:id="addProductBtn6" mnemonicParsing="false" text="Add To Cat" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="120.0" top="120.0" />
-                           </GridPane.margin>
-                        </Button>
-                        <Label fx:id="productLbl1" text="Product 1">
-                           <GridPane.margin>
-                              <Insets bottom="130.0" left="130.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label fx:id="productLbl2" text="Product 2" GridPane.columnIndex="1">
-                           <GridPane.margin>
-                              <Insets bottom="130.0" left="130.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label fx:id="productLbl7" text="Product 7" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets bottom="130.0" left="130.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label fx:id="productLbl6" text="Product 6" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets bottom="130.0" left="130.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label fx:id="productLbl5" text="Product 5" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets bottom="130.0" left="130.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label fx:id="productLbl4" text="Product 4" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets bottom="130.0" left="130.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label fx:id="productLbl3" text="Product 3" GridPane.columnIndex="2">
-                           <GridPane.margin>
-                              <Insets bottom="130.0" left="130.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label fx:id="productLbl9" text="Product 9" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets bottom="130.0" left="130.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label fx:id="productLbl8" text="Product 8" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets bottom="130.0" left="130.0" />
-                           </GridPane.margin>
-                        </Label>
+                        </VBox>
                      </children>
                   </GridPane>
                </content>
+               <padding>
+                  <Insets bottom="15.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </ScrollPane>
+            <HBox prefHeight="2.0" prefWidth="783.0">
+               <children>
+                  <Label text="* Clicking on an image opens the product details popup" textFill="#4170d0" />
+               </children>
+            </HBox>
          </children>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
       </VBox>
    </children>
+   <padding>
+      <Insets bottom="20.0" />
+   </padding>
 </HBox>
