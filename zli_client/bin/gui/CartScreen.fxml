@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CartScreenController">
    <children>
       <VBox layoutX="39.0" layoutY="23.0" prefHeight="563.0" prefWidth="918.0">
          <children>
@@ -41,7 +41,7 @@
             </HBox>
             <ScrollPane prefHeight="386.0" prefWidth="894.0">
                <content>
-                  <VBox prefHeight="514.0" prefWidth="903.0">
+                  <VBox fx:id="cartItemVbox" prefHeight="514.0" prefWidth="903.0">
                      <children>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="99.0">
                            <children>

@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CatalogScreenController">
    <children>
       <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="602.0" prefWidth="783.0">
          <children>
@@ -46,7 +46,7 @@
                         <Insets left="55.0" top="35.0" />
                      </GridPane.margin>
                   </Label>
-                  <ImageView fx:id="homeImage" fitHeight="80.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="homeImage" fitHeight="80.0" fitWidth="103.0" onMousePressed="#goToHomeScreen" pickOnBounds="true" preserveRatio="true">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
