@@ -31,6 +31,8 @@ public class LoginScreenController {
 		}
     }
     
+    
+    // TODO: handle login with OCSF
     private Boolean loginClient(String username,String password) {
 //    	if(user connected(username,password)) {
 //    		return false;
@@ -38,5 +40,4 @@ public class LoginScreenController {
 //    	
     	return true;
     }
-
 }
