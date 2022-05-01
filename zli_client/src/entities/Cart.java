@@ -30,4 +30,19 @@ public class Cart {
 		cart.remove(product);
 		return true;
 	}
+
+	/**
+	 * @return the cart
+	 */
+	public Map<Product, Integer> getCart() {
+		return cart;
+	}
+	
+	public Product findByID(int id) {
+		for(Product p : cart.keySet()) {
+			if(id == p.getProductID())
+				return p;
+		}
+		return null;
+	}
 }
