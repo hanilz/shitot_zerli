@@ -2,6 +2,7 @@ package server;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import entities.Order;
 import gui.ServerFormController;
@@ -12,6 +13,7 @@ import ocsf.server.ConnectionToClient;
 import util.ClientDetails;
 import util.DataBaseController;
 import util.InputChecker;
+import util.ServerMessageController;
 
 /**
  * ServerController extends the superclass AbstractServer for implementing and
@@ -25,11 +27,6 @@ public class ServerController extends AbstractServer implements Runnable {
 	final public static int DEFAULT_PORT = 5555;
 
 	/**
-	 * Saving the port of the server
-	 */
-	private int port;
-
-	/**
 	 * Saving the ip of the server
 	 */
 	private String ip;
@@ -39,11 +36,22 @@ public class ServerController extends AbstractServer implements Runnable {
 	 * present the clients
 	 */
 	public static final ObservableList<ClientDetails> clients = FXCollections.observableArrayList();
+	
+	//  singleton
+	private static ServerController sc = null;
 
-	public ServerController(int port, String ip) {
-		super(port);
-		this.port = port;
+	private ServerController() {
+		super(DEFAULT_PORT);
+	}
+
+	public void setIp(String ip) {
 		this.ip = ip;
+	}
+	
+	public static ServerController getServerController() {
+		if(sc == null)
+			sc = new ServerController();
+		return sc;
 	}
 
 	/**
@@ -65,61 +73,7 @@ public class ServerController extends AbstractServer implements Runnable {
 	 */
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
-		if (msg instanceof String) {
-			String message = (String) msg;
-			if (msg.equals("fetch orders")) { // if the string equals to fetch orders -> execute the select * query from
-												// table orders
-				ArrayList<Order> orders = DataBaseController.selectAllOrders();
-				try {
-					client.sendToClient(orders); // send the list to fetch all the orders to the server
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			else if (message.contains("update orders")) {
-				String[] messagesFromClient = message.split(" ");
-				String sendDate = messagesFromClient[3] + " " + messagesFromClient[4];
-				if(!InputChecker.checkDateFormat(sendDate)) {
-					System.out.println("The date format is invalid");
-					try {
-						client.sendToClient("update orders failed: datetime format is invalid");
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					return;
-				}
-				DataBaseController.updateOrder(messagesFromClient[2], sendDate, messagesFromClient[5]);
-				if(DataBaseController.isUpdated) {
-					message = messagesFromClient[0] + " " + messagesFromClient[1] + " true";
-					DataBaseController.isUpdated = false;
-				}
-				else {
-					message = messagesFromClient[0] + " " + messagesFromClient[1] + " false";
-				}
-				try {
-					client.sendToClient(message);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			else if(message.equals("client disconnected")) {
-				String clientIP = client.getInetAddress().toString();
-				System.out.println("client disconnected detected: ip is " + clientIP);
-				for (ClientDetails currentClient : clients) {
-					if (clientIP.equals(currentClient.getClientIP())) {
-						disconnectClient(currentClient);
-						break;
-					}
-				}
-				try {
-					client.sendToClient("client disconnected");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
+		ServerMessageController.getServerMessageController().handleMessages(msg, client);
 	}
 
 	/**
@@ -127,7 +81,9 @@ public class ServerController extends AbstractServer implements Runnable {
 	 */
 	public void disconnectServer() {
 		try {
-			sendToAllClients("server disconnected");  // make all clients go back to main client screen
+			HashMap<String, Object> message = new HashMap<>();
+			message.put("command", "server disconnected");
+			sendToAllClients(message); // make all clients go back to main client screen
 			close();
 			disconnectAllClients();
 			System.out.println("disconnected server");
@@ -207,7 +163,7 @@ public class ServerController extends AbstractServer implements Runnable {
 	 * 
 	 * @param client
 	 */
-	private void disconnectClient(ClientDetails client) {
+	public void disconnectClient(ClientDetails client) {
 		String clientAddress = client.getClientIP();
 		System.out.println("Hi! I disconnected =)");
 

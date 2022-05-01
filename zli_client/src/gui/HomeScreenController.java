@@ -43,7 +43,7 @@ public class HomeScreenController {
 	@FXML
 	void goToLoignScreen(MouseEvent event) {
 		try {
-			ClientMain.changeScene(getClass().getResource("LoginScreen.fxml"), "Loign");
+			ClientMain.changeScene(getClass().getResource("LoginScreen.fxml"), "Login");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

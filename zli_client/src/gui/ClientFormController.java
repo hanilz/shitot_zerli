@@ -1,6 +1,7 @@
 package gui;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import client.ClientController;
 import javafx.event.EventHandler;
@@ -47,7 +48,9 @@ public class ClientFormController {
 				public void handle(WindowEvent e) {
 					try {
 						if(client.isConnected()) {
-							Object response = ClientFormController.client.accept("client disconnected");
+							HashMap<String, Object> message = new HashMap<>();
+							message.put("command", "client disconnected");
+							Object response = ClientFormController.client.accept(message);
 							client.closeConnection();
 							System.out.println("disconnected! yayyyy");
 						}
@@ -66,17 +69,6 @@ public class ClientFormController {
 		}
 		changeSceneToCatalog();
 	}
-
-//	/**
-//	 * This function will help us to switch between the screens after the user connected to the server-ip
-//	 */
-//	private void changeSceneToViewOrders() {
-//		try {
-//			ClientMain.changeScene(getClass().getResource("ViewOrders.fxml"), "View Orders");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
 	
 	/**
 	 * This function will help us to switch between the screens after the user connected to the server-ip
