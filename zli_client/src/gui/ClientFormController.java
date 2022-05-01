@@ -64,17 +64,30 @@ public class ClientFormController {
 			errorLabel.setVisible(true);
 			return;
 		}
-		changeSceneToViewOrders();
+		changeSceneToCatalog();
 	}
 
+//	/**
+//	 * This function will help us to switch between the screens after the user connected to the server-ip
+//	 */
+//	private void changeSceneToViewOrders() {
+//		try {
+//			ClientMain.changeScene(getClass().getResource("ViewOrders.fxml"), "View Orders");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+	
 	/**
 	 * This function will help us to switch between the screens after the user connected to the server-ip
 	 */
-	private void changeSceneToViewOrders() {
+	private void changeSceneToCatalog() {
 		try {
-			ClientMain.changeScene(getClass().getResource("ViewOrders.fxml"), "View Orders");
+			ClientMain.changeScene(getClass().getResource("CatalogScreen.fxml"), "Catalog");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
+	
 }
