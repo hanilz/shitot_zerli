@@ -72,7 +72,7 @@ public class ClientMessageController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
+		}
 		else if(command.contains("fetch products")) {
 			ArrayList<Product> productsList = (ArrayList<Product>) message.get("response");
 			response = FXCollections.observableArrayList(productsList);
