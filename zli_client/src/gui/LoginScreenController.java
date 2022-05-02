@@ -25,7 +25,7 @@ public class LoginScreenController {
     	//** add server connection
     	//we assume the credentials were entered correctly
 		try {
-			ClientMain.changeScene(getClass().getResource("CatalogScreen.fxml"), "Catalog");
+			ClientScreen.changeScene(getClass().getResource("CatalogScreen.fxml"), "Catalog");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="890.0" spacing="99.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CartScreenController">
+<HBox alignment="CENTER" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="890.0" spacing="99.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CartController">
    <children>
       <ImageView fitHeight="80.0" fitWidth="103.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
          <HBox.margin>

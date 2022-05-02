@@ -41,12 +41,23 @@ public class HomeScreenController {
 	private Label welcomeLbl;
 
 	@FXML
-	void goToLoignScreen(MouseEvent event) {
+	void changeToLoginScreen(MouseEvent event) {
 		try {
-			ClientMain.changeScene(getClass().getResource("LoginScreen.fxml"), "Login");
+			ClientScreen.changeScene(getClass().getResource("LoginScreen.fxml"), "Login");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
+    @FXML
+    void changeToCatalogScreen(MouseEvent event) {
+    	try {
+			ClientScreen.changeScene(getClass().getResource("CatalogScreen.fxml"), "Catalog");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+	
+	
 
 }

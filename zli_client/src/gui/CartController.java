@@ -21,7 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public class CartScreenController {
+public class CartController {
 	Cart cart;
 	@FXML
 	private Button buyButton;

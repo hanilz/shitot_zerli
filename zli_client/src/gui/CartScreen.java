@@ -8,7 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class CartMainTest extends Application {
+public class CartScreen extends Application {
 	public static Stage clientStage;
 	
 	public static void main(String args[]) throws Exception {
