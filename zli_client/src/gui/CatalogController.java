@@ -1,6 +1,14 @@
 package gui;
 
+import java.net.URL;
+import java.util.HashMap;
+import java.util.ResourceBundle;
+
+import entities.Product;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -8,7 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
-public class CatalogController {
+public class CatalogController implements Initializable {
 
     @FXML
     private Button addProductBtn1;
@@ -99,6 +107,8 @@ public class CatalogController {
 
     @FXML
     private Label productLbl1615;
+    
+    private ObservableList<Product> products = FXCollections.observableArrayList();
 
     @FXML
     void goToHomeScreen(MouseEvent event) {
@@ -108,5 +118,15 @@ public class CatalogController {
 			e.printStackTrace();
 		}
     }
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		//first - we will fetch all the orders from the db
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", "fetch products");
+		Object response = ClientFormController.client.accept(message);
+	}
+    
+    
 
 }

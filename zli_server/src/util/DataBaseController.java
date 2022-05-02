@@ -30,7 +30,7 @@ public class DataBaseController {
 	 */
 	public static boolean isConnected = false;
 	
-	public static boolean isUpdated = false;
+
 
 	// private static PreparedStatement ps = null;
 
@@ -114,52 +114,10 @@ public class DataBaseController {
 		return true;
 	}
 
-	public static void updateOrder(String orderNumber, String date, String color) {
-		try {
-			int sendOrderNumberDB = Integer.parseInt(orderNumber);
-			PreparedStatement stmt = conn
-					.prepareStatement("UPDATE orders SET color = ?, date = ? WHERE orderNumber = ?");
-			stmt.setString(1, color);
-			stmt.setString(2, date);
-			stmt.setInt(3, sendOrderNumberDB);
 
-			isUpdated = true;
-			stmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			isUpdated = false;
-			return;
-		}
-	}
 
-	/**
-	 * selectAllOrder will execute select * from the order table for presenting the
-	 * data to the client screen
-	 * 
-	 * @return
-	 */
-	public static ArrayList<Order> selectAllOrders() {
-		ArrayList<Order> orders = new ArrayList<>();
-		orders.add(new Order(-1, 0.0, "", "", "", "", "", ""));
-		try {
-			Statement selectStmt = conn.createStatement();
-			ResultSet rs = selectStmt.executeQuery("SELECT * FROM orders;");
-			while (rs.next()) {
-				int orderNumber = rs.getInt(1);
-				double price = rs.getDouble(2);
-				String greetingCard = rs.getString(3);
-				String color = rs.getString(4);
-				String dOrder = rs.getString(5);
-				String shop = rs.getString(6);
-				String date = rs.getString(7);
-				String orderDate = rs.getString(8);
-				Order resultOrder = new Order(orderNumber, price, greetingCard, color, dOrder, shop, date, orderDate);
-				orders.add(resultOrder);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return orders;
+	public static Connection getConn() {
+		return conn;
 	}
 
 }

@@ -104,7 +104,7 @@ public class CartController {
 				cart.addToCart(cart.findByID(pid), Integer.parseInt(qbox.getText()));
 				String oldPrice = priceLabel.getText();
 				String[] price = oldPrice.split(" ");
-				int oldPriceInt = Integer.parseInt(price[0]);
+				double oldPriceInt = Integer.parseInt(price[0]);
 				oldPriceInt = oldPriceInt - oldQty * old.getProductPrice()
 						+ cart.getCart().get(product) * product.getProductPrice();
 				priceLabel.setText(oldPriceInt + " $");
