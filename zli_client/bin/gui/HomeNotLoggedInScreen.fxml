@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-image: url('file:D:/EclipseProjects/ZliPrototype/src/resources/home/homepage.png');" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.HomeScreenController">
+<HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-image: url('file:D:/EclipseProjects/ZliPrototype/src/resources/home/homepage.png');" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.HomeScreenController">
    <children>
       <GridPane fx:id="sideHomeGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="578.0" prefWidth="244.0">
         <columnConstraints>
@@ -64,12 +64,12 @@
                   <Image url="@../resources/home/editprofile.png" />
                </image>
             </ImageView>
-            <Button fx:id="catalogButton" mnemonicParsing="false" text="Catalog">
+            <Button fx:id="catalogButton" mnemonicParsing="false" onMousePressed="#changeToCatalogScreen" text="Catalog">
                <GridPane.margin>
                   <Insets bottom="170.0" left="45.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="loginBtn" mnemonicParsing="false" onMousePressed="#goToLoignScreen" text="Login" GridPane.columnIndex="1">
+            <Button fx:id="loginBtn" mnemonicParsing="false" onMousePressed="#changeToLoginScreen" text="Login" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets bottom="170.0" left="45.0" />
                </GridPane.margin>

@@ -8,7 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
-public class CatalogScreenController {
+public class CatalogController {
 
     @FXML
     private Button addProductBtn1;
@@ -103,7 +103,7 @@ public class CatalogScreenController {
     @FXML
     void goToHomeScreen(MouseEvent event) {
 		try {
-			ClientMain.changeScene(getClass().getResource("HomeNotLoggedInScreen.fxml"), "Home Screen");
+			ClientScreen.changeScene(getClass().getResource("HomeNotLoggedInScreen.fxml"), "Home Screen");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

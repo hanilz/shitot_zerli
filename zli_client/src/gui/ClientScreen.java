@@ -10,7 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class ClientMain extends Application {
+public class ClientScreen extends Application {
 	public static Stage clientStage;
 	
 	public static void main(String args[]) throws Exception {

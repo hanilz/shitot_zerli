@@ -1,10 +1,8 @@
 package server;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import entities.Order;
 import gui.ServerFormController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +10,6 @@ import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 import util.ClientDetails;
 import util.DataBaseController;
-import util.InputChecker;
 import util.ServerMessageController;
 
 /**

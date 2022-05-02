@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import client.ClientController;
 import entities.Order;
-import gui.ClientMain;
+import gui.ClientScreen;
 import javafx.collections.FXCollections;
 
 /**
@@ -67,7 +67,7 @@ public class ClientMessageController {
 	 */
 	private void changeSceneToMainClient() {
 		try {
-			ClientMain.changeScene(ClientMain.class.getResource("ClientScreen.fxml"), "Zli Client");
+			ClientScreen.changeScene(ClientScreen.class.getResource("ClientScreen.fxml"), "Zli Client");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

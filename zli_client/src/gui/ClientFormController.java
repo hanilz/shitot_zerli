@@ -43,7 +43,7 @@ public class ClientFormController {
 		try {
 			client = new ClientController(ip);
 			System.out.println("All good bruh");
-			ClientMain.clientStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			ClientScreen.clientStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				@Override
 				public void handle(WindowEvent e) {
 					try {
@@ -75,7 +75,7 @@ public class ClientFormController {
 	 */
 	private void changeSceneToCatalog() {
 		try {
-			ClientMain.changeScene(getClass().getResource("CatalogScreen.fxml"), "Catalog");
+			ClientScreen.changeScene(getClass().getResource("CatalogScreen.fxml"), "Catalog");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
