@@ -64,7 +64,7 @@ public class CartController {
 	}
 
 	public void intitializeCart() {
-		int totalPrice = 0;
+		double totalPrice = 0;
 		Set<Product> items = cart.getCart().keySet();
 		for (Product product : items) {
 			HBox cartRow = new HBox();

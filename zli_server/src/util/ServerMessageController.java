@@ -68,5 +68,18 @@ public class ServerMessageController {
 		else if(command.equals("fetch products")) {
 			ArrayList<Product> products = AnaylzeCommand.selectAllProducts();
 		}
+		
+		//handle login massage
+		else if(command.equals("login user")) {
+			boolean status = AnaylzeCommand.loginUser((String)message.get("username"),(String)message.get("password"));
+			if(status) {
+				try {
+					message.put("response", status);
+					client.sendToClient(message);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }

@@ -1,5 +1,6 @@
 package util;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,12 +10,14 @@ import java.util.ArrayList;
 import entities.Order;
 import entities.Product;
 
-/**AnaylzeCommand - will anaylze the command that given from the server controller and will execute the sql query.
+/**
+ * AnaylzeCommand - will anaylze the command that given from the server
+ * controller and will execute the sql query.
  */
 public class AnaylzeCommand {
-	
+
 	public static boolean isUpdated = false;
-	
+
 	public static ArrayList<Product> selectAllProducts() {
 		ArrayList<Product> products = new ArrayList<>();
 		try {
@@ -29,7 +32,8 @@ public class AnaylzeCommand {
 				String productType = rs.getString(6);
 				String productDesc = rs.getString(7);
 				String imagePath = rs.getString(8);
-				Product productResult = new Product(productId, productName, flowerType, productColor, productPrice, productType, productDesc, imagePath);
+				Product productResult = new Product(productId, productName, flowerType, productColor, productPrice,
+						productType, productDesc, imagePath);
 				products.add(productResult);
 			}
 		} catch (SQLException e) {
@@ -37,7 +41,7 @@ public class AnaylzeCommand {
 		}
 		return products;
 	}
-	
+
 	public static void updateOrder(String orderNumber, String date, String color) {
 		try {
 			int sendOrderNumberDB = Integer.parseInt(orderNumber);
@@ -55,6 +59,7 @@ public class AnaylzeCommand {
 			return;
 		}
 	}
+
 	/**
 	 * selectAllOrder will execute select * from the order table for presenting the
 	 * data to the client screen
@@ -84,4 +89,39 @@ public class AnaylzeCommand {
 		}
 		return orders;
 	}
+
+	public static boolean loginUser(String username, String password) {
+		Connection selectStmt;
+		try {
+			selectStmt = DataBaseController.getConn();
+			String query = "update users set isLogin = ? where username = ? and password = ?";
+			PreparedStatement preparedStmt = selectStmt.prepareStatement(query);
+			preparedStmt.setInt   (1, 1);
+			preparedStmt.setString(2, username);
+			preparedStmt.setString(3, password);
+			if(preparedStmt.executeUpdate()==0)
+				return false;
+		} catch (SQLException e) {
+			System.out.println("failed to fetch user");
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
