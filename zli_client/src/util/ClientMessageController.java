@@ -60,10 +60,24 @@ public class ClientMessageController {
 		} else if (command.contains("client disconnected")) {
 			ClientController.setResponse("client disconnected");
 		}
+
+		
+		if (command.contains("login user")) {
+			boolean status = (boolean)message.get("response");
+			try {
+				if(status)
+					ClientScreen.changeScene(getClass().getResource("CatalogScreen.fxml"), "Catalog");
+				else
+					System.out.println("failed to login");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		else if(command.contains("fetch products")) {
 			ArrayList<Product> productsList = (ArrayList<Product>) message.get("response");
 			response = FXCollections.observableArrayList(productsList);
 			ClientController.setResponse(response);
+
 		}
 	}
 

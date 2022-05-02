@@ -1,5 +1,7 @@
 package gui;
 
+import java.util.HashMap;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -24,11 +26,11 @@ public class LoginScreenController {
     	//but we need to still add the functionality on the server side
     	//** add server connection
     	//we assume the credentials were entered correctly
-		try {
-			ClientScreen.changeScene(getClass().getResource("CatalogScreen.fxml"), "Catalog");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		HashMap<String, Object> message = new HashMap<String, Object>();
+		message.put("command", "login user");
+		message.put("username", username);
+		message.put("password", password);
+		ClientFormController.client.accept(message);
     }
     
     
