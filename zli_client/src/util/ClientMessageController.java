@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import client.ClientController;
 import entities.Order;
+import entities.Product;
 import gui.ClientScreen;
 import javafx.collections.FXCollections;
 
@@ -59,6 +60,7 @@ public class ClientMessageController {
 		} else if (command.contains("client disconnected")) {
 			ClientController.setResponse("client disconnected");
 		}
+
 		
 		if (command.contains("login user")) {
 			boolean status = (boolean)message.get("response");
@@ -70,6 +72,12 @@ public class ClientMessageController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+
+		else if(command.contains("fetch products")) {
+			ArrayList<Product> productsList = (ArrayList<Product>) message.get("response");
+			response = FXCollections.observableArrayList(productsList);
+			ClientController.setResponse(response);
+
 		}
 	}
 

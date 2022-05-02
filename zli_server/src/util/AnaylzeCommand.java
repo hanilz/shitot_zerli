@@ -28,7 +28,7 @@ public class AnaylzeCommand {
 				String productName = rs.getString(2);
 				String flowerType = rs.getString(3);
 				String productColor = rs.getString(4);
-				double productPrice = rs.getDouble(5);
+				double productPrice = rs.getInt(5);
 				String productType = rs.getString(6);
 				String productDesc = rs.getString(7);
 				String imagePath = rs.getString(8);

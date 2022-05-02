@@ -67,6 +67,12 @@ public class ServerMessageController {
 		}
 		else if(command.equals("fetch products")) {
 			ArrayList<Product> products = AnaylzeCommand.selectAllProducts();
+			try {
+				message.put("response", products);
+				client.sendToClient(message); // send the list to fetch all the orders to the server
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		//handle login massage
