@@ -5,12 +5,12 @@ public class Product {
 	private String productName;
 	private String flowerType;
 	private String productColor;
-	private int productPrice;
+	private double productPrice;
 	private String productType;
 	private String productDescription;
 	private String imagePath;
 
-	public Product(int productID, String productName, String flowerType, String productColor, int productPrice,
+	public Product(int productID, String productName, String flowerType, String productColor, double productPrice,
 			String productType, String productDescription, String imagePath) {
 		this.productID = productID;
 		this.productName = productName;
@@ -81,7 +81,7 @@ public class Product {
 	/**
 	 * @return the productPrice
 	 */
-	public int getProductPrice() {
+	public double getProductPrice() {
 		return productPrice;
 	}
 

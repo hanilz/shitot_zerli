@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import entities.Order;
+import entities.Product;
 import ocsf.server.ConnectionToClient;
 import server.ServerController;
 
@@ -40,7 +41,7 @@ public class ServerMessageController {
 		String command = (String) message.get("command");
 		if (command.equals("fetch orders")) { // if the string equals to fetch orders -> execute the select * query from
 										  // table orders
-			ArrayList<Order> orders = DataBaseController.selectAllOrders();
+			ArrayList<Order> orders = AnaylzeCommand.selectAllOrders();
 			try {
 				message.put("response", orders);
 				client.sendToClient(message); // send the list to fetch all the orders to the server
@@ -63,6 +64,9 @@ public class ServerMessageController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		else if(command.equals("fetch products")) {
+			ArrayList<Product> products = AnaylzeCommand.selectAllProducts();
 		}
 	}
 }
