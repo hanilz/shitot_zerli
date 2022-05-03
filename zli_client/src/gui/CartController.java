@@ -1,6 +1,8 @@
 package gui;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import entities.Cart;
@@ -9,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -21,127 +24,64 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public class CartController {
-	Cart cart;
+public class CartController implements Initializable {
+	Cart cart = Cart.getInstance();
+	
+	private double totalPrice = 0;
+	
+	@FXML
+    private Button backToCatalogButton;
+	
 	@FXML
 	private Button buyButton;
 
-	@FXML
-	private VBox cartItemVbox;
+    @FXML
+    private VBox cartItemVBox;
 
 	@FXML
 	private Label priceLabel;
 
-	@FXML
-	void buyProducts(MouseEvent event) {
-		Product p1 = new Product(0, "Rose Bouquet - White, Red, Pink", "floerType", "productClor", 15, "ProductType",
-				"descreption", "/resources/products/1.png");
-		Product p2 = new Product(1, "Carnation Bouquet - Mixed", "floerType", "productClor", 12, "ProductType",
-				"descreption", "/resources/products/3.jpg");
-		cart = new Cart();
-		cart.addToCart(p1, 1);
-		cart.addToCart(p2, 3);
+	public void initCart() {
+		Set<Product> products = cart.getCart().keySet();
+		System.out.println("Adding all product to cart screen...");
 
-		// initcart();
-		intitializeCart();
+		for (Product product : products) {
+			Integer quantity = cart.getCart().get(product);
+			System.out.println("product to add is "+ product.getProductName() + " with the quantity " + quantity);
+			
+			CartHBox productHBox = new CartHBox(product, quantity);
+			productHBox.initHBox();
+			cartItemVBox.getChildren().add(productHBox);
+			totalPrice += productHBox.getTotalSumPrice();
+		}
+		
+		priceLabel.setText(totalPrice + " ₪");
 	}
 
-	public void initcart() {
+    @FXML
+    void changeToCatalogScreen(MouseEvent event) {
 		try {
-			Set<Product> items = cart.getCart().keySet();
-
-			for (Product product : items) {
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("CartRow.fxml"));
-				Parent item = loader.load();
-//	    		ImageView productImg = (ImageView)item.getChildren().get(0);//img
-//	    		productImg.setImage(new Image(product.getImagePath()));
-//	    		item.getChildren().set(0, productImg);
-
-			}
-		} catch (IOException e) {
+			ClientScreen.changeScene(getClass().getResource("CatalogScreen2.fxml"), "Catalog Screen");
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+    }
 
-	public void intitializeCart() {
-		double totalPrice = 0;
-		Set<Product> items = cart.getCart().keySet();
-		for (Product product : items) {
-			HBox cartRow = new HBox();
-			cartRow.setAlignment(Pos.CENTER);
-			cartRow.setSpacing(20);
-			cartRow.setPadding(new Insets(0, 7, 7, 0));
-
-			ImageView productImg = new ImageView(product.getImagePath());
-			productImg.setFitHeight(80);
-			productImg.setFitWidth(100);
-			cartRow.getChildren().add(productImg);
-
-			cartRow.getChildren().add(new Label("CN:\n" + product.getProductID()));
-
-			Label productName = new Label(product.getProductName());
-			productName.setFont(new Font(30));
-
-			productName.setMinWidth(520);
-			productName.setPrefWidth(520);
-
-			cartRow.getChildren().add(productName);
-			VBox quantity = new VBox();
-			quantity.setAlignment(Pos.CENTER);
-			quantity.setSpacing(10);
-			quantity.getChildren().add(new Label("Quantity"));
-			TextField qbox = new TextField();
-			qbox.setMinWidth(50);
-			qbox.setPrefWidth(50);
-			qbox.setText(cart.getCart().get(product).toString());
-			qbox.setOnKeyPressed(e -> {
-				System.out.println("Clicked");
-				String id = ((Label) qbox.getParent().getChildrenUnmodifiable().get(1)).getText();
-				String[] lines = id.split("\\n");
-				int pid = Integer.parseInt(lines[1]);
-				Product old = cart.findByID(pid);
-				int oldQty = cart.getCart().get(old);
-				cart.addToCart(cart.findByID(pid), Integer.parseInt(qbox.getText()));
-				String oldPrice = priceLabel.getText();
-				String[] price = oldPrice.split(" ");
-				double oldPriceInt = Integer.parseInt(price[0]);
-				oldPriceInt = oldPriceInt - oldQty * old.getProductPrice()
-						+ cart.getCart().get(product) * product.getProductPrice();
-				priceLabel.setText(oldPriceInt + " $");
-			});
-			quantity.getChildren().add(qbox);
-			cartRow.getChildren().add(quantity);
-
-			VBox price = new VBox();
-			price.setAlignment(Pos.CENTER);
-			Label pricelbl = new Label("Price");
-			pricelbl.setFont(new Font(20));
-			price.getChildren().add(pricelbl);
-			Label priceAmount = new Label(product.getProductPrice() + "$");
-			priceAmount.setFont(new Font(20));
-			price.getChildren().add(priceAmount);
-			cartRow.getChildren().add(price);
-
-			Button removeBtn = new Button("X");
-			removeBtn.setStyle("-fx-background-color : Red ; -fx-font-size:16 ; -fx-font-weight: bold");
-			removeBtn.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent e) {
-					String id = ((Label) removeBtn.getParent().getChildrenUnmodifiable().get(1)).getText();
-					String[] lines = id.split("\\n");
-					cart.removeFromCart(cart.findByID(Integer.parseInt(lines[1])));
-					cartItemVbox.getChildren().clear();
-					intitializeCart();
-				}
-			});
-			cartRow.getChildren().add(removeBtn);
-
-			cartItemVbox.getChildren().add(cartRow);
-			totalPrice += product.getProductPrice() * cart.getCart().get(product);
+    @FXML
+    void changeToGreetingCardScreen(MouseEvent event) {
+		try {
+			ClientScreen.changeScene(getClass().getResource("GreetingCardScreen.fxml"), "Greeting Card Screen");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		priceLabel.setText(totalPrice + " $");
-	}
+    }
 
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		System.out.println("Entered cart hellllooo");
+		initCart();
+	}
+	
 //	private class cartrow {
 //		private Product product;
 //		private HBox row;

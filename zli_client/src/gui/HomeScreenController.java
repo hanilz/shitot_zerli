@@ -52,7 +52,7 @@ public class HomeScreenController {
     @FXML
     void changeToCatalogScreen(MouseEvent event) {
     	try {
-			ClientScreen.changeScene(getClass().getResource("CatalogScreen.fxml"), "Catalog");
+			ClientScreen.changeScene(getClass().getResource("CatalogScreen2.fxml"), "Catalog");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
