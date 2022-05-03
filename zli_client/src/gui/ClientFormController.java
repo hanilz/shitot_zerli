@@ -75,7 +75,7 @@ public class ClientFormController {
 	 */
 	private void changeSceneToCatalog() {
 		try {
-			ClientScreen.changeScene(getClass().getResource("CatalogScreen.fxml"), "Catalog");
+			ClientScreen.changeScene(getClass().getResource("CatalogScreen2.fxml"), "Catalog"); //CatalogScreen2 is a temp file because we want a dynamic catalog
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
