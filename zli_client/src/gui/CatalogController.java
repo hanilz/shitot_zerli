@@ -113,8 +113,9 @@ public class CatalogController implements Initializable {
     @FXML
     private GridPane catalogGrid;
 
-	private ImageView[] productsImages;
+	private CatalogVBox[] productVBoxList;
 
+	
 	@FXML
 	void goToHomeScreen(MouseEvent event) {
 		try {
@@ -124,6 +125,16 @@ public class CatalogController implements Initializable {
 		}
 	}
 
+    @FXML
+    void changeToCartScreen(MouseEvent event) {
+		try {
+			ClientScreen.changeScene(getClass().getResource("CartScreen.fxml"), "Cart Screen");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+    }
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// first - we will fetch all the orders from the db
@@ -131,38 +142,31 @@ public class CatalogController implements Initializable {
 		message.put("command", "fetch products");
 		Object response = ClientFormController.client.accept(message);
 		products = (ObservableList<Product>) response;
-		initImageView();
+		initCatalogVBoxes();
 		initGrid();
-		scrollCatalogPane.setContent(catalogGrid);
+		//scrollCatalogPane.setContent(catalogGrid);
 	}
 
 	private void initGrid() {
-		catalogGrid = new GridPane();
-		int numberOfRows = products.size() / 3;
-		int leftProducts = products.size() % 3;
-		if (leftProducts > 0)
-			numberOfRows++;
-		for (int i = 0; i < numberOfRows; i++) {
-			for (int j = 0; j < 3; j++) {
-				catalogGrid.add(new VBox(), i, j);
-				if(productsImages.length < 20)
-					catalogGrid.add(productsImages[i * 3 + j], i, j);
-			}
+		//catalogGrid = new GridPane();
+		int numberOfRows = (int) Math.ceil(products.size()/3.0);
+        for (int i = 0; i < numberOfRows; i++) {
+            RowConstraints rowConst = new RowConstraints();
+            rowConst.setPercentHeight(100.0 / numberOfRows);
+            catalogGrid.getRowConstraints().add(rowConst);         
+        }		
+        //catalogGrid.setGridLinesVisible(true);
+		for (int i = 0; i < productVBoxList.length; i++) {
+				catalogGrid.add(productVBoxList[i], i%3, i/3);
 		}
-		catalogGrid.getChildren().addAll(scrollCatalogPane);
 	}
 
-	private void initImageView() {
-		productsImages = new ImageView[products.size()];
-		Image setImage = null;
+	private void initCatalogVBoxes() {
+		productVBoxList = new CatalogVBox[products.size()];
 		for (int i = 0; i < products.size(); i++) {
-			System.out.println(products.get(i).getImagePath());
-			try {
-				setImage = new Image(new FileInputStream(products.get(i).getImagePath()));
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			productsImages[i] = new ImageView(setImage);
+			CatalogVBox catalogVBox = new CatalogVBox(products.get(i));
+			catalogVBox.initVBox();
+			productVBoxList[i] = catalogVBox;
 		}
 	}
 

@@ -4,7 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Cart {
-	private Map<Product,Integer> cart= new HashMap<>();//saves the product and the amount of the product in the cart
+	private Map<Product,Integer> cart = new HashMap<>();  // saves the product and the amount of the product in the cart
+	
+	private static Cart cartInstance = null;
+	
+	private Cart() {}
+	
+	public static Cart getInstance() {
+		return ((cartInstance == null) ? cartInstance = new Cart(): cartInstance);
+	}
 	
 	/**
 	 * This method is used to add/update and item in the cart
@@ -12,10 +20,15 @@ public class Cart {
 	 * @param amount we want to set for the product
 	 * @return if added/updated successfully
 	 */
-	public Boolean addToCart(Product product,int amount) {
-		if(product == null || amount <=0)
+	public Boolean addToCart(Product product, int amount, boolean add) {
+		if(product == null || amount <0)
 			return false;
-		cart.put(product, amount);
+		if(amount == 0) 
+			removeFromCart(product);
+		else if(add)
+			cart.put(product, (cart.get(product) == null ? 0 : cart.get(product)) + amount);
+		else
+			cart.put(product,amount);
 		return true;
 	}
 	

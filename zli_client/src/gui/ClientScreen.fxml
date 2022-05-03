@@ -35,7 +35,7 @@
                         <Font size="22.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="ipTextField" alignment="CENTER" prefHeight="25.0" prefWidth="302.0">
+                  <TextField fx:id="ipTextField" alignment="CENTER" prefHeight="25.0" prefWidth="302.0" text="localhost">
                      <VBox.margin>
                         <Insets left="70.0" right="70.0" />
                      </VBox.margin>
