@@ -2,18 +2,25 @@ package gui;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import entities.Cart;
 import entities.Product;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class CatalogVBox extends VBox {
 	private Product product;  // will be used to get the data from
@@ -37,6 +44,19 @@ public class CatalogVBox extends VBox {
 		
 		try {
 			image = new ImageView(new Image(new FileInputStream(product.getImagePath())));
+			image.setOnMouseReleased(new EventHandler<MouseEvent>() {
+			    @Override
+			    public void handle(MouseEvent event) {
+			    	ProductVBox popup = new ProductVBox(product);
+					popup.initProductVBox();
+					Scene scene = new Scene(popup);
+					Stage stage = new Stage();
+					stage.setTitle("Product Details - "+ product.getProductName());
+					stage.setScene(scene);
+					stage.showAndWait();
+					// productImage1.setDisable(false);
+			    }
+			});
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
