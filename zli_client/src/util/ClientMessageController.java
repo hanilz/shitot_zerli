@@ -77,7 +77,6 @@ public class ClientMessageController {
 			ArrayList<Product> productsList = (ArrayList<Product>) message.get("response");
 			response = FXCollections.observableArrayList(productsList);
 			ClientController.setResponse(response);
-
 		}
 	}
 

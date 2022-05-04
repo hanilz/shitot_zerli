@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Cart {
-	private Map<Product,Integer> cart = new HashMap<>();  // saves the product and the amount of the product in the cart
+	private Map<Product,Integer> cart = new HashMap<>();  // saves the product and the quantity of the product in the cart
 	
 	private static Cart cartInstance = null;
 	
@@ -17,18 +17,23 @@ public class Cart {
 	/**
 	 * This method is used to add/update and item in the cart
 	 * @param product we want to add/update
-	 * @param amount we want to set for the product
+	 * @param quantity we want to set for the product
 	 * @return if added/updated successfully
 	 */
-	public Boolean addToCart(Product product, int amount, boolean add) {
-		if(product == null || amount <0)
+	public Boolean addToCart(Product product, int quantity, boolean add) {
+		if(product == null || quantity <0)
 			return false;
-		if(amount == 0) 
-			removeFromCart(product);
-		else if(add)
-			cart.put(product, (cart.get(product) == null ? 0 : cart.get(product)) + amount);
+		Product foundProduct = findByID(product.getProductID());
+		if(quantity == 0)
+			removeFromCart(foundProduct);
+		else if(add) {
+			if(foundProduct == null)
+				cart.put(product, quantity);
+			else
+				cart.put(foundProduct, cart.get(foundProduct) + quantity);
+		}
 		else
-			cart.put(product,amount);
+			cart.put(foundProduct, quantity);
 		return true;
 	}
 	
@@ -51,7 +56,7 @@ public class Cart {
 		return cart;
 	}
 	
-	public Product findByID(int id) {
+	private Product findByID(int id) {
 		for(Product p : cart.keySet()) {
 			if(id == p.getProductID())
 				return p;
