@@ -75,8 +75,7 @@ public class ServerMessageController {
 
 		// handle login massage
 		else if (command.equals("login user")) {
-			boolean status = AnaylzeCommand.loginUser((String) message.get("username"),
-					(String) message.get("password"));
+			Status status = AnaylzeCommand.loginUser((String) message.get("username"), (String) message.get("password"));
 			try {
 				message.put("response", status);
 				client.sendToClient(message);

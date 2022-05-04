@@ -63,7 +63,7 @@ public class ClientMessageController {
 
 		
 		if (command.contains("login user")) {
-			boolean status = (boolean)message.get("response");
+			Status status = (Status)message.get("response");
 			try {
 				ClientController.setResponse(status);
 			} catch (Exception e) {

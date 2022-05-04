@@ -90,46 +90,32 @@ public class AnaylzeCommand {
 		return orders;
 	}
 
-	public static boolean loginUser(String username, String password) {
+	public static Status loginUser(String username, String password) {
 		Connection conn;
+		conn = DataBaseController.getConn();
+		ResultSet rs;
+		String query = "SELECT * FROM users WHERE username=? AND password=?";
 		try {
-			conn = DataBaseController.getConn();
-
-			String query = "SELECT * FROM users WHERE username=? AND password=?";
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setString(1, username);
 			preparedStmt.setString(2, password);
-			preparedStmt = conn.prepareStatement(query);
-			if(preparedStmt.executeQuery().getInt(5)==1) 
-				return false;
-			
+			rs=preparedStmt.executeQuery();
+			if(!rs.next())//if user not exist or already logged in
+				return Status.NOT_REGISTERED;
+			if(rs.getBoolean(6))
+				return Status.ALREADY_LOGGED_IN;
 			query = "UPDATE users SET isLogin = ? WHERE username = ? AND password = ?";
 			preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setInt   (1, 1);
+			preparedStmt.setInt(1, 1);
 			preparedStmt.setString(2, username);
 			preparedStmt.setString(3, password);
-			return preparedStmt.executeUpdate()==1;
+			if (preparedStmt.executeUpdate() == 1)
+					return Status.NEW_LOG_IN;
 		} catch (SQLException e) {
 			System.out.println("failed to fetch user");
 			e.printStackTrace();
 		}
-		return false;
+		return Status.NOT_REGISTERED;//default for any throw would be unregistered
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

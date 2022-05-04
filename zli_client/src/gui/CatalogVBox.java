@@ -65,7 +65,7 @@ public class CatalogVBox extends VBox {
 		image.setFitWidth(200);
 		image.setPreserveRatio(true);
 		
-		amountLabel.setText("" + ((int)product.getProductPrice()) + " ILS");
+		amountLabel.setText("" + ((int)product.getProductPrice()) + " ¤");
 		
 		priceHBox.getChildren().add(priceLabel);
 		priceHBox.getChildren().add(amountLabel);
