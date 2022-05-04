@@ -66,13 +66,14 @@ public class ClientMessageController {
 			boolean status = (boolean)message.get("response");
 			try {
 				if(status)
-					ClientScreen.changeScene(getClass().getResource("CatalogScreen.fxml"), "Catalog");
+					ClientScreen.changeScene(ClientScreen.class.getResource("CatalogScreen.fxml"), "Catalog");
 				else
 					System.out.println("failed to login");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+		
 		else if(command.contains("fetch products")) {
 			ArrayList<Product> productsList = (ArrayList<Product>) message.get("response");
 			response = FXCollections.observableArrayList(productsList);
