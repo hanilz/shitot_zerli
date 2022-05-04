@@ -37,7 +37,7 @@
       </HBox>
       <ScrollPane prefHeight="386.0" prefWidth="894.0">
          <content>
-            <VBox fx:id="cartItemVBox" prefHeight="514.0" prefWidth="903.0" />
+            <VBox fx:id="cartItemVBox" prefHeight="380.0" prefWidth="985.0" />
          </content>
       </ScrollPane>
       <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="51.0">

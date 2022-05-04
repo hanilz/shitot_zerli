@@ -14,10 +14,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 public class CartController implements Initializable {
-	Cart cart = Cart.getInstance();
-	
-	private double totalPrice = 0;
-	
+	private static Cart cart = Cart.getInstance();
+		
 	@FXML
     private Button backToCatalogButton;
 	
@@ -29,8 +27,11 @@ public class CartController implements Initializable {
 
 	@FXML
 	private Label priceLabel;
+	
+	private static CartController instance;
 
 	public void initCart() {
+		instance=this;
 		Set<Product> products = cart.getCart().keySet();
 		System.out.println("Adding all product to cart screen...");
 
@@ -41,12 +42,10 @@ public class CartController implements Initializable {
 			CartHBox productHBox = new CartHBox(product, quantity);
 			productHBox.initHBox();
 			cartItemVBox.getChildren().add(productHBox);
-			totalPrice += productHBox.getTotalSumPrice();
 		}
-		
-		priceLabel.setText(totalPrice + " ₪");
+		refreshTotalPrice();
 	}
-
+	
     @FXML
     void changeToCatalogScreen(MouseEvent event) {
 		try {
@@ -70,4 +69,25 @@ public class CartController implements Initializable {
 		System.out.println("Entered cart hellllooo");
 		initCart();
 	}
+	
+	public void refreshTotalPrice() {
+		priceLabel.setText(cart.getTotalPrice() + " ₪");
+	}
+	
+	public static void connectionWithCartHBox(String command) {
+		if(command.contains("refresh total price"))
+			instance.refreshTotalPrice();
+		else if(command.contains("refresh cart")) {
+			instance.resetCart();
+			instance.initCart();
+		}
+	}
+
+	/**
+	 * we need to clear the cart VBox in order to prevent duplicates 
+	 * from appearing when we need to refresh the cart.
+	 */
+	private void resetCart() {
+		cartItemVBox.getChildren().clear();
+	}	
 }

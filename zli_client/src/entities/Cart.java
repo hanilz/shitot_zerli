@@ -8,6 +8,8 @@ public class Cart {
 	
 	private static Cart cartInstance = null;
 	
+	private double totalPrice = 0;
+	
 	private Cart() {}
 	
 	public static Cart getInstance() {
@@ -21,31 +23,45 @@ public class Cart {
 	 * @return if added/updated successfully
 	 */
 	public Boolean addToCart(Product product, int quantity, boolean add) {
-		if(product == null || quantity <0)
+		if(product == null || quantity < 0)
 			return false;
+		int deltaQuantity = 0;
 		Product foundProduct = findByID(product.getProductID());
 		if(quantity == 0)
 			removeFromCart(foundProduct);
 		else if(add) {
-			if(foundProduct == null)
+			if(foundProduct == null) 
 				cart.put(product, quantity);
-			else
+			else 
 				cart.put(foundProduct, cart.get(foundProduct) + quantity);
+			deltaQuantity = quantity;
 		}
-		else
+		else {
+			deltaQuantity = quantity - cart.get(foundProduct);
 			cart.put(foundProduct, quantity);
+		}
+		calculateTotalPrice(deltaQuantity * product.getProductPrice());
 		return true;
 	}
 	
+	public double getTotalPrice() { return totalPrice;}
+	
+	private void calculateTotalPrice(double amount) {
+		totalPrice += amount;
+	}
+			
 	/**
 	 * This method is used to remove an item form the cart if it is in the cart
 	 * @param product we want to remove
 	 * @return if item was removed successfully
 	 */
 	public Boolean removeFromCart(Product product) {
-		if(!cart.containsKey(product))
+		Product foundProduct = findByID(product.getProductID());
+		if(!cart.containsKey(foundProduct))
 			return false;
-		cart.remove(product);
+		calculateTotalPrice(-(cart.get(foundProduct)) * product.getProductPrice());
+
+		cart.remove(foundProduct);
 		return true;
 	}
 

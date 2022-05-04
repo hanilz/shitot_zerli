@@ -6,6 +6,8 @@ import java.util.Set;
 
 import entities.Cart;
 import entities.Product;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -74,14 +76,28 @@ public class CartHBox extends HBox {
 		quantityField.setAlignment(Pos.CENTER);
 		quantityField.setMinWidth(50);
 		quantityField.setPrefWidth(50);
-		
-		quantityField.setOnKeyPressed(e -> {
-			int id = product.getProductID();
-			Integer newQuantity = Integer.parseInt(quantityField.getText());
-			cart.addToCart(product, Integer.parseInt(quantityField.getText()), false);
-			totalSumPrice = product.getProductPrice() * newQuantity;
-			amountLabel.setText(totalSumPrice + " ₪");
-			quantity = newQuantity;
+		// force the field to be numeric only
+		quantityField.textProperty().addListener(new ChangeListener<String>() {
+		    @Override
+		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+		        String newValue) {
+		        if (!newValue.matches("\\d*")) {
+		        	quantityField.setText(newValue.replaceAll("[^\\d]", ""));
+		        }
+		        Integer newQuantity = 0;
+				if(quantityField.getText().isEmpty())
+					return;
+				newQuantity = Integer.parseInt(quantityField.getText());
+				cart.addToCart(product, newQuantity, false);
+				totalSumPrice = product.getProductPrice() * newQuantity;
+				System.out.println("new price is " + totalSumPrice);
+				amountLabel.setText(totalSumPrice + " ₪");
+				quantity = newQuantity;
+				if (quantity == 0)
+					CartController.connectionWithCartHBox("refresh cart");
+				else
+					CartController.connectionWithCartHBox("refresh total price");
+		    }
 		});
 		
 		quantityVBox.setAlignment(Pos.CENTER);
@@ -105,7 +121,7 @@ public class CartHBox extends HBox {
 			@Override
 			public void handle(ActionEvent e) {
 				cart.removeFromCart(product);
-				// TODO: update parent to remove the current HBox of this button
+				CartController.connectionWithCartHBox("refresh cart");
 			}
 		});
 		
