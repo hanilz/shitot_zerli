@@ -8,13 +8,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LoginScreenController">
    <children>
       <Label alignment="CENTER" text="Welcome To Zli">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Label>
+      <Label fx:id="errorLabel" alignment="CENTER" text="Username or Password is incorrect" textFill="RED" visible="false">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>

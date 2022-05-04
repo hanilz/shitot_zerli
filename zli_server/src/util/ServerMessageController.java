@@ -10,22 +10,22 @@ import ocsf.server.ConnectionToClient;
 import server.ServerController;
 
 public class ServerMessageController {
-	
+
 	private static ServerMessageController instance = null;
-	
+
 	private ServerMessageController() {
-		
+
 	}
-	
+
 	public static ServerMessageController getServerMessageController() {
-		if(instance==null)
+		if (instance == null)
 			instance = new ServerMessageController();
 		return instance;
 	}
-	
+
 	/**
-	 * This class will help us the control all the messages that the server recieves and the
-	 * server sending. for example: handling all the queries that the client
+	 * This class will help us the control all the messages that the server recieves
+	 * and the server sending. for example: handling all the queries that the client
 	 * sending.
 	 */
 
@@ -40,7 +40,7 @@ public class ServerMessageController {
 		HashMap<String, Object> message = (HashMap<String, Object>) msg;
 		String command = (String) message.get("command");
 		if (command.equals("fetch orders")) { // if the string equals to fetch orders -> execute the select * query from
-										  // table orders
+			// table orders
 			ArrayList<Order> orders = AnaylzeCommand.selectAllOrders();
 			try {
 				message.put("response", orders);
@@ -48,8 +48,7 @@ public class ServerMessageController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
-		else if(command.equals("client disconnected")) {
+		} else if (command.equals("client disconnected")) {
 			String clientIP = client.getInetAddress().toString();
 			System.out.println("client disconnected detected: ip is " + clientIP);
 			for (ClientDetails currentClient : ServerController.clients) {
@@ -64,8 +63,7 @@ public class ServerMessageController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
-		else if(command.equals("fetch products")) {
+		} else if (command.equals("fetch products")) {
 			ArrayList<Product> products = AnaylzeCommand.selectAllProducts();
 			try {
 				message.put("response", products);
@@ -74,17 +72,16 @@ public class ServerMessageController {
 				e.printStackTrace();
 			}
 		}
-		
-		//handle login massage
-		else if(command.equals("login user")) {
-			boolean status = AnaylzeCommand.loginUser((String)message.get("username"),(String)message.get("password"));
-			if(status) {
-				try {
-					message.put("response", status);
-					client.sendToClient(message);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+
+		// handle login massage
+		else if (command.equals("login user")) {
+			boolean status = AnaylzeCommand.loginUser((String) message.get("username"),
+					(String) message.get("password"));
+			try {
+				message.put("response", status);
+				client.sendToClient(message);
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 	}

@@ -91,21 +91,29 @@ public class AnaylzeCommand {
 	}
 
 	public static boolean loginUser(String username, String password) {
-		Connection selectStmt;
+		Connection conn;
 		try {
-			selectStmt = DataBaseController.getConn();
-			String query = "update users set isLogin = ? where username = ? and password = ?";
-			PreparedStatement preparedStmt = selectStmt.prepareStatement(query);
+			conn = DataBaseController.getConn();
+
+			String query = "SELECT * FROM users WHERE username=? AND password=?";
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setString(1, username);
+			preparedStmt.setString(2, password);
+			preparedStmt = conn.prepareStatement(query);
+			if(preparedStmt.executeQuery().getInt(5)==1) 
+				return false;
+			
+			query = "UPDATE users SET isLogin = ? WHERE username = ? AND password = ?";
+			preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt   (1, 1);
 			preparedStmt.setString(2, username);
 			preparedStmt.setString(3, password);
-			if(preparedStmt.executeUpdate()==0)
-				return false;
+			return preparedStmt.executeUpdate()==1;
 		} catch (SQLException e) {
 			System.out.println("failed to fetch user");
 			e.printStackTrace();
 		}
-		return true;
+		return false;
 	}
 	
 	
