@@ -60,7 +60,7 @@ public class LoginScreenController {
 			errorLabel.setVisible(true);
 			break;
 		case NOT_REGISTERED:
-			errorLabel.setText("Username or Password is incorrect");
+			errorLabel.setText("Username or Password are incorrect");
 			errorLabel.setVisible(true);
 			break;
 		}

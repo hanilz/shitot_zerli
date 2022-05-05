@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import entities.Product;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -101,6 +102,7 @@ public class ProductVBox extends VBox {
 		
 		//add close button to VBox
 		closeBtn = new Button("Close");
+		closeBtn.setCursor(Cursor.HAND);
 		closeBtn.setOnAction(e -> {
 		    Stage stage = (Stage) closeBtn.getScene().getWindow();
 		    // do what you have to do

@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -50,7 +51,7 @@ public class CartHBox extends HBox {
 	public void initHBox() {
 		this.setAlignment(Pos.CENTER);
 		this.setSpacing(20);
-		this.setPadding(new Insets(0, 7, 7, 0));
+		this.setPadding(new Insets(0, 0, 10, 0));
 
 		try {
 			image = new ImageView(new Image(new FileInputStream(product.getImagePath())));
@@ -116,6 +117,7 @@ public class CartHBox extends HBox {
 		priceVBox.getChildren().add(priceLabel);
 		priceVBox.getChildren().add(amountLabel);
 
+		removeButton.setCursor(Cursor.HAND);
 		removeButton.setStyle("-fx-background-color : Red ; -fx-font-size:16 ; -fx-font-weight: bold");
 		removeButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
