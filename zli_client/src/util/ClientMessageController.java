@@ -63,12 +63,9 @@ public class ClientMessageController {
 
 		
 		if (command.contains("login user")) {
-			boolean status = (boolean)message.get("response");
+			Status status = (Status)message.get("response");
 			try {
-				if(status)
-					ClientScreen.changeScene(ClientScreen.class.getResource("CatalogScreen.fxml"), "Catalog");
-				else
-					System.out.println("failed to login");
+				ClientController.setResponse(status);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -91,7 +91,7 @@ public class CartHBox extends HBox {
 				cart.addToCart(product, newQuantity, false);
 				totalSumPrice = product.getProductPrice() * newQuantity;
 				System.out.println("new price is " + totalSumPrice);
-				amountLabel.setText(totalSumPrice + " â‚ª");
+				amountLabel.setText(totalSumPrice + " ¤");
 				quantity = newQuantity;
 				if (quantity == 0)
 					CartController.connectionWithCartHBox("refresh cart");
@@ -108,7 +108,7 @@ public class CartHBox extends HBox {
 
 		priceLabel.setFont(new Font(20));
 		totalSumPrice = product.getProductPrice() * quantity;
-		amountLabel = new Label(totalSumPrice + " â‚ª");
+		amountLabel = new Label(totalSumPrice + " ¤");
 		amountLabel.setFont(new Font(20));
 		
 		priceVBox.setAlignment(Pos.CENTER);

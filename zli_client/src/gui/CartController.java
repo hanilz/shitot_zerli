@@ -71,7 +71,7 @@ public class CartController implements Initializable {
 	}
 	
 	public void refreshTotalPrice() {
-		priceLabel.setText(cart.getTotalPrice() + " â‚ª");
+		priceLabel.setText(cart.getTotalPrice() + " ¤");
 	}
 	
 	public static void connectionWithCartHBox(String command) {
