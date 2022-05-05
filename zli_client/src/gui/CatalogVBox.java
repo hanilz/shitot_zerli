@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -64,6 +65,7 @@ public class CatalogVBox extends VBox {
 		image.setFitHeight(120);
 		image.setFitWidth(200);
 		image.setPreserveRatio(true);
+		image.setCursor(Cursor.HAND);
 		
 		amountLabel.setText("" + ((int)product.getProductPrice()) + " ¤");
 		
@@ -72,6 +74,7 @@ public class CatalogVBox extends VBox {
 		priceHBox.setAlignment(Pos.CENTER);
 		priceHBox.setSpacing(25);
 		
+		addToCartButton.setCursor(Cursor.HAND);
 		addToCartButton.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
 		    public void handle(ActionEvent event) {
