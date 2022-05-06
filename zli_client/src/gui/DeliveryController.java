@@ -55,7 +55,7 @@ public class DeliveryController implements Initializable{
     private TextField recieverPhoneField;
     
     @FXML
-    private Label requiredLabel;
+    private Label required;
     
 
     int deliveryButton = 0, pickupButton = 0;
@@ -96,7 +96,7 @@ public class DeliveryController implements Initializable{
     		hourComboBox.setDisable(false);
     		minuteComboBox.setDisable(false);
     		recieverPhoneField.setDisable(false);
-    		requiredLabel.setVisible(true);
+    		required.setVisible(true);
     		
     		pickupButton = 0;
     	}
@@ -112,7 +112,7 @@ public class DeliveryController implements Initializable{
     		hourComboBox.setDisable(true);
     		minuteComboBox.setDisable(true);
     		recieverPhoneField.setDisable(true);
-    		requiredLabel.setVisible(false);
+    		required.setVisible(false);
     		
     		deliveryButton = 0;
 
