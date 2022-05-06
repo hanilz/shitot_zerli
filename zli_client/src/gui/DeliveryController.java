@@ -1,0 +1,111 @@
+package gui;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+
+public class DeliveryController {
+
+    @FXML
+    private TextField addressField;
+
+    @FXML
+    private Button backButton;
+
+    @FXML
+    private Button checkoutButton;
+
+    @FXML
+    private ToggleGroup delivery;
+    
+    @FXML
+    private DatePicker deliveryDatePicker;
+
+    @FXML
+    private RadioButton deliveryRadioButton;
+
+    @FXML
+    private ImageView homeButton;
+
+    @FXML
+    private ComboBox<?> hourComboBox;
+
+    @FXML
+    private ComboBox<?> minuteComboBox;
+
+    @FXML
+    private RadioButton pickUpRadioButton;
+
+    @FXML
+    private TextField recieverNameField;
+
+    @FXML
+    private TextField recieverPhoneField;
+
+    int deliveryButton = 0, pickupButton = 0;
+    
+    @FXML
+    void changeToCheckoutScreen(MouseEvent event) {
+    	try {
+			ClientScreen.changeScene(getClass().getResource("CheckoutScreen.fxml"), "Checkout Screen");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+
+    @FXML
+    void changeToGreetingCardScreen(MouseEvent event) {
+    	try {
+			ClientScreen.changeScene(getClass().getResource("GreetingCardScreen.fxml"), "Greeting Card Screen");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+
+    @FXML
+    void changeToHomeScreen(MouseEvent event) {
+    	try {
+			ClientScreen.changeScene(getClass().getResource("HomeNotLoggedInScreen.fxml"), "Home Screen");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+
+    @FXML
+    void selectDelivery(MouseEvent event) {
+    	if(deliveryRadioButton.isSelected() && deliveryButton == 0) {
+    		addressField.setDisable(false);
+    		deliveryDatePicker.setDisable(false);
+    		recieverNameField.setDisable(false);
+    		hourComboBox.setDisable(false);
+    		minuteComboBox.setDisable(false);
+    		recieverPhoneField.setDisable(false);
+    		
+    		pickupButton = 0;
+    	}
+    	deliveryButton++;
+    }
+
+    @FXML
+    void selectPickup(MouseEvent event) {
+    	if(pickUpRadioButton.isSelected() && pickupButton == 0) {
+    		addressField.setDisable(true);
+    		deliveryDatePicker.setDisable(true);
+    		recieverNameField.setDisable(true);
+    		hourComboBox.setDisable(true);
+    		minuteComboBox.setDisable(true);
+    		recieverPhoneField.setDisable(true);
+
+    		deliveryButton = 0;
+
+    	}
+		pickupButton++;
+    }
+
+}

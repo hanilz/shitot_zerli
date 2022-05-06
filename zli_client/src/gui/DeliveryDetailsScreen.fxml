@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.TextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -16,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="938.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DeliveryController">
    <children>
       <GridPane>
         <columnConstraints>
@@ -41,7 +42,7 @@
                <children>
                   <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" style="-fx-background-color: transparent;">
                      <graphic>
-                        <ImageView fitHeight="54.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="homeButton" fitHeight="54.0" fitWidth="45.0" onMousePressed="#changeToHomeScreen" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../resources/catalog/home.png" />
                            </image>
@@ -53,117 +54,117 @@
          </children>
       </GridPane>
       <HBox prefHeight="100.0" prefWidth="200.0" />
-      <VBox alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="467.0" prefWidth="687.0" spacing="50.0">
+      <VBox alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="449.0" prefWidth="775.0" spacing="50.0">
          <children>
-            <VBox prefHeight="55.0" prefWidth="436.0" spacing="10.0">
+            <VBox prefHeight="94.0" prefWidth="775.0" spacing="10.0">
                <children>
-                  <RadioButton mnemonicParsing="false" selected="true" text="In-Store Pickup">
+                  <RadioButton fx:id="pickUpRadioButton" mnemonicParsing="false" onMouseClicked="#selectPickup" selected="true" text="In-Store Pickup">
                      <toggleGroup>
                         <ToggleGroup fx:id="delivery" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" selected="true" text="Delivery" toggleGroup="$delivery" />
+                  <RadioButton fx:id="deliveryRadioButton" mnemonicParsing="false" onMouseClicked="#selectDelivery" selected="true" text="Delivery" toggleGroup="$delivery" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <VBox prefHeight="189.0" prefWidth="775.0" spacing="6.0">
                      <children>
-                        <Label text="* All fields are required" textFill="#ff1b1b" />
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="* All fields are required" textFill="#ff1b1b" />
+                           </children>
+                        </HBox>
+                        <GridPane hgap="15.0" maxWidth="-Infinity" prefHeight="180.0" prefWidth="751.0" vgap="10.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="0.0" prefWidth="131.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="656.0" minWidth="10.0" prefWidth="248.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="656.0" minWidth="0.0" prefWidth="135.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="656.0" minWidth="10.0" prefWidth="190.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="83.0" prefWidth="400.0" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label text="Delivery Date:">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <Label text="Address:">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="252.0" spacing="37.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <children>
+                                    <DatePicker fx:id="deliveryDatePicker" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="100.0" prefWidth="147.0" GridPane.rowIndex="2">
+                                 <children>
+                                    <Label text="Reciever Name:">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="40.0" prefWidth="178.0" spacing="10.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                 <children>
+                                    <ComboBox fx:id="hourComboBox" prefHeight="25.0" prefWidth="100.0" promptText="hour" />
+                                    <Label alignment="TOP_CENTER" text=":">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets bottom="5.0" />
+                                       </padding>
+                                    </Label>
+                                    <ComboBox fx:id="minuteComboBox" prefHeight="25.0" prefWidth="131.0" promptText="minute" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="83.0" prefWidth="400.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label text="Delivery Time:">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                 <children>
+                                    <Label text="Reciever Phone:">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <TextField fx:id="addressField" prefHeight="25.0" prefWidth="499.0" />
+                                 </children>
+                              </HBox>
+                              <TextField fx:id="recieverNameField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="recieverPhoneField" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                           </children>
+                        </GridPane>
                      </children>
-                  </HBox>
-                  <GridPane hgap="15.0" maxWidth="-Infinity" prefHeight="180.0" prefWidth="687.0" vgap="10.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="0.0" prefWidth="120.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="656.0" minWidth="10.0" prefWidth="242.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="656.0" minWidth="0.0" prefWidth="124.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="656.0" minWidth="10.0" prefWidth="116.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="83.0" prefWidth="400.0" GridPane.rowIndex="1">
-                           <children>
-                              <Label text="Delivery Date:">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <Label text="Address:">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="252.0" spacing="37.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <children>
-                              <DatePicker />
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="100.0" prefWidth="147.0" GridPane.rowIndex="2">
-                           <children>
-                              <Label text="Reciever Name:">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField floatText="xxx - xxx-xxxx" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                           <padding>
-                              <Insets bottom="15.0" />
-                           </padding>
-                        </TextField>
-                        <HBox alignment="CENTER" prefHeight="42.0" prefWidth="126.0" spacing="10.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                           <children>
-                              <TextField floatText="Hour" prefHeight="35.0" prefWidth="58.0" />
-                              <Label alignment="TOP_CENTER" text=":">
-                                 <font>
-                                    <Font size="22.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets bottom="5.0" />
-                                 </padding>
-                              </Label>
-                              <TextField floatText="Minute" prefHeight="35.0" prefWidth="66.0" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="83.0" prefWidth="400.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                           <children>
-                              <Label text="Delivery Time:">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                           <children>
-                              <Label text="Reciever Phone:">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
-                           <children>
-                              <TextField prefHeight="25.0" prefWidth="499.0" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </GridPane>
+                  </VBox>
                </children>
             </VBox>
-            <HBox alignment="CENTER" prefHeight="210.0" prefWidth="687.0" spacing="59.0">
+            <HBox alignment="CENTER" prefHeight="156.0" prefWidth="775.0" spacing="59.0">
                <children>
-                  <Button mnemonicParsing="false" text="Back" />
-                  <Button mnemonicParsing="false" text="Checkout" />
+                  <Button fx:id="backButton" mnemonicParsing="false" onMousePressed="#changeToGreetingCardScreen" text="Back" />
+                  <Button fx:id="checkoutButton" mnemonicParsing="false" onMousePressed="#changeToCheckoutScreen" text="Checkout" />
                </children>
             </HBox>
          </children>
