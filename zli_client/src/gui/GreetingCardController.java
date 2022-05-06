@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 public class GreetingCardController {
@@ -22,8 +23,8 @@ public class GreetingCardController {
     private TextArea greetingCardTextArea;
 
     @FXML
-    private Button homeButton;
-
+    private ImageView homeButton;
+    
     @FXML
     private CheckBox isIncludedCheckBox;
 

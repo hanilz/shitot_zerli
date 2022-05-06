@@ -8,10 +8,12 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ClientScreen extends Application {
 	public static Stage clientStage;
+	public static Stage popupStage;
 	
 	public static void main(String args[]) throws Exception {
 		launch(args);
@@ -58,6 +60,27 @@ public class ClientScreen extends Application {
 		    	clientStage.setScene(scene);
 				clientStage.setTitle(title);
 				clientStage.show();		    
+			}
+		});
+	}
+	
+	public static void openPopupFXML(URL url, String title) throws Exception {
+		FXMLLoader loader = new FXMLLoader();
+		try {
+			loader = new FXMLLoader(url);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Parent root = loader.load();
+		Scene scene = new Scene(root);
+		popupStage = new Stage();
+		Platform.runLater(new Runnable() {  // this thread will help us change between scenes and avoid exceptions
+		    @Override
+		    public void run() {
+		    	popupStage.setTitle(title);
+		    	popupStage.setScene(scene);
+		    	popupStage.initModality(Modality.APPLICATION_MODAL);
+		    	popupStage.showAndWait();
 			}
 		});
 	}

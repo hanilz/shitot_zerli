@@ -1,6 +1,10 @@
 package gui;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -9,8 +13,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.collections.FXCollections;
 
-public class DeliveryController {
+public class DeliveryController implements Initializable{
 
     @FXML
     private TextField addressField;
@@ -107,5 +112,8 @@ public class DeliveryController {
     	}
 		pickupButton++;
     }
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {}
 
 }
