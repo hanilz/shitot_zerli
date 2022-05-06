@@ -75,10 +75,10 @@ public class ServerMessageController {
 
 		// handle login massage
 		else if (command.equals("login user")) {
-			Status status = AnaylzeCommand.loginUser((String) message.get("username"), (String) message.get("password"));
+			HashMap<String,Object> result = AnaylzeCommand.loginUser((String) message.get("username"), (String) message.get("password"));
+			result.put("command", "login user");
 			try {
-				message.put("response", status);
-				client.sendToClient(message);
+				client.sendToClient(result);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

@@ -43,7 +43,7 @@ public class ClientFormController {
 		try {
 			client = new ClientController(ip);
 			System.out.println("All good bruh");
-			ClientScreen.clientStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			ClientScreen.clientStage.setOnCloseRequest(new EventHandler<WindowEvent>() {//Windows X button pressed
 				@Override
 				public void handle(WindowEvent e) {
 					try {
