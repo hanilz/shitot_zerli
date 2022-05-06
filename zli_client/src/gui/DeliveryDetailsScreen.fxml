@@ -53,7 +53,7 @@
             </HBox>
          </children>
       </GridPane>
-      <HBox prefHeight="100.0" prefWidth="200.0" />
+      <HBox fx:id="requiredLabel" prefHeight="100.0" prefWidth="200.0" />
       <VBox alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="449.0" prefWidth="775.0" spacing="50.0">
          <children>
             <VBox prefHeight="94.0" prefWidth="775.0" spacing="10.0">
@@ -78,7 +78,7 @@
                      <children>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Label text="* All fields are required" textFill="#ff1b1b" />
+                              <Label fx:id="requiredLabel" text="* All fields are required" textFill="#ff1b1b" />
                            </children>
                         </HBox>
                         <GridPane hgap="15.0" maxWidth="-Infinity" prefHeight="180.0" prefWidth="751.0" vgap="10.0">

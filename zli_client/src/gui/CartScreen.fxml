@@ -68,7 +68,7 @@
                   </Label>
                </children>
             </VBox>
-            <Button fx:id="buyButton" mnemonicParsing="false" onMousePressed="#changeToGreetingCardScreen" prefHeight="25.0" prefWidth="89.0" text="Buy">
+            <Button fx:id="buyButton" mnemonicParsing="false" onMousePressed="#buy" prefHeight="25.0" prefWidth="89.0" text="Buy">
                <HBox.margin>
                   <Insets right="20.0" />
                </HBox.margin>

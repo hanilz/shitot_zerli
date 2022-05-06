@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import client.ClientController;
+import entities.User;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -50,6 +51,11 @@ public class ClientFormController {
 						if(client.isConnected()) {
 							HashMap<String, Object> message = new HashMap<>();
 							message.put("command", "client disconnected");
+							if(User.getUserInstance().isUserLoggedIn())
+							{
+								message.put("logout",User.getUserInstance().getIdUser());
+								User.getUserInstance().logout();
+							}
 							Object response = ClientFormController.client.accept(message);
 							client.closeConnection();
 							System.out.println("disconnected! yayyyy");

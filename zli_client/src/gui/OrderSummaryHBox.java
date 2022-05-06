@@ -16,6 +16,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import util.InputChecker;
+
 import java.util.Currency;
 
 public class OrderSummaryHBox extends HBox {
@@ -64,7 +66,7 @@ public class OrderSummaryHBox extends HBox {
 		quantityLabel.setText("" + quantity);
 		
 		priceLabel.setFont(new Font(20));
-		priceLabel.setText("" + product.getProductPrice() + " NIS");
+		priceLabel.setText(InputChecker.price(product.getProductPrice()));
 		
 		this.getChildren().add(image);
 		this.getChildren().add(quantityLabel);

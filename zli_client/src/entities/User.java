@@ -15,7 +15,6 @@ public class User {
 	}
 
 	public static User getUserInstance() {
-		
 		return userInstance == null ? userInstance=new User() : userInstance;
 	}
 
@@ -49,5 +48,9 @@ public class User {
 
 	public String getUsername() {
 		return username;
+	}
+	public int getIdUser()
+	{
+		return idUser;
 	}
 }
