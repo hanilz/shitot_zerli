@@ -7,11 +7,14 @@ import java.util.ResourceBundle;
 import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import util.Status;
 import util.UserType;
 
@@ -30,6 +33,8 @@ public class LoginScreenController implements Initializable{
 
 	@FXML
 	private Button backButton;
+	
+	private static boolean isPopup;
 
 	@FXML
 	void loginUserIntoSystem(MouseEvent event) {
@@ -64,6 +69,8 @@ public class LoginScreenController implements Initializable{
 
 				User.getUserInstance().login(idUser, username, idAccount, userType);//creating running user
 				System.out.println("running : "+User.getUserInstance());
+				if(popup(event))
+					return;
 				ClientScreen.changeScene(ClientScreen.class.getResource("CatalogScreen2.fxml"), "Catalog");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -80,9 +87,15 @@ public class LoginScreenController implements Initializable{
 			break;
 		}
 	}
+	public static void enablePopup(boolean Popup)
+	{
+		isPopup=Popup;
+	}
 
 	@FXML
 	void changeToHomeScreen(MouseEvent event) {
+		if(popup(event))
+			return;
 		try {
 			ClientScreen.changeScene(ClientScreen.class.getResource("HomeNotLoggedInScreen.fxml"), "Home");
 		} catch (Exception e) {
@@ -90,7 +103,16 @@ public class LoginScreenController implements Initializable{
 			e.printStackTrace();
 		}
 	}
-
+private boolean popup(MouseEvent event) {
+	if(isPopup)
+	{
+		Node n=((Node)(event.getSource()));
+		Stage s=((Stage)n.getScene().getWindow());
+		s.close();
+		return true;
+	}
+	return false;
+}
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		if (User.getUserInstance().isUserLoggedIn()){//one user is already active in this client

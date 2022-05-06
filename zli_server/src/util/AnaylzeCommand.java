@@ -91,10 +91,10 @@ public class AnaylzeCommand {
 		return orders;
 	}
 
-	public static HashMap<String,Object> loginUser(String username, String password) {
+	public static HashMap<String, Object> loginUser(String username, String password) {
 		Connection conn;
 		Status status = Status.NOT_REGISTERED;
-		HashMap<String,Object> login=new HashMap<>();
+		HashMap<String, Object> login = new HashMap<>();
 		conn = DataBaseController.getConn();
 		ResultSet rs;
 		String query = "SELECT * FROM users WHERE username=? AND password=?";
@@ -102,31 +102,48 @@ public class AnaylzeCommand {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setString(1, username);
 			preparedStmt.setString(2, password);
-			rs=preparedStmt.executeQuery();
-			if(!rs.next())//if user not exist 
-				status= Status.NOT_REGISTERED;
-			else if(rs.getBoolean(6))//if user already logged in
-				status= Status.ALREADY_LOGGED_IN;
+			rs = preparedStmt.executeQuery();
+			if (!rs.next())// if user not exist
+				status = Status.NOT_REGISTERED;
+			else if (rs.getBoolean(6))// if user already logged in
+				status = Status.ALREADY_LOGGED_IN;
 			else {
-			login.put("idUser", Integer.parseInt(rs.getString(1)));
-			login.put("idAccount", Integer.parseInt(rs.getString(4)));
-			login.put("userType", UserType.get(rs.getString(5)));
-			
-			query = "UPDATE users SET isLogin = ? WHERE username = ? AND password = ?";
-			preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setInt(1, 1);
-			preparedStmt.setString(2, username);
-			preparedStmt.setString(3, password);
-			if (preparedStmt.executeUpdate() == 1)
-					status= Status.NEW_LOG_IN;
+				login.put("idUser", Integer.parseInt(rs.getString(1)));
+				login.put("idAccount", Integer.parseInt(rs.getString(4)));
+				login.put("userType", UserType.get(rs.getString(5)));
+
+				query = "UPDATE users SET isLogin = ? WHERE username = ? AND password = ?";
+				preparedStmt = conn.prepareStatement(query);
+				preparedStmt.setInt(1, 1);
+				preparedStmt.setString(2, username);
+				preparedStmt.setString(3, password);
+				if (preparedStmt.executeUpdate() == 1)
+					status = Status.NEW_LOG_IN;
 			}
 		} catch (SQLException e) {
 			System.out.println("failed to fetch user");
 			e.printStackTrace();
 		}
-		login.put("response",status);//status of login
-		return login;//default for any throw would be unregistered
+		login.put("response", status);// status of login
+		return login;// default for any throw would be unregistered
 	}
 
+	public static void logoutUser(int idUser) {
+		Connection conn;
+		conn = DataBaseController.getConn();
+		ResultSet rs;
+		String query = "SELECT * FROM users WHERE idUser";
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			query = "UPDATE users SET isLogin = ? WHERE idUser = ?";
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, 0);
+			preparedStmt.setInt(2, idUser);
+			preparedStmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("failed to fetch user");
+			e.printStackTrace();
+		}
+	}
 
 }

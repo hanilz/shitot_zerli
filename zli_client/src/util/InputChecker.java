@@ -27,4 +27,11 @@ public class InputChecker {
 			return false;
 		}
 	}
+
+	public static String price(double amount) {//setting price of num+NIS
+		int a = 0x20AA;
+		String price = amount+" "+Character.toString((char)a);
+		return price;
+	}
+
 }

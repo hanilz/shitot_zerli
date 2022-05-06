@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import util.InputChecker;
 
 public class CheckoutController implements Initializable{
 
@@ -68,7 +69,7 @@ public class CheckoutController implements Initializable{
 			productSummaryHBox.initHBox();
 			orderSummaryVBox.getChildren().add(productSummaryHBox);
 		}
-		totalPriceLabel.setText(Cart.getInstance().getTotalPrice() + " NIS");
+		totalPriceLabel.setText(InputChecker.price(Cart.getInstance().getTotalPrice()));
 	}
 	
     @FXML

@@ -23,6 +23,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import util.InputChecker;
 
 public class CatalogVBox extends VBox {
 	private Product product;  // will be used to get the data from
@@ -66,7 +67,7 @@ public class CatalogVBox extends VBox {
 		image.setPreserveRatio(true);
 		image.setCursor(Cursor.HAND);
 		
-		amountLabel.setText("" + ((int)product.getProductPrice()) + " �");
+		amountLabel.setText("" + InputChecker.price(((int)product.getProductPrice())));
 		
 		priceHBox.getChildren().add(priceLabel);
 		priceHBox.getChildren().add(amountLabel);

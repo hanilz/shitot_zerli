@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -52,6 +53,10 @@ public class DeliveryController implements Initializable{
 
     @FXML
     private TextField recieverPhoneField;
+    
+    @FXML
+    private Label requiredLabel;
+    
 
     int deliveryButton = 0, pickupButton = 0;
     
@@ -91,6 +96,7 @@ public class DeliveryController implements Initializable{
     		hourComboBox.setDisable(false);
     		minuteComboBox.setDisable(false);
     		recieverPhoneField.setDisable(false);
+    		requiredLabel.setVisible(true);
     		
     		pickupButton = 0;
     	}
@@ -106,7 +112,8 @@ public class DeliveryController implements Initializable{
     		hourComboBox.setDisable(true);
     		minuteComboBox.setDisable(true);
     		recieverPhoneField.setDisable(true);
-
+    		requiredLabel.setVisible(false);
+    		
     		deliveryButton = 0;
 
     	}

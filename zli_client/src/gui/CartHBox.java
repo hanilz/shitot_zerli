@@ -21,6 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import util.InputChecker;
 
 public class CartHBox extends HBox {
 	private Cart cart = Cart.getInstance();
@@ -92,7 +93,7 @@ public class CartHBox extends HBox {
 				cart.addToCart(product, newQuantity, false);
 				totalSumPrice = product.getProductPrice() * newQuantity;
 				System.out.println("new price is " + totalSumPrice);
-				amountLabel.setText(totalSumPrice + " ¤");
+				amountLabel.setText(InputChecker.price(totalSumPrice));
 				quantity = newQuantity;
 				if (quantity == 0)
 					CartController.connectionWithCartHBox("refresh cart");
@@ -109,7 +110,7 @@ public class CartHBox extends HBox {
 
 		priceLabel.setFont(new Font(20));
 		totalSumPrice = product.getProductPrice() * quantity;
-		amountLabel = new Label(totalSumPrice + " ¤");
+		amountLabel = new Label(InputChecker.price(totalSumPrice));
 		amountLabel.setFont(new Font(20));
 		
 		priceVBox.setAlignment(Pos.CENTER);
