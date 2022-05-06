@@ -53,10 +53,9 @@ public class CatalogVBox extends VBox {
 					popup.initProductVBox();
 					Scene scene = new Scene(popup);
 					Stage stage = new Stage();
-					stage.setTitle("Product Details - "+ product.getProductName());
+					stage.setTitle("Product Details - " + product.getProductName());
 					stage.setScene(scene);
 					stage.showAndWait();
-					// productImage1.setDisable(false);
 			    }
 			});
 		} catch (FileNotFoundException e) {
@@ -67,7 +66,7 @@ public class CatalogVBox extends VBox {
 		image.setPreserveRatio(true);
 		image.setCursor(Cursor.HAND);
 		
-		amountLabel.setText("" + ((int)product.getProductPrice()) + " ¤");
+		amountLabel.setText("" + ((int)product.getProductPrice()) + " ï¿½");
 		
 		priceHBox.getChildren().add(priceLabel);
 		priceHBox.getChildren().add(amountLabel);
