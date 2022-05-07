@@ -19,7 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import util.ChangeScreen;
+import util.ManageScreens;
 import util.InputChecker;
 
 public class CartController implements Initializable {
@@ -58,7 +58,7 @@ public class CartController implements Initializable {
 	@FXML
 	void changeToHomeScreen(MouseEvent event) {
 		try {
-			ChangeScreen.changeScene(getClass().getResource("../home/HomeNotLoggedInScreen.fxml"), "Catalog Screen");
+			ManageScreens.changeScene(getClass().getResource("../home/HomeGuestScreen.fxml"), "Catalog Screen");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -68,7 +68,7 @@ public class CartController implements Initializable {
 	@FXML
 	void changeToCatalogScreen(MouseEvent event) {
 		try {
-			ChangeScreen.changeScene(getClass().getResource("../catalog/CatalogScreen.fxml"), "Catalog Screen");
+			ManageScreens.changeScene(getClass().getResource("../catalog/CatalogScreen.fxml"), "Catalog Screen");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -94,13 +94,13 @@ public class CartController implements Initializable {
 			LoginScreenController.enablePopup(false);// disable popup
 			if (User.getUserInstance().isUserLoggedIn())
 				try {
-					ChangeScreen.changeScene(getClass().getResource("GreetingCardScreen.fxml"), "Greeting Card Screen");
+					ManageScreens.changeScene(getClass().getResource("GreetingCardScreen.fxml"), "Greeting Card Screen");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 		} else {// user tries to buy
 			try {
-				ChangeScreen.changeScene(getClass().getResource("GreetingCardScreen.fxml"), "Greeting Card Screen");
+				ManageScreens.changeScene(getClass().getResource("GreetingCardScreen.fxml"), "Greeting Card Screen");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

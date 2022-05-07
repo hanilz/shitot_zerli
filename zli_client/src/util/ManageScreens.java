@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class ChangeScreen {
+public class ManageScreens {
 	private static Stage stage;
 	private static Stage popupStage;
 
@@ -38,7 +38,7 @@ public class ChangeScreen {
 			}
 		});
 	}
-	
+
 	public static void openPopupFXML(URL url, String title) throws Exception {
 		FXMLLoader loader = new FXMLLoader();
 		try {
@@ -61,7 +61,7 @@ public class ChangeScreen {
 	}
 
 	public static void setStage(Stage stage) {
-		ChangeScreen.stage = stage;
+		ManageScreens.stage = stage;
 	}
 
 	public static Stage getStage() {

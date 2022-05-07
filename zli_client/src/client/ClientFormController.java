@@ -1,9 +1,7 @@
 package client;
 
 import java.io.IOException;
-import java.util.HashMap;
 
-import entities.User;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,7 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.WindowEvent;
-import util.ChangeScreen;
+import util.ManageClients;
+import util.ManageScreens;
 
 /**
  * ClientFormController will handle all the events from the gui
@@ -34,8 +33,11 @@ public class ClientFormController {
 	public static ClientController client = null;
 
 	/**
-	 * The initial screen: the user will insert the server-ip so he can connect to the server.
-	 * By clicking the connect button, we will sent to the client controller the ip of the user so the server can update the connection table (which client is connected to the server)
+	 * The initial screen: the user will insert the server-ip so he can connect to
+	 * the server. By clicking the connect button, we will sent to the client
+	 * controller the ip of the user so the server can update the connection table
+	 * (which client is connected to the server)
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -52,44 +54,26 @@ public class ClientFormController {
 		}
 		changeSceneToCatalog();
 	}
-
-	private void exitFromWindow() {
-		ChangeScreen.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {//Windows X button pressed
+	
+	public void exitFromWindow() {
+		ManageScreens.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {// Windows X button pressed
 			@Override
 			public void handle(WindowEvent e) {
-				try {
-					if(client.isConnected()) {
-						HashMap<String, Object> message = new HashMap<>();
-						message.put("command", "client disconnected");
-						if(User.getUserInstance().isUserLoggedIn())
-						{
-							message.put("logout",User.getUserInstance().getIdUser());
-							User.getUserInstance().logout();
-						}
-						Object response = ClientFormController.client.accept(message);
-						client.closeConnection();
-						System.out.println("disconnected! yayyyy");
-					}
-					else {System.out.println("not connected to anything - babye!");}
-
-				} catch (IOException ex) {
-					System.out.println("Oh no!");
-					ex.printStackTrace();
-				}
+				ManageClients.exitClient();
 			}
 		});
 	}
-	
+
 	/**
-	 * This function will help us to switch between the screens after the user connected to the server-ip
+	 * This function will help us to switch between the screens after the user
+	 * connected to the server-ip
 	 */
 	private void changeSceneToCatalog() {
 		try {
-			ChangeScreen.changeScene(getClass().getResource("../catalog/CatalogScreen.fxml"), "Catalog"); //CatalogScreen2 is a temp file because we want a dynamic catalog
+			ManageScreens.changeScene(getClass().getResource("../catalog/CatalogScreen.fxml"), "Catalog");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 }

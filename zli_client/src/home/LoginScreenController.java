@@ -16,7 +16,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import util.ChangeScreen;
+import util.ManageScreens;
 import util.Status;
 import util.UserType;
 
@@ -82,7 +82,7 @@ public class LoginScreenController implements Initializable {
 				System.out.println("running : " + User.getUserInstance());
 				if (popup(event))
 					return;
-				ChangeScreen.changeScene(ClientScreen.class.getResource("../catalog/CatalogScreen.fxml"), "Catalog");
+				ManageScreens.changeScene(ClientScreen.class.getResource("../catalog/CatalogScreen.fxml"), "Catalog");//login
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -108,7 +108,7 @@ public class LoginScreenController implements Initializable {
 		if (popup(event))
 			return;
 		try {
-			ChangeScreen.changeScene(ClientScreen.class.getResource("../home/HomeNotLoggedInScreen.fxml"), "Home");
+			ManageScreens.changeScene(ClientScreen.class.getResource("../home/HomeGuestScreen.fxml"), "Home");//back guest
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

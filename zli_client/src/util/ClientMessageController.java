@@ -83,7 +83,7 @@ public class ClientMessageController {
 	 */
 	private void changeSceneToMainClient() {
 		try {
-			ChangeScreen.changeScene(ClientScreen.class.getResource("ClientScreen.fxml"), "Zli Client");
+			ManageScreens.changeScene(ClientScreen.class.getResource("ClientScreen.fxml"), "Zli Client");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -14,7 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import util.ChangeScreen;
+import util.ManageScreens;
 
 public class DeliveryController implements Initializable {
 
@@ -62,7 +62,7 @@ public class DeliveryController implements Initializable {
 	@FXML
 	void changeToCheckoutScreen(MouseEvent event) {
 		try {
-			ChangeScreen.changeScene(getClass().getResource("../order/CheckoutScreen.fxml"), "Checkout Screen");
+			ManageScreens.changeScene(getClass().getResource("../order/CheckoutScreen.fxml"), "Checkout Screen");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -71,7 +71,7 @@ public class DeliveryController implements Initializable {
 	@FXML
 	void changeToGreetingCardScreen(MouseEvent event) {
 		try {
-			ChangeScreen.changeScene(getClass().getResource("../order/GreetingCardScreen.fxml"),
+			ManageScreens.changeScene(getClass().getResource("../order/GreetingCardScreen.fxml"),
 					"Greeting Card Screen");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -81,7 +81,7 @@ public class DeliveryController implements Initializable {
 	@FXML
 	void changeToHomeScreen(MouseEvent event) {
 		try {
-			ChangeScreen.changeScene(getClass().getResource("../home/HomeNotLoggedInScreen.fxml"), "Home Screen");
+			ManageScreens.changeScene(getClass().getResource("../home/HomeGuestScreen.fxml"), "Home Screen");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
