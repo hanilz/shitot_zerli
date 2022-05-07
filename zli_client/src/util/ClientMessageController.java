@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import client.ClientController;
+import client.ClientScreen;
 import entities.Order;
 import entities.Product;
-import gui.ClientScreen;
 import javafx.collections.FXCollections;
 
 /**
@@ -83,7 +83,7 @@ public class ClientMessageController {
 	 */
 	private void changeSceneToMainClient() {
 		try {
-			ClientScreen.changeScene(ClientScreen.class.getResource("ClientScreen.fxml"), "Zli Client");
+			ChangeScreen.changeScene(ClientScreen.class.getResource("ClientScreen.fxml"), "Zli Client");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
