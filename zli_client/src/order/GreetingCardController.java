@@ -7,7 +7,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import util.ChangeScreen;
+import util.ManageScreens;
 
 public class GreetingCardController {
 
@@ -38,7 +38,7 @@ public class GreetingCardController {
     @FXML
     void changeToCartScreen(MouseEvent event) {
     	try {
-    		ChangeScreen.changeScene(getClass().getResource("../order/CartScreen.fxml"), "Cart Screen");
+    		ManageScreens.changeScene(getClass().getResource("../order/CartScreen.fxml"), "Cart Screen");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,7 +47,7 @@ public class GreetingCardController {
     @FXML
     void changeToDeliveryScreen(MouseEvent event) {
     	try {
-    		ChangeScreen.changeScene(getClass().getResource("../order/DeliveryDetailsScreen.fxml"), "Delivery Details Screen");
+    		ManageScreens.changeScene(getClass().getResource("../order/DeliveryDetailsScreen.fxml"), "Delivery Details Screen");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -56,7 +56,7 @@ public class GreetingCardController {
     @FXML
     void changeToHomeScreen(MouseEvent event) {
     	try {
-    		ChangeScreen.changeScene(getClass().getResource("../home/HomeNotLoggedInScreen.fxml"), "Home Screen");
+    		ManageScreens.changeScene(getClass().getResource("../home/HomeGuestScreen.fxml"), "Home Screen");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

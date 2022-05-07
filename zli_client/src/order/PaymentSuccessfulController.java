@@ -3,7 +3,7 @@ package order;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-import util.ChangeScreen;
+import util.ManageScreens;
 
 public class PaymentSuccessfulController {
 
@@ -12,10 +12,10 @@ public class PaymentSuccessfulController {
 
     @FXML
     void changeToCatalog(MouseEvent event) {
-    	if(ChangeScreen. getPopupStage() != null)
-    		ChangeScreen. getPopupStage().close();
+    	if(ManageScreens. getPopupStage() != null)
+    		ManageScreens. getPopupStage().close();
     	try {
-    		ChangeScreen.changeScene(getClass().getResource("../catalog/CatalogScreen.fxml"), "Catalog Screen");
+    		ManageScreens.changeScene(getClass().getResource("../catalog/CatalogScreen.fxml"), "Catalog Screen");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

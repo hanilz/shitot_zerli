@@ -4,10 +4,10 @@ import util.UserType;
 
 public class User {
 
-	private int idUser=-1;
+	private int idUser = -1;
 	private String username = "guest";
-	private int idAccount=-1;
-	private UserType userType=UserType.UNDEFINED;
+	private int idAccount = -1;
+	private UserType userType = UserType.UNDEFINED;
 	private boolean isLogged = false;
 	private static User userInstance = null;
 
@@ -15,7 +15,7 @@ public class User {
 	}
 
 	public static User getUserInstance() {
-		return userInstance == null ? userInstance=new User() : userInstance;
+		return userInstance == null ? userInstance = new User() : userInstance;
 	}
 
 	public void login(int idUser, String username, int idAccount, UserType userType) {
@@ -28,6 +28,7 @@ public class User {
 			System.out.println(this.username + " logged in");
 		}
 	}
+
 	public void logout() {
 		if (isLogged) {
 			this.idUser = -1;
@@ -37,20 +38,21 @@ public class User {
 			isLogged = false;
 		}
 	}
+
 	public String toString() {
 		return "User " + username + " logged\nidUser: " + idUser + "\nidAccount: " + idAccount + "\nuserType: "
 				+ userType;
 	}
-	public boolean isUserLoggedIn()
-	{
+
+	public boolean isUserLoggedIn() {
 		return isLogged;
 	}
 
 	public String getUsername() {
 		return username;
 	}
-	public int getIdUser()
-	{
+
+	public int getIdUser() {
 		return idUser;
 	}
 }

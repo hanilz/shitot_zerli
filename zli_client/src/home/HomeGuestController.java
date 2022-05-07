@@ -12,9 +12,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import util.ChangeScreen;
+import util.ManageScreens;
 
-public class HomeScreenController implements Initializable {
+public class HomeGuestController implements Initializable {
 
 	@FXML
 	private Button catalogButton;
@@ -52,7 +52,7 @@ public class HomeScreenController implements Initializable {
 	@FXML
 	void changeToLoginScreen(MouseEvent event) {
 		try {
-			ChangeScreen.changeScene(getClass().getResource("LoginScreen.fxml"), "Login");
+			ManageScreens.changeScene(getClass().getResource("LoginScreen.fxml"), "Login");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -61,7 +61,7 @@ public class HomeScreenController implements Initializable {
     @FXML
     void changeToCatalogScreen(MouseEvent event) {
     	try {
-    		ChangeScreen.changeScene(getClass().getResource("../catalog/CatalogScreen.fxml"), "Catalog");
+    		ManageScreens.changeScene(getClass().getResource("../catalog/CatalogScreen.fxml"), "Catalog");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -71,7 +71,5 @@ public class HomeScreenController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		TypeLabel.setText(User.getUserInstance().getUsername());		
 	}
-	
-	
 
 }

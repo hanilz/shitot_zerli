@@ -24,7 +24,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
-import util.ChangeScreen;
+import util.ManageScreens;
 
 public class CatalogController implements Initializable {
 
@@ -54,7 +54,7 @@ public class CatalogController implements Initializable {
 	@FXML
 	void goToHomeScreen(MouseEvent event) {
 		try {
-			ChangeScreen.changeScene(getClass().getResource("../home/HomeNotLoggedInScreen.fxml"), "Home Screen");
+			ManageScreens.changeScene(getClass().getResource("../home/HomeGuestScreen.fxml"), "Home Screen");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -63,7 +63,7 @@ public class CatalogController implements Initializable {
     @FXML
     void changeToCartScreen(MouseEvent event) {
 		try {
-			ChangeScreen.changeScene(getClass().getResource("../order/CartScreen.fxml"), "Cart Screen");
+			ManageScreens.changeScene(getClass().getResource("../order/CartScreen.fxml"), "Cart Screen");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -7,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import util.ChangeScreen;
+import util.ManageScreens;
 
 public class ClientScreen extends Application {
 
@@ -32,9 +32,8 @@ public class ClientScreen extends Application {
 		}
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
-		ChangeScreen.setStage(primaryStage);
+		ManageScreens.setStage(primaryStage);
 		primaryStage.show();
 	}
-
 
 }
