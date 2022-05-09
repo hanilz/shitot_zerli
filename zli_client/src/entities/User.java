@@ -69,4 +69,8 @@ public class User {
 	{
 		return idUser;
 	}
+	public UserType getType()
+	{
+		return userType;
+	}
 }

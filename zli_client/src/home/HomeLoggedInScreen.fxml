@@ -9,9 +9,10 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-image: url(&quot;../resources/home/homepage.png&quot;);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.LoggedHomeScreenController">
+<HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" spacing="50.0" style="-fx-background-image: url(&quot;../resources/home/homepage.png&quot;);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.LoggedHomeScreenController">
    <children>
       <GridPane fx:id="sideHomeGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="238.0">
         <columnConstraints>
@@ -23,58 +24,43 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <HBox.margin>
-            <Insets right="250.0" />
+            <Insets />
          </HBox.margin>
          <children>
-            <Label prefHeight="45.0" prefWidth="167.0" text="Welcome To Zli" GridPane.rowIndex="1">
-               <font>
-                  <Font size="22.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets bottom="125.0" left="85.0" />
-               </GridPane.margin>
-            </Label>
-            <Label fx:id="userNameLabel" prefHeight="30.0" prefWidth="48.0" text="User" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets bottom="125.0" left="140.0" top="55.0" />
-               </GridPane.margin>
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
+            <VBox alignment="CENTER" GridPane.rowIndex="1">
+               <children>
+                  <Label prefHeight="45.0" prefWidth="167.0" text="Welcome To Zli">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="userNameLabel" prefHeight="30.0" prefWidth="48.0" text="User">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
          </children>
       </GridPane>
-      <GridPane fx:id="buttonGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="532.0" prefWidth="497.0">
+      <GridPane fx:id="buttonGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="372.0" prefWidth="555.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="400.0" minHeight="0.0" prefHeight="384.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="335.0" minHeight="10.0" prefHeight="215.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="250.0" minHeight="10.0" prefHeight="250.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="logoutButton" mnemonicParsing="false" onMouseClicked="#changeScreenGuestHome" text="Logout" GridPane.columnIndex="2" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets bottom="170.0" left="45.0" />
-               </GridPane.margin>
-            </Button>
-            <ImageView fitHeight="150.0" fitWidth="147.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
-               <image>
-                  <Image url="@../resources/home/logout.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="editProfileButton" mnemonicParsing="false" onMouseClicked="#changeScreenToEdit" text="Edit Profile" GridPane.columnIndex="2">
-               <GridPane.margin>
-                  <Insets bottom="170.0" left="45.0" />
-               </GridPane.margin>
-            </Button>
-            <ImageView fitHeight="147.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
-               <image>
-                  <Image url="@../resources/home/edit.png" />
-               </image>
-            </ImageView>
+            <VBox alignment="CENTER">
+               <children>
+                  <Button fx:id="logoutButton" mnemonicParsing="false" onMouseClicked="#changeScreenGuestHome" text="Logout" />
+                  <ImageView fitHeight="150.0" fitWidth="147.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/home/logout.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
          </children>
          <HBox.margin>
             <Insets right="100.0" />

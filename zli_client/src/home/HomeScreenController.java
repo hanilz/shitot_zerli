@@ -58,13 +58,6 @@ public class HomeScreenController implements Initializable {//Guest
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		if(User.getUserInstance().isUserLoggedIn())
-			try {
-				ChangeScreen.changeScene(getClass().getResource("../home/HomeLoggedInScreen.fxml"), "HomeScreen");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		userNameLabel.setText(User.getUserInstance().getUsername());		
 	}
 	
