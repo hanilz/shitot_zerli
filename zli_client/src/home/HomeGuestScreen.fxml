@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.HomeGuestController">
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.HomeGuestController">
    <children>
       <HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-image: url('file:D:/EclipseProjects/ZliPrototype/src/resources/home/homepage.png');">
          <children>
@@ -91,7 +91,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="registerBtn" mnemonicParsing="false" text="Exit" GridPane.columnIndex="2">
+                              <Button fx:id="exitButton" mnemonicParsing="false" onMousePressed="#exitApplication" text="Exit" GridPane.columnIndex="2">
                                  <GridPane.margin>
                                     <Insets bottom="170.0" left="62.0" />
                                  </GridPane.margin>

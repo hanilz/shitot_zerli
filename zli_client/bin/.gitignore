@@ -1,9 +1,5 @@
-/cartTest/
-/home/
-/entities/
+/userScreens/
+/MnageUsers.fxml
 /util/
-/client/
-/order/
-/catalog/
-/report/
-/resources/
+/entities/
+/home/

@@ -10,6 +10,8 @@ import java.util.HashMap;
 
 import entities.Order;
 import entities.Product;
+import entities.User;
+import entities.UserDetails;
 
 /**
  * AnaylzeCommand - will anaylze the command that given from the server
@@ -139,6 +141,57 @@ public class AnaylzeCommand {
 			preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, 0);
 			preparedStmt.setInt(2, idUser);
+			preparedStmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("failed to fetch user");
+			e.printStackTrace();
+		}
+	}
+
+	public static ArrayList<UserDetails> selectAllUsers() {
+		ArrayList<UserDetails> users = new ArrayList<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt.executeQuery("SELECT * FROM user_details;");
+			while (rs.next()) {
+				int idAccount = rs.getInt(1);
+				String firstName =  rs.getString(2);
+				String lastName =  rs.getString(3);
+				String id =  rs.getString(4);
+				String email =  rs.getString(5);
+				String phoneNumber = rs.getString(6);
+				String status = rs.getString(7);
+				UserDetails resultOrder = new UserDetails(idAccount, firstName, lastName, id, email, phoneNumber,status);
+				users.add(resultOrder);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+
+	public static void changeUserStatus(Object object) {
+		Connection conn;
+		conn = DataBaseController.getConn();
+		try {
+			ResultSet rs;
+			String query = "SELECT * FROM user_details WHERE idAccount = ?";
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+		
+			int id = (Integer)object;
+			preparedStmt.setInt(1, id);
+			rs = preparedStmt.executeQuery();
+			rs.next();
+			String userStatus = rs.getString(7);
+			
+			preparedStmt = conn.prepareStatement(query);
+			query = "UPDATE user_details SET status = ? WHERE idAccount = ?";
+			preparedStmt = conn.prepareStatement(query);
+			if(userStatus.equals("Active"))
+				preparedStmt.setString(1, "Suspended");
+			else
+				preparedStmt.setString(1, "Active");
+			preparedStmt.setInt(2, id);
 			preparedStmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("failed to fetch user");

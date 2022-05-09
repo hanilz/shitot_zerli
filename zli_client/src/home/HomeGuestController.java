@@ -37,8 +37,8 @@ public class HomeGuestController implements Initializable {
 	@FXML
 	private ImageView ordersImage;
 
-	@FXML
-	private Button registerBtn;
+    @FXML
+    private Button exitButton;
 
 	@FXML
 	private GridPane sideHomeGrid;
@@ -71,5 +71,14 @@ public class HomeGuestController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		TypeLabel.setText(User.getUserInstance().getUsername());		
 	}
+	
+    @FXML
+    void exitApplication(MouseEvent event) {
+    	try {
+    		ManageScreens.changeScene(getClass().getResource("../userScreens/ManageUsers.fxml"), "manageUsers");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
 
 }
