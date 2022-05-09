@@ -52,7 +52,7 @@ public class ServerMessageController {
 			String clientIP = client.getInetAddress().toString();
 			System.out.println("client disconnected detected: ip is " + clientIP);
 			// call database for update on disconnection
-			if (message.get("logout")!=null)
+			if (message.get("logout") != null)
 				AnaylzeCommand.logoutUser((int) message.get("logout"));
 			for (ClientDetails currentClient : ServerController.clients) {
 				if (clientIP.equals(currentClient.getClientIP())) {
@@ -74,8 +74,15 @@ public class ServerMessageController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			
+		} else if (command.equals("logout")) {
+			message.put("logout", AnaylzeCommand.logoutUser((int) message.get("logoutID")));
+			try {
+				client.sendToClient(message);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-
 		// handle login massage
 		else if (command.equals("login user")) {
 			HashMap<String, Object> result = AnaylzeCommand.loginUser((String) message.get("username"),

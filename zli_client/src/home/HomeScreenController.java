@@ -14,40 +14,22 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import util.ChangeScreen;
 
-public class HomeScreenController implements Initializable {
+public class HomeScreenController implements Initializable {//Guest
 
 	@FXML
-	private Button catalogButton;
+    private Button catalogButton;
 
-	@FXML
-	private ImageView catalogImage;
-
-	@FXML
-	private ImageView editProfileImage;
-
-	@FXML
-	private GridPane gridOptions;
-
-	@FXML
-	private HBox hbox;
-
-	@FXML
-	private Button loginBtn;
-
-	@FXML
-	private ImageView ordersImage;
-
-	@FXML
-	private Button registerBtn;
-
-	@FXML
-	private GridPane sideHomeGrid;
-
-	@FXML
-	private Label welcomeLbl;
-	
     @FXML
-    private Label TypeLabel;
+    private HBox hbox;
+
+    @FXML
+    private Button loginBtn;
+
+    @FXML
+    private GridPane sideHomeGrid;
+
+    @FXML
+    private Label userNameLabel;
 
 	@FXML
 	void changeToLoginScreen(MouseEvent event) {
@@ -58,10 +40,17 @@ public class HomeScreenController implements Initializable {
 		}
 	}
 	
+	void changeToLoggedHomeScreen() {
+		try {
+			ChangeScreen.changeScene(ChangeScreen.class.getResource("../home/HomeLoggedInScreen.fxml"), "HomeScreen");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
     @FXML
     void changeToCatalogScreen(MouseEvent event) {
     	try {
-    		ChangeScreen.changeScene(getClass().getResource("../catalog/CatalogScreen.fxml"), "Catalog");
+    		ChangeScreen.changeScene(ChangeScreen.class.getResource("../catalog/CatalogScreen.fxml"), "Catalog");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -69,7 +58,14 @@ public class HomeScreenController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		TypeLabel.setText(User.getUserInstance().getUsername());		
+		if(User.getUserInstance().isUserLoggedIn())
+			try {
+				ChangeScreen.changeScene(getClass().getResource("../home/HomeLoggedInScreen.fxml"), "HomeScreen");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		userNameLabel.setText(User.getUserInstance().getUsername());		
 	}
 	
 	

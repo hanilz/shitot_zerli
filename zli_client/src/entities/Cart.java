@@ -79,4 +79,7 @@ public class Cart {
 		}
 		return null;
 	}
+	public boolean isEmpty() {
+		return cart.isEmpty();
+	}
 }

@@ -1,5 +1,6 @@
 package order;
 
+import entities.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -56,6 +57,9 @@ public class GreetingCardController {
     @FXML
     void changeToHomeScreen(MouseEvent event) {
     	try {
+			if (User.getUserInstance().isUserLoggedIn())
+				ChangeScreen.changeScene(getClass().getResource("../home/HomeLoggedInScreen.fxml"), "HomeScreen");
+			else
     		ChangeScreen.changeScene(getClass().getResource("../home/HomeNotLoggedInScreen.fxml"), "Home Screen");
 		} catch (Exception e) {
 			e.printStackTrace();

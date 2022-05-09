@@ -58,8 +58,13 @@ public class CartController implements Initializable {
 	@FXML
 	void changeToHomeScreen(MouseEvent event) {
 		try {
-			ChangeScreen.changeScene(getClass().getResource("../home/HomeNotLoggedInScreen.fxml"), "Catalog Screen");
+			if (User.getUserInstance().isUserLoggedIn())
+				ChangeScreen.changeScene(getClass().getResource("../home/HomeLoggedInScreen.fxml"), "HomeScreen");
+			else
+				ChangeScreen.changeScene(getClass().getResource("../home/HomeNotLoggedInScreen.fxml"),
+						"Catalog Screen");
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -115,7 +120,7 @@ public class CartController implements Initializable {
 
 	public void refreshTotalPrice() {
 		priceLabel.setText(InputChecker.price(cart.getTotalPrice()));
-		if (priceLabel.getText().equals("0.0 �")) {
+		if (cart.isEmpty()) {
 			buyButton.setStyle("-fx-background-color: red");
 			buyButton.setDisable(true);
 		} else {

@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import client.ClientFormController;
 import entities.Product;
+import entities.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -54,6 +55,9 @@ public class CatalogController implements Initializable {
 	@FXML
 	void goToHomeScreen(MouseEvent event) {
 		try {
+			if (User.getUserInstance().isUserLoggedIn())
+				ChangeScreen.changeScene(getClass().getResource("../home/HomeLoggedInScreen.fxml"), "HomeScreen");
+			else
 			ChangeScreen.changeScene(getClass().getResource("../home/HomeNotLoggedInScreen.fxml"), "Home Screen");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -62,7 +66,7 @@ public class CatalogController implements Initializable {
 
     @FXML
     void changeToCartScreen(MouseEvent event) {
-		try {
+    	try {
 			ChangeScreen.changeScene(getClass().getResource("../order/CartScreen.fxml"), "Cart Screen");
 		} catch (Exception e) {
 			e.printStackTrace();

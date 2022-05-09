@@ -1,5 +1,9 @@
 package entities;
 
+import java.io.IOException;
+import java.util.HashMap;
+
+import client.ClientFormController;
 import util.UserType;
 
 public class User {
@@ -28,8 +32,19 @@ public class User {
 			System.out.println(this.username + " logged in");
 		}
 	}
-	public void logout() {
+
+	public void logout()  {
 		if (isLogged) {
+			// updateDB
+			HashMap<String, Object> message = new HashMap<>();
+			message.put("command", "logout");
+			message.put("logoutID", User.getUserInstance().getIdUser());
+			if((boolean)ClientFormController.client.accept(message))
+			{
+				System.out.println("logout");
+			}
+			else
+				System.out.println("failed");
 			this.idUser = -1;
 			this.username = "guest";
 			this.idAccount = -1;
@@ -37,6 +52,7 @@ public class User {
 			isLogged = false;
 		}
 	}
+	
 	public String toString() {
 		return "User " + username + " logged\nidUser: " + idUser + "\nidAccount: " + idAccount + "\nuserType: "
 				+ userType;

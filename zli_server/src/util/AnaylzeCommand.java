@@ -128,21 +128,21 @@ public class AnaylzeCommand {
 		return login;// default for any throw would be unregistered
 	}
 
-	public static void logoutUser(int idUser) {
+	public static boolean logoutUser(int idUser) {
 		Connection conn;
 		conn = DataBaseController.getConn();
 		ResultSet rs;
-		String query = "SELECT * FROM users WHERE idUser";
+		String query = "UPDATE users SET isLogin = ? WHERE idUser = ?";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			query = "UPDATE users SET isLogin = ? WHERE idUser = ?";
 			preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, 0);
 			preparedStmt.setInt(2, idUser);
-			preparedStmt.executeUpdate();
+			System.out.println(preparedStmt.executeUpdate());
+			return true;
 		} catch (SQLException e) {
-			System.out.println("failed to fetch user");
 			e.printStackTrace();
+			return false;
 		}
 	}
 

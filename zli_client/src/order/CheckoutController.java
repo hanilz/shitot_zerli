@@ -6,6 +6,7 @@ import java.util.Set;
 
 import entities.Cart;
 import entities.Product;
+import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -92,6 +93,9 @@ public class CheckoutController implements Initializable{
     @FXML
     void changeToHome(MouseEvent event) {
     	try {
+			if (User.getUserInstance().isUserLoggedIn())
+				ChangeScreen.changeScene(getClass().getResource("../home/HomeLoggedInScreen.fxml"), "HomeScreen");
+			else
     		ChangeScreen.changeScene(getClass().getResource("../home/HomeNotLoggedInScreen.fxml"), "Home Screen");
 		} catch (Exception e) {
 			e.printStackTrace();

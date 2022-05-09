@@ -3,6 +3,7 @@ package order;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -81,6 +82,9 @@ public class DeliveryController implements Initializable {
 	@FXML
 	void changeToHomeScreen(MouseEvent event) {
 		try {
+			if (User.getUserInstance().isUserLoggedIn())
+				ChangeScreen.changeScene(getClass().getResource("../home/HomeLoggedInScreen.fxml"), "HomeScreen");
+			else
 			ChangeScreen.changeScene(getClass().getResource("../home/HomeNotLoggedInScreen.fxml"), "Home Screen");
 		} catch (Exception e) {
 			e.printStackTrace();

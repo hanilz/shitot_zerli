@@ -51,7 +51,7 @@ public class LoginScreenController implements Initializable {
 		responseAction(event, username, response);
 	}
 
-	private void checkUserInputAndLogin(String username, String password) {
+	private void checkUserInputAndLogin(String username, String password) {// Login
 		if (User.getUserInstance().isUserLoggedIn() || username.equals("") || password.equals("")) {// Label empty or
 																									// already client or
 																									// already logged in
@@ -82,7 +82,8 @@ public class LoginScreenController implements Initializable {
 				System.out.println("running : " + User.getUserInstance());
 				if (popup(event))
 					return;
-				ChangeScreen.changeScene(ClientScreen.class.getResource("../catalog/CatalogScreen.fxml"), "Catalog");
+				ChangeScreen.changeScene(getClass().getResource("HomeLoggedInScreen.fxml"), "UserHome");//changed
+				//ChangeScreen.changeScene(ClientScreen.class.getResource("../catalog/CatalogScreen.fxml"), "Catalog");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -99,12 +100,12 @@ public class LoginScreenController implements Initializable {
 		}
 	}
 
-	public static void enablePopup(boolean Popup) {
+	public static void enablePopup(boolean Popup) {// setting as pop up (not changing stages)
 		isPopup = Popup;
 	}
 
 	@FXML
-	void changeToHomeScreen(MouseEvent event) {
+	void changeToHomeScreen(MouseEvent event) {// back button
 		if (popup(event))
 			return;
 		try {
@@ -114,7 +115,7 @@ public class LoginScreenController implements Initializable {
 		}
 	}
 
-	private boolean popup(MouseEvent event) {
+	private boolean popup(MouseEvent event) {// popup behavior =closing window and not changing stage
 		if (isPopup) {
 			Node n = ((Node) (event.getSource()));
 			Stage s = ((Stage) n.getScene().getWindow());
