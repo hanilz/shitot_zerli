@@ -6,6 +6,8 @@ import java.util.HashMap;
 
 import entities.Order;
 import entities.Product;
+import entities.User;
+import entities.UserDetails;
 import ocsf.server.ConnectionToClient;
 import server.ServerController;
 
@@ -87,5 +89,28 @@ public class ServerMessageController {
 				e.printStackTrace();
 			}
 		}
+		
+		else if(command.equals("fetch all user details")) {
+			ArrayList<UserDetails> users = AnaylzeCommand.selectAllUsers();
+			try {
+				message.put("response", users);
+				client.sendToClient(message);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		else if(command.equals("change user status")) {
+			message.get("id");
+			String response  = AnaylzeCommand.changeUserStatus(message.get("id"));
+			try {
+				message.put("response",response);
+				client.sendToClient(message);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
 	}
 }
