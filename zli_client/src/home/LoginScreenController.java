@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import util.ManageScreens;
+import util.Screens;
 import util.Status;
 import util.UserType;
 
@@ -72,7 +73,6 @@ public class LoginScreenController implements Initializable {
 	private void responseAction(MouseEvent event, String username, HashMap<String, Object> response) {
 		switch ((Status) (response).get("response")) {
 		case NEW_LOG_IN:
-			try {
 				errorLabel.setVisible(false);
 				int idUser = (Integer) response.get("idUser");
 				int idAccount = (Integer) response.get("idAccount");
@@ -82,11 +82,7 @@ public class LoginScreenController implements Initializable {
 				System.out.println("running : " + User.getUserInstance());
 				if (popup(event))
 					return;
-				ManageScreens.changeScene(ClientScreen.class.getResource("../catalog/CatalogScreen.fxml"), "Catalog");//login
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				ManageScreens.changeScreenTo(Screens.CATALOG);
 			break;
 		case ALREADY_LOGGED_IN:
 			errorLabel.setText("User already logged in");
@@ -107,11 +103,7 @@ public class LoginScreenController implements Initializable {
 	void changeToHomeScreen(MouseEvent event) {
 		if (popup(event))
 			return;
-		try {
-			ManageScreens.changeScene(ClientScreen.class.getResource("../home/HomeGuestScreen.fxml"), "Home");//back guest
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ManageScreens.home();
 	}
 
 	private boolean popup(MouseEvent event) {

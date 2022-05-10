@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import util.ManageScreens;
+import util.Screens;
 import util.InputChecker;
 
 public class CheckoutController implements Initializable{
@@ -73,11 +74,7 @@ public class CheckoutController implements Initializable{
 	
     @FXML
     void changeToDeliveryScreen(MouseEvent event) {
-    	try {
-    		ManageScreens.changeScene(getClass().getResource("DeliveryDetailsScreen.fxml"), "Delivery Details Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	ManageScreens.changeScreenTo(Screens.DELIVERY_DETAILS);
     }
 
     @FXML
@@ -91,10 +88,6 @@ public class CheckoutController implements Initializable{
     
     @FXML
     void changeToHome(MouseEvent event) {
-    	try {
-    		ManageScreens.changeScene(getClass().getResource("../home/HomeGuestScreen.fxml"), "Home Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	ManageScreens.home();
     }
 }

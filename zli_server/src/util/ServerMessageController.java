@@ -55,7 +55,7 @@ public class ServerMessageController {
 			String clientIP = client.getInetAddress().toString();
 			System.out.println("client disconnected detected: ip is " + clientIP);
 			// call database for update on disconnection
-			if (message.get("logout")!=null)
+			if (message.get("logout") != null)
 				AnaylzeCommand.logoutUser((int) message.get("logout"));
 			for (ClientDetails currentClient : ServerController.clients) {
 				if (clientIP.equals(currentClient.getClientIP())) {
@@ -99,7 +99,6 @@ public class ServerMessageController {
 				e.printStackTrace();
 			}
 		}
-
 		
 		else if(command.equals("fetch all user details")) {
 			ArrayList<UserDetails> users = AnaylzeCommand.selectAllUsers();
@@ -110,18 +109,23 @@ public class ServerMessageController {
 				e.printStackTrace();
 			}
 		}
-		
-		
-		else if(command.equals("change user status")) {
+
+		else if (command.equals("change user status")) {
 			message.get("id");
-			String response  = AnaylzeCommand.changeUserStatus(message.get("id"));
+			String response = AnaylzeCommand.changeUserStatus(message.get("id"));
 			try {
-				message.put("response",response);
+				message.put("response", response);
+				client.sendToClient(message);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("logout")) {
+			message.put("logout", AnaylzeCommand.logoutUser((int) message.get("logoutID")));
+			try {
 				client.sendToClient(message);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-
 	}
 }
