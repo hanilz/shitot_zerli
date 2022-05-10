@@ -44,7 +44,7 @@ public class ClientMessageController {
 			ArrayList<Order> ordersList = (ArrayList<Order>) message.get("response");
 			if (!ordersList.isEmpty()) {
 				Order messageOrder = ordersList.get(0);
-				int orderNumber = messageOrder.getOrderNumber();
+				int orderNumber = messageOrder.getIdOrder();
 				switch (orderNumber) { // because we will use the orders table for the next assignment, we will use
 										// switch-case for extending the behavior of the orders table queries
 				case -1: // is fetch all orders

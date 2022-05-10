@@ -3,6 +3,8 @@ package order;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -14,6 +16,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import util.ManageScreens;
 
 public class DeliveryController implements Initializable {
@@ -24,7 +28,10 @@ public class DeliveryController implements Initializable {
 	@FXML
 	private Button backButton;
 
-	@FXML
+    @FXML
+    private ComboBox<?> branchComboBox;
+
+    @FXML
 	private Button checkoutButton;
 
 	@FXML
@@ -36,15 +43,21 @@ public class DeliveryController implements Initializable {
 	@FXML
 	private RadioButton deliveryRadioButton;
 
+    @FXML
+    private VBox deliveryVBox;
+	
 	@FXML
 	private ImageView homeButton;
 
 	@FXML
-	private ComboBox<?> hourComboBox;
+	private ComboBox<String> hourComboBox;
 
 	@FXML
-	private ComboBox<?> minuteComboBox;
+	private ComboBox<String> minuteComboBox;
 
+    @FXML
+    private HBox pickupHBox;
+	
 	@FXML
 	private RadioButton pickUpRadioButton;
 
@@ -54,6 +67,9 @@ public class DeliveryController implements Initializable {
 	@FXML
 	private TextField recieverPhoneField;
 
+	@FXML
+    private ComboBox<?> regionComboBox;
+	
 	@FXML
 	private Label required;
 
@@ -90,27 +106,19 @@ public class DeliveryController implements Initializable {
 	@FXML
 	void selectDelivery(MouseEvent event) {
 		if (deliveryRadioButton.isSelected() && deliveryButton == 0) {
-			enableDeliveryOptions(false);
-
+			pickupHBox.setVisible(false);
+			deliveryVBox.setVisible(true);
+			
 			pickupButton = 0;
 		}
 		deliveryButton++;
 	}
 
-	private void enableDeliveryOptions(boolean setOption) {
-		addressField.setDisable(setOption);
-		deliveryDatePicker.setDisable(setOption);
-		recieverNameField.setDisable(setOption);
-		hourComboBox.setDisable(setOption);
-		minuteComboBox.setDisable(setOption);
-		recieverPhoneField.setDisable(setOption);
-		required.setVisible(!setOption);
-	}
-
 	@FXML
 	void selectPickup(MouseEvent event) {
 		if (pickUpRadioButton.isSelected() && pickupButton == 0) {
-			enableDeliveryOptions(true);
+			pickupHBox.setVisible(true);
+			deliveryVBox.setVisible(false);
 
 			deliveryButton = 0;
 
@@ -120,6 +128,11 @@ public class DeliveryController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		hourComboBox.getItems().addAll("00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15",
+		        "16","17","18","19","20","21","22","23");
+		minuteComboBox.getItems().addAll("00","15","30","45");
+		
+		
 	}
 
 }
