@@ -52,11 +52,7 @@ public class ManageUsersController implements Initializable {
 
     @FXML
     void changeScreenToMain(ActionEvent event) {
-    	try {
-    		ManageScreens.changeScene(getClass().getResource("../Home/HomeGuestScreen.fxml"), "Home Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	ManageScreens.home();
     }
 
 	@SuppressWarnings("unchecked")
