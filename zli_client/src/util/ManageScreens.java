@@ -82,7 +82,7 @@ public class ManageScreens {
 	public static Stage getPopupStage() {
 		return popupStage;
 	}
-
+	
 	public static void changeScreenTo(Screens screen) {
 
 		try {

@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.WindowEvent;
 import util.ManageClients;
 import util.ManageScreens;
+import util.Screens;
 
 /**
  * ClientFormController will handle all the events from the gui
@@ -69,11 +70,8 @@ public class ClientFormController {
 	 * connected to the server-ip
 	 */
 	private void changeSceneToCatalog() {
-		try {
-			ManageScreens.changeScene(getClass().getResource("../catalog/CatalogScreen.fxml"), "Catalog");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ManageScreens.changeScreenTo(Screens.CATALOG);
+
 	}
 
 }

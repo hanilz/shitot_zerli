@@ -20,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import util.ManageScreens;
+import util.Screens;
 import util.InputChecker;
 
 public class CartController implements Initializable {
@@ -57,21 +58,12 @@ public class CartController implements Initializable {
 
 	@FXML
 	void changeToHomeScreen(MouseEvent event) {
-		try {
-			ManageScreens.changeScene(getClass().getResource("../home/HomeGuestScreen.fxml"), "Catalog Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		ManageScreens.home();
 	}
 
 	@FXML
 	void changeToCatalogScreen(MouseEvent event) {
-		try {
-			ManageScreens.changeScene(getClass().getResource("../catalog/CatalogScreen.fxml"), "Catalog Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ManageScreens.changeScreenTo(Screens.CATALOG);
 	}
 
 	@FXML

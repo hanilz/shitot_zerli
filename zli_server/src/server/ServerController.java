@@ -33,8 +33,8 @@ public class ServerController extends AbstractServer implements Runnable {
 	 * present the clients
 	 */
 	public static final ObservableList<ClientDetails> clients = FXCollections.observableArrayList();
-	
-	//  singleton
+
+	// singleton
 	private static ServerController sc = null;
 
 	private ServerController() {
@@ -44,9 +44,9 @@ public class ServerController extends AbstractServer implements Runnable {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
-	
+
 	public static ServerController getServerController() {
-		if(sc == null)
+		if (sc == null)
 			sc = new ServerController();
 		return sc;
 	}
@@ -168,8 +168,7 @@ public class ServerController extends AbstractServer implements Runnable {
 			if (currentClient.getClientIP().equals(clientAddress)) {
 				System.out.println("Client " + currentClient.getClientIP() + " found - disconnecting.");
 				currentClient.setStatus("Disconnected");
-				System.out
-						.println("Client " + currentClient.getClientIP() + " status is - " + currentClient.getStatus());
+				System.out.println("Client " + currentClient.getClientIP() + " status is - " + currentClient.getStatus());
 			}
 		}
 		ServerFormController.get().refreshClientsTable();

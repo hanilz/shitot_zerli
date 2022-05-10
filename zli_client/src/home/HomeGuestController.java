@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import util.ManageScreens;
+import util.Screens;
 
 public class HomeGuestController implements Initializable {
 
@@ -51,20 +52,12 @@ public class HomeGuestController implements Initializable {
 
 	@FXML
 	void changeToLoginScreen(MouseEvent event) {
-		try {
-			ManageScreens.changeScene(getClass().getResource("LoginScreen.fxml"), "Login");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ManageScreens.changeScreenTo(Screens.LOGIN);
 	}
 	
     @FXML
     void changeToCatalogScreen(MouseEvent event) {
-    	try {
-    		ManageScreens.changeScene(getClass().getResource("../catalog/CatalogScreen.fxml"), "Catalog");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	ManageScreens.changeScreenTo(Screens.CATALOG);
     }
 
 	@Override

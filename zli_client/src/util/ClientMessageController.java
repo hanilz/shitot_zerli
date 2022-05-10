@@ -63,9 +63,10 @@ public class ClientMessageController {
 		} else if (command.contains("client disconnected")) {
 			ClientController.setResponse("client disconnected");
 		}
-
+		else if(command.contains("logout"))
+			ClientController.setResponse((boolean)message.get("logout"));//logout 
 		
-		if (command.contains("login user")) {
+		else if (command.contains("login user")) {
 			try {
 				ClientController.setResponse(message);
 			} catch (Exception e) {

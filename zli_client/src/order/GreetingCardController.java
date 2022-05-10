@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import util.ManageScreens;
+import util.Screens;
 
 public class GreetingCardController {
 
@@ -37,29 +38,17 @@ public class GreetingCardController {
 
     @FXML
     void changeToCartScreen(MouseEvent event) {
-    	try {
-    		ManageScreens.changeScene(getClass().getResource("../order/CartScreen.fxml"), "Cart Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	ManageScreens.changeScreenTo(Screens.CART);
     }
 
     @FXML
     void changeToDeliveryScreen(MouseEvent event) {
-    	try {
-    		ManageScreens.changeScene(getClass().getResource("../order/DeliveryDetailsScreen.fxml"), "Delivery Details Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	ManageScreens.changeScreenTo(Screens.DELIVERY_DETAILS);
     }
 
     @FXML
     void changeToHomeScreen(MouseEvent event) {
-    	try {
-    		ManageScreens.changeScene(getClass().getResource("../home/HomeGuestScreen.fxml"), "Home Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	ManageScreens.home();
     }
 
     @FXML

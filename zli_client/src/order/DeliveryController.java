@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import util.ManageScreens;
+import util.Screens;
 
 public class DeliveryController implements Initializable {
 
@@ -77,30 +78,17 @@ public class DeliveryController implements Initializable {
 
 	@FXML
 	void changeToCheckoutScreen(MouseEvent event) {
-		try {
-			ManageScreens.changeScene(getClass().getResource("../order/CheckoutScreen.fxml"), "Checkout Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ManageScreens.changeScreenTo(Screens.CHECKOUT);
 	}
 
 	@FXML
 	void changeToGreetingCardScreen(MouseEvent event) {
-		try {
-			ManageScreens.changeScene(getClass().getResource("../order/GreetingCardScreen.fxml"),
-					"Greeting Card Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ManageScreens.changeScreenTo(Screens.GREATING_CARD);
 	}
 
 	@FXML
 	void changeToHomeScreen(MouseEvent event) {
-		try {
-			ManageScreens.changeScene(getClass().getResource("../home/HomeGuestScreen.fxml"), "Home Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ManageScreens.home();
 	}
 
 	@FXML
