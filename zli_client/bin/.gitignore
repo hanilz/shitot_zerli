@@ -1,9 +1,6 @@
-/cartTest/
-/home/
-/entities/
-/util/
-/client/
 /order/
+/util/
+/entities/
 /catalog/
-/report/
-/resources/
+/client/
+/home/
