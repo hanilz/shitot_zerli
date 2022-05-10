@@ -1,5 +1,6 @@
 package home;
 
+import entities.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,6 +9,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import util.ManageClients;
 import util.ManageScreens;
+import util.Screens;
 
 public class HomeUserTypesController implements HomeInterface {
 
@@ -36,15 +38,11 @@ public class HomeUserTypesController implements HomeInterface {
 
 	@Override
 	public void logoutFromUser(MouseEvent event) {
-		//disconnect from the db
-		ManageClients.exitClient();
-		//change Scene to guest or show login screen
-		try {
-			ManageScreens.changeScene(getClass().getResource("HomeGuestScreen.fxml"), "Zli Home: Guest");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
+		User.getUserInstance().logout();
+		ManageScreens.changeScreenTo(Screens.GUEST_HOME);	
+	}
+	public void changeToCatalog(MouseEvent event) {
+		ManageScreens.changeScreenTo(Screens.CATALOG);	
 	}
 
 }
