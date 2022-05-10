@@ -1,5 +1,6 @@
 package util;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -8,6 +9,8 @@ import client.ClientScreen;
 import entities.Branch;
 import entities.Order;
 import entities.Product;
+import entities.User;
+import entities.UserDetails;
 import javafx.collections.FXCollections;
 
 /**
@@ -77,11 +80,23 @@ public class ClientMessageController {
 			ClientController.setResponse(response);
 		}
 		
+<<<<<<< HEAD
 		else if(command.contains("fetch branches")) {
 			ArrayList<Branch> branchesList = (ArrayList<Branch>) message.get("response");
 			response = FXCollections.observableArrayList(branchesList);
 			ClientController.setResponse(response);
 		}
+=======
+		else if(command.contains("fetch all user details")) {
+			ArrayList<UserDetails> userList = (ArrayList<UserDetails>) message.get("response");
+			response = FXCollections.observableArrayList(userList);
+			ClientController.setResponse(response);
+		}
+		
+		else if(command.equals("change user status")) {
+			ClientController.setResponse(message.get("response"));
+		}
+>>>>>>> 8823c059d7eb0c794a7f454d2ff132d32919e2dc
 	}
 
 	/**
