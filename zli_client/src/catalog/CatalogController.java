@@ -1,6 +1,5 @@
 package catalog;
 
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -25,7 +24,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
+import order.CartController;
 import util.ChangeScreen;
+import util.Screens;
 
 public class CatalogController implements Initializable {
 
@@ -46,34 +47,21 @@ public class CatalogController implements Initializable {
 
 	private ObservableList<Product> products = FXCollections.observableArrayList();
 
-    @FXML
-    private GridPane catalogGrid;
+	@FXML
+	private GridPane catalogGrid;
 
 	private CatalogVBox[] productVBoxList;
 
-	
 	@FXML
 	void goToHomeScreen(MouseEvent event) {
-		try {
-			if (User.getUserInstance().isUserLoggedIn())
-				ChangeScreen.changeScene(getClass().getResource("../home/HomeLoggedInScreen.fxml"), "HomeScreen");
-			else
-			ChangeScreen.changeScene(getClass().getResource("../home/HomeNotLoggedInScreen.fxml"), "Home Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ChangeScreen.home();
 	}
 
-    @FXML
-    void changeToCartScreen(MouseEvent event) {
-    	try {
-			ChangeScreen.changeScene(getClass().getResource("../order/CartScreen.fxml"), "Cart Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	@FXML
+	void changeToCartScreen(MouseEvent event) {
+		ChangeScreen.to(Screens.CART);
+	}
 
-    }
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// first - we will fetch all the orders from the db
@@ -83,18 +71,18 @@ public class CatalogController implements Initializable {
 		products = (ObservableList<Product>) response;
 		initCatalogVBoxes();
 		initGrid();
-		//scrollCatalogPane.setContent(catalogGrid);
+		// scrollCatalogPane.setContent(catalogGrid);
 	}
 
 	private void initGrid() {
-		int numberOfRows = (int) Math.ceil(products.size()/3.0);
-        for (int i = 0; i < numberOfRows; i++) {
-            RowConstraints rowConst = new RowConstraints();
-            rowConst.setPercentHeight(100.0 / numberOfRows);
-            catalogGrid.getRowConstraints().add(rowConst);         
-        }		
+		int numberOfRows = (int) Math.ceil(products.size() / 3.0);
+		for (int i = 0; i < numberOfRows; i++) {
+			RowConstraints rowConst = new RowConstraints();
+			rowConst.setPercentHeight(100.0 / numberOfRows);
+			catalogGrid.getRowConstraints().add(rowConst);
+		}
 		for (int i = 0; i < productVBoxList.length; i++) {
-				catalogGrid.add(productVBoxList[i], i%3, i/3);
+			catalogGrid.add(productVBoxList[i], i % 3, i / 3);
 		}
 	}
 

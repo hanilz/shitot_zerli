@@ -16,6 +16,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import util.ChangeScreen;
+import util.Screens;
 
 public class DeliveryController implements Initializable {
 
@@ -62,33 +63,17 @@ public class DeliveryController implements Initializable {
 
 	@FXML
 	void changeToCheckoutScreen(MouseEvent event) {
-		try {
-			ChangeScreen.changeScene(getClass().getResource("../order/CheckoutScreen.fxml"), "Checkout Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ChangeScreen.to(Screens.CHECKOUT);
 	}
 
 	@FXML
 	void changeToGreetingCardScreen(MouseEvent event) {
-		try {
-			ChangeScreen.changeScene(getClass().getResource("../order/GreetingCardScreen.fxml"),
-					"Greeting Card Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ChangeScreen.to(Screens.GREATING_CARD);
 	}
 
 	@FXML
 	void changeToHomeScreen(MouseEvent event) {
-		try {
-			if (User.getUserInstance().isUserLoggedIn())
-				ChangeScreen.changeScene(getClass().getResource("../home/HomeLoggedInScreen.fxml"), "HomeScreen");
-			else
-			ChangeScreen.changeScene(getClass().getResource("../home/HomeNotLoggedInScreen.fxml"), "Home Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ChangeScreen.home();
 	}
 
 	@FXML
@@ -123,7 +108,7 @@ public class DeliveryController implements Initializable {
 	}
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public void initialize(URL location, ResourceBundle resources) {//?
 	}
 
 }

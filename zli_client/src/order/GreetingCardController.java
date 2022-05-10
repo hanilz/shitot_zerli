@@ -1,6 +1,5 @@
 package order;
 
-import entities.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -9,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import util.ChangeScreen;
+import util.Screens;
 
 public class GreetingCardController {
 
@@ -38,32 +38,17 @@ public class GreetingCardController {
 
     @FXML
     void changeToCartScreen(MouseEvent event) {
-    	try {
-    		ChangeScreen.changeScene(getClass().getResource("../order/CartScreen.fxml"), "Cart Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	ChangeScreen.to(Screens.CART);
     }
 
     @FXML
     void changeToDeliveryScreen(MouseEvent event) {
-    	try {
-    		ChangeScreen.changeScene(getClass().getResource("../order/DeliveryDetailsScreen.fxml"), "Delivery Details Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	ChangeScreen.to(Screens.DELIVERY_DETAILS);
     }
 
     @FXML
     void changeToHomeScreen(MouseEvent event) {
-    	try {
-			if (User.getUserInstance().isUserLoggedIn())
-				ChangeScreen.changeScene(getClass().getResource("../home/HomeLoggedInScreen.fxml"), "HomeScreen");
-			else
-    		ChangeScreen.changeScene(getClass().getResource("../home/HomeNotLoggedInScreen.fxml"), "Home Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	ChangeScreen.home();
     }
 
     @FXML

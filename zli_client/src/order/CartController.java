@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import util.ChangeScreen;
 import util.InputChecker;
+import util.Screens;
 
 public class CartController implements Initializable {
 	private static Cart cart = Cart.getInstance();
@@ -57,26 +58,16 @@ public class CartController implements Initializable {
 
 	@FXML
 	void changeToHomeScreen(MouseEvent event) {
-		try {
-			if (User.getUserInstance().isUserLoggedIn())
-				ChangeScreen.changeScene(getClass().getResource("../home/HomeLoggedInScreen.fxml"), "HomeScreen");
-			else
-				ChangeScreen.changeScene(getClass().getResource("../home/HomeNotLoggedInScreen.fxml"),
-						"Catalog Screen");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		if (User.getUserInstance().isUserLoggedIn())
+			ChangeScreen.to(Screens.USER_HOME);
+		else
+			ChangeScreen.to(Screens.GUEST_HOME);
 	}
 
 	@FXML
 	void changeToCatalogScreen(MouseEvent event) {
-		try {
-			ChangeScreen.changeScene(getClass().getResource("../catalog/CatalogScreen.fxml"), "Catalog Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ChangeScreen.to(Screens.CATALOG);
+
 	}
 
 	@FXML
@@ -97,19 +88,9 @@ public class CartController implements Initializable {
 			LoginScreenController.enablePopup(true);// enable popup
 			stage.showAndWait();
 			LoginScreenController.enablePopup(false);// disable popup
-			if (User.getUserInstance().isUserLoggedIn())
-				try {
-					ChangeScreen.changeScene(getClass().getResource("GreetingCardScreen.fxml"), "Greeting Card Screen");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-		} else {// user tries to buy
-			try {
-				ChangeScreen.changeScene(getClass().getResource("GreetingCardScreen.fxml"), "Greeting Card Screen");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		}
+			if (User.getUserInstance().isUserLoggedIn())//only users can processed
+				ChangeScreen.to(Screens.GREATING_CARD);
 	}
 
 	@Override

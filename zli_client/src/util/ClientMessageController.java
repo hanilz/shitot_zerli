@@ -83,11 +83,7 @@ public class ClientMessageController {
 	 * connected to the server-ip
 	 */
 	private void changeSceneToMainClient() {
-		try {
-			ChangeScreen.changeScene(ClientScreen.class.getResource("ClientScreen.fxml"), "Zli Client");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ChangeScreen.to(Screens.CLIENT);
 	}
 }
 

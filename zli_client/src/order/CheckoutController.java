@@ -17,44 +17,45 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import util.ChangeScreen;
 import util.InputChecker;
+import util.Screens;
 
-public class CheckoutController implements Initializable{
+public class CheckoutController implements Initializable {
 
-    @FXML
-    private Button backButton;
+	@FXML
+	private Button backButton;
 
-    @FXML
-    private TextField cardNumberField;
+	@FXML
+	private TextField cardNumberField;
 
-    @FXML
-    private TextField csvField;
+	@FXML
+	private TextField csvField;
 
-    @FXML
-    private TextField firstNameField;
+	@FXML
+	private TextField firstNameField;
 
-    @FXML
-    private ImageView homeButton;
+	@FXML
+	private ImageView homeButton;
 
-    @FXML
-    private TextField idField;
+	@FXML
+	private TextField idField;
 
-    @FXML
-    private TextField lastNameField;
+	@FXML
+	private TextField lastNameField;
 
-    @FXML
-    private TextField monthField;
+	@FXML
+	private TextField monthField;
 
-    @FXML
-    private VBox orderSummaryVBox;
+	@FXML
+	private VBox orderSummaryVBox;
 
-    @FXML
-    private Button placeOrderButton;
+	@FXML
+	private Button placeOrderButton;
 
-    @FXML
-    private TextField yearField;
-    
-    @FXML
-    private Label totalPriceLabel;
+	@FXML
+	private TextField yearField;
+
+	@FXML
+	private Label totalPriceLabel;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -63,42 +64,28 @@ public class CheckoutController implements Initializable{
 
 		for (Product product : products) {
 			Integer quantity = Cart.getInstance().getCart().get(product);
-			System.out.println("product to add is "+ product.getProductName() + " with the quantity " + quantity);
-			
+			System.out.println("product to add is " + product.getProductName() + " with the quantity " + quantity);
+
 			OrderSummaryHBox productSummaryHBox = new OrderSummaryHBox(product, quantity);
 			productSummaryHBox.initHBox();
 			orderSummaryVBox.getChildren().add(productSummaryHBox);
 		}
 		totalPriceLabel.setText(InputChecker.price(Cart.getInstance().getTotalPrice()));
 	}
-	
-    @FXML
-    void changeToDeliveryScreen(MouseEvent event) {
-    	try {
-    		ChangeScreen.changeScene(getClass().getResource("DeliveryDetailsScreen.fxml"), "Delivery Details Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    }
 
-    @FXML
-    void placeOrder(MouseEvent event) {
-    	try {
-    		ChangeScreen.openPopupFXML(getClass().getResource("PaymentSuccessfulPopup.fxml"), "Payment Successful!");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    }
-    
-    @FXML
-    void changeToHome(MouseEvent event) {
-    	try {
-			if (User.getUserInstance().isUserLoggedIn())
-				ChangeScreen.changeScene(getClass().getResource("../home/HomeLoggedInScreen.fxml"), "HomeScreen");
-			else
-    		ChangeScreen.changeScene(getClass().getResource("../home/HomeNotLoggedInScreen.fxml"), "Home Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    }
+	@FXML
+	void changeToDeliveryScreen(MouseEvent event) {
+		ChangeScreen.to(Screens.DELIVERY_DETAILS);
+	}
+
+	@FXML
+	void placeOrder(MouseEvent event) {
+		ChangeScreen.to(Screens.PAYMENT_SUCCESSFULY);
+	}
+
+	@FXML
+	void changeToHome(MouseEvent event) {
+		ChangeScreen.home();
+
+	}
 }

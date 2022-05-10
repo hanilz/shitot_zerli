@@ -14,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import util.ChangeScreen;
+import util.Screens;
 import util.UserType;
 
 public class LoggedHomeScreenController implements Initializable {
@@ -37,11 +38,7 @@ public class LoggedHomeScreenController implements Initializable {
 	@FXML
 	void changeScreenGuestHome(MouseEvent event) {// Logout
 		User.getUserInstance().logout();
-		try {
-			ChangeScreen.changeScene(getClass().getResource("HomeNotLoggedInScreen.fxml"), "Home");
-		} catch (Exception e) {
-		}
-
+		ChangeScreen.to(Screens.GUEST_HOME);
 	}
 
 	@Override
@@ -60,11 +57,10 @@ public class LoggedHomeScreenController implements Initializable {
 				if (i / 3 > 0 && i % 3 == 0)
 					buttonGrid.addRow(i);
 				if (i / 3 == 0) {
-					buttonGrid.addColumn(i+1);
+					buttonGrid.addColumn(i + 1);
 				}
 				buttons.add(new HomeVBox(ButtonsNames[i], urls[i], imagePath[i]));// saving
-				this.buttonGrid.add(buttons.get(i), i+1 % 3, i+1 / 3);
-				;
+				this.buttonGrid.add(buttons.get(i), i + 1 % 3, i + 1 / 3);
 			}
 	}
 

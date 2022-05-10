@@ -3,6 +3,7 @@ package home;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import catalog.CatalogController;
 import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,54 +14,42 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import util.ChangeScreen;
+import util.Screens;
 
-public class HomeScreenController implements Initializable {//Guest
+public class HomeScreenController implements Initializable {// Guest
 
 	@FXML
-    private Button catalogButton;
+	private Button catalogButton;
 
-    @FXML
-    private HBox hbox;
+	@FXML
+	private HBox hbox;
 
-    @FXML
-    private Button loginBtn;
+	@FXML
+	private Button loginBtn;
 
-    @FXML
-    private GridPane sideHomeGrid;
+	@FXML
+	private GridPane sideHomeGrid;
 
-    @FXML
-    private Label userNameLabel;
+	@FXML
+	private Label userNameLabel;
 
 	@FXML
 	void changeToLoginScreen(MouseEvent event) {
-		try {
-			ChangeScreen.changeScene(getClass().getResource("LoginScreen.fxml"), "Login");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ChangeScreen.to(Screens.LOGIN);
 	}
-	
-	void changeToLoggedHomeScreen() {
-		try {
-			ChangeScreen.changeScene(ChangeScreen.class.getResource("../home/HomeLoggedInScreen.fxml"), "HomeScreen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+
+	void changeToLoggedHomeScreen() {// maybe can be removed
+		ChangeScreen.to(Screens.USER_HOME);
 	}
-    @FXML
-    void changeToCatalogScreen(MouseEvent event) {
-    	try {
-    		ChangeScreen.changeScene(ChangeScreen.class.getResource("../catalog/CatalogScreen.fxml"), "Catalog");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    }
+
+	@FXML
+	void changeToCatalogScreen(MouseEvent event) {
+		ChangeScreen.to(Screens.CATALOG);
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		userNameLabel.setText(User.getUserInstance().getUsername());		
+		userNameLabel.setText(User.getUserInstance().getUsername());
 	}
-	
-	
 
 }

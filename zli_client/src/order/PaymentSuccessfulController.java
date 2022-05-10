@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import util.ChangeScreen;
+import util.Screens;
 
 public class PaymentSuccessfulController {
 
@@ -14,11 +15,7 @@ public class PaymentSuccessfulController {
     void changeToCatalog(MouseEvent event) {
     	if(ChangeScreen. getPopupStage() != null)
     		ChangeScreen. getPopupStage().close();
-    	try {
-    		ChangeScreen.changeScene(getClass().getResource("../catalog/CatalogScreen.fxml"), "Catalog Screen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	ChangeScreen.to(Screens.CATALOG);
     }
 
 }
