@@ -92,19 +92,13 @@ public class CartController implements Initializable {
 			LoginScreenController.enablePopup(true);// enable popup
 			stage.showAndWait();
 			LoginScreenController.enablePopup(false);// disable popup
-			if (User.getUserInstance().isUserLoggedIn())
-				try {
-					ManageScreens.changeScene(getClass().getResource("GreetingCardScreen.fxml"), "Greeting Card Screen");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-		} else {// user tries to buy
+		}
+		if (User.getUserInstance().isUserLoggedIn())
 			try {
 				ManageScreens.changeScene(getClass().getResource("GreetingCardScreen.fxml"), "Greeting Card Screen");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
 	}
 
 	@Override
