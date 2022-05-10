@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import entities.Branch;
 import entities.Order;
 import entities.Product;
 import ocsf.server.ConnectionToClient;
@@ -66,6 +67,15 @@ public class ServerMessageController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		} else if (command.equals("fetch branches")) {
+			ArrayList<Branch> branches = AnaylzeCommand.selectAllBranches();
+			
+			try {
+				message.put("response", branches);
+				client.sendToClient(message); // send the list to fetch all the orders to the server
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		} else if (command.equals("fetch products")) {
 			ArrayList<Product> products = AnaylzeCommand.selectAllProducts();
 			try {
@@ -87,5 +97,4 @@ public class ServerMessageController {
 				e.printStackTrace();
 			}
 		}
-	}
-}
+	}}

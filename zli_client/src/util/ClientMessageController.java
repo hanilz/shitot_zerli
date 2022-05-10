@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import client.ClientController;
 import client.ClientScreen;
+import entities.Branch;
 import entities.Order;
 import entities.Product;
 import javafx.collections.FXCollections;
@@ -62,7 +63,7 @@ public class ClientMessageController {
 		}
 
 		
-		if (command.contains("login user")) {
+		else if (command.contains("login user")) {
 			try {
 				ClientController.setResponse(message);
 			} catch (Exception e) {
@@ -73,6 +74,12 @@ public class ClientMessageController {
 		else if(command.contains("fetch products")) {
 			ArrayList<Product> productsList = (ArrayList<Product>) message.get("response");
 			response = FXCollections.observableArrayList(productsList);
+			ClientController.setResponse(response);
+		}
+		
+		else if(command.contains("fetch branches")) {
+			ArrayList<Branch> branchesList = (ArrayList<Branch>) message.get("response");
+			response = FXCollections.observableArrayList(branchesList);
 			ClientController.setResponse(response);
 		}
 	}

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import entities.Branch;
 import entities.Order;
 import entities.Product;
 
@@ -43,6 +44,26 @@ public class AnaylzeCommand {
 		return products;
 	}
 
+	public static ArrayList<Branch> selectAllBranches() {
+		ArrayList<Branch> branches = new ArrayList<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt.executeQuery("SELECT * FROM branches;");
+			while (rs.next()) {
+				int idBranch = rs.getInt(1);
+				String city = rs.getString(2);
+				String address = rs.getString(3);
+				String region = rs.getString(4);
+
+				Branch branchResult = new Branch(idBranch, city, address, region);
+				branches.add(branchResult);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return branches;
+		
+	}
 	public static void updateOrder(String orderNumber, String date, String color) {
 		try {
 			int sendOrderNumberDB = Integer.parseInt(orderNumber);

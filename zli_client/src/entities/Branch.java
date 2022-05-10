@@ -1,6 +1,12 @@
 package entities;
 
-public class Branch {
+import java.io.Serializable;
+
+public class Branch implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int idBranch;
 	private String city;
 	private String address;

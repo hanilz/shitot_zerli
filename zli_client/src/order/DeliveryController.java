@@ -1,8 +1,14 @@
 package order;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import client.ClientFormController;
+import entities.Branch;
+import entities.Product;
+import entities.SingletonOrder;
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,6 +24,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import util.ManageScreens;
 
 public class DeliveryController implements Initializable {
@@ -29,7 +36,7 @@ public class DeliveryController implements Initializable {
 	private Button backButton;
 
     @FXML
-    private ComboBox<?> branchComboBox;
+    private ComboBox<String> branchComboBox;
 
     @FXML
 	private Button checkoutButton;
@@ -43,6 +50,9 @@ public class DeliveryController implements Initializable {
 	@FXML
 	private RadioButton deliveryRadioButton;
 
+    @FXML
+    private Label fillAllFieldsLabel;
+    
     @FXML
     private VBox deliveryVBox;
 	
@@ -68,22 +78,70 @@ public class DeliveryController implements Initializable {
 	private TextField recieverPhoneField;
 
 	@FXML
-    private ComboBox<?> regionComboBox;
+    private ComboBox<String> regionComboBox;
 	
 	@FXML
 	private Label required;
 
 	int deliveryButton = 0, pickupButton = 0;
 
+	ObservableList<Branch> branches;
+	
 	@FXML
 	void changeToCheckoutScreen(MouseEvent event) {
 		try {
+//			if(deliveryRadioButton.isSelected()) {  // if delivery is selected 
+//				String addressString = addressField.getText();
+//				String recieverName = recieverNameField.getText();
+//				String reciever = recieverPhoneField.getText();
+//
+//				if(addressString.isEmpty() || recieverName.isEmpty() || reciever.isEmpty()) {
+//					switchFillAllFields();
+//					return;
+//				}
+//				try {
+//					String deliveryDate = deliveryDatePicker.getPromptText();
+//					String deliveryHour = hourComboBox.getPromptText();
+//					String deliveryMinute= minuteComboBox.getPromptText();
+//					String region = regionComboBox.getPromptText();
+//					for(Branch branch : branches) {
+//						if(branch.getRegion().equals(region)) {
+//							SingletonOrder.getInstance().setBranch(branch);
+//							break;
+//						}	
+//					}
+//				} catch (NullPointerException ex) {  // One of the comboBoxes is null
+//					switchFillAllFields();
+//					return;
+//				}
+//				SingletonOrder.getInstance().set(null);;
+//				SingletonOrder.getInstance().setBranch(branch);
+//				SingletonOrder.getInstance().setBranch(branch);
+//				SingletonOrder.getInstance().setBranch(branch);
+//				SingletonOrder.getInstance().setBranch(branch);
+//				SingletonOrder.getInstance().setBranch(branch);
+//				SingletonOrder.getInstance().setBranch(branch);
+//
+//			}
+//			else {  // if pick-up is selected 
+//				
+//				
+//				
+//			}
 			ManageScreens.changeScene(getClass().getResource("../order/CheckoutScreen.fxml"), "Checkout Screen");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
+	
+	private void switchFillAllFields() {
+		fillAllFieldsLabel.setText("* Please fill all the fields");
+		PauseTransition pause = new PauseTransition(Duration.seconds(5));
+		pause.setOnFinished(e -> fillAllFieldsLabel.setText(""));
+		pause.play();
+	}
+	
+	
 	@FXML
 	void changeToGreetingCardScreen(MouseEvent event) {
 		try {
@@ -130,8 +188,17 @@ public class DeliveryController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		hourComboBox.getItems().addAll("00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15",
 		        "16","17","18","19","20","21","22","23");
-		minuteComboBox.getItems().addAll("00","15","30","45");
+		minuteComboBox.getItems().addAll("00","15","30","45");		
 		
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", "fetch branches");
+		Object response = ClientFormController.client.accept(message);
+		branches = (ObservableList<Branch>) response;
+		
+		for(Branch branch : branches) {
+			regionComboBox.getItems().addAll(branch.getRegion());
+			branchComboBox.getItems().addAll(branch.getAddress()+ ", " + branch.getCity());
+		}
 		
 	}
 

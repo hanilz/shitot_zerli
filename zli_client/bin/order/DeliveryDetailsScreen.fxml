@@ -88,11 +88,16 @@
                         </Label>
                      </children>
                   </HBox>
-                  <ComboBox fx:id="branchComboBox" prefWidth="150.0" promptText="Branch" />
+                  <ComboBox fx:id="branchComboBox" prefHeight="25.0" prefWidth="231.0" promptText="Branch" />
                </children>
             </HBox>
             <VBox fx:id="deliveryVBox" alignment="BOTTOM_CENTER" prefHeight="252.0" prefWidth="775.0" spacing="6.0">
                <children>
+                  <HBox prefHeight="22.0" prefWidth="775.0">
+                     <children>
+                        <Label fx:id="fillAllFieldsLabel" text="* Please fill all the fields!" textFill="#ff1b1b" />
+                     </children>
+                  </HBox>
                   <HBox prefHeight="22.0" prefWidth="775.0">
                      <children>
                         <Label fx:id="required" text="* All fields are required" textFill="#ff1b1b" />
@@ -195,7 +200,7 @@
                               </Label>
                            </children>
                         </HBox>
-                        <ComboBox fx:id="regionComboBox" prefWidth="150.0" promptText="Region" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="regionComboBox" prefHeight="25.0" prefWidth="89.0" promptText="Region" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </children>
