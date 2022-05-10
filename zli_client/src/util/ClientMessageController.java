@@ -1,6 +1,5 @@
 package util;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -8,7 +7,6 @@ import client.ClientController;
 import client.ClientScreen;
 import entities.Order;
 import entities.Product;
-import entities.User;
 import entities.UserDetails;
 import javafx.collections.FXCollections;
 

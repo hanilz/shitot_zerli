@@ -8,7 +8,8 @@ public class User {
 	private String username = "guest";
 	private int idAccount = -1;
 	private UserType userType = UserType.UNDEFINED;
-	private boolean isLogged = false;
+	private boolean isLogin = false;
+	private String status = "";
 	private static User userInstance = null;
 
 	private User() {
@@ -19,23 +20,23 @@ public class User {
 	}
 
 	public void login(int idUser, String username, int idAccount, UserType userType) {
-		if (!isLogged) {
+		if (!isLogin) {
 			this.idUser = idUser;
 			this.username = username;
 			this.idAccount = idAccount;
 			this.userType = userType;
-			isLogged = true;
+			isLogin = true;
 			System.out.println(this.username + " logged in");
 		}
 	}
 
 	public void logout() {
-		if (isLogged) {
+		if (isLogin) {
 			this.idUser = -1;
 			this.username = "guest";
 			this.idAccount = -1;
 			this.userType = UserType.UNDEFINED;
-			isLogged = false;
+			isLogin = false;
 		}
 	}
 
@@ -45,7 +46,7 @@ public class User {
 	}
 
 	public boolean isUserLoggedIn() {
-		return isLogged;
+		return isLogin;
 	}
 
 	public String getUsername() {
