@@ -29,7 +29,7 @@
       </TableView>
       <HBox prefHeight="27.0" prefWidth="980.0">
          <children>
-            <Button mnemonicParsing="false" text="Back">
+            <Button fx:id="backBtn" mnemonicParsing="false" onAction="#changeScreenToMain" text="Back">
                <HBox.margin>
                   <Insets />
                </HBox.margin>

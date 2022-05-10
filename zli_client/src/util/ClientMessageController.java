@@ -86,7 +86,7 @@ public class ClientMessageController {
 		}
 		
 		else if(command.equals("change user status")) {
-			ClientController.setResponse("Changed");
+			ClientController.setResponse(message.get("response"));
 		}
 	}
 

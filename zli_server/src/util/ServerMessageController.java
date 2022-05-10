@@ -103,9 +103,9 @@ public class ServerMessageController {
 		
 		else if(command.equals("change user status")) {
 			message.get("id");
-			AnaylzeCommand.changeUserStatus(message.get("id"));
+			String response  = AnaylzeCommand.changeUserStatus(message.get("id"));
 			try {
-				message.put("response","Changed");
+				message.put("response",response);
 				client.sendToClient(message);
 			} catch (IOException e) {
 				e.printStackTrace();

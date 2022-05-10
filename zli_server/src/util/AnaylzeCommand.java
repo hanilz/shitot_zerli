@@ -148,6 +148,7 @@ public class AnaylzeCommand {
 		}
 	}
 
+	//this method is used to get all the users from user_details table
 	public static ArrayList<UserDetails> selectAllUsers() {
 		ArrayList<UserDetails> users = new ArrayList<>();
 		try {
@@ -170,33 +171,43 @@ public class AnaylzeCommand {
 		return users;
 	}
 
-	public static void changeUserStatus(Object object) {
-		Connection conn;
-		conn = DataBaseController.getConn();
+	
+	//this methods gets an Account id and changes the status of the user
+	public static String changeUserStatus(Object object) {
+		Connection conn = DataBaseController.getConn();
+		ResultSet rs;
+		int id = (Integer)object;
+		String response = "failed";
 		try {
-			ResultSet rs;
+			//first we get the current user status
 			String query = "SELECT * FROM user_details WHERE idAccount = ?";
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-		
-			int id = (Integer)object;
 			preparedStmt.setInt(1, id);
 			rs = preparedStmt.executeQuery();
-			rs.next();
-			String userStatus = rs.getString(7);
+			if(!rs.next())
+				return "failed";
+			String userStatus = rs.getString(7);	
 			
-			preparedStmt = conn.prepareStatement(query);
+			//preparedStmt = conn.prepareStatement(query);
+			//second we find the user again and change its status to be the inverse of the current status
 			query = "UPDATE user_details SET status = ? WHERE idAccount = ?";
 			preparedStmt = conn.prepareStatement(query);
-			if(userStatus.equals("Active"))
+			if(userStatus.equals("Active")) {
 				preparedStmt.setString(1, "Suspended");
-			else
+				response = "Suspended";
+			}
+			else {
 				preparedStmt.setString(1, "Active");
+				response = "Active";
+			}
 			preparedStmt.setInt(2, id);
 			preparedStmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("failed to fetch user");
 			e.printStackTrace();
 		}
+		
+		return response;
 	}
 
 }
