@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-image: url(&quot;../resources/home/homepage.png&quot;);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-image: url(&quot;../resources/home/homepage.png&quot;);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.HomeUserTypesController">
    <children>
       <GridPane fx:id="sideHomeGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="238.0">
         <columnConstraints>
@@ -75,7 +75,7 @@
                   <Image url="@../resources/home/edit.png" />
                </image>
             </ImageView>
-            <Button fx:id="catalogButton" mnemonicParsing="false" text="Catalog">
+            <Button fx:id="catalogButton" mnemonicParsing="false" onMouseClicked="#changeToCatalog" text="Catalog">
                <GridPane.margin>
                   <Insets bottom="170.0" left="45.0" />
                </GridPane.margin>
@@ -90,7 +90,7 @@
                   <Insets bottom="170.0" left="45.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="logoutBtn" mnemonicParsing="false" text="Logout" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <Button fx:id="logoutBtn" mnemonicParsing="false" onMouseClicked="#logoutFromUser" text="Logout" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets bottom="170.0" left="45.0" />
                </GridPane.margin>

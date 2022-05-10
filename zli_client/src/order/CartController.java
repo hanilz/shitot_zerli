@@ -86,11 +86,7 @@ public class CartController implements Initializable {
 			LoginScreenController.enablePopup(false);// disable popup
 		}
 		if (User.getUserInstance().isUserLoggedIn())
-			try {
-				ManageScreens.changeScene(getClass().getResource("GreetingCardScreen.fxml"), "Greeting Card Screen");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			ManageScreens.changeScreenTo(Screens.GREATING_CARD);
 	}
 
 	@Override
@@ -101,7 +97,7 @@ public class CartController implements Initializable {
 
 	public void refreshTotalPrice() {
 		priceLabel.setText(InputChecker.price(cart.getTotalPrice()));
-		if (priceLabel.getText().equals("0.0 �")) {
+		if (cart.isEmpty()) {
 			buyButton.setStyle("-fx-background-color: red");
 			buyButton.setDisable(true);
 		} else {
