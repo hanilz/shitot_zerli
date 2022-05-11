@@ -14,7 +14,7 @@ public class SingletonOrder extends Order{
 	}
 	
 	public SingletonOrder() {
-		super(0, 0.0, "", "", "", "", null, "", null, "");
+		super(0, 0.0, "", "", "", null, "", null, "");
 	}
 	
 	public Delivery getDelivery() {

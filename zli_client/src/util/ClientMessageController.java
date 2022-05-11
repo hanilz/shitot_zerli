@@ -95,6 +95,26 @@ public class ClientMessageController {
 		else if(command.equals("change user status")) {
 			ClientController.setResponse(message.get("response"));
 		}
+		
+		else if(command.equals("insert account payment")) {
+			ClientController.setResponse(message.get("response"));
+		}
+		
+		else if(command.equals("insert order")) {
+			ClientController.setResponse(message.get("response"));
+		}
+		
+		else if(command.equals("insert order products")) {
+			ClientController.setResponse(message.get("response"));
+		}
+		
+		else if(command.equals("insert delivery")) {
+			ClientController.setResponse(message.get("response"));
+		}
+		
+		else if(command.equals("insert delivery order")) {
+			ClientController.setResponse(message.get("response"));
+		}
 
 	}
 

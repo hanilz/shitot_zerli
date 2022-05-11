@@ -99,7 +99,7 @@
                   </HBox>
                   <VBox prefHeight="343.0" prefWidth="618.0">
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="618.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="618.0" spacing="50.0">
                            <children>
                               <Label alignment="CENTER" text="* All fields are required" textFill="#ff0c0c" />
                            </children>
@@ -126,7 +126,7 @@
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
-                                    <Label alignment="CENTER" prefHeight="60.0" prefWidth="150.0" text="CSV">
+                                    <Label alignment="CENTER" prefHeight="60.0" prefWidth="150.0" text="VCC">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
@@ -211,7 +211,7 @@
                                     </HBox>
                                     <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0">
                                        <children>
-                                          <TextField fx:id="csvField" alignment="CENTER" prefHeight="31.0" prefWidth="43.0" promptText="xxx">
+                                          <TextField fx:id="vccField" alignment="CENTER" prefHeight="31.0" prefWidth="43.0" promptText="xxx">
                                              <font>
                                                 <Font size="15.0" />
                                              </font>
@@ -245,6 +245,7 @@
                   <GridPane prefHeight="64.0" prefWidth="618.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
@@ -259,7 +260,7 @@
                                  </cursor></Button>
                            </children>
                         </VBox>
-                        <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+                        <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
                            <children>
                               <Button fx:id="placeOrderButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#placeOrder" prefHeight="25.0" prefWidth="72.0" text="Place Order">
                                  <padding>
@@ -269,6 +270,11 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+                           <children>
+                              <Label fx:id="messageLabel" alignment="CENTER" textFill="#ff0c0c" />
                            </children>
                         </VBox>
                      </children>
