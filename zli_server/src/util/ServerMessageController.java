@@ -7,8 +7,7 @@ import java.util.HashMap;
 import entities.Branch;
 import entities.Order;
 import entities.Product;
-import entities.User;
-import entities.UserDetails;
+import entities.ManageUsers;
 import ocsf.server.ConnectionToClient;
 import server.ServerController;
 
@@ -101,7 +100,7 @@ public class ServerMessageController {
 		}
 		
 		else if(command.equals("fetch all user details")) {
-			ArrayList<UserDetails> users = AnaylzeCommand.selectAllUsers();
+			ArrayList<ManageUsers> users = AnaylzeCommand.selectAllUsers();
 			try {
 				message.put("response", users);
 				client.sendToClient(message);
@@ -119,7 +118,9 @@ public class ServerMessageController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("logout")) {
+		} 
+		
+		else if (command.equals("logout")) {
 			message.put("logout", AnaylzeCommand.logoutUser((int) message.get("logoutID")));
 			try {
 				client.sendToClient(message);

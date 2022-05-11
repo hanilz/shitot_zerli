@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import client.ClientFormController;
-import entities.UserDetails;
+import entities.ManageUsers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,34 +20,32 @@ import javafx.util.Callback;
 import util.ManageScreens;
 
 public class ManageUsersController implements Initializable {
-	private static ObservableList<UserDetails> users = FXCollections.observableArrayList();
+	private static ObservableList<ManageUsers> users = FXCollections.observableArrayList();
 
     @FXML
     private Button backBtn;
 
-	@FXML
-	private TableColumn<UserDetails, String> email;
+//	@FXML
+//	private TableColumn<ManageUsers, Integer> idUser;
 
 	@FXML
-	private TableColumn<UserDetails, String> firstName;
+	private TableColumn<ManageUsers, String> firstName;
 
 	@FXML
-	private TableColumn<UserDetails, String> id;
+	private TableColumn<ManageUsers, String> lastName;
 
 	@FXML
-	private TableColumn<UserDetails, Integer> idAccount;
+	private TableColumn<ManageUsers, String> id;
 
 	@FXML
-	private TableColumn<UserDetails, String> lastName;
+	private TableColumn<ManageUsers, String> userType;
+
 
 	@FXML
-	private TableColumn<UserDetails, String> phoneNumber;
+	private TableColumn<ManageUsers, String> status;
 
 	@FXML
-	private TableColumn<UserDetails, String> status;
-
-	@FXML
-	private TableView<UserDetails> userTable;
+	private TableView<ManageUsers> userTable;
 	
 
     @FXML
@@ -59,19 +57,20 @@ public class ManageUsersController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//define table columns
-		idAccount.setCellValueFactory(new PropertyValueFactory<>("idAccount"));
+		//idUser.setCellValueFactory(new PropertyValueFactory<>("idUser"));
 		firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 		lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
 		id.setCellValueFactory(new PropertyValueFactory<>("id"));
-		email.setCellValueFactory(new PropertyValueFactory<>("email"));
-		phoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+		userType.setCellValueFactory(new PropertyValueFactory<>("userType"));
 		status.setCellValueFactory(new PropertyValueFactory<>("status"));
 		
+		System.out.println("requesting users");
 		//create a request to fetch the table data
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", "fetch all user details");
 		Object response = ClientFormController.client.accept(message);
-		users = (ObservableList<UserDetails>) response;
+		users = (ObservableList<ManageUsers>) response;
+		System.out.println("got users");
 		userTable.setItems(users);//set the information in the table
 		addButtonToTable();//call method to add buttons to the final column
 
@@ -79,29 +78,27 @@ public class ManageUsersController implements Initializable {
 
 	//method to add a button to the last column in the table for each row
 	private void addButtonToTable() {
-		TableColumn<UserDetails, Void> colBtn = new TableColumn("Action");
+		TableColumn<ManageUsers, Void> colBtn = new TableColumn("Action");
 
-		Callback<TableColumn<UserDetails, Void>, TableCell<UserDetails, Void>> cellFactory = new Callback<TableColumn<UserDetails, Void>, TableCell<UserDetails, Void>>() {
+		Callback<TableColumn<ManageUsers, Void>, TableCell<ManageUsers, Void>> cellFactory = new Callback<TableColumn<ManageUsers, Void>, TableCell<ManageUsers, Void>>() {
 			@Override
-			public TableCell<UserDetails, Void> call(final TableColumn<UserDetails, Void> param) {
-				final TableCell<UserDetails, Void> cell = new TableCell<UserDetails, Void>() {
+			public TableCell<ManageUsers, Void> call(final TableColumn<ManageUsers, Void> param) {
+				final TableCell<ManageUsers, Void> cell = new TableCell<ManageUsers, Void>() {
 
 					private Button btn = new Button("Change Status");
 					{
 						btn.setOnAction((ActionEvent event) -> {
-							UserDetails data = getTableView().getItems().get(getIndex());
+							ManageUsers data = getTableView().getItems().get(getIndex());
 							HashMap<String, Object> message = new HashMap<>();
 							message.put("command", "change user status");
-							message.put("id", data.getIdAccount());
+							message.put("id", data.getIdUser());
 							Object response = ClientFormController.client.accept(message);
 							
 							if (response.equals("Suspended")&&data.getStatus().equals("Active")) {
 								users.get(users.indexOf(data)).setStatus("Suspended");
-								// buttons.get(btn).setText("Activate");
 							} else {
 								if(response.equals("Active"))
 									users.get(users.indexOf(data)).setStatus("Active");
-								// buttons.get(btn).setText("Suspend");
 							}
 							userTable.refresh();
 						});

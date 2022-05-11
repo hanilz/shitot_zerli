@@ -92,6 +92,9 @@ public class LoginScreenController implements Initializable {
 			errorLabel.setText("Username or Password are incorrect");
 			errorLabel.setVisible(true);
 			break;
+		case SUSPENDED:
+			errorLabel.setText("User Suspended");
+			errorLabel.setVisible(true);
 		}
 	}
 
