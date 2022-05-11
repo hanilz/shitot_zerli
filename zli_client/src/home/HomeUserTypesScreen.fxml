@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.HomeUserTypesController">
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.HomeUserTypesController">
    <children>
       <HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-image: url('file:D:/EclipseProjects/ZliPrototype/src/resources/home/homepage.png');">
          <children>
@@ -26,7 +26,7 @@
                         <Insets right="22.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="userLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="196.0">
+                  <Label fx:id="userNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="196.0">
                      <font>
                         <Font size="22.0" />
                      </font>
@@ -56,14 +56,12 @@
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="131.0" />
                           </columnConstraints>
                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                                  <children>
-                                    <Button fx:id="exitButton" mnemonicParsing="false" onMousePressed="#exitHomeScreen" text="Exit" />
+                                    <Button fx:id="exitButton" mnemonicParsing="false" onMouseClicked="#exitHomeScreen" onMousePressed="#exitHomeScreen" text="Exit" textFill="#7c0000" />
                                     <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../resources/home/exit.png" />
@@ -71,9 +69,9 @@
                                     </ImageView>
                                  </children>
                               </VBox>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="1">
                                  <children>
-                                    <Button fx:id="logoutButton" mnemonicParsing="false" onMousePressed="#logoutFromUser" text="Logout" />
+                                    <Button fx:id="logoutButton" mnemonicParsing="false" onMouseClicked="#logoutFromUser" text="Logout" />
                                     <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../resources/home/logout.png" />

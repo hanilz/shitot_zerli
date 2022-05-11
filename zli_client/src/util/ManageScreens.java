@@ -82,7 +82,7 @@ public class ManageScreens {
 	public static Stage getPopupStage() {
 		return popupStage;
 	}
-	
+
 	public static void changeScreenTo(Screens screen) {
 
 		try {
@@ -91,15 +91,15 @@ public class ManageScreens {
 				System.out.println("ok");
 				ManageScreens.changeScene(HomeGuestController.class.getResource("HomeGuestScreen.fxml"), "HomeScreen");
 				break;
-			case CATALOG:
-				ManageScreens.changeScene(CatalogController.class.getResource("CatalogScreen.fxml"), "Catalog");
-				break;
 			case USER_HOME:
-				ManageScreens.changeScene(HomeUserTypesController.class.getResource("HomeLoggedInScreen.fxml"),
+				ManageScreens.changeScene(HomeUserTypesController.class.getResource("HomeUserTypesScreen.fxml"),
 						"HomeScreen");
 				break;
 			case LOGIN:
 				ManageScreens.changeScene(LoginScreenController.class.getResource("LoginScreen.fxml"), "Login");
+				break;
+			case CATALOG:
+				ManageScreens.changeScene(CatalogController.class.getResource("CatalogScreen.fxml"), "Catalog");
 				break;
 			case CART:
 				ManageScreens.changeScene(CartController.class.getResource("CartScreen.fxml"), "Cart Screen");
