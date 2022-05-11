@@ -128,9 +128,11 @@ public class AnaylzeCommand {
 			rs = preparedStmt.executeQuery();
 			if (!rs.next())// if user not exist
 				status = Status.NOT_REGISTERED;
-			else if (rs.getBoolean(6))// if user already logged in
+			else if (rs.getString(7).toLowerCase().equals("suspended"))// if user is suspended
+				status = Status.SUSPENDED;
+			else {if (rs.getBoolean(6))// if user already logged in
 				status = Status.ALREADY_LOGGED_IN;
-			else {
+			else 
 				login.put("idUser", Integer.parseInt(rs.getString(1)));
 				login.put("idAccount", Integer.parseInt(rs.getString(4)));
 				login.put("userType", UserType.get(rs.getString(5)));
