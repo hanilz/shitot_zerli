@@ -19,6 +19,7 @@ import order.CheckoutController;
 import order.DeliveryController;
 import order.GreetingCardController;
 import order.PaymentSuccessfulController;
+import userScreens.ManageUsersController;
 
 public class ManageScreens {
 	private static Stage stage;
@@ -123,6 +124,9 @@ public class ManageScreens {
 			case CLIENT:
 				ManageScreens.changeScene(ClientScreen.class.getResource("ClientScreen.fxml"), "Zli Client");
 				break;
+			case MANAGE_USERS:
+				ManageScreens.changeScene(ManageUsersController.class.getResource("ManageUsers.fxml"), "Manage Users");
+				break;
 			default:
 				break;
 			}
@@ -137,6 +141,7 @@ public class ManageScreens {
 		else
 			ManageScreens.changeScreenTo(Screens.GUEST_HOME);
 	}
+
 	public static String getName(Screens user) {
 		switch (user) {
 		case CART:
@@ -170,10 +175,13 @@ public class ManageScreens {
 		case VIEW_ORDERS:
 			return "Orders";
 		case VIEW_ORDERS_REPORT:
-			break;			
+			break;
+		case MANAGE_USERS:
+			return "Manage Users";
 		}
-		return "";//no such user//
+		return "";// no such user//
 	}
+
 	public static String getIconPath(Screens user) {
 		switch (user) {
 		case CART:
@@ -191,7 +199,7 @@ public class ManageScreens {
 		case GUEST_HOME:
 			return "resources/catalog/home.png";
 		case LOGIN:
-			return "resources/home/login.png";	
+			return "resources/home/login.png";
 		case PAYMENT_SUCCESSFULY:
 			return "";
 		case PRODUCT_DETAILS_POPUP:
@@ -207,8 +215,11 @@ public class ManageScreens {
 		case VIEW_ORDERS:
 			return "";
 		case VIEW_ORDERS_REPORT:
-			break;			
+			return "";
+		case MANAGE_USERS:
+			return "resources/home/manageUsers.png";
+		default:
+			return "";// no such user//
 		}
-		return "";//no such user//
 	}
 }

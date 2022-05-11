@@ -15,7 +15,6 @@ import javafx.scene.layout.HBox;
 import util.ManageClients;
 import util.ManageScreens;
 import util.Screens;
-import util.UserType;
 
 public class HomeUserTypesController implements HomeInterface,Initializable {
 
@@ -64,7 +63,7 @@ public class HomeUserTypesController implements HomeInterface,Initializable {
 				if (i / 3 > 0 && i % 3 == 0)
 					gridOptions.addRow(i/3);
 				buttons.add(new HomeVBox(userScreens.get(i)));
-				this.gridOptions.add(buttons.get(i), i+2 % 3, i+2 / 3);
+				this.gridOptions.add(buttons.get(i), (i+2) % 3, (i+2) / 3);
 			}
 		System.out.println(buttons);
 	}
