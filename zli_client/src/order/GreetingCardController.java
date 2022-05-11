@@ -58,11 +58,17 @@ public class GreetingCardController {
 		if (InputChecker.isFieldsAreEmptyChecker(isIncludedCheckBox.isSelected(), titleTextField.getText(),
 				fromTextField.getText(), toTextField.getText(), greetingCardTextArea.getText())) {
 			isAllFilledLabel.setText("* Please fill all the fields for the greeting card for proceeding the order!");
-			PauseTransition pause = new PauseTransition(Duration.seconds(5));
+			PauseTransition pause = new PauseTransition(Duration.seconds(3));
 			pause.setOnFinished(e -> isAllFilledLabel.setText(""));
 			pause.play();
-
-		} 
+		}
+		else if(isIncludedCheckBox.isSelected() && !InputChecker.isGreetingCardInputIsVaild(titleTextField.getText(), fromTextField.getText(), toTextField.getText())) {
+			isAllFilledLabel.setText("* Please check the input of the greeting card!");
+			PauseTransition pause = new PauseTransition(Duration.seconds(3));
+			pause.setOnFinished(e -> isAllFilledLabel.setText(""));
+			pause.play();
+			//TODO - we need to think together if the textArea of the greeting card need to be only letters or letters and digits!
+		}
 		else {
 			//if all the fields are filled, we will insert the greeting card into the order
 			insertGreetingCardIntoOrder();

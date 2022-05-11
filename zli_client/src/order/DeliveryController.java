@@ -180,7 +180,7 @@ public class DeliveryController implements Initializable {
 
 	private void switchFillAllFields() {
 		fillAllFieldsLabel.setText("* Please fill all the fields");
-		PauseTransition pause = new PauseTransition(Duration.seconds(5));
+		PauseTransition pause = new PauseTransition(Duration.seconds(3));
 		pause.setOnFinished(e -> fillAllFieldsLabel.setText(""));
 		pause.play();
 	}
