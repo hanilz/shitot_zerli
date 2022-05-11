@@ -152,15 +152,8 @@ public class DeliveryController implements Initializable {
 
 	private void insertDelivery() {
 		String address = addressField.getText();
-		String pattern = "dd/MM/yyyy";
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-		String dateSelected = "";
-		try {
-			dateSelected = simpleDateFormat.parse(deliveryDatePicker.getValue().toString()).toString();
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-		}
-		String deliveryDate = String.format("%s %s:%s:00",dateSelected,hourComboBox.getValue(),minuteComboBox.getValue());
+		System.out.println(deliveryDatePicker.getValue().toString());
+		String deliveryDate = String.format("%s %s:%s:00",deliveryDatePicker.getValue().toString(),hourComboBox.getValue(),minuteComboBox.getValue());
 		String phoneNumber = recieverPhoneField.getText();
 		String receiverName = recieverNameField.getText();
 		String status = "Pending";  // TODO: const class or enum for delivery options

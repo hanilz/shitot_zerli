@@ -106,11 +106,11 @@ public class CheckoutController implements Initializable{
     }
     
     private boolean checkCheckoutFields() {
-    	if(!InputChecker.isPaymentFieldsEmpty(firstNameField.getText(), lastNameField.getText(), cardNumberField.getText(), monthField.getText(), yearField.getText(), vccField.getText(), idField.getText())) {
+    	if(InputChecker.isPaymentFieldsEmpty(firstNameField.getText(), lastNameField.getText(), cardNumberField.getText(), monthField.getText(), yearField.getText(), vccField.getText(), idField.getText())) {
     		showMessage("* Please fill all the fields!");
     		return false;
     	}
-    	else if(InputChecker.checkPaymentInput(firstNameField.getText(), lastNameField.getText(), cardNumberField.getText(), monthField.getText(), yearField.getText(), vccField.getText(), idField.getText())) {
+    	else if(!InputChecker.checkPaymentInput(firstNameField.getText(), lastNameField.getText(), cardNumberField.getText(), monthField.getText(), yearField.getText(), vccField.getText(), idField.getText())) {
     		showMessage("* Please check the input!");
     		return false;
     	}

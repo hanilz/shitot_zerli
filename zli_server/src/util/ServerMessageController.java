@@ -149,7 +149,7 @@ public class ServerMessageController {
 		
 		else if (command.equals("insert order")) {
 			Order order = (Order) message.get("order");
-			int idOrderReturned = AnaylzeCommand.insertNewOrder(order.getPrice(), order.getGreetingCard(), order.getdOrder(), order.getBranch().getIdBranch(), order.getStatus(), order.getPaymentMethod(), order.getUser().getIdUser());
+			Integer idOrderReturned = AnaylzeCommand.insertNewOrder(order.getPrice(), order.getGreetingCard(), order.getdOrder(), order.getBranch().getIdBranch(), order.getStatus(), order.getPaymentMethod(), order.getUser().getIdUser());
 			try {
 				message.put("respose", idOrderReturned);
 				client.sendToClient(message);
