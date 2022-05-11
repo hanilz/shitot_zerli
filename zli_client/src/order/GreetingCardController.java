@@ -62,7 +62,7 @@ public class GreetingCardController {
 			pause.setOnFinished(e -> isAllFilledLabel.setText(""));
 			pause.play();
 		}
-		else if(isIncludedCheckBox.isSelected() && !InputChecker.isGreetingCardInputIsVaild(titleTextField.getText(), fromTextField.getText(), toTextField.getText())) {
+		else if(isIncludedCheckBox.isSelected() && !InputChecker.isGreetingCardInputIsVaild(fromTextField.getText(), toTextField.getText())) {
 			isAllFilledLabel.setText("* Please check the input of the greeting card!");
 			PauseTransition pause = new PauseTransition(Duration.seconds(3));
 			pause.setOnFinished(e -> isAllFilledLabel.setText(""));

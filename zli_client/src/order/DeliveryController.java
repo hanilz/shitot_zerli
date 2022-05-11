@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 import client.ClientFormController;
 import entities.Branch;
 import entities.Delivery;
-import entities.SingletonDelivery;
 import entities.SingletonOrder;
 import javafx.animation.PauseTransition;
 import javafx.collections.ObservableList;
@@ -115,6 +114,11 @@ public class DeliveryController implements Initializable {
 				switchFillAllFields(fillAllFieldsLabel, "* Please fill all the fields!");
 				canProceed = false;
 			}
+			else if(!InputChecker.isDeliveryInputIsValid(recieverPhoneField.getText(), recieverNameField.getText())) {
+				switchFillAllFields(fillAllFieldsLabel, "* Please check the phone number or reciever name!");
+				canProceed = false;
+			}
+				
 		}
 		// the same thing for pickUp option, if the comboBox has not changed -> the
 		// label will appear for selecting the branch.
@@ -144,8 +148,6 @@ public class DeliveryController implements Initializable {
 		String status = "Pending";  // TODO: const class
 
 		SingletonOrder.getInstance().setDelivery(new Delivery(address, deliveryDate, phoneNumber, ReceiverName, status));
-		SingletonDelivery.getDeliveryInstance().setStatus("Pending");
-		
 		initBranchForOrder(regionComboBox.getValue());		
 	}
 
