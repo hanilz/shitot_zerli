@@ -9,10 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import entities.Branch;
-import entities.Order;
-import entities.Product;
-import entities.UserDetails;
 import entities.ManageUsers;
+import entities.OrderProduct;
+import entities.Product;
 
 /**
  * AnaylzeCommand - will anaylze the command that given from the server
@@ -90,9 +89,9 @@ public class AnaylzeCommand {
 	 * 
 	 * @return
 	 */
-	public static ArrayList<Order> selectAllOrders() {
+	/*public static ArrayList<Order> selectAllOrders() {
 		ArrayList<Order> orders = new ArrayList<>();
-		orders.add(new Order(-1, 0.0, "", "", "", "", "", ""));
+		orders.add(new Order(-1, 0.0, "", "", "", null, "", null, ""));
 		try {
 			Statement selectStmt = DataBaseController.getConn().createStatement();
 			ResultSet rs = selectStmt.executeQuery("SELECT * FROM orders;");
@@ -112,7 +111,7 @@ public class AnaylzeCommand {
 			e.printStackTrace();
 		}
 		return orders;
-	}
+	}*/
 
 	public static HashMap<String, Object> loginUser(String username, String password) {
 		Connection conn;
@@ -157,7 +156,6 @@ public class AnaylzeCommand {
 	public static boolean logoutUser(int idUser) {
 		Connection conn;
 		conn = DataBaseController.getConn();
-		ResultSet rs;
 		String query = "UPDATE users SET isLogin = ? WHERE idUser = ?";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -236,6 +234,111 @@ public class AnaylzeCommand {
 		}
 		
 		return response;
+	}
+	
+	public static boolean insertAccountPayment(String fullName, String cardNumber, String cardDate, String cardVCC, int idUser) {
+		Connection conn;
+		conn = DataBaseController.getConn();
+		String query = "INSERT INTO account_payment (fullName, cardNumber, cardDate, cardVCC, idUser) VALUES (?, ?, ?, ?, ?);";
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setString(1, fullName);
+			preparedStmt.setString(2, cardNumber);
+			preparedStmt.setString(3, cardDate);
+			preparedStmt.setString(4, cardVCC);
+			preparedStmt.setInt(5, idUser);
+			preparedStmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public static int insertNewOrder(double totalPrice, String greetingCard,String dOrder,int idBranch,String status,String paymentMethod, int idUser) {
+		Connection conn;
+		conn = DataBaseController.getConn();
+		ResultSet rs = null;
+		String query = "INSERT INTO orders (price, greetingCard, dOrder, idBranch, status, paymentMethod, idUser) VALUES (?, ?, ?, ?, ?, ?, ?);";
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setDouble(1, totalPrice);
+			preparedStmt.setString(2, greetingCard);
+			preparedStmt.setString(3, dOrder);
+			preparedStmt.setInt(4, idBranch);
+			preparedStmt.setString(5, status);
+			preparedStmt.setString(6, paymentMethod);
+			preparedStmt.setInt(7, idUser);
+			preparedStmt.executeUpdate();
+			rs = preparedStmt.getGeneratedKeys();
+			rs.next();
+			return rs.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+	
+	public static boolean insertOrderProducts(ArrayList<OrderProduct> orderProductsList) {
+		StringBuffer buff = new StringBuffer();
+		buff.append("INSERT INTO order_products (idOrder, idProduct, quantity) VALUES ");
+		for(OrderProduct currentInsert : orderProductsList) {
+			buff.append("("+currentInsert.getIdOrder()+","+ currentInsert.getProduct().getProductID()+ "," + currentInsert.getQuantity() +"),");
+		}
+		buff.deleteCharAt(buff.length()-1);  
+		buff.append(";");
+		try {
+			Connection conn;
+			conn = DataBaseController.getConn();
+			PreparedStatement preparedStmt = conn.prepareStatement(buff.toString());
+			preparedStmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public static int insertNewDelivery(String address, String recieverName, String phoneNumber, String deliveryDate, String status) {
+		Connection conn;
+		ResultSet rs = null;
+		conn = DataBaseController.getConn();
+		String query = "INSERT INTO deliveries (address, receiverName, phoneNumber, deliveryDate, status) VALUES (?, ?, ?, ?, ?);";
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setString(1, address);
+			preparedStmt.setString(2, recieverName);
+			preparedStmt.setString(3, phoneNumber);
+			preparedStmt.setString(4, deliveryDate);
+			preparedStmt.setString(5, status);
+			preparedStmt.executeUpdate();
+			rs = preparedStmt.getGeneratedKeys();
+			rs.next();
+			return rs.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+	
+	public static boolean insertDeliveryOrder(int idOrder, int idDelivery) {
+		Connection conn;
+		conn = DataBaseController.getConn();
+		String query = "INSERT INTO deliveries_orders (idOrder, idDelivery) VALUES (?, ?);";
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idOrder);
+			preparedStmt.setInt(2, idDelivery);
+			preparedStmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 }

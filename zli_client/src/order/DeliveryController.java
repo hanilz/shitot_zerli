@@ -1,6 +1,9 @@
 package order;
 
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -104,26 +107,12 @@ public class DeliveryController implements Initializable {
 		// option.
 		// else -> the user filled all the fields
 		if (deliveryRadioButton.isSelected()) {
-			if (!InputChecker.isDeliveryComboBoxIsChanged(hourComboBox.getValue(), minuteComboBox.getValue(),
-					regionComboBox.getValue())) {
-				switchFillAllFields(fillAllFieldsLabel, "* Please fill all the fields!");
-				canProceed = false;
-			}
-			else if (InputChecker.isFieldsAreEmptyChecker(true, addressField.getText(), recieverNameField.getText(),
-					deliveryDatePicker.getValue().toString(), recieverPhoneField.getText())) {
-				switchFillAllFields(fillAllFieldsLabel, "* Please fill all the fields!");
-				canProceed = false;
-			}
-			else if(!InputChecker.isDeliveryInputIsValid(recieverPhoneField.getText(), recieverNameField.getText())) {
-				switchFillAllFields(fillAllFieldsLabel, "* Please check the phone number or reciever name!");
-				canProceed = false;
-			}
-				
+			canProceed = checkInputDelivery(canProceed);
 		}
 		// the same thing for pickUp option, if the comboBox has not changed -> the
 		// label will appear for selecting the branch.
 		else if (pickUpRadioButton.isSelected()) {
-			if (!InputChecker.isPickUpComboBoxIsChanged(branchComboBox.getValue())) {
+			if (!InputChecker.isPickUpComboBoxChanged(branchComboBox.getValue())) {
 				switchFillAllFields(selectABranchLabel, "* Please select a branch!");
 				canProceed = false;
 			}
@@ -135,19 +124,48 @@ public class DeliveryController implements Initializable {
 				insertDelivery();
 			else if (pickUpRadioButton.isSelected())
 				SingletonOrder.getInstance().setBranch(branchComboBox.getValue());
-				
 			ManageScreens.changeScreenTo(Screens.CHECKOUT);
 		}
 	}
 
+	private boolean checkInputDelivery(boolean canProceed) {
+		if (!InputChecker.isDeliveryComboBoxChanged(hourComboBox.getValue(), minuteComboBox.getValue(),
+				regionComboBox.getValue())) {
+			switchFillAllFields(fillAllFieldsLabel, "* Please fill all the fields!");
+			canProceed = false;
+		}
+		else if (InputChecker.isFieldsAreEmptyChecker(true, addressField.getText(), recieverNameField.getText(),
+				deliveryDatePicker.getValue().toString(), recieverPhoneField.getText())) {
+			switchFillAllFields(fillAllFieldsLabel, "* Please fill all the fields!");
+			canProceed = false;
+		}
+		else if(!InputChecker.isDeliveryInputValid(recieverPhoneField.getText(), recieverNameField.getText())) {
+			switchFillAllFields(fillAllFieldsLabel, "* Please check the phone number or reciever name!");
+			canProceed = false;
+		}
+		else if(!InputChecker.isPhoneNumberVaild(recieverPhoneField.getText())) {
+			switchFillAllFields(fillAllFieldsLabel, "* Please check the phone number!");
+			canProceed = false;
+		}
+		return canProceed;
+	}
+
 	private void insertDelivery() {
 		String address = addressField.getText();
-		String deliveryDate = deliveryDatePicker.getValue().toString();
+		String pattern = "dd/MM/yyyy";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		String dateSelected = "";
+		try {
+			dateSelected = simpleDateFormat.parse(deliveryDatePicker.getValue().toString()).toString();
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+		String deliveryDate = String.format("%s %s:%s:00",dateSelected,hourComboBox.getValue(),minuteComboBox.getValue());
 		String phoneNumber = recieverPhoneField.getText();
-		String ReceiverName = recieverNameField.getText();
-		String status = "Pending";  // TODO: const class
+		String receiverName = recieverNameField.getText();
+		String status = "Pending";  // TODO: const class or enum for delivery options
 
-		SingletonOrder.getInstance().setDelivery(new Delivery(address, deliveryDate, phoneNumber, ReceiverName, status));
+		SingletonOrder.getInstance().setDelivery(new Delivery(address, receiverName, phoneNumber, deliveryDate, status));
 		initBranchForOrder(regionComboBox.getValue());		
 	}
 
@@ -164,7 +182,7 @@ public class DeliveryController implements Initializable {
 	}
 
 	private void switchFillAllFields(Label label, String textToShow) {
-		label.setText("* Please fill all the fields");
+		label.setText(textToShow);
 		PauseTransition pause = new PauseTransition(Duration.seconds(3));
 		pause.setOnFinished(e -> label.setText(""));
 		pause.play();
@@ -206,6 +224,9 @@ public class DeliveryController implements Initializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		SingletonOrder.getInstance().setBranch(null);
+		SingletonOrder.getInstance().setDelivery(null);
+		
 		hourComboBox.getItems().addAll("08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20");
 		minuteComboBox.getItems().addAll("00", "15", "30", "45");
 

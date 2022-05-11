@@ -47,46 +47,59 @@ public class InputChecker {
 		return false;
 	}
 
-	public static boolean isDeliveryComboBoxIsChanged(String hour, String minutes, String region) {
+	public static boolean isDeliveryComboBoxChanged(String hour, String minutes, String region) {
 		if (hour == null || minutes == null || region == null)
 			return false;
 		return true;
 	}
 
-	public static boolean isPickUpComboBoxIsChanged(Branch branch) {
+	public static boolean isPickUpComboBoxChanged(Branch branch) {
 		if (branch == null)
 			return false;
 		return true;
 	}
 	
-	public static boolean isPaymentFieldsAreEmpty(String firstName, String lastName, String cardNumber, String month, String year, String csv, String id) {
-		if(firstName.isEmpty() || lastName.isEmpty() || cardNumber.isEmpty() || month.isEmpty() || year.isEmpty() || csv.isEmpty() || id.isEmpty())
+	public static boolean isPaymentFieldsEmpty(String firstName, String lastName, String cardNumber, String month, String year, String vcc, String id) {
+		if(firstName.isEmpty() || lastName.isEmpty() || cardNumber.isEmpty() || month.isEmpty() || year.isEmpty() || vcc.isEmpty() || id.isEmpty())
 			return true;
 		return false;
 	}
 	
-	public static boolean checkPaymentFields(String firstName, String lastName, String cardNumber, String month, String year, String csv, String id) {
-		if(!cardNumber.matches("[0-9]+") || !month.matches("[0-9]+") ||  !csv.matches("[0-9]+") || !id.matches("[0-9]+"))
+	public static boolean checkPaymentInput(String firstName, String lastName, String cardNumber, String month, String year, String vcc, String id) {
+		if(!cardNumber.matches("[0-9]+") || !month.matches("[0-9]+") ||  !vcc.matches("[0-9]+") || !id.matches("[0-9]+"))
 			return false;
-		else if(cardNumber.length()!=16 || month.length()!=2 || year.length()!=2 || csv.length()!=3 || id.length()!=9)
+		else if(cardNumber.length()!=16 || month.length()!=2 || year.length()!=2 || vcc.length()!=3 || id.length()!=9)
 			return false;
 		else if(!firstName.matches("^[ A-Za-z]+$") || !lastName.matches("^[ A-Za-z]+$"))
 			return false;
 		return true;
 	}
 	
-	public static boolean isGreetingCardInputIsVaild(String from, String to) {
+	public static boolean isGreetingCardInputVaild(String from, String to) {
 		if(!from.matches("^[ A-Za-z]+$") ||  !to.matches("^[ A-Za-z]+$"))
 			return false;
 		return true;
 	}
 	
-	public static boolean isDeliveryInputIsValid(String phoneNumber, String recieverName) {
+	public static boolean isDeliveryInputValid(String phoneNumber, String recieverName) {
 		if(!recieverName.matches("^[ A-Za-z]+$"))
 			return false;
 		else if(!phoneNumber.matches("[0-9]+"))
 			return false;
 		return true;
 	}
-
+	
+	public static boolean isPhoneNumberVaild(String phoneNumber) {
+		if(phoneNumber.length() == 10) //if mobile
+			return true;
+		else if(phoneNumber.length() == 9) //if regular phone number
+			return true;
+		return false;
+	}
+	
+	public static boolean checkMonthCardDate(String month) {
+		if(month.matches("^(1[0-2]|[1-9])$"))
+			return true;
+		return false;
+	}
 }

@@ -14,22 +14,30 @@ public class Order implements Serializable{
 	private double price; 
 	private String greetingCard;
 	private String dOrder;
-	private String color;
 	private Branch branch;
 	private String date;
 	private String status;
 	private User user;
 	private String paymentMethod;
 	
-	public Order(int idOrder, double price, String greetingCard, String color, String dOrder,
+	public Order(int idOrder, double price, String greetingCard, String dOrder,
 			String date, Branch branch, String status, User user, String paymentMethod) {
 		this.idOrder = idOrder;
 		this.price = price;
 		this.greetingCard = greetingCard;
-		this.color = color;
 		this.dOrder = dOrder;
 		this.branch = branch;
 		this.date = date;
+		this.paymentMethod = paymentMethod;
+		this.user = user;
+		this.status = status;
+	}
+	
+	public Order(double price, String greetingCard, String dOrder, Branch branch, String status, String paymentMethod, User user) {
+		this.price = price;
+		this.greetingCard = greetingCard;
+		this.dOrder = dOrder;
+		this.branch = branch;
 		this.paymentMethod = paymentMethod;
 		this.user = user;
 		this.status = status;
@@ -65,14 +73,6 @@ public class Order implements Serializable{
 
 	public void setdOrder(String dOrder) {
 		this.dOrder = dOrder;
-	}
-
-	public String getColor() {
-		return color;
-	}
-
-	public void setColor(String color) {
-		this.color = color;
 	}
 
 	public Branch getBranch() {
