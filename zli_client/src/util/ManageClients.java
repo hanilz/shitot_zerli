@@ -1,12 +1,15 @@
 package util;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import client.ClientFormController;
 import entities.User;
 
 public class ManageClients {
+	
 	public static void exitClient() {
 		try {
 			if (ClientFormController.client.isConnected()) {
@@ -28,4 +31,31 @@ public class ManageClients {
 			ex.printStackTrace();
 		}
 	}
+	public static ArrayList<Screens> getUserScreens(UserType type){//assumed user logged in 
+		ArrayList<Screens> userTypeScreens;
+		switch(type)
+		{
+		case CEO:
+			break;
+		case CUSTOMER:
+			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.CATALOG,Screens.CART}));
+		case CUSTOMER_SERVICE:
+			break;
+		case DELIVERY_COORDINATOR:
+			break;
+		case MARKETING_WORKER:
+			break;
+		case SERVICE_EXPERT:
+			break;
+		case STORE_MANGER:
+			break;
+		case STORE_WORKER:
+			break;
+
+		default:
+			return null;
+		}
+		return null;	
+	}
+			
 }

@@ -88,7 +88,6 @@ public class ManageScreens {
 		try {
 			switch (screen) {
 			case GUEST_HOME:
-				System.out.println("ok");
 				ManageScreens.changeScene(HomeGuestController.class.getResource("HomeGuestScreen.fxml"), "HomeScreen");
 				break;
 			case USER_HOME:
@@ -137,5 +136,79 @@ public class ManageScreens {
 			ManageScreens.changeScreenTo(Screens.USER_HOME);
 		else
 			ManageScreens.changeScreenTo(Screens.GUEST_HOME);
+	}
+	public static String getName(Screens user) {
+		switch (user) {
+		case CART:
+			return "Cart";
+		case CATALOG:
+			return "Catalog";
+		case CHECKOUT:
+			return "Checkout";
+		case CLIENT:
+			return "Client";
+		case DELIVERY_DETAILS:
+			return "Delivery Details";
+		case GREATING_CARD:
+			return "Greating Card";
+		case GUEST_HOME:
+			return "Guest Home";
+		case LOGIN:
+			return "Login";
+		case PAYMENT_SUCCESSFULY:
+			return "Payment";
+		case PRODUCT_DETAILS_POPUP:
+			return "Product Details";
+		case REPORT:
+			return "Report";
+		case USER_HOME:
+			return "Home";
+		case VIEW_COMPLAINTS_REPORT:
+			return "Compaints Report";
+		case VIEW_INCOME_REPORT:
+			return "Income Report";
+		case VIEW_ORDERS:
+			return "Orders";
+		case VIEW_ORDERS_REPORT:
+			break;			
+		}
+		return "";//no such user//
+	}
+	public static String getIconPath(Screens user) {
+		switch (user) {
+		case CART:
+			return "resources/catalog/cart.png";
+		case CATALOG:
+			return "resources/home/store.png";
+		case CHECKOUT:
+			return "";
+		case CLIENT:
+			return "";
+		case DELIVERY_DETAILS:
+			return "";
+		case GREATING_CARD:
+			return "";
+		case GUEST_HOME:
+			return "resources/catalog/home.png";
+		case LOGIN:
+			return "resources/home/login.png";	
+		case PAYMENT_SUCCESSFULY:
+			return "";
+		case PRODUCT_DETAILS_POPUP:
+			return "";
+		case REPORT:
+			return "";
+		case USER_HOME:
+			return "resources/catalog/home.png";
+		case VIEW_COMPLAINTS_REPORT:
+			return "";
+		case VIEW_INCOME_REPORT:
+			return "";
+		case VIEW_ORDERS:
+			return "";
+		case VIEW_ORDERS_REPORT:
+			break;			
+		}
+		return "";//no such user//
 	}
 }
