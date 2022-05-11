@@ -53,22 +53,22 @@ public class HomeUserTypesController implements HomeInterface,Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		String[] buttonsNames = null, fxmls = null, imagePath = null;
-		ArrayList<String[]> typeGUI = UserType.get(User.getUserInstance().getType());// get user gui
-		if (typeGUI.get(0) != null && typeGUI.get(1) != null && typeGUI.get(2) != null)// check data is valid
-			setScreen(typeGUI.get(0), typeGUI.get(1), typeGUI.get(2));// implement GUI in Home
+		ArrayList<Screens> userScreens = ManageClients.getUserScreens(User.getUserInstance().getType());
+		setScreen(userScreens);// 
 		userNameLabel.setText(User.getUserInstance().getUsername());	
 	}
 
-	private void setScreen(String[] ButtonsNames, String[] urls, String[] imagePath) {// implement gui in home
-		if (ButtonsNames != null)
-			for (int i = 0; i < ButtonsNames.length; i++) {
+	private void setScreen(ArrayList<Screens> userScreens) {// 
+		if (userScreens != null)
+			for (int i = 0; i < userScreens.size();i++) {
 				if (i / 3 > 0 && i % 3 == 0)
-					gridOptions.addRow(i);
-				buttons.add(new HomeVBox(ButtonsNames[i], urls[i], imagePath[i]));// saving
+					gridOptions.addRow(i/3);
+				buttons.add(new HomeVBox(userScreens.get(i)));
 				this.gridOptions.add(buttons.get(i), i+2 % 3, i+2 / 3);
 			}
+		System.out.println(buttons);
 	}
+	
 
 
 }

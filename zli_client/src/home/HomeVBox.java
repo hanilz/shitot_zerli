@@ -7,18 +7,20 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import util.ManageScreens;
+import util.Screens;
+import util.UserType;
 
 public class HomeVBox extends VBox {
 	private ImageView image;
 	private Button button;
-	private String url;
+	private Screens changeToScreen;
 
-	public HomeVBox(String buttonName, String url, String imagePath) {
-		this.url = url;
+	public HomeVBox(Screens changeToScreen) {
+		this.changeToScreen = changeToScreen;
 		button = new Button();
-		button.setText(buttonName);
-		if (imagePath != null)
-			image = new ImageView(imagePath);
+		button.setText(ManageScreens.getName(changeToScreen));
+		if (!ManageScreens.getIconPath(changeToScreen).equals(""))
+			image = new ImageView(ManageScreens.getIconPath(changeToScreen));
 		init();
 	}
 
@@ -34,13 +36,17 @@ public class HomeVBox extends VBox {
 			@Override
 			public void handle(Event event) {
 				try {
-					ManageScreens.changeScene(getClass().getResource(url), button.getText());
+					ManageScreens.changeScreenTo(changeToScreen);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
 		this.setAlignment(Pos.CENTER);
+	}
+	public String toString()
+	{
+		return ManageScreens.getName(changeToScreen);
 	}
 
 }
