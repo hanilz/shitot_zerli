@@ -1,6 +1,5 @@
 package util;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,8 +8,7 @@ import client.ClientScreen;
 import entities.Branch;
 import entities.Order;
 import entities.Product;
-import entities.User;
-import entities.UserDetails;
+import entities.ManageUsers;
 import javafx.collections.FXCollections;
 
 /**
@@ -89,7 +87,7 @@ public class ClientMessageController {
 		}
 
 		else if(command.contains("fetch all user details")) {
-			ArrayList<UserDetails> userList = (ArrayList<UserDetails>) message.get("response");
+			ArrayList<ManageUsers> userList = (ArrayList<ManageUsers>) message.get("response");
 			response = FXCollections.observableArrayList(userList);
 			ClientController.setResponse(response);
 		}
