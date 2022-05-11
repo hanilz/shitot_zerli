@@ -70,13 +70,21 @@ public class InputChecker {
 			return false;
 		else if(cardNumber.length()!=16 || month.length()!=2 || year.length()!=2 || csv.length()!=3 || id.length()!=9)
 			return false;
-		else if(!firstName.matches("[a-zA-Z]+") || !lastName.matches("[a-zA-Z]+"))
+		else if(!firstName.matches("^[ A-Za-z]+$") || !lastName.matches("^[ A-Za-z]+$"))
 			return false;
 		return true;
 	}
 	
-	public static boolean isGreetingCardInputIsVaild(String title, String from, String to) {
-		if(!title.matches("[a-zA-Z]+") || !from.matches("[a-zA-Z]+") ||  !to.matches("[a-zA-Z]+"))
+	public static boolean isGreetingCardInputIsVaild(String from, String to) {
+		if(!from.matches("^[ A-Za-z]+$") ||  !to.matches("^[ A-Za-z]+$"))
+			return false;
+		return true;
+	}
+	
+	public static boolean isDeliveryInputIsValid(String phoneNumber, String recieverName) {
+		if(!recieverName.matches("^[ A-Za-z]+$"))
+			return false;
+		else if(!phoneNumber.matches("[0-9]+"))
 			return false;
 		return true;
 	}
