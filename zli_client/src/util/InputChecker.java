@@ -72,5 +72,11 @@ public class InputChecker {
 			return false;
 		return true;
 	}
+	
+	public static boolean isGreetingCardInputIsVaild(String title, String from, String to) {
+		if(!title.matches("[a-zA-Z]+") || !from.matches("[a-zA-Z]+") ||  !to.matches("[a-zA-Z]+"))
+			return false;
+		return true;
+	}
 
 }
