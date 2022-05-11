@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import client.ClientFormController;
 import entities.Branch;
+import entities.Delivery;
 import entities.SingletonDelivery;
 import entities.SingletonOrder;
 import javafx.animation.PauseTransition;
@@ -37,7 +38,7 @@ public class DeliveryController implements Initializable {
 	private Button backButton;
 
 	@FXML
-	private ComboBox<String> branchComboBox;
+	private ComboBox<Branch> branchComboBox;
 
 	@FXML
 	private Button checkoutButton;
@@ -72,6 +73,9 @@ public class DeliveryController implements Initializable {
 	@FXML
 	private RadioButton pickUpRadioButton;
 
+    @FXML
+    private Label selectABranchLabel;
+	
 	@FXML
 	private TextField recieverNameField;
 
@@ -88,37 +92,13 @@ public class DeliveryController implements Initializable {
 
 	ObservableList<Branch> branches;
 
+	/**
+	 * @param event
+	 */
 	@FXML
 	void changeToCheckoutScreen(MouseEvent event) {
-		/*
-		 * try { // if(deliveryRadioButton.isSelected()) { // if delivery is selected //
-		 * String addressString = addressField.getText(); // String recieverName =
-		 * recieverNameField.getText(); // String reciever =
-		 * recieverPhoneField.getText(); // // if(addressString.isEmpty() ||
-		 * recieverName.isEmpty() || reciever.isEmpty()) { // switchFillAllFields(); //
-		 * return; // } // try { // String deliveryDate =
-		 * deliveryDatePicker.getPromptText(); // String deliveryHour =
-		 * hourComboBox.getPromptText(); // String deliveryMinute=
-		 * minuteComboBox.getPromptText(); // String region =
-		 * regionComboBox.getPromptText(); // for(Branch branch : branches) { //
-		 * if(branch.getRegion().equals(region)) { //
-		 * SingletonOrder.getInstance().setBranch(branch); // break; // } // } // }
-		 * catch (NullPointerException ex) { // One of the comboBoxes is null //
-		 * switchFillAllFields(); // return; // } //
-		 * SingletonOrder.getInstance().set(null);; //
-		 * SingletonOrder.getInstance().setBranch(branch); //
-		 * SingletonOrder.getInstance().setBranch(branch); //
-		 * SingletonOrder.getInstance().setBranch(branch); //
-		 * SingletonOrder.getInstance().setBranch(branch); //
-		 * SingletonOrder.getInstance().setBranch(branch); //
-		 * SingletonOrder.getInstance().setBranch(branch); // // } // else { // if
-		 * pick-up is selected // // // // }
-		 * ManageScreens.changeScene(getClass().getResource(
-		 * "../order/CheckoutScreen.fxml"), "Checkout Screen"); } catch (Exception e) {
-		 * e.printStackTrace(); }
-		 */
 		boolean canProceed = true;
-		// First - we will check the fields in the deilivery option if selected.
+		// First - we will check the fields in the delivery option if selected.
 		// if the method returned true for the fields -> one of them are empty or ALL of
 		// them.
 		// if the method returned false for the comboBox -> the user didn't select any
@@ -127,43 +107,46 @@ public class DeliveryController implements Initializable {
 		if (deliveryRadioButton.isSelected()) {
 			if (!InputChecker.isDeliveryComboBoxIsChanged(hourComboBox.getValue(), minuteComboBox.getValue(),
 					regionComboBox.getValue())) {
-				switchFillAllFields();
+				switchFillAllFields(fillAllFieldsLabel, "* Please fill all the fields!");
 				canProceed = false;
 			}
 			else if (InputChecker.isFieldsAreEmptyChecker(true, addressField.getText(), recieverNameField.getText(),
 					deliveryDatePicker.getValue().toString(), recieverPhoneField.getText())) {
-				switchFillAllFields();
+				switchFillAllFields(fillAllFieldsLabel, "* Please fill all the fields!");
 				canProceed = false;
 			}
 		}
 		// the same thing for pickUp option, if the comboBox has not changed -> the
 		// label will appear for selecting the branch.
 		else if (pickUpRadioButton.isSelected()) {
-			//if (!InputChecker.isPickUpComboBoxIsChanged(branchComboBox.getValue())) {
-				//TODO - label for pickup if the user didn't selected a branch
-				//canProceed = false;
-			//}
+			if (!InputChecker.isPickUpComboBoxIsChanged(branchComboBox.getValue())) {
+				switchFillAllFields(selectABranchLabel, "* Please select a branch!");
+				canProceed = false;
+			}
 		}
 		// if everything is filled and selected, the user will proceed to checkout and
 		// we will set the delivery if selected and the branch for the order
 		if(canProceed) {
-			insertDelivery();
-			if (pickUpRadioButton.isSelected())
-				initBranchForOrder(branchComboBox.getValue());
-			else
-				initBranchForOrder(addressField.getText());
+			if (deliveryRadioButton.isSelected())
+				insertDelivery();
+			else if (pickUpRadioButton.isSelected())
+				SingletonOrder.getInstance().setBranch(branchComboBox.getValue());
+				
 			ManageScreens.changeScreenTo(Screens.CHECKOUT);
 		}
 	}
 
 	private void insertDelivery() {
-		if (deliveryRadioButton.isSelected()) {
-			SingletonDelivery.getDeliveryInstance().setAddress(addressField.getText());
-			SingletonDelivery.getDeliveryInstance().setDeliveryDate(deliveryDatePicker.getValue().toString());
-			SingletonDelivery.getDeliveryInstance().setPhoneNumber(recieverPhoneField.getText());
-			SingletonDelivery.getDeliveryInstance().setReceiverName(recieverNameField.getText());
-			SingletonDelivery.getDeliveryInstance().setStatus("Pending");
-		}
+		String address = addressField.getText();
+		String deliveryDate = deliveryDatePicker.getValue().toString();
+		String phoneNumber = recieverPhoneField.getText();
+		String ReceiverName = recieverNameField.getText();
+		String status = "Pending";  // TODO: const class
+
+		SingletonOrder.getInstance().setDelivery(new Delivery(address, deliveryDate, phoneNumber, ReceiverName, status));
+		SingletonDelivery.getDeliveryInstance().setStatus("Pending");
+		
+		initBranchForOrder(regionComboBox.getValue());		
 	}
 
 	private void initBranchForOrder(String checkString) {
@@ -178,10 +161,10 @@ public class DeliveryController implements Initializable {
 		return null;
 	}
 
-	private void switchFillAllFields() {
-		fillAllFieldsLabel.setText("* Please fill all the fields");
+	private void switchFillAllFields(Label label, String textToShow) {
+		label.setText("* Please fill all the fields");
 		PauseTransition pause = new PauseTransition(Duration.seconds(3));
-		pause.setOnFinished(e -> fillAllFieldsLabel.setText(""));
+		pause.setOnFinished(e -> label.setText(""));
 		pause.play();
 	}
 
@@ -230,8 +213,8 @@ public class DeliveryController implements Initializable {
 		branches = (ObservableList<Branch>) response;
 
 		for (Branch branch : branches) {
-			regionComboBox.getItems().addAll(branch.getRegion());
-			branchComboBox.getItems().addAll(branch.toString());
+			regionComboBox.getItems().add(branch.getRegion());
+			branchComboBox.getItems().add(branch);
 		}
 
 	}

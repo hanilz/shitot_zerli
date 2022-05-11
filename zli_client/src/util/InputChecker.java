@@ -3,6 +3,8 @@ package util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import entities.Branch;
+
 public class InputChecker {
 	public static boolean checkDateFormat(String date) {
 		if (!date.contains(":")) // if the date not contains the time
@@ -51,7 +53,7 @@ public class InputChecker {
 		return true;
 	}
 
-	public static boolean isPickUpComboBoxIsChanged(String branch) {
+	public static boolean isPickUpComboBoxIsChanged(Branch branch) {
 		if (branch == null)
 			return false;
 		return true;

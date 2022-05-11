@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.DeliveryController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.DeliveryController">
    <children>
       <GridPane>
         <columnConstraints>
@@ -72,30 +72,39 @@
                      </cursor></RadioButton>
                </children>
             </VBox>
-            <HBox fx:id="pickupHBox" alignment="CENTER" prefHeight="72.0" prefWidth="775.0" spacing="34.0" visible="false">
+            <VBox alignment="TOP_CENTER" prefHeight="97.0" prefWidth="775.0">
                <children>
-                  <HBox alignment="CENTER" prefHeight="26.0" prefWidth="227.0" spacing="3.0">
+                  <HBox alignment="CENTER" prefHeight="22.0" prefWidth="775.0">
                      <children>
-                        <Label text="*" textFill="#ff1b1b">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label text="Choose Branch For Pickup:">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
+                        <Label fx:id="selectABranchLabel" textFill="#ff1b1b" />
                      </children>
                   </HBox>
-                  <ComboBox fx:id="branchComboBox" prefHeight="25.0" prefWidth="231.0" promptText="select branch" />
+                  <HBox fx:id="pickupHBox" alignment="CENTER" prefHeight="72.0" prefWidth="775.0" spacing="34.0" visible="false">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="26.0" prefWidth="227.0" spacing="3.0">
+                           <children>
+                              <Label text="*" textFill="#ff1b1b">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Choose Branch For Pickup:">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <ComboBox fx:id="branchComboBox" prefHeight="25.0" prefWidth="231.0" promptText="select branch" />
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
+            </VBox>
             <VBox fx:id="deliveryVBox" alignment="BOTTOM_CENTER" prefHeight="252.0" prefWidth="775.0" spacing="6.0">
                <children>
                   <HBox prefHeight="22.0" prefWidth="775.0">
                      <children>
-                        <Label fx:id="fillAllFieldsLabel" text="* Please fill all the fields!" textFill="#ff1b1b" />
+                        <Label fx:id="fillAllFieldsLabel" textFill="#ff1b1b" />
                      </children>
                   </HBox>
                   <HBox prefHeight="22.0" prefWidth="775.0">
