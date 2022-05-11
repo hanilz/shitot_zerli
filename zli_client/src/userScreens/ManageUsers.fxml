@@ -18,13 +18,11 @@
       </Label>
       <TableView fx:id="userTable" prefHeight="480.0" prefWidth="980.0">
         <columns>
-          <TableColumn fx:id="idAccount" prefWidth="70.0" text="Account ID" />
-          <TableColumn fx:id="firstName" text="Name" />
+          <TableColumn fx:id="firstName" text="First Name" />
             <TableColumn fx:id="lastName" text="Last Name" />
-            <TableColumn fx:id="id" prefWidth="60.0" text="ID" />
-            <TableColumn fx:id="email" text="Email" />
-            <TableColumn fx:id="phoneNumber" text="Phone" />
-            <TableColumn fx:id="status" prefWidth="90.0" text="Status" />
+            <TableColumn fx:id="userType" prefWidth="81.0" text="User Type" />
+            <TableColumn fx:id="id" prefWidth="89.0" text="Personal ID" />
+            <TableColumn fx:id="status" prefWidth="118.0" text="Status" />
         </columns>
       </TableView>
       <HBox prefHeight="27.0" prefWidth="980.0">
