@@ -50,4 +50,10 @@ public class Branch implements Serializable{
 	public void setRegion(String region) {
 		this.region = region;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("%s, %s", address, city);
+	}
+	
 }

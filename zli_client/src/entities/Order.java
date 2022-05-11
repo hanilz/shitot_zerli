@@ -21,7 +21,6 @@ public class Order implements Serializable{
 	private User user;
 	private String paymentMethod;
 	
-	
 	public Order(int idOrder, double price, String greetingCard, String color, String dOrder,
 			String date, Branch branch, String status, User user, String paymentMethod) {
 		this.idOrder = idOrder;

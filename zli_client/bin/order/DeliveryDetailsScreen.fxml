@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.DeliveryController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.DeliveryController">
    <children>
       <GridPane>
         <columnConstraints>
@@ -88,7 +88,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <ComboBox fx:id="branchComboBox" prefHeight="25.0" prefWidth="231.0" promptText="Branch" />
+                  <ComboBox fx:id="branchComboBox" prefHeight="25.0" prefWidth="231.0" promptText="select branch" />
                </children>
             </HBox>
             <VBox fx:id="deliveryVBox" alignment="BOTTOM_CENTER" prefHeight="252.0" prefWidth="775.0" spacing="6.0">
