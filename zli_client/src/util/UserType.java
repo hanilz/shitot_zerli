@@ -1,10 +1,5 @@
 package util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import entities.User;
-
 public enum UserType {
 	CUSTOMER, STORE_WORKER, STORE_MANGER, DELIVERY_COORDINATOR, CUSTOMER_SERVICE, UNDEFINED, CEO, MARKETING_WORKER,
 	SERVICE_EXPERT;

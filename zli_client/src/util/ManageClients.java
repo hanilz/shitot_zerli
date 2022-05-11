@@ -32,13 +32,12 @@ public class ManageClients {
 		}
 	}
 	public static ArrayList<Screens> getUserScreens(UserType type){//assumed user logged in 
-		ArrayList<Screens> userTypeScreens;
 		switch(type)
 		{
 		case CEO:
 			break;
 		case CUSTOMER:
-			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.CATALOG}));
+			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.CATALOG, Screens.CART}));
 		case CUSTOMER_SERVICE:
 			break;
 		case DELIVERY_COORDINATOR:
@@ -48,7 +47,7 @@ public class ManageClients {
 		case SERVICE_EXPERT:
 			break;
 		case STORE_MANGER:
-			break;
+			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.MANAGE_USERS}));
 		case STORE_WORKER:
 			break;
 

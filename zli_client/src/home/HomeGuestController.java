@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import util.ManageClients;
 import util.ManageScreens;
 import util.Screens;
 
@@ -67,11 +68,10 @@ public class HomeGuestController implements Initializable {
 	
     @FXML
     void exitApplication(MouseEvent event) {
-    	try {
-    		ManageScreens.changeScene(getClass().getResource("../userScreens/ManageUsers.fxml"), "manageUsers");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		//release the client from the ocsf server + disconnect from the db
+		ManageClients.exitClient();
+		//exit window
+		System.exit(0);
     }
 
 }

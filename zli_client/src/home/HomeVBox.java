@@ -27,7 +27,7 @@ public class HomeVBox extends VBox {
 	public void init() {
 		this.getChildren().add(button);
 		if (image != null) {
-			image.setFitWidth(147);
+			image.setFitWidth(150);
 			image.setFitHeight(150);
 			this.getChildren().add(image);
 		}
