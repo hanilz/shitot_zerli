@@ -67,7 +67,6 @@ public class GreetingCardController {
 			PauseTransition pause = new PauseTransition(Duration.seconds(3));
 			pause.setOnFinished(e -> isAllFilledLabel.setText(""));
 			pause.play();
-			//TODO - we need to think together if the textArea of the greeting card need to be only letters or letters and digits!
 		}
 		else {
 			//if all the fields are filled, we will insert the greeting card into the order
@@ -78,7 +77,7 @@ public class GreetingCardController {
 
 	private void insertGreetingCardIntoOrder() {
 		if(isIncludedCheckBox.isSelected()) //insert only if the user included greeting card.
-			SingletonOrder.getInstance().setGreetingCard(String.format("Title: %sm,From: %s,To: %s,GreetingCard: %s", titleTextField.getText(),
+			SingletonOrder.getInstance().setGreetingCard(String.format("Title: %s, From: %s, To: %s, GreetingCard: %s", titleTextField.getText(),
 					fromTextField.getText(), toTextField.getText(), greetingCardTextArea.getText()));
 	}
 

@@ -25,6 +25,14 @@ public class Delivery implements Serializable {
 		this.deliveryDate = deliveryDate;
 		this.status = status;
 	}
+	
+	public Delivery(String address, String receiverName, String phoneNumber, String deliveryDate, String status) {
+		this.address = address;
+		this.receiverName = receiverName;
+		this.phoneNumber = phoneNumber;
+		this.deliveryDate = deliveryDate;
+		this.status = status;
+	}
 
 	public int getIdDelivery() {
 		return idDelivery;
