@@ -103,12 +103,11 @@ public class CartController implements Initializable {
 		if (cart.isEmpty()) {
 			buyButton.setStyle("-fx-background-color: red");
 			buyButton.setDisable(true);
+			emptyCartButton.setVisible(false);
 		} else {
 			buyButton.setStyle("-fx-background-color: green");
 			buyButton.setDisable(false);
 		}
-    	if(cart.isEmpty())
-			emptyCartButton.setVisible(false);
 	}
 
 	public static void connectionWithCartHBox(String command) {
