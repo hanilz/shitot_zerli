@@ -19,6 +19,7 @@ import order.CheckoutController;
 import order.DeliveryController;
 import order.GreetingCardController;
 import order.PaymentSuccessfulController;
+import survey.SurveyHomeController;
 import userScreens.ManageUsersController;
 
 public class ManageScreens {
@@ -127,6 +128,9 @@ public class ManageScreens {
 			case MANAGE_USERS:
 				ManageScreens.changeScene(ManageUsersController.class.getResource("ManageUsers.fxml"), "Manage Users");
 				break;
+			case SURVEY_HOME:
+				ManageScreens.changeScene(SurveyHomeController.class.getResource("SurveyHomeScreen.fxml"), "Questionnaires");
+				break;
 			default:
 				break;
 			}
@@ -178,6 +182,8 @@ public class ManageScreens {
 			break;
 		case MANAGE_USERS:
 			return "Manage Users";
+		case SURVEY_HOME:
+			return "Surveys";
 		}
 		return "";// no such user//
 	}
@@ -218,6 +224,8 @@ public class ManageScreens {
 			return "";
 		case MANAGE_USERS:
 			return "resources/home/manageUsers.png";
+		case SURVEY_HOME:
+			return "resources/home/survey.png";
 		default:
 			return "";// no such user//
 		}

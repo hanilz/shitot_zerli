@@ -115,6 +115,10 @@ public class ClientMessageController {
 		else if(command.equals("insert delivery order")) {
 			ClientController.setResponse(message.get("response"));
 		}
+		
+		else if(command.equals("Fetch Surveys")) {
+			ClientController.setResponse(message.get("response"));
+		}
 
 	}
 

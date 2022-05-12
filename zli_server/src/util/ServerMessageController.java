@@ -14,6 +14,7 @@ import entities.Product;
 import entities.ManageUsers;
 import ocsf.server.ConnectionToClient;
 import server.ServerController;
+import survey.Survey;
 
 public class ServerMessageController {
 
@@ -197,5 +198,16 @@ public class ServerMessageController {
 				e.printStackTrace();
 			}
 		}
+		
+		else if(command.equals("Fetch Surveys")) {
+			ArrayList<Survey> surveys = AnaylzeCommand.selectSurveys();
+			try {
+				message.put("response", surveys);
+				client.sendToClient(message);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 }
