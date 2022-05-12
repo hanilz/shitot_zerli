@@ -43,7 +43,11 @@ public class Cart {
 		calculateTotalPrice(deltaQuantity * product.getProductPrice());
 		return true;
 	}
-	
+	public void emptyCart()
+	{
+		cart.clear();
+		totalPrice = 0;
+	}
 	public double getTotalPrice() { return totalPrice;}
 	
 	private void calculateTotalPrice(double amount) {
