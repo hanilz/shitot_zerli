@@ -22,7 +22,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label fx:id="qTitleLabel" text="this is a Survey">
+            <Label fx:id="surveyTitleLabel" text="this is a Survey">
                <font>
                   <Font size="24.0" />
                </font>
@@ -36,8 +36,8 @@
       </ScrollPane>
       <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="580.0" spacing="70.0">
          <children>
-            <Button fx:id="discardButton" mnemonicParsing="false" onAction="#discardQuestionnaireAnswer" text="Discard And Close" />
-            <Button fx:id="submitButton" mnemonicParsing="false" onAction="#saveQuestionnaireAnswer" text="Submit Answer" />
+            <Button fx:id="discardButton" mnemonicParsing="false" onAction="#discardSurveyAnswer" text="Discard And Close" />
+            <Button fx:id="submitButton" mnemonicParsing="false" onAction="#saveSurveyAnswer" text="Submit Answer" />
          </children>
          <VBox.margin>
             <Insets />

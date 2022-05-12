@@ -129,7 +129,10 @@ public class ManageScreens {
 				ManageScreens.changeScene(ManageUsersController.class.getResource("ManageUsers.fxml"), "Manage Users");
 				break;
 			case SURVEY_HOME:
-				ManageScreens.changeScene(SurveyHomeController.class.getResource("SurveyHomeScreen.fxml"), "Questionnaires");
+				ManageScreens.changeScene(SurveyHomeController.class.getResource("SurveyHomeScreen.fxml"), "Survey Home Screen");
+				break;
+			case SURVEY:
+				ManageScreens.changeScene(SurveyHomeController.class.getResource("Survey.fxml"), "Survey");
 				break;
 			default:
 				break;
