@@ -12,6 +12,7 @@ import entities.Branch;
 import entities.ManageUsers;
 import entities.OrderProduct;
 import entities.Product;
+import survey.Survey;
 
 /**
  * AnaylzeCommand - will anaylze the command that given from the server
@@ -339,6 +340,29 @@ public class AnaylzeCommand {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	
+	public static ArrayList<Survey> selectSurveys() {
+		ArrayList<Survey> surveys = new ArrayList<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt.executeQuery("SELECT * FROM surveys;");
+			while (rs.next()) {
+				int idSurvey = rs.getInt(1);
+				String surveyName =  rs.getString(2);
+				String[] questions = new String[6];
+				for(int i = 0 ; i<6 ;i++) {
+					questions[i]=rs.getString(i+2);
+				}
+				Survey survey = new Survey(idSurvey, surveyName, questions);
+				surveys.add(survey);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("returned surveys");
+		return surveys;
 	}
 
 }
