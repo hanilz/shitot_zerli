@@ -82,7 +82,7 @@ public class LoginScreenController implements Initializable {
 				System.out.println("running : " + User.getUserInstance());
 				if (popup(event))
 					return;
-				ManageScreens.changeScreenTo(Screens.CATALOG);
+				ManageScreens.home();
 			break;
 		case ALREADY_LOGGED_IN:
 			errorLabel.setText("User already logged in");
