@@ -38,6 +38,9 @@ public class CartController implements Initializable {
 	@FXML
 	private Label priceLabel;
 
+    @FXML
+    private Button emptyCartButton;
+
 	private static CartController instance;
 
 	public void initCart() {
@@ -100,6 +103,7 @@ public class CartController implements Initializable {
 		if (cart.isEmpty()) {
 			buyButton.setStyle("-fx-background-color: red");
 			buyButton.setDisable(true);
+			emptyCartButton.setVisible(false);
 		} else {
 			buyButton.setStyle("-fx-background-color: green");
 			buyButton.setDisable(false);
@@ -114,6 +118,12 @@ public class CartController implements Initializable {
 			instance.initCart();
 		}
 	}
+    @FXML
+    void emptyCart(MouseEvent event) {
+    	cart.emptyCart();
+    	connectionWithCartHBox("refresh cart");
+    }
+    
 
 	/**
 	 * we need to clear the cart VBox in order to prevent duplicates from appearing

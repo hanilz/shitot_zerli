@@ -11,16 +11,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.CartController">
+<VBox prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.CartController">
    <children>
-      <HBox alignment="CENTER" prefHeight="46.0" prefWidth="804.0">
+      <HBox alignment="CENTER" prefHeight="46.0" prefWidth="804.0" spacing="300.0">
          <children>
             <ImageView fitHeight="80.0" fitWidth="103.0" nodeOrientation="INHERIT" onMouseClicked="#changeToHomeScreen" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../resources/catalog/home.png" />
                </image>
                <HBox.margin>
-                  <Insets right="297.0" />
+                  <Insets />
                </HBox.margin>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -31,12 +31,17 @@
                   <Font size="47.0" />
                </font>
                <HBox.margin>
-                  <Insets right="413.0" />
+                  <Insets />
                </HBox.margin>
                <padding>
                   <Insets right="4.0" />
                </padding>
             </Label>
+            <Button fx:id="emptyCartButton" mnemonicParsing="false" onMouseClicked="#emptyCart" text="Empty Cart" textFill="#942b2b">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
       </HBox>
       <ScrollPane prefHeight="386.0" prefWidth="894.0">
@@ -48,7 +53,7 @@
          <children>
             <Button fx:id="backToCatalogButton" mnemonicParsing="false" onMousePressed="#changeToCatalogScreen" prefHeight="27.0" prefWidth="127.0" text="Back To Catalog">
                <HBox.margin>
-                  <Insets right="349.0" />
+                  <Insets right="430.0" />
                </HBox.margin>
                <cursor>
                   <Cursor fx:constant="HAND" />
