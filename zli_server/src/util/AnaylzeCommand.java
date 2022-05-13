@@ -353,7 +353,7 @@ public class AnaylzeCommand {
 				String surveyName =  rs.getString(2);
 				String[] questions = new String[6];
 				for(int i = 0 ; i<6 ;i++) {
-					questions[i]=rs.getString(i+2);
+					questions[i]=rs.getString(i+3);
 				}
 				Survey survey = new Survey(idSurvey, surveyName, questions);
 				surveys.add(survey);

@@ -1,6 +1,7 @@
 package survey;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -16,7 +17,7 @@ import util.Screens;
 
 public class SurveyController implements Initializable{
 
-	Survey survey;
+	private static Survey survey;
 	
     @FXML
     private Button discardButton;
@@ -37,7 +38,12 @@ public class SurveyController implements Initializable{
 
     @FXML
     void saveSurveyAnswer(ActionEvent event) {
+    	int[] answers = new int[6];
+    	for (int i = 0; i < 6; i++) {
+    		answers[i] = ((questionHBox) questionVbox.getChildren().get(i*2)).getSelected();
+		}
     	// TODO add SQL saving functionality
+    	System.out.println(Arrays.toString(answers));
     	ManageScreens.changeScreenTo(Screens.SURVEY_HOME);
     }
 
@@ -53,6 +59,10 @@ public class SurveyController implements Initializable{
 			questionVbox.getChildren().add(question);
 			questionVbox.getChildren().add(new Separator(Orientation.HORIZONTAL));
 		}
+	}
+	
+	public static void setSurvey(Survey survey2) {
+		survey = survey2;
 	}
 
 }
