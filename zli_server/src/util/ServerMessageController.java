@@ -58,37 +58,20 @@ public class ServerMessageController {
 					break;
 				}
 			}
-			try {
 				message.put("command", "client disconnected");
-				client.sendToClient(message);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+				sendToClient(client);
 		} else if (command.equals("fetch branches")) {
 			ArrayList<Branch> branches = AnaylzeCommand.selectAllBranches();
-
-			try {
 				message.put("response", branches);
-				client.sendToClient(message); // send the list to fetch all the orders to the server
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+				sendToClient(client);
 		} else if (command.equals("fetch products")) {
 			ArrayList<Product> products = AnaylzeCommand.selectAllProducts();
-			try {
 				message.put("response", products);
-				client.sendToClient(message); // send the list to fetch all the products to the client
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+				sendToClient(client);
 		} else if (command.equals("fetch products")) {
 			ArrayList<Item> items = AnaylzeCommand.selectAllItems();
-			try {
 				message.put("response", items);
-				client.sendToClient(message); // send the list to fetch all the items to the client
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+				sendToClient(client);
 		}
 
 		// handle login massage
@@ -105,32 +88,20 @@ public class ServerMessageController {
 
 		else if (command.equals("fetch all user details")) {
 			ArrayList<ManageUsers> users = AnaylzeCommand.selectAllUsers();
-			try {
 				message.put("response", users);
-				client.sendToClient(message);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+				sendToClient(client);
 		}
 
 		else if (command.equals("change user status")) {
 			message.get("id");
 			String response = AnaylzeCommand.changeUserStatus(message.get("id"));
-			try {
-				message.put("response", response);
-				client.sendToClient(message);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			message.put("response", response);
+			sendToClient(client);
 		}
 
 		else if (command.equals("logout")) {
 			message.put("logout", AnaylzeCommand.logoutUser((int) message.get("logoutID")));
-			try {
-				client.sendToClient(message);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			sendToClient(client);
 		}
 
 		else if (command.equals("insert account payment")) {
@@ -138,15 +109,11 @@ public class ServerMessageController {
 			boolean isInsert = AnaylzeCommand.insertAccountPayment(accountPayment.getFullName(),
 					accountPayment.getCardNumber(), accountPayment.getCardDate(), accountPayment.getCardVCC(),
 					accountPayment.getUser().getIdUser());
-			try {
-				if (isInsert)
-					message.put("response", "insert account payment successful");
-				else
-					message.put("response", "insert account payment failed");
-				client.sendToClient(message);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			if (isInsert)
+				message.put("response", "insert account payment successful");
+			else
+				message.put("response", "insert account payment failed");
+			sendToClient(client);
 		}
 
 		else if (command.equals("insert order")) {
@@ -154,64 +121,44 @@ public class ServerMessageController {
 			Integer idOrderReturned = AnaylzeCommand.insertNewOrder(order.getPrice(), order.getGreetingCard(),
 					order.getdOrder(), order.getBranch().getIdBranch(), order.getStatus(), order.getPaymentMethod(),
 					order.getUser().getIdUser());
-			try {
-				message.put("response", idOrderReturned);
-				client.sendToClient(message);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			message.put("response", idOrderReturned);
+			sendToClient(client);
 		}
 
 		else if (command.equals("insert order products")) {
 			@SuppressWarnings("unchecked")
 			ArrayList<OrderProduct> orderProductsList = (ArrayList<OrderProduct>) message.get("list order products");
 			boolean isInserted = AnaylzeCommand.insertOrderProducts(orderProductsList);
-			try {
-				if (isInserted)
-					message.put("response", "insert order products successful");
-				else
-					message.put("response", "insert order products failed");
-				client.sendToClient(message);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			if (isInserted)
+				message.put("response", "insert order products successful");
+			else
+				message.put("response", "insert order products failed");
+			sendToClient(client);
 		}
 
 		else if (command.equals("insert delivery")) {
 			Delivery delivery = (Delivery) message.get("delivery");
 			int idDeliveryReturned = AnaylzeCommand.insertNewDelivery(delivery.getAddress(), delivery.getReceiverName(),
 					delivery.getPhoneNumber(), delivery.getDeliveryDate(), delivery.getStatus());
-			try {
-				message.put("response", idDeliveryReturned);
-				client.sendToClient(message);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			message.put("response", idDeliveryReturned);
+			sendToClient(client);
 		}
 
 		else if (command.equals("insert delivery order")) {
 			DeliveriesOrders deliveryOrder = (DeliveriesOrders) message.get("delivery order");
 			boolean isInserted = AnaylzeCommand.insertDeliveryOrder(deliveryOrder.getIdOrder(),
 					deliveryOrder.getIdDelivery());
-			try {
-				if (isInserted)
-					message.put("response", "insert delivery order successful");
-				else
-					message.put("response", "insert delivery order failed");
-				client.sendToClient(message);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			if (isInserted)
+				message.put("response", "insert delivery order successful");
+			else
+				message.put("response", "insert delivery order failed");
+			sendToClient(client);
 		}
 
 		else if (command.equals("Fetch Surveys")) {
 			ArrayList<Survey> surveys = AnaylzeCommand.selectSurveys();
-			try {
-				message.put("response", surveys);
-				client.sendToClient(message);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			message.put("response", surveys);
+			sendToClient(client);
 		}
 
 	}

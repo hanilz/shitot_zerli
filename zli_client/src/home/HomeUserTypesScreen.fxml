@@ -14,7 +14,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.HomeUserTypesController">
    <children>
-      <HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-image: url('file:D:/EclipseProjects/ZliPrototype/src/resources/home/homepage.png');">
+      <HBox fx:id="hbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0">
          <children>
             <VBox alignment="CENTER_LEFT" prefHeight="455.0" prefWidth="215.0">
                <children>
