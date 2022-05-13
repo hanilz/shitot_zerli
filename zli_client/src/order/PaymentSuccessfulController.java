@@ -1,5 +1,7 @@
 package order;
 
+import entities.Cart;
+import entities.SingletonOrder;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -15,6 +17,9 @@ public class PaymentSuccessfulController {
     void changeToCatalog(MouseEvent event) {
     	if(ManageScreens. getPopupStage() != null)
     		ManageScreens. getPopupStage().close();
+    	//Empty the cart and the singletonOrder after we inserted the order into db
+		Cart.getInstance().emptyCart();
+		SingletonOrder.getInstance().emptySingletonOrder();
     	ManageScreens.changeScreenTo(Screens.CATALOG);
 
     }
