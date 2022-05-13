@@ -46,7 +46,6 @@ public class SurveyHomeController implements Initializable {
 			surveyList.getChildren().add(shrh);
 			surveyList.getChildren().add(new Separator(Orientation.HORIZONTAL));
 			
-			
 			//surveyList.getChildren().add(new Label(survey.getIdSurvey() +" :"+survey.getSurveyName()));//test worked
 		}
 		//userTable.setItems(users);// set the information in the table

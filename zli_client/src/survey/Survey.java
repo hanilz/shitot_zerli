@@ -46,7 +46,7 @@ public class Survey implements Serializable{
 	}
 
 	public String getQuestion(int idx) {
-		if (idx > 0 && idx <= 6)
+		if (idx >= 0 && idx < 6)
 			return questions[idx];
 		return "Invalid Parameter";
 	}
