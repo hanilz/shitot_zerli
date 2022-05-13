@@ -27,6 +27,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import util.Commands;
 import util.ManageScreens;
 import util.Screens;
 
@@ -78,16 +79,18 @@ public class CatalogController implements Initializable {
 
 	private void fetchItems() {
 		HashMap<String, Object> message = new HashMap<>();
-		message.put("command", "fetch items");
+		message.put("command",Commands.FETCH_ITEMS);
 		Object response = ClientFormController.client.accept(message);
 		items = (ObservableList<Item>) response;
+		System.out.println(products);
 	}
 
 	private void fetchProducts() {
 		HashMap<String, Object> message = new HashMap<>();
-		message.put("command", "fetch products");
+		message.put("command",Commands.FETCH_PRODUCTS);
 		Object response = ClientFormController.client.accept(message);
 		products = (ObservableList<Product>) response;
+		System.out.println(products);
 	}
 
 	private void initGrid() {

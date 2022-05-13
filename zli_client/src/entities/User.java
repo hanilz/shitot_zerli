@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 import client.ClientFormController;
+import util.Commands;
 import util.UserType;
 
 public class User implements Serializable {
@@ -40,7 +41,7 @@ public class User implements Serializable {
 		if (isLogged) {
 			// updateDB
 			HashMap<String, Object> message = new HashMap<>();
-			message.put("command", "logout");
+			message.put("command", Commands.LOGOUT);
 			message.put("logoutID", User.getUserInstance().getIdUser());
 			if((boolean)ClientFormController.client.accept(message))
 			{

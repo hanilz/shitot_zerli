@@ -26,6 +26,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import util.Commands;
 import util.InputChecker;
 import util.ManageScreens;
 import util.Screens;
@@ -164,7 +165,7 @@ public class CheckoutController implements Initializable {
 	private void insertOrderProductsToDB(int idOrder) {
 		HashMap<String, Object> message = new HashMap<>();
 		ArrayList<OrderProduct> orderProductsList = new ArrayList<>();
-		message.put("command", "insert order products");
+		message.put("command",Commands.INSERT_ORDERS_PRODUCT);
 		for (Product currentProduct : Cart.getInstance().getProductCart().keySet())
 			orderProductsList
 					.add(new OrderProduct(idOrder, currentProduct, Cart.getInstance().getProductCart().get(currentProduct)));
@@ -179,7 +180,7 @@ public class CheckoutController implements Initializable {
 	private void insertDelivery(int idOrder) {
 		// first - insert the delivery into the db
 		HashMap<String, Object> message = new HashMap<>();
-		message.put("command", "insert delivery");
+		message.put("command", Commands.INSERT_DELIVERY);
 		message.put("delivery", SingletonOrder.getInstance().getDelivery());
 		Object response = ClientFormController.client.accept(message);
 		if ((Integer) response != -1) {
@@ -191,7 +192,7 @@ public class CheckoutController implements Initializable {
 	private void insertDeliveriesOrders(int idOrder, int idDelivery) {
 		// second - insert the delivery order into the db
 		HashMap<String, Object> message = new HashMap<>();
-		message.put("command", "insert delivery order");
+		message.put("command",Commands.INSERT_DELIVERY_ORDER);
 		message.put("delivery order", new DeliveriesOrders(idOrder, idDelivery));
 		Object response = ClientFormController.client.accept(message);
 		if (response.equals("insert delivery order successful"))

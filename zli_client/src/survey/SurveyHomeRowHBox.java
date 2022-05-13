@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
+import util.Commands;
 import util.ManageScreens;
 import util.Screens;
 
@@ -41,9 +42,8 @@ public class SurveyHomeRowHBox extends HBox{
 		    @Override public void handle(ActionEvent e) {
 		    	//TODO add SQL call HERE TO fetch question
 		        System.out.println("Clicked "+ surveyID);
-		        
 				HashMap<String, Object> message = new HashMap<>();
-				message.put("command", "Get Survey");
+				message.put("command",  Commands.GET_SERVEY);
 				message.put("surveyID", surveyID);
 				Object response = ClientFormController.client.accept(message);
 				

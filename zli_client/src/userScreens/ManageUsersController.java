@@ -17,6 +17,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
+import util.Commands;
 import util.ManageScreens;
 
 public class ManageUsersController implements Initializable {
@@ -67,7 +68,7 @@ public class ManageUsersController implements Initializable {
 		System.out.println("requesting users");
 		//create a request to fetch the table data
 		HashMap<String, Object> message = new HashMap<>();
-		message.put("command", "fetch all user details");
+		message.put("command", Commands.FETCH_ALL_USERS_DETAILS);
 		Object response = ClientFormController.client.accept(message);
 		users = (ObservableList<ManageUsers>) response;
 		System.out.println("got users");
@@ -90,7 +91,7 @@ public class ManageUsersController implements Initializable {
 						btn.setOnAction((ActionEvent event) -> {
 							ManageUsers data = getTableView().getItems().get(getIndex());
 							HashMap<String, Object> message = new HashMap<>();
-							message.put("command", "change user status");
+							message.put("command", Commands.CHANGE_USER_STATUS);
 							message.put("id", data.getIdUser());
 							Object response = ClientFormController.client.accept(message);
 							

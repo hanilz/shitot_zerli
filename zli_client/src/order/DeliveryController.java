@@ -24,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import util.Commands;
 import util.InputChecker;
 import util.ManageScreens;
 import util.Screens;
@@ -221,7 +222,7 @@ public class DeliveryController implements Initializable {
 		minuteComboBox.getItems().addAll("00", "15", "30", "45");
 
 		HashMap<String, Object> message = new HashMap<>();
-		message.put("command", "fetch branches");
+		message.put("command", Commands.FETCH_BRANCHES);
 		Object response = ClientFormController.client.accept(message);
 		branches = (ObservableList<Branch>) response;
 

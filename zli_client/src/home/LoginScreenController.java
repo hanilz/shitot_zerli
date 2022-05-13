@@ -15,7 +15,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.web.HTMLEditorSkin.Command;
 import javafx.stage.Stage;
+import util.Commands;
 import util.ManageScreens;
 import util.Screens;
 import util.Status;
@@ -44,10 +46,11 @@ public class LoginScreenController implements Initializable {
 		String username = usernameLabel.getText();
 		String password = passwordLabel.getText();
 		HashMap<String, Object> message = new HashMap<String, Object>();
-		message.put("command", "login user");
+		message.put("command",Commands.LOGIN);
 		message.put("username", username);
 		message.put("password", password);
 		checkUserInputAndLogin(username, password);
+		@SuppressWarnings("unchecked")
 		HashMap<String, Object> response = (HashMap<String, Object>) ClientFormController.client.accept(message);
 		responseAction(event, username, response);
 	}
