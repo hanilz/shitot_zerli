@@ -67,7 +67,7 @@ public class ServerMessageController {
 					break;
 				}
 			}
-			message.put("command", "client disconnected");
+			message.put("command", Commands.CLIENT_DISCONNECTED);
 			sendToClient(client);
 			break;
 		case FETCH_ALL_USERS_DETAILS:
@@ -97,10 +97,8 @@ public class ServerMessageController {
 			boolean isInsert = AnaylzeCommand.insertAccountPayment(accountPayment.getFullName(),
 					accountPayment.getCardNumber(), accountPayment.getCardDate(), accountPayment.getCardVCC(),
 					accountPayment.getUser().getIdUser());
-			if (isInsert)
-				message.put("response", "insert account payment successful");
-			else
-				message.put("response", "insert account payment failed");
+			String insertionResult = isInsert ? "insert account payment successful" : "insert account payment failed";
+			message.put("response", insertionResult);
 			sendToClient(client);
 			break;
 		case INSERT_DELIVERY:
@@ -165,8 +163,8 @@ public class ServerMessageController {
 			break;
 		case SUBMIT_SURVEY:
 			boolean isSubmitted = AnaylzeCommand.submitSurvey((HashMap) message.get("answers"));
-			String submissionResult=isSubmitted? "insert survey answer successful":"insert survey answer failed";
-			message.put("response",submissionResult);
+			String submissionResult = isSubmitted ? "insert survey answer successful" : "insert survey answer failed";
+			message.put("response", submissionResult);
 			sendToClient(client);
 		default:
 			break;
