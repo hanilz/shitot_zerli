@@ -46,6 +46,11 @@
             <Insets top="10.0" />
          </padding>
       </HBox>
+      <Label fx:id="errorLabel" text="*Please fill all the questions before submiting" textFill="RED" visible="false">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
    </children>
    <opaqueInsets>
       <Insets />

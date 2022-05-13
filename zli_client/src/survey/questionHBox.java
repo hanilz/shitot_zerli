@@ -17,10 +17,10 @@ public class questionHBox extends HBox {
 	private Label question;
 	private int selected = 0;
 
-	public questionHBox(String question) {
+	public questionHBox(SurveyQuestion question) {
 		this.setAlignment(Pos.CENTER_LEFT);
-		this.question = new Label(question);
-		this.question.setPrefWidth(400);
+		this.question = new Label(question.getQuestion());
+		this.question.setPrefWidth(500);
 		this.question.setFont(new Font(16));
 		this.getChildren().add(this.question);
 		this.getChildren().add(new Separator(Orientation.VERTICAL));

@@ -1,5 +1,9 @@
 package survey;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import client.ClientFormController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -12,9 +16,12 @@ import util.ManageScreens;
 import util.Screens;
 
 public class SurveyHomeRowHBox extends HBox{
-	private Survey survey; 
-	public SurveyHomeRowHBox(Survey survey) {
-		this.survey=survey;
+	private int surveyID;
+	private String title;
+	Survey survey;
+	public SurveyHomeRowHBox(int surveyID, String title) {
+		this.surveyID=surveyID;
+		this.title=title;
 		this.setAlignment(Pos.CENTER_LEFT);
 		initHBox();
 	}
@@ -24,7 +31,7 @@ public class SurveyHomeRowHBox extends HBox{
 		Font font = new Font(24);
 		this.setPadding(new Insets(20));
 		this.setSpacing(20);
-		Label surveyName = new Label("Survey ID: " + survey.getIdSurvey() + "\tSurvey Name: " + survey.getSurveyName());
+		Label surveyName = new Label("Survey ID: " + surveyID + "\tSurvey Name: " + title);
 		surveyName.setFont(font);
 		surveyName.setPrefWidth(700);
 		this.getChildren().add(surveyName);
@@ -32,7 +39,17 @@ public class SurveyHomeRowHBox extends HBox{
 		
 		btn.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		        System.out.println("Clicked "+ survey.getIdSurvey());
+		    	//TODO add SQL call HERE TO fetch question
+		        System.out.println("Clicked "+ surveyID);
+		        
+				HashMap<String, Object> message = new HashMap<>();
+				message.put("command", "Get Survey");
+				message.put("surveyID", surveyID);
+				Object response = ClientFormController.client.accept(message);
+				
+				ArrayList<SurveyQuestion> questions = (ArrayList)response;//(ObservableList<Survey>) response;
+				System.out.println("got surveys");
+				survey = new Survey(surveyID,title,questions);
 		        SurveyController.setSurvey(survey);
 		        ManageScreens.changeScreenTo(Screens.SURVEY);
 		    }

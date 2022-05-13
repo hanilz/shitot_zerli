@@ -18,9 +18,9 @@ import util.ManageScreens;
 import util.Screens;
 
 public class SurveyHomeController implements Initializable {
-	//Map<Integer,String> surveys = new HashMap<>();
-	List<Survey> surveys = new ArrayList<>();
- 	@FXML
+	// Map<Integer,String> surveys = new HashMap<>();
+	HashMap<Integer, String> surveys = new HashMap<>();
+	@FXML
 	private ImageView homeImage;
 
 	@FXML
@@ -37,20 +37,14 @@ public class SurveyHomeController implements Initializable {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", "Fetch Surveys");
 		Object response = ClientFormController.client.accept(message);
-		surveys = (ArrayList)response;//(ObservableList<Survey>) response;
+		surveys = (HashMap) response;// (ObservableList<Survey>) response;
 		System.out.println("got surveys");
 
-		for(Survey survey:surveys) {
-			SurveyHomeRowHBox shrh = new SurveyHomeRowHBox(survey);
-			
+		for (int surveyID : surveys.keySet()) {
+			SurveyHomeRowHBox shrh = new SurveyHomeRowHBox(surveyID, surveys.get(surveyID));
 			surveyList.getChildren().add(shrh);
 			surveyList.getChildren().add(new Separator(Orientation.HORIZONTAL));
-			
-			//surveyList.getChildren().add(new Label(survey.getIdSurvey() +" :"+survey.getSurveyName()));//test worked
 		}
-		//userTable.setItems(users);// set the information in the table
-		// TODO Auto-generated method stub
-		// add sql connection
 
 	}
 
