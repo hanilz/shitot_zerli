@@ -64,8 +64,9 @@ public class AnaylzeCommand {
 			e.printStackTrace();
 		}
 		return branches;
-		
+
 	}
+
 	public static void updateOrder(String orderNumber, String date, String color) {
 		try {
 			int sendOrderNumberDB = Integer.parseInt(orderNumber);
@@ -90,29 +91,20 @@ public class AnaylzeCommand {
 	 * 
 	 * @return
 	 */
-	/*public static ArrayList<Order> selectAllOrders() {
-		ArrayList<Order> orders = new ArrayList<>();
-		orders.add(new Order(-1, 0.0, "", "", "", null, "", null, ""));
-		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = selectStmt.executeQuery("SELECT * FROM orders;");
-			while (rs.next()) {
-				int orderNumber = rs.getInt(1);
-				double price = rs.getDouble(2);
-				String greetingCard = rs.getString(3);
-				String color = rs.getString(4);
-				String dOrder = rs.getString(5);
-				String shop = rs.getString(6);
-				String date = rs.getString(7);
-				String orderDate = rs.getString(8);
-				Order resultOrder = new Order(orderNumber, price, greetingCard, color, dOrder, shop, date, orderDate);
-				orders.add(resultOrder);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return orders;
-	}*/
+	/*
+	 * public static ArrayList<Order> selectAllOrders() { ArrayList<Order> orders =
+	 * new ArrayList<>(); orders.add(new Order(-1, 0.0, "", "", "", null, "", null,
+	 * "")); try { Statement selectStmt =
+	 * DataBaseController.getConn().createStatement(); ResultSet rs =
+	 * selectStmt.executeQuery("SELECT * FROM orders;"); while (rs.next()) { int
+	 * orderNumber = rs.getInt(1); double price = rs.getDouble(2); String
+	 * greetingCard = rs.getString(3); String color = rs.getString(4); String dOrder
+	 * = rs.getString(5); String shop = rs.getString(6); String date =
+	 * rs.getString(7); String orderDate = rs.getString(8); Order resultOrder = new
+	 * Order(orderNumber, price, greetingCard, color, dOrder, shop, date,
+	 * orderDate); orders.add(resultOrder); } } catch (SQLException e) {
+	 * e.printStackTrace(); } return orders; }
+	 */
 
 	public static HashMap<String, Object> loginUser(String username, String password) {
 		Connection conn;
@@ -130,10 +122,11 @@ public class AnaylzeCommand {
 				status = Status.NOT_REGISTERED;
 			else if (rs.getString(7).toLowerCase().equals("suspended"))// if user is suspended
 				status = Status.SUSPENDED;
-			else {if (rs.getBoolean(6))// if user already logged in
-				status = Status.ALREADY_LOGGED_IN;
-			else 
-				login.put("idUser", Integer.parseInt(rs.getString(1)));
+			else {
+				if (rs.getBoolean(6))// if user already logged in
+					status = Status.ALREADY_LOGGED_IN;
+				else
+					login.put("idUser", Integer.parseInt(rs.getString(1)));
 				login.put("idAccount", Integer.parseInt(rs.getString(4)));
 				login.put("userType", UserType.get(rs.getString(5)));
 
@@ -153,14 +146,12 @@ public class AnaylzeCommand {
 		return login;// default for any throw would be unregistered
 	}
 
-
 	public static boolean logoutUser(int idUser) {
 		Connection conn;
 		conn = DataBaseController.getConn();
 		String query = "UPDATE users SET isLogin = ? WHERE idUser = ?";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, 0);
 			preparedStmt.setInt(2, idUser);
 			System.out.println(preparedStmt.executeUpdate());
@@ -171,22 +162,22 @@ public class AnaylzeCommand {
 		}
 	}
 
-
-	//this method is used to get all the users from user_details table
+	// this method is used to get all the users from user_details table
 	public static ArrayList<ManageUsers> selectAllUsers() {
 		System.out.println("getting all users");
 		ArrayList<ManageUsers> users = new ArrayList<>();
 		try {
 			Statement selectStmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = selectStmt.executeQuery("SELECT U.idUser, UD.firstName, UD.lastName, UD.id,U.userType, U.status FROM users U, user_details UD where U.idAccount = UD.idAccount;");
+			ResultSet rs = selectStmt.executeQuery(
+					"SELECT U.idUser, UD.firstName, UD.lastName, UD.id,U.userType, U.status FROM users U, user_details UD where U.idAccount = UD.idAccount;");
 			while (rs.next()) {
 				int idUser = rs.getInt(1);
-				String firstName =  rs.getString(2);
-				String lastName =  rs.getString(3);
-				String id =  rs.getString(4);
+				String firstName = rs.getString(2);
+				String lastName = rs.getString(3);
+				String id = rs.getString(4);
 				String userType = rs.getString(5);
 				String status = rs.getString(6);
-				ManageUsers resultOrder = new ManageUsers(idUser, firstName, lastName, id, userType,status);
+				ManageUsers resultOrder = new ManageUsers(idUser, firstName, lastName, id, userType, status);
 				users.add(resultOrder);
 			}
 		} catch (SQLException e) {
@@ -196,34 +187,33 @@ public class AnaylzeCommand {
 		return users;
 	}
 
-	
-	//this methods gets an Account id and changes the status of the user
+	// this methods gets an Account id and changes the status of the user
 	public static String changeUserStatus(Object object) {
-		
-		System.out.println("Changing user status, id: "+(int)object);
+
+		System.out.println("Changing user status, id: " + (int) object);
 		Connection conn = DataBaseController.getConn();
 		ResultSet rs;
-		int id = (Integer)object;
+		int id = (Integer) object;
 		String response = "failed";
 		try {
-			//first we get the current user status
+			// first we get the current user status
 			String query = "SELECT * FROM users WHERE idUser = ?";
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, id);
 			rs = preparedStmt.executeQuery();
-			if(!rs.next())
+			if (!rs.next())
 				return "failed";
-			String userStatus = rs.getString(7);	
-			
-			//preparedStmt = conn.prepareStatement(query);
-			//second we find the user again and change its status to be the inverse of the current status
+			String userStatus = rs.getString(7);
+
+			// preparedStmt = conn.prepareStatement(query);
+			// second we find the user again and change its status to be the inverse of the
+			// current status
 			query = "UPDATE users SET status = ? WHERE idUser = ?";
 			preparedStmt = conn.prepareStatement(query);
-			if(userStatus.equals("Active")) {
+			if (userStatus.equals("Active")) {
 				preparedStmt.setString(1, "Suspended");
 				response = "Suspended";
-			}
-			else {
+			} else {
 				preparedStmt.setString(1, "Active");
 				response = "Active";
 			}
@@ -233,17 +223,17 @@ public class AnaylzeCommand {
 			System.out.println("failed to fetch user");
 			e.printStackTrace();
 		}
-		
+
 		return response;
 	}
-	
-	public static boolean insertAccountPayment(String fullName, String cardNumber, String cardDate, String cardVCC, int idUser) {
+
+	public static boolean insertAccountPayment(String fullName, String cardNumber, String cardDate, String cardVCC,
+			int idUser) {
 		Connection conn;
 		conn = DataBaseController.getConn();
 		String query = "INSERT INTO account_payment (fullName, cardNumber, cardDate, cardVCC, idUser) VALUES (?, ?, ?, ?, ?);";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setString(1, fullName);
 			preparedStmt.setString(2, cardNumber);
 			preparedStmt.setString(3, cardDate);
@@ -256,15 +246,16 @@ public class AnaylzeCommand {
 			return false;
 		}
 	}
-	
-	public static int insertNewOrder(double totalPrice, String greetingCard,String dOrder,int idBranch,String status,String paymentMethod, int idUser) {
+
+	public static int insertNewOrder(double totalPrice, String greetingCard, String dOrder, int idBranch, String status,
+			String paymentMethod, int idUser) {
 		Connection conn;
+		int idOrder = -1;
 		conn = DataBaseController.getConn();
 		ResultSet rs = null;
-		String query = "INSERT INTO orders (price, greetingCard, dOrder, idBranch, status, paymentMethod, idUser) VALUES (?, ?, ?, ?, ?, ?, ?);";
+		String query = "INSERT INTO orders (price, greetingCard, dOrder, idBranch, status, paymentMethod, idUser) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			preparedStmt = conn.prepareStatement(query);
+			PreparedStatement preparedStmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 			preparedStmt.setDouble(1, totalPrice);
 			preparedStmt.setString(2, greetingCard);
 			preparedStmt.setString(3, dOrder);
@@ -274,21 +265,22 @@ public class AnaylzeCommand {
 			preparedStmt.setInt(7, idUser);
 			preparedStmt.executeUpdate();
 			rs = preparedStmt.getGeneratedKeys();
-			rs.next();
-			return rs.getInt(1);
+			if (rs.next())
+				idOrder = rs.getInt(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return -1;
 		}
+		return idOrder;
 	}
-	
+
 	public static boolean insertOrderProducts(ArrayList<OrderProduct> orderProductsList) {
 		StringBuffer buff = new StringBuffer();
 		buff.append("INSERT INTO order_products (idOrder, idProduct, quantity) VALUES ");
-		for(OrderProduct currentInsert : orderProductsList) {
-			buff.append("("+currentInsert.getIdOrder()+","+ currentInsert.getProduct().getProductID()+ "," + currentInsert.getQuantity() +"),");
+		for (OrderProduct currentInsert : orderProductsList) {
+			buff.append("(" + currentInsert.getIdOrder() + "," + currentInsert.getProduct().getProductID() + ","
+					+ currentInsert.getQuantity() + "),");
 		}
-		buff.deleteCharAt(buff.length()-1);  
+		buff.deleteCharAt(buff.length() - 1);
 		buff.append(";");
 		try {
 			Connection conn;
@@ -301,15 +293,16 @@ public class AnaylzeCommand {
 			return false;
 		}
 	}
-	
-	public static int insertNewDelivery(String address, String recieverName, String phoneNumber, String deliveryDate, String status) {
+
+	public static int insertNewDelivery(String address, String recieverName, String phoneNumber, String deliveryDate,
+			String status) {
 		Connection conn;
 		ResultSet rs = null;
+		int idOrder = -1;
 		conn = DataBaseController.getConn();
 		String query = "INSERT INTO deliveries (address, receiverName, phoneNumber, deliveryDate, status) VALUES (?, ?, ?, ?, ?);";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			preparedStmt = conn.prepareStatement(query);
+			PreparedStatement preparedStmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 			preparedStmt.setString(1, address);
 			preparedStmt.setString(2, recieverName);
 			preparedStmt.setString(3, phoneNumber);
@@ -317,21 +310,20 @@ public class AnaylzeCommand {
 			preparedStmt.setString(5, status);
 			preparedStmt.executeUpdate();
 			rs = preparedStmt.getGeneratedKeys();
-			rs.next();
-			return rs.getInt(1);
+			if (rs.next())
+				idOrder = rs.getInt(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return -1;
 		}
+		return idOrder;
 	}
-	
+
 	public static boolean insertDeliveryOrder(int idOrder, int idDelivery) {
 		Connection conn;
 		conn = DataBaseController.getConn();
 		String query = "INSERT INTO deliveries_orders (idOrder, idDelivery) VALUES (?, ?);";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
 			preparedStmt.setInt(2, idDelivery);
 			preparedStmt.executeUpdate();
@@ -341,8 +333,7 @@ public class AnaylzeCommand {
 			return false;
 		}
 	}
-	
-	
+
 	public static ArrayList<Survey> selectSurveys() {
 		ArrayList<Survey> surveys = new ArrayList<>();
 		try {
@@ -350,10 +341,10 @@ public class AnaylzeCommand {
 			ResultSet rs = selectStmt.executeQuery("SELECT * FROM surveys;");
 			while (rs.next()) {
 				int idSurvey = rs.getInt(1);
-				String surveyName =  rs.getString(2);
+				String surveyName = rs.getString(2);
 				String[] questions = new String[6];
-				for(int i = 0 ; i<6 ;i++) {
-					questions[i]=rs.getString(i+2);
+				for (int i = 0; i < 6; i++) {
+					questions[i] = rs.getString(i + 2);
 				}
 				Survey survey = new Survey(idSurvey, surveyName, questions);
 				surveys.add(survey);

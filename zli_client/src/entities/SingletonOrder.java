@@ -24,4 +24,8 @@ public class SingletonOrder extends Order{
 	public void setDelivery(Delivery delivery) {
 		this.delivery = delivery;
 	}
+	
+	public void emptySingletonOrder() {
+		instance = null;
+	}
 }
