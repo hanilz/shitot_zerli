@@ -19,6 +19,7 @@ import survey.Survey;
 public class ServerMessageController {
 
 	private static ServerMessageController instance = null;
+	private HashMap<String, Object> message;
 
 	private ServerMessageController() {
 	}
@@ -42,8 +43,7 @@ public class ServerMessageController {
 	 * @param msg
 	 */
 	public void handleMessages(Object msg, ConnectionToClient client) {
-		@SuppressWarnings("unchecked")
-		HashMap<String, Object> message = (HashMap<String, Object>) msg;
+		message = (HashMap<String, Object>) msg;
 		String command = (String) message.get("command");
 		if (command.equals("client disconnected")) {
 			String clientIP = client.getInetAddress().toString();
@@ -205,6 +205,14 @@ public class ServerMessageController {
 			}
 		}
 
+	}
+
+	private void sendToClient(ConnectionToClient client) {
+		try {
+			client.sendToClient(message);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
 //Warehouse
