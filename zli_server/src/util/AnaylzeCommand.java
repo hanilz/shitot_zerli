@@ -125,8 +125,8 @@ public class AnaylzeCommand {
 			else {
 				if (rs.getBoolean(6))// if user already logged in
 					status = Status.ALREADY_LOGGED_IN;
-				else
-					login.put("idUser", Integer.parseInt(rs.getString(1)));
+				else {
+				login.put("idUser", Integer.parseInt(rs.getString(1)));
 				login.put("idAccount", Integer.parseInt(rs.getString(4)));
 				login.put("userType", UserType.get(rs.getString(5)));
 
@@ -137,6 +137,7 @@ public class AnaylzeCommand {
 				preparedStmt.setString(3, password);
 				if (preparedStmt.executeUpdate() == 1)
 					status = Status.NEW_LOG_IN;
+			}
 			}
 		} catch (SQLException e) {
 			System.out.println("failed to fetch user");
@@ -204,7 +205,6 @@ public class AnaylzeCommand {
 			if (!rs.next())
 				return "failed";
 			String userStatus = rs.getString(7);
-
 			// preparedStmt = conn.prepareStatement(query);
 			// second we find the user again and change its status to be the inverse of the
 			// current status
@@ -344,8 +344,8 @@ public class AnaylzeCommand {
 				String surveyName = rs.getString(2);
 				String[] questions = new String[6];
 
-				for(int i = 0 ; i<6 ;i++) {
-					questions[i]=rs.getString(i+3);
+				for (int i = 0; i < 6; i++) {
+					questions[i] = rs.getString(i + 3);
 				}
 				Survey survey = new Survey(idSurvey, surveyName, questions);
 				surveys.add(survey);

@@ -53,9 +53,7 @@ public class LoginScreenController implements Initializable {
 	}
 
 	private void checkUserInputAndLogin(String username, String password) {
-		if (User.getUserInstance().isUserLoggedIn() || username.equals("") || password.equals("")) {// Label empty or
-																									// already client or
-																									// already logged in
+		if (User.getUserInstance().isUserLoggedIn() || username.equals("") || password.equals("")) {
 			if (User.getUserInstance().isUserLoggedIn())// one user is already active in this client
 			{
 				if (User.getUserInstance().getUsername().equals(username))// user already logged in this computer
@@ -74,6 +72,7 @@ public class LoginScreenController implements Initializable {
 		switch ((Status) (response).get("response")) {
 		case NEW_LOG_IN:
 				errorLabel.setVisible(false);
+				System.out.println(response.get("idUser"));
 				int idUser = (Integer) response.get("idUser");
 				int idAccount = (Integer) response.get("idAccount");
 				UserType userType = (UserType) response.get("userType");
