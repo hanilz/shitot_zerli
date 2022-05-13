@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import entities.Branch;
+import entities.Item;
 import entities.ManageUsers;
 import entities.OrderProduct;
 import entities.Product;
@@ -44,6 +45,27 @@ public class AnaylzeCommand {
 			e.printStackTrace();
 		}
 		return products;
+	}
+	
+	public static ArrayList<Item> selectAllItems() {
+		ArrayList<Item> items = new ArrayList<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt.executeQuery("SELECT * FROM items;");
+			while (rs.next()) {
+				int itemID = rs.getInt(1);
+				String itemName = rs.getString(2);
+				String itemColor = rs.getString(3);
+				double itemPrice = rs.getDouble(4);
+				String itemType = rs.getString(5);
+				String imagePath = rs.getString(6);
+				Item itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath);
+				items.add(itemResult);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return items;
 	}
 
 	public static ArrayList<Branch> selectAllBranches() {

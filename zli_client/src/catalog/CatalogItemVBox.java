@@ -15,7 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import util.InputChecker;
 
-public class CustomProductBuilderVBox extends VBox {
+public class CatalogItemVBox extends VBox implements ICatalogVBox {
 	private Item item; // will be used to get the data from item
 	private Label nameLabel = new Label(); // will show the item name
 	private ImageView image;
@@ -27,7 +27,7 @@ public class CustomProductBuilderVBox extends VBox {
 	private TextField quantityField = new TextField("0");
 	private Button addQuantityButton = new Button("+");
 
-	public CustomProductBuilderVBox(Item item) {
+	public CatalogItemVBox(Item item) {
 		this.item = item;
 	}
 

@@ -16,16 +16,17 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import util.InputChecker;
 
-public class CatalogVBox extends VBox {
+public class CatalogProductVBox extends VBox implements ICatalogVBox {
 	private Product product; // will be used to get the data from
 	private Label nameLabel = new Label(); // will show the product name
 	private ImageView image;
+	private ImageView productIcon;
 	private Label priceLabel = new Label("Price:");
 	private Label amountLabel = new Label();; // will show the price
 	private HBox priceHBox = new HBox();
 	private Button addToCartButton = new Button("Add To Cart");
 
-	public CatalogVBox(Product product) {
+	public CatalogProductVBox(Product product) {
 		this.product = product;
 	}
 
@@ -35,7 +36,8 @@ public class CatalogVBox extends VBox {
 	public void initVBox() {
 		nameLabel.setText(product.getProductName());
 		initImageProduct();
-
+		initProductIcon();
+		
 		amountLabel.setText("" + InputChecker.price(((int) product.getProductPrice())));
 
 		initPriceHBox();
@@ -52,6 +54,7 @@ public class CatalogVBox extends VBox {
 
 		this.getChildren().add(nameLabel);
 		this.getChildren().add(image);
+		this.getChildren().add(productIcon);
 		this.getChildren().add(priceHBox);
 		this.getChildren().add(addToCartButton);
 
@@ -84,5 +87,12 @@ public class CatalogVBox extends VBox {
 		image.setFitWidth(200);
 		image.setPreserveRatio(true);
 		image.setCursor(Cursor.HAND);
+	}
+	
+	private void initProductIcon() {
+		productIcon = new ImageView("/resources/productImages/icon/bouquet_icon.png");
+		productIcon.setFitHeight(30);
+		productIcon.setFitWidth(30);
+		productIcon.setPreserveRatio(true);
 	}
 }
