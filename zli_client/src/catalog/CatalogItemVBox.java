@@ -52,7 +52,7 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 					quantity = Integer.valueOf(quantityField.getText());
 				} catch (Exception e) { return;}
 				if (quantity >= 1)
-					quantityField.setText("" + quantity--);
+					quantityField.setText("" + (--quantity));
 			}
 		});
 		
@@ -61,9 +61,9 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 			public void handle(ActionEvent event) {
 				int quantity = 0;
 				try {
-					quantity = Integer.valueOf(quantityField.getText());
+					quantity = Integer.valueOf(quantityField.getText());	
 				} catch (Exception e) { return;}
-				quantityField.setText("" + quantity++);
+				quantityField.setText("" + (++quantity));
 			}
 		});
 		
@@ -83,6 +83,8 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 			@Override
 			public void handle(ActionEvent event) {
 				int quantity = Integer.valueOf(quantityField.getText());
+				if(quantity<1)
+					return;
 				Cart.getInstance().addToItemCart(item, quantity);
 				System.out.println("Cart is: " + Cart.getInstance().getItemCart());
 				System.out.println(item.getItemName() + " added to cart woohoooo");

@@ -14,7 +14,7 @@ public class ManageClients {
 		try {
 			if (ClientFormController.client.isConnected()) {
 				HashMap<String, Object> message = new HashMap<>();
-				message.put("command", "client disconnected");
+				message.put("command", Commands.CLIENT_DISCONNECTED);
 				if (User.getUserInstance().isUserLoggedIn()) {
 					message.put("logout", User.getUserInstance().getIdUser());
 					User.getUserInstance().logout();

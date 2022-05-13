@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import entities.Cart;
+import entities.Item;
 import entities.Product;
 import entities.User;
 import home.LoginScreenController;
@@ -21,6 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import util.ManageScreens;
 import util.Screens;
+import util.UserType;
 import util.InputChecker;
 
 public class CartController implements Initializable {
@@ -51,7 +53,6 @@ public class CartController implements Initializable {
 		for (Product product : products) {
 			Integer quantity = cart.getProductCart().get(product);
 			System.out.println("product to add is " + product.getProductName() + " with the quantity " + quantity);
-
 			CartHBox productHBox = new CartHBox(product, quantity);
 			productHBox.initHBox();
 			cartItemVBox.getChildren().add(productHBox);
@@ -87,6 +88,8 @@ public class CartController implements Initializable {
 			LoginScreenController.enablePopup(true);// enable popup
 			stage.showAndWait();
 			LoginScreenController.enablePopup(false);// disable popup
+			if(User.getUserInstance().getType()!=UserType.CUSTOMER)//need to FIX!!!!!need to show message only customers can buy
+				User.getUserInstance().logout();
 		}
 		if (User.getUserInstance().isUserLoggedIn())
 			ManageScreens.changeScreenTo(Screens.GREATING_CARD);
@@ -94,13 +97,13 @@ public class CartController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		System.out.println("Entered cart hellllooo");
+		System.out.println(cart);
 		initCart();
 	}
 
 	public void refreshTotalPrice() {
 		priceLabel.setText(InputChecker.price(cart.getTotalPrice()));
-		if (cart.isProductCartEmpty()) {
+		if (cart.isEmpty()) {
 			buyButton.setStyle("-fx-background-color: red");
 			buyButton.setDisable(true);
 			emptyCartButton.setVisible(false);

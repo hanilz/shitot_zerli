@@ -14,6 +14,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import util.Commands;
 import util.ManageScreens;
 import util.Screens;
 
@@ -35,7 +36,7 @@ public class SurveyHomeController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		// create a request to fetch the table data
 		HashMap<String, Object> message = new HashMap<>();
-		message.put("command", "Fetch Surveys");
+		message.put("command", Commands.FETCH_SURVEYS);
 		Object response = ClientFormController.client.accept(message);
 		surveys = (HashMap) response;// (ObservableList<Survey>) response;
 		System.out.println("got surveys");

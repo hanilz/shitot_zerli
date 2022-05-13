@@ -14,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.HTMLEditorSkin.Command;
+import util.Commands;
 import util.ManageScreens;
 import util.Screens;
 
@@ -54,7 +56,7 @@ public class SurveyController implements Initializable{
     		answers.put(survey.getQuestion(i),ans);
 		}
     	HashMap<String, Object> message = new HashMap<>();
-		message.put("command", "Submit survey Answer");
+		message.put("command", Commands.SUBMIT_SURVEY);
 		message.put("answers", answers);
 		Object response = ClientFormController.client.accept(message);
 		System.out.println((String)response);
