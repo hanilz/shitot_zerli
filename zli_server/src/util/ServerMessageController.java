@@ -81,7 +81,7 @@ public class ServerMessageController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("fetch products")) {
+		} else if (command.equals("fetch items")) {
 			ArrayList<Item> items = AnaylzeCommand.selectAllItems();
 			try {
 				message.put("response", items);

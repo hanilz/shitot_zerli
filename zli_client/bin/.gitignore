@@ -1,11 +1,11 @@
-/cartTest/
 /catalog/
-/client/
-/entities/
-/gui/
+/resources/
 /home/
+/util/
 /order/
+/cartTest/
+/client/
+/gui/
+/report/
 /survey/
 /userScreens/
-/util/
-/resources/

@@ -1,11 +1,13 @@
 package catalog;
 
+import entities.Cart;
 import entities.Item;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -13,7 +15,7 @@ import javafx.scene.layout.HBox;
 import util.InputChecker;
 
 public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
-		private Item item; // will be used to get the data from item
+	private Item item; // will be used to get the data from item
 	private HBox quantityHBox = new HBox();
 	private Button subtractQuantityButton = new Button("-");
 	private TextField quantityField = new TextField("0");
@@ -27,11 +29,10 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 	 * 
 	 */
 	public void initVBox() {
-		nameLabel.setText(item.getItemName());
+		nameLabel.setText(item.getItemName() + " - " + item.getItemColor());
 		setImageProp();
 
 		amountLabel.setText("" + InputChecker.price(((int) item.getItemPrice())));
-		//int quantity = Integer.valueOf(quantityField.getText());
 
 		// force the field to be numeric only
 		quantityField.textProperty().addListener(new ChangeListener<String>() {
@@ -69,20 +70,33 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 		initPriceHBox();
 		initQuantityHBox();
 
-		this.getChildren().add(nameLabel);
-		this.getChildren().add(image);
-		this.getChildren().add(priceHBox);
+		initAddToCartButton();
+		
+		super.initVBox();
 		this.getChildren().add(quantityHBox);
-
-		this.setAlignment(Pos.CENTER);
+		this.getChildren().add(addToCartButton);
 	}
 
+	private void initAddToCartButton() {
+		addToCartButton.setCursor(Cursor.HAND);
+		addToCartButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				int quantity = Integer.valueOf(quantityField.getText());
+				Cart.getInstance().addToItemCart(item, quantity);
+				System.out.println("Cart is: " + Cart.getInstance().getItemCart());
+				System.out.println(item.getItemName() + " added to cart woohoooo");
+			}
+		});
+	}
+
+	
 	private void initQuantityHBox() {
-		priceHBox.getChildren().add(subtractQuantityButton);
-		priceHBox.getChildren().add(quantityField);
-		priceHBox.getChildren().add(addQuantityButton);
-		priceHBox.setAlignment(Pos.CENTER);
-		priceHBox.setSpacing(10);
+		quantityHBox.getChildren().add(subtractQuantityButton);
+		quantityHBox.getChildren().add(quantityField);
+		quantityHBox.getChildren().add(addQuantityButton);
+		quantityHBox.setAlignment(Pos.CENTER);
+		quantityHBox.setSpacing(10);
 	}
 
 	protected void setImageProp() {

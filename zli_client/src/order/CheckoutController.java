@@ -73,11 +73,11 @@ public class CheckoutController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		Set<Product> products = Cart.getInstance().getCart().keySet();
+		Set<Product> products = Cart.getInstance().getProductCart().keySet();
 		System.out.println("Adding all product to cart screen...");
 
 		for (Product product : products) {
-			Integer quantity = Cart.getInstance().getCart().get(product);
+			Integer quantity = Cart.getInstance().getProductCart().get(product);
 			System.out.println("product to add is " + product.getProductName() + " with the quantity " + quantity);
 
 			OrderSummaryHBox productSummaryHBox = new OrderSummaryHBox(product, quantity);
@@ -165,9 +165,9 @@ public class CheckoutController implements Initializable {
 		HashMap<String, Object> message = new HashMap<>();
 		ArrayList<OrderProduct> orderProductsList = new ArrayList<>();
 		message.put("command", "insert order products");
-		for (Product currentProduct : Cart.getInstance().getCart().keySet())
+		for (Product currentProduct : Cart.getInstance().getProductCart().keySet())
 			orderProductsList
-					.add(new OrderProduct(idOrder, currentProduct, Cart.getInstance().getCart().get(currentProduct)));
+					.add(new OrderProduct(idOrder, currentProduct, Cart.getInstance().getProductCart().get(currentProduct)));
 		message.put("list order products", orderProductsList);
 		Object response = ClientFormController.client.accept(message);
 		if (response.equals("insert order products successful"))

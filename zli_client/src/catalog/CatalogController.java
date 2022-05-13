@@ -3,6 +3,7 @@ package catalog;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -53,8 +54,7 @@ public class CatalogController implements Initializable {
     @FXML
     private GridPane catalogGrid;
 
-	private VBox[] productVBoxList;
-	private CatalogItemVBox[] itemVBoxList;
+	private ArrayList<CatalogVBox> catalogVBoxList = new ArrayList<>();
 	
 	@FXML
 	void goToHomeScreen(MouseEvent event) {
@@ -91,32 +91,31 @@ public class CatalogController implements Initializable {
 	}
 
 	private void initGrid() {
-		int numberOfRows = (int) Math.ceil(products.size()/3.0);
+		int numberOfRows = (int) Math.ceil((products.size() + items.size())/3.0);
         for (int i = 0; i < numberOfRows; i++) {
             RowConstraints rowConst = new RowConstraints();
             rowConst.setPercentHeight(100.0 / numberOfRows);
             catalogGrid.getRowConstraints().add(rowConst);         
         }		
-		for (int i = 0; i < productVBoxList.length; i++) {
-				catalogGrid.add(productVBoxList[i], i%3, i/3);
+		for (int i = 0; i < catalogVBoxList.size(); i++) {
+				catalogGrid.add(catalogVBoxList.get(i), i%3, i/3);
 		}
+		catalogGrid.setVgap(20);
 	}
 
 	private void initCatalogItemVBoxes() {
-		itemVBoxList = new CatalogItemVBox[items.size()];
 		for (int i = 0; i < items.size(); i++) {
-			CatalogItemVBox itemVBox = new CatalogItemVBox(items.get(i));
-			itemVBox.initVBox();
-			itemVBoxList[i] = itemVBox;
+			CatalogItemVBox catalogItemVBox = new CatalogItemVBox(items.get(i));
+			catalogItemVBox.initVBox();
+			catalogVBoxList.add(catalogItemVBox);
 		}
 	}
 
 	private void initCatalogProductVBoxes() {
-		productVBoxList = new CatalogProductVBox[products.size()];
 		for (int i = 0; i < products.size(); i++) {
-			CatalogProductVBox catalogVBox = new CatalogProductVBox(products.get(i));
-			catalogVBox.initVBox();
-			productVBoxList[i] = catalogVBox;
+			CatalogProductVBox catalogProductVBox = new CatalogProductVBox(products.get(i));
+			catalogProductVBox.initVBox();
+			catalogVBoxList.add(catalogProductVBox);
 		}
 	}
 	

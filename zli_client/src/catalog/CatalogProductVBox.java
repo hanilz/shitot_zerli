@@ -31,23 +31,29 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 
 		initPriceHBox();
 
-		addToCartButton.setCursor(Cursor.HAND);
-		addToCartButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				Cart.getInstance().addToCart(product, 1, true);
-				System.out.println("Cart is: " + Cart.getInstance().getCart());
-				System.out.println(product.getProductName() + " added to cart woohoooo");
-			}
-		});
+		initAddToCartButton();
 		
 		super.initVBox();
 		this.getChildren().add(productIcon);
 		this.getChildren().add(addToCartButton);
 	}
 
+	private void initAddToCartButton() {
+		addToCartButton.setCursor(Cursor.HAND);
+		addToCartButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				Cart.getInstance().addToProductCart(product, 1, true);
+				System.out.println("Cart is: " + Cart.getInstance().getProductCart());
+				System.out.println(product.getProductName() + " added to cart woohoooo");
+			}
+		});
+	}
+
 	private void initImageProduct() { //same function but not with the event so we will call super.
 		image = new ImageView(product.getImagePath());
+		setImageProp();
+
 		image.setOnMouseReleased(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {

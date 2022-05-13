@@ -18,6 +18,14 @@ public class CatalogVBox extends VBox implements ICatalogVBox {
 
 	@Override
 	public void initVBox() {
+//		this.setPrefHeight(130);
+//		this.setPrefWidth(100);
+//
+//		this.setMinHeight(USE_PREF_SIZE);
+//		this.setMaxHeight(USE_PREF_SIZE);
+//		this.setMinWidth(USE_PREF_SIZE);
+//		this.setMaxWidth(USE_PREF_SIZE);
+		
 		this.getChildren().add(nameLabel);
 		this.getChildren().add(image);
 		this.getChildren().add(priceHBox);
