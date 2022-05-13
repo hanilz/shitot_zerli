@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Cart {
-	private Map<Product,Integer> cart = new HashMap<>();  // saves the product and the quantity of the product in the cart
+	private Map<Product,Integer> productCart = new HashMap<>();  // saves the product and the quantity of the product in the cart
+	
+	private Map<Item,Integer> itemCart = new HashMap<>();  // saves the item and the quantity of the item in the cart
 	
 	private static Cart cartInstance = null;
 	
@@ -22,32 +24,61 @@ public class Cart {
 	 * @param quantity we want to set for the product
 	 * @return if added/updated successfully
 	 */
-	public Boolean addToCart(Product product, int quantity, boolean add) {
+	public Boolean addToProductCart(Product product, int quantity, boolean add) {
 		if(product == null || quantity < 0)
 			return false;
 		int deltaQuantity = 0;
-		Product foundProduct = findByID(product.getProductID());
+		Product foundProduct = findProductByID(product.getProductID());
 		if(quantity == 0)
-			removeFromCart(foundProduct);
+			removeFromProductCart(foundProduct);
 		else if(add) {
 			if(foundProduct == null) 
-				cart.put(product, quantity);
+				productCart.put(product, quantity);
 			else 
-				cart.put(foundProduct, cart.get(foundProduct) + quantity);
+				productCart.put(foundProduct, productCart.get(foundProduct) + quantity);
 			deltaQuantity = quantity;
 		}
 		else {
-			deltaQuantity = quantity - cart.get(foundProduct);
-			cart.put(foundProduct, quantity);
+			deltaQuantity = quantity - productCart.get(foundProduct);
+			productCart.put(foundProduct, quantity);
 		}
 		calculateTotalPrice(deltaQuantity * product.getProductPrice());
 		return true;
 	}
-	public void emptyCart()
-	{
-		cart.clear();
+	
+	/**
+	 * This method is used to add/update and item in the cart
+	 * @param product we want to add/update
+	 * @param quantity we want to set for the product
+	 * @return if added/updated successfully
+	 */
+	public Boolean addToItemCart(Item item, int quantity) {
+		if(item == null || quantity < 0)
+			return false;
+		int deltaQuantity = 0;
+		Item foundItem = findItemByID(item.getItemID());
+		if(quantity == 0)
+			removeFromItemCart(foundItem);
+		else {
+			if(foundItem == null) {
+				itemCart.put(item, quantity);
+				deltaQuantity = quantity - itemCart.get(item);
+			}
+			else {
+				itemCart.put(foundItem, quantity);
+				deltaQuantity = quantity - itemCart.get(foundItem);
+			}
+		}
+		calculateTotalPrice(deltaQuantity * item.getItemPrice());
+		return true;
+	}
+	
+	public void emptyCart() {
+		productCart.clear();
+		itemCart.clear();
 		totalPrice = 0;
 	}
+	
 	public double getTotalPrice() { return totalPrice;}
 	
 	private void calculateTotalPrice(double amount) {
@@ -59,32 +90,66 @@ public class Cart {
 	 * @param product we want to remove
 	 * @return if item was removed successfully
 	 */
-	public Boolean removeFromCart(Product product) {
-		Product foundProduct = findByID(product.getProductID());
-		if(!cart.containsKey(foundProduct))
+	public Boolean removeFromProductCart(Product product) {
+		Product foundProduct = findProductByID(product.getProductID());
+		if(!productCart.containsKey(foundProduct))
 			return false;
-		calculateTotalPrice(-(cart.get(foundProduct)) * product.getProductPrice());
+		calculateTotalPrice(-(productCart.get(foundProduct)) * product.getProductPrice());
 
-		cart.remove(foundProduct);
+		productCart.remove(foundProduct);
+		return true;
+	}
+	
+	/**
+	 * This method is used to remove an item form the cart if it is in the cart
+	 * @param item we want to remove
+	 * @return if item was removed successfully
+	 */
+	public Boolean removeFromItemCart(Item item) {
+		Item foundItem = findItemByID(item.getItemID());
+		if(!itemCart.containsKey(foundItem))
+			return false;
+		calculateTotalPrice(-(itemCart.get(foundItem)) * item.getItemPrice());
+
+		itemCart.remove(foundItem);
 		return true;
 	}
 
 	/**
-	 * @return the cart
+	 * @return the product cart
 	 */
-	public Map<Product, Integer> getCart() {
-		return cart;
+	public Map<Product, Integer> getProductCart() {
+		return productCart;
 	}
 	
-	private Product findByID(int id) {
-		for(Product p : cart.keySet()) {
-			if(id == p.getProductID())
-				return p;
+	public Map<Item, Integer> getItemCart() {
+		return itemCart;
+	}
+	
+	private Product findProductByID(int id) {
+		for(Product product : productCart.keySet()) {
+			if(id == product.getProductID())
+				return product;
 		}
 		return null;
 	}
-	public boolean isEmpty()
-	{
-		return cart.isEmpty();
+	
+	private Item findItemByID(int id) {
+		for(Item item : itemCart.keySet()) {
+			if(id == item.getItemID())
+				return item;
+		}
+		return null;
 	}
+
+	public boolean isProductCartEmpty()
+	{
+		return productCart.isEmpty();
+	}
+	
+	public boolean isItemCartEmpty()
+	{
+		return itemCart.isEmpty();
+	}
+
 }

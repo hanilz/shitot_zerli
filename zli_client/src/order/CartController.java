@@ -45,11 +45,11 @@ public class CartController implements Initializable {
 
 	public void initCart() {
 		instance = this;
-		Set<Product> products = cart.getCart().keySet();
+		Set<Product> products = cart.getProductCart().keySet();
 		System.out.println("Adding all product to cart screen...");
 
 		for (Product product : products) {
-			Integer quantity = cart.getCart().get(product);
+			Integer quantity = cart.getProductCart().get(product);
 			System.out.println("product to add is " + product.getProductName() + " with the quantity " + quantity);
 
 			CartHBox productHBox = new CartHBox(product, quantity);
@@ -100,7 +100,7 @@ public class CartController implements Initializable {
 
 	public void refreshTotalPrice() {
 		priceLabel.setText(InputChecker.price(cart.getTotalPrice()));
-		if (cart.isEmpty()) {
+		if (cart.isProductCartEmpty()) {
 			buyButton.setStyle("-fx-background-color: red");
 			buyButton.setDisable(true);
 			emptyCartButton.setVisible(false);

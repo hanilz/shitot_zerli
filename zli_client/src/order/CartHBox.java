@@ -62,7 +62,7 @@ public class CartHBox extends HBox {
 		removeButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				cart.removeFromCart(product);
+				cart.removeFromProductCart(product);
 				CartController.connectionWithCartHBox("refresh cart");
 			}
 		});
@@ -114,7 +114,7 @@ public class CartHBox extends HBox {
 				if (quantityField.getText().isEmpty())
 					return;
 				newQuantity = Integer.parseInt(quantityField.getText());
-				cart.addToCart(product, newQuantity, false);
+				cart.addToProductCart(product, newQuantity, false);
 				totalSumPrice = product.getProductPrice() * newQuantity;
 				System.out.println("new price is " + totalSumPrice);
 				amountLabel.setText(InputChecker.price(totalSumPrice));
