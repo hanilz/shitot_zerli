@@ -19,10 +19,10 @@ import javafx.collections.FXCollections;
 public class ClientMessageController {
 
 	private static ClientMessageController instance = null;
+	private HashMap<String, Object> message=null;
+	private Object response=null;
 
-	private ClientMessageController() {
-
-	}
+	private ClientMessageController() {}
 
 	public static ClientMessageController getClientMessageController() {
 		if (instance == null)
@@ -36,13 +36,13 @@ public class ClientMessageController {
 	 * 
 	 * @param msg
 	 */
-	public void handleMessages(Object msg) {
-		@SuppressWarnings("unchecked")
-		HashMap<String, Object> message = (HashMap<String, Object>) msg;
+	@SuppressWarnings("unchecked")
+	public void handleMessages(Object msg) {//from server To client
+		message = (HashMap<String, Object>) msg;
 		String command = (String) message.get("command");
-		Object response = null;
-		if (command.contains("fetch orders")) {
-			@SuppressWarnings("unchecked")
+//start of if commands
+		if (command.contains("fetch orders")) 
+		{
 			ArrayList<Order> ordersList = (ArrayList<Order>) message.get("response");
 			if (!ordersList.isEmpty()) {
 				Order messageOrder = ordersList.get(0);
@@ -54,85 +54,76 @@ public class ClientMessageController {
 					break;
 				}
 			}
-			response = FXCollections.observableArrayList(ordersList); // cast to ObservableList
-			ClientController.setResponse(response);
-		} else if (command.contains("server disconnected")) {
-			System.out.println("disconnected from server, back to client main.");
-			changeSceneToMainClient();
-		} else if (command.contains("client disconnected")) {
-			ClientController.setResponse("client disconnected");
+			returnServerListRespond(ordersList);
+		}
+		
+		else if (command.contains("server disconnected")) {
+				System.out.println("disconnected from server, back to client main.");
+				ManageScreens.changeScreenTo(Screens.CLIENT);
+		}
+		else if (command.contains("client disconnected")) {
+				ClientController.setResponse("client disconnected");
 		}
 		else if(command.contains("logout"))
-			ClientController.setResponse((boolean)message.get("logout"));//logout 
+				ClientController.setResponse((boolean)message.get("logout"));//logout 
 		
 		else if (command.contains("login user")) {
-			try {
 				ClientController.setResponse(message);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		}
 		
 		else if(command.contains("fetch products")) {
-			ArrayList<Product> productsList = (ArrayList<Product>) message.get("response");
-			response = FXCollections.observableArrayList(productsList);
-			ClientController.setResponse(response);
-		}
-		
+			returnServerListRespond(new ArrayList<Product>());
+		}	
 
 		else if(command.contains("fetch branches")) {
-			ArrayList<Branch> branchesList = (ArrayList<Branch>) message.get("response");
-			response = FXCollections.observableArrayList(branchesList);
-			ClientController.setResponse(response);
+			returnServerListRespond(new ArrayList<Branch>());
 		}
 
 		else if(command.contains("fetch all user details")) {
-			ArrayList<ManageUsers> userList = (ArrayList<ManageUsers>) message.get("response");
-			response = FXCollections.observableArrayList(userList);
-			ClientController.setResponse(response);
+			returnServerListRespond(new ArrayList<ManageUsers>());
 		}
-		
+		//////////else
 		else if(command.equals("change user status")) {
-			ClientController.setResponse(message.get("response"));
+			returnServerRespond();
 		}
 		
 		else if(command.equals("insert account payment")) {
-			ClientController.setResponse(message.get("response"));
+			returnServerRespond();
 		}
 		
 		else if(command.equals("insert order")) {
-			ClientController.setResponse(message.get("response"));
+			returnServerRespond();
 		}
 		
 		else if(command.equals("insert order products")) {
-			ClientController.setResponse(message.get("response"));
+			returnServerRespond();
 		}
 		
 		else if(command.equals("insert delivery")) {
-			ClientController.setResponse(message.get("response"));
+			returnServerRespond();
 		}
 		
 		else if(command.equals("insert delivery order")) {
-			ClientController.setResponse(message.get("response"));
+			returnServerRespond();
 		}
 		
 		else if(command.equals("Fetch Surveys")) {
-			ClientController.setResponse(message.get("response"));
+			returnServerRespond();
 		}
-
+		//////////else
 	}
-
-	/**
-	 * This function will help us to switch between the screens after the user
-	 * connected to the server-ip
-	 */
-	private void changeSceneToMainClient() {
-		try {
-			ManageScreens.changeScene(ClientScreen.class.getResource("ClientScreen.fxml"), "Zli Client");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	private void returnServerRespond()
+	{
+		ClientController.setResponse(message.get("response"));
 	}
+	private void returnServerListRespond(ArrayList<?> listResponse)
+	{
+		ArrayList<?> respondAsList=((listResponse.isEmpty())?(ArrayList<?>)message.get("response"):listResponse);
+		response = FXCollections.observableArrayList(respondAsList);
+		ClientController.setResponse(response);
+	}
+	
+
 }
 
 // -----  Code warehouse  -----
