@@ -110,6 +110,14 @@ public class ClientMessageController {
 		else if(command.equals("Fetch Surveys")) {
 			returnServerRespond();
 		}
+		
+		else if(command.equals("Get Survey")) {
+			returnServerRespond();
+		}
+		
+		else if(command.equals("Submit survey Answer")) {
+			returnServerRespond();
+		}
 		//////////else
 	}
 	private void returnServerRespond()

@@ -15,6 +15,7 @@ import entities.ManageUsers;
 import ocsf.server.ConnectionToClient;
 import server.ServerController;
 import survey.Survey;
+import survey.SurveyQuestion;
 
 public class ServerMessageController {
 
@@ -196,9 +197,33 @@ public class ServerMessageController {
 		}
 
 		else if (command.equals("Fetch Surveys")) {
-			ArrayList<Survey> surveys = AnaylzeCommand.selectSurveys();
+			HashMap<Integer, String> surveys = AnaylzeCommand.selectSurveys();
 			try {
 				message.put("response", surveys);
+				client.sendToClient(message);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		else if (command.equals("Get Survey")) {
+			ArrayList<SurveyQuestion> surveys = AnaylzeCommand.getSurvey((Integer) message.get("surveyID"));
+			try {
+				message.put("response", surveys);
+				client.sendToClient(message);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		else if (command.equals("Submit survey Answer")) {
+			// TODO
+			boolean response = AnaylzeCommand.submitSurvey((HashMap) message.get("answers"));
+			try {
+				if (response)
+					message.put("response", "insert survey answer successful");
+				else
+					message.put("response", "insert survey answer failed");
 				client.sendToClient(message);
 			} catch (IOException e) {
 				e.printStackTrace();

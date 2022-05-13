@@ -1,6 +1,7 @@
 package survey;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Survey implements Serializable{
 	/**
@@ -8,10 +9,10 @@ public class Survey implements Serializable{
 	 */
 	private static final long serialVersionUID = -6878148869855072143L;
 	private String surveyName;
-	private String[] questions;
+	private ArrayList<SurveyQuestion> questions;
 	private int idSurvey;
 
-	public Survey(int idSurvey ,String surveyName, String[] questions) {
+	public Survey(int idSurvey ,String surveyName, ArrayList<SurveyQuestion> questions) {
 		this.surveyName = surveyName;
 		this.questions = questions;
 		this.idSurvey=idSurvey;
@@ -34,21 +35,21 @@ public class Survey implements Serializable{
 	/**
 	 * @return the questions
 	 */
-	public String[] getQuestions() {
+	public ArrayList<SurveyQuestion> getQuestions() {
 		return questions;
 	}
 
 	/**
 	 * @param questions the questions to set
 	 */
-	public void setQuestions(String[] questions) {
+	public void setQuestions(ArrayList<SurveyQuestion> questions) {
 		this.questions = questions;
 	}
 
-	public String getQuestion(int idx) {
-		if (idx >= 0 && idx < 6)
-			return questions[idx];
-		return "Invalid Parameter";
+	public SurveyQuestion getQuestion(int idx) {
+		if (idx >= 0 && idx < questions.size())
+			return questions.get(idx);
+		return null;
 	}
 
 	/**

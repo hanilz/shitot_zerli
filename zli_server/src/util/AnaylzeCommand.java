@@ -13,6 +13,7 @@ import entities.ManageUsers;
 import entities.OrderProduct;
 import entities.Product;
 import survey.Survey;
+import survey.SurveyQuestion;
 
 /**
  * AnaylzeCommand - will anaylze the command that given from the server
@@ -125,18 +126,18 @@ public class AnaylzeCommand {
 			else {
 				if (rs.getBoolean(6))// if user already logged in
 					status = Status.ALREADY_LOGGED_IN;
-				else
+				else {
 					login.put("idUser", Integer.parseInt(rs.getString(1)));
-				login.put("idAccount", Integer.parseInt(rs.getString(4)));
-				login.put("userType", UserType.get(rs.getString(5)));
-
-				query = "UPDATE users SET isLogin = ? WHERE username = ? AND password = ?";
-				preparedStmt = conn.prepareStatement(query);
-				preparedStmt.setInt(1, 1);
-				preparedStmt.setString(2, username);
-				preparedStmt.setString(3, password);
-				if (preparedStmt.executeUpdate() == 1)
-					status = Status.NEW_LOG_IN;
+					login.put("idAccount", Integer.parseInt(rs.getString(4)));
+					login.put("userType", UserType.get(rs.getString(5)));
+					query = "UPDATE users SET isLogin = ? WHERE username = ? AND password = ?";
+					preparedStmt = conn.prepareStatement(query);
+					preparedStmt.setInt(1, 1);
+					preparedStmt.setString(2, username);
+					preparedStmt.setString(3, password);
+					if (preparedStmt.executeUpdate() == 1)
+						status = Status.NEW_LOG_IN;
+				}
 			}
 		} catch (SQLException e) {
 			System.out.println("failed to fetch user");
@@ -334,27 +335,60 @@ public class AnaylzeCommand {
 		}
 	}
 
-	public static ArrayList<Survey> selectSurveys() {
-		ArrayList<Survey> surveys = new ArrayList<>();
+	public static HashMap<Integer, String> selectSurveys() {
+		HashMap<Integer, String> surveys = new HashMap<>();
 		try {
 			Statement selectStmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = selectStmt.executeQuery("SELECT * FROM surveys;");
+			ResultSet rs = selectStmt.executeQuery("SELECT s.idSurvey,s.surveyName FROM surveys s;");
 			while (rs.next()) {
 				int idSurvey = rs.getInt(1);
 				String surveyName = rs.getString(2);
-				String[] questions = new String[6];
-
-				for(int i = 0 ; i<6 ;i++) {
-					questions[i]=rs.getString(i+3);
-				}
-				Survey survey = new Survey(idSurvey, surveyName, questions);
-				surveys.add(survey);
+				surveys.put(idSurvey, surveyName);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		System.out.println("returned surveys");
 		return surveys;
+	}
+
+	public static ArrayList<SurveyQuestion> getSurvey(int surveyID) {
+		ArrayList<SurveyQuestion> questions = new ArrayList<>();
+		Connection conn = DataBaseController.getConn();
+		String query = "SELECT * FROM survey_questions where idSurvey = ?;";
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, surveyID);
+			ResultSet rs = preparedStmt.executeQuery();
+			while (rs.next()) {
+				questions.add(new SurveyQuestion(rs.getInt(1), rs.getInt(2), rs.getString(3)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("returned qustions for survey: " + surveyID);
+		return questions;
+	}
+
+	public static boolean submitSurvey(HashMap<SurveyQuestion,Integer> answers) {
+		StringBuffer buff = new StringBuffer();
+		buff.append("INSERT INTO survey_answers (idQuestion, answer) VALUES ");
+		for (SurveyQuestion sq : answers.keySet()) {
+			buff.append("(" + sq.getQuestionID() + "," + answers.get(sq) + "),");
+		}
+		buff.deleteCharAt(buff.length() - 1);
+		buff.append(";");
+		try {
+			Connection conn;
+			conn = DataBaseController.getConn();
+			PreparedStatement preparedStmt = conn.prepareStatement(buff.toString());
+			preparedStmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 }
