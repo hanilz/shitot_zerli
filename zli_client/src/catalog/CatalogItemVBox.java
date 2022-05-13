@@ -6,28 +6,20 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import util.InputChecker;
 
-public class CustomProductBuilderVBox extends VBox {
-	private Item item; // will be used to get the data from item
-	private Label nameLabel = new Label(); // will show the item name
-	private ImageView image;
-	private Label priceLabel = new Label("Price:");
-	private Label amountLabel = new Label();; // will show the price
-	private HBox priceHBox = new HBox();
+public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
+		private Item item; // will be used to get the data from item
 	private HBox quantityHBox = new HBox();
 	private Button subtractQuantityButton = new Button("-");
 	private TextField quantityField = new TextField("0");
 	private Button addQuantityButton = new Button("+");
 
-	public CustomProductBuilderVBox(Item item) {
+	public CatalogItemVBox(Item item) {
 		this.item = item;
 	}
 
@@ -36,10 +28,10 @@ public class CustomProductBuilderVBox extends VBox {
 	 */
 	public void initVBox() {
 		nameLabel.setText(item.getItemName());
-		initImageProduct();
+		setImageProp();
 
 		amountLabel.setText("" + InputChecker.price(((int) item.getItemPrice())));
-		int quantity = Integer.valueOf(quantityField.getText());
+		//int quantity = Integer.valueOf(quantityField.getText());
 
 		// force the field to be numeric only
 		quantityField.textProperty().addListener(new ChangeListener<String>() {
@@ -85,13 +77,6 @@ public class CustomProductBuilderVBox extends VBox {
 		this.setAlignment(Pos.CENTER);
 	}
 
-	private void initPriceHBox() {
-		priceHBox.getChildren().add(priceLabel);
-		priceHBox.getChildren().add(amountLabel);
-		priceHBox.setAlignment(Pos.CENTER);
-		priceHBox.setSpacing(25);
-	}
-
 	private void initQuantityHBox() {
 		priceHBox.getChildren().add(subtractQuantityButton);
 		priceHBox.getChildren().add(quantityField);
@@ -100,11 +85,8 @@ public class CustomProductBuilderVBox extends VBox {
 		priceHBox.setSpacing(10);
 	}
 
-	private void initImageProduct() {
+	protected void setImageProp() {
 		image = new ImageView(item.getImagePath());
-		image.setFitHeight(100);
-		image.setFitWidth(166);
-		image.setPreserveRatio(true);
-		image.setCursor(Cursor.HAND);
+		super.setImageProp();
 	}
 }

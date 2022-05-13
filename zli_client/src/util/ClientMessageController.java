@@ -6,6 +6,7 @@ import java.util.HashMap;
 import client.ClientController;
 import client.ClientScreen;
 import entities.Branch;
+import entities.Item;
 import entities.Order;
 import entities.Product;
 import entities.ManageUsers;
@@ -41,8 +42,7 @@ public class ClientMessageController {
 		message = (HashMap<String, Object>) msg;
 		String command = (String) message.get("command");
 //start of if commands
-		if (command.contains("fetch orders")) 
-		{
+		if (command.contains("fetch orders")) {
 			ArrayList<Order> ordersList = (ArrayList<Order>) message.get("response");
 			if (!ordersList.isEmpty()) {
 				Order messageOrder = ordersList.get(0);
@@ -55,6 +55,8 @@ public class ClientMessageController {
 				}
 			}
 			returnServerListRespond(ordersList);
+		} else if (command.contains("fetch items")) {
+			returnServerListRespond(new ArrayList<Item>());
 		}
 		
 		else if (command.contains("server disconnected")) {
@@ -133,5 +135,3 @@ public class ClientMessageController {
 	
 
 }
-
-// -----  Code warehouse  -----

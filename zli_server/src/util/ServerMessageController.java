@@ -8,6 +8,7 @@ import entities.AccountPayment;
 import entities.Branch;
 import entities.DeliveriesOrders;
 import entities.Delivery;
+import entities.Item;
 import entities.Order;
 import entities.OrderProduct;
 import entities.Product;
@@ -20,6 +21,7 @@ import survey.SurveyQuestion;
 public class ServerMessageController {
 
 	private static ServerMessageController instance = null;
+	private HashMap<String, Object> message;
 
 	private ServerMessageController() {
 	}
@@ -43,8 +45,7 @@ public class ServerMessageController {
 	 * @param msg
 	 */
 	public void handleMessages(Object msg, ConnectionToClient client) {
-		@SuppressWarnings("unchecked")
-		HashMap<String, Object> message = (HashMap<String, Object>) msg;
+		message = (HashMap<String, Object>) msg;
 		String command = (String) message.get("command");
 		if (command.equals("client disconnected")) {
 			String clientIP = client.getInetAddress().toString();
@@ -77,7 +78,15 @@ public class ServerMessageController {
 			ArrayList<Product> products = AnaylzeCommand.selectAllProducts();
 			try {
 				message.put("response", products);
-				client.sendToClient(message); // send the list to fetch all the orders to the server
+				client.sendToClient(message); // send the list to fetch all the products to the client
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("fetch products")) {
+			ArrayList<Item> items = AnaylzeCommand.selectAllItems();
+			try {
+				message.put("response", items);
+				client.sendToClient(message); // send the list to fetch all the items to the client
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -230,6 +239,14 @@ public class ServerMessageController {
 			}
 		}
 
+	}
+
+	private void sendToClient(ConnectionToClient client) {
+		try {
+			client.sendToClient(message);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
 //Warehouse

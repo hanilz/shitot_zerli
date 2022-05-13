@@ -41,6 +41,7 @@ public class ManageScreens {
 			e.printStackTrace();
 		}
 		Parent root = loader.load();
+		root.styleProperty();
 		Scene scene = new Scene(root);
 		Platform.runLater(new Runnable() { // this thread will help us change between scenes and avoid exceptions
 			@Override
@@ -188,7 +189,7 @@ public class ManageScreens {
 		case SURVEY_HOME:
 			return "Surveys";
 		}
-		return "";// no such user//
+		return null;
 	}
 
 	public static String getIconPath(Screens user) {

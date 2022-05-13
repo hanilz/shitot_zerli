@@ -65,7 +65,6 @@ public class HomeUserTypesController implements HomeInterface,Initializable {
 				buttons.add(new HomeVBox(userScreens.get(i)));
 				this.gridOptions.add(buttons.get(i), (i+2) % 3, (i+2) / 3);
 			}
-		System.out.println(buttons);
 	}
 	
 

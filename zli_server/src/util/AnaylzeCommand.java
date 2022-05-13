@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import entities.Branch;
+import entities.Item;
 import entities.ManageUsers;
 import entities.OrderProduct;
 import entities.Product;
@@ -45,6 +46,27 @@ public class AnaylzeCommand {
 			e.printStackTrace();
 		}
 		return products;
+	}
+	
+	public static ArrayList<Item> selectAllItems() {
+		ArrayList<Item> items = new ArrayList<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt.executeQuery("SELECT * FROM items;");
+			while (rs.next()) {
+				int itemID = rs.getInt(1);
+				String itemName = rs.getString(2);
+				String itemColor = rs.getString(3);
+				double itemPrice = rs.getDouble(4);
+				String itemType = rs.getString(5);
+				String imagePath = rs.getString(6);
+				Item itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath);
+				items.add(itemResult);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return items;
 	}
 
 	public static ArrayList<Branch> selectAllBranches() {
@@ -137,7 +159,7 @@ public class AnaylzeCommand {
 					preparedStmt.setString(3, password);
 					if (preparedStmt.executeUpdate() == 1)
 						status = Status.NEW_LOG_IN;
-				}
+        }
 			}
 		} catch (SQLException e) {
 			System.out.println("failed to fetch user");
@@ -205,7 +227,6 @@ public class AnaylzeCommand {
 			if (!rs.next())
 				return "failed";
 			String userStatus = rs.getString(7);
-
 			// preparedStmt = conn.prepareStatement(query);
 			// second we find the user again and change its status to be the inverse of the
 			// current status

@@ -40,7 +40,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <Label fx:id="catalogLbl" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="134.0" prefWidth="460.0" text="Welcomet to ZLI" textAlignment="CENTER" GridPane.columnIndex="2">
+            <Label fx:id="catalogLbl" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="134.0" prefWidth="460.0" text="Welcome to ZLI" textAlignment="CENTER" GridPane.columnIndex="2">
                <padding>
                   <Insets bottom="40.0" left="40.0" />
                </padding>
@@ -135,13 +135,14 @@
                   <Insets bottom="15.0" />
                </padding>
                <content>
-                  <GridPane fx:id="catalogGrid" alignment="CENTER" prefHeight="485.0" prefWidth="745.0">
+                  <GridPane fx:id="catalogGrid" alignment="CENTER" prefHeight="485.0" prefWidth="800.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                      </columnConstraints>
                      <rowConstraints>
+                        <RowConstraints />
                         <RowConstraints />
                      </rowConstraints>
                   </GridPane>
