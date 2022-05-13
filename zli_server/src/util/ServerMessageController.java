@@ -139,9 +139,9 @@ public class ServerMessageController {
 			boolean isInsert = AnaylzeCommand.insertAccountPayment(accountPayment.getFullName(), accountPayment.getCardNumber(), accountPayment.getCardDate(), accountPayment.getCardVCC(), accountPayment.getUser().getIdUser());
 			try {
 				if(isInsert)
-					message.put("respose", "insert account payment successful");
+					message.put("response", "insert account payment successful");
 				else
-					message.put("respose", "insert account payment failed");
+					message.put("response", "insert account payment failed");
 				client.sendToClient(message);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -152,7 +152,7 @@ public class ServerMessageController {
 			Order order = (Order) message.get("order");
 			Integer idOrderReturned = AnaylzeCommand.insertNewOrder(order.getPrice(), order.getGreetingCard(), order.getdOrder(), order.getBranch().getIdBranch(), order.getStatus(), order.getPaymentMethod(), order.getUser().getIdUser());
 			try {
-				message.put("respose", idOrderReturned);
+				message.put("response", idOrderReturned);
 				client.sendToClient(message);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -165,9 +165,9 @@ public class ServerMessageController {
 			boolean isInserted = AnaylzeCommand.insertOrderProducts(orderProductsList);
 			try {
 				if(isInserted)
-					message.put("respose", "insert order products successful");
+					message.put("response", "insert order products successful");
 				else
-					message.put("respose", "insert order products failed");
+					message.put("response", "insert order products failed");
 				client.sendToClient(message);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -178,7 +178,7 @@ public class ServerMessageController {
 			Delivery delivery = (Delivery) message.get("delivery");
 			int idDeliveryReturned = AnaylzeCommand.insertNewDelivery(delivery.getAddress(), delivery.getReceiverName(), delivery.getPhoneNumber(), delivery.getDeliveryDate(), delivery.getStatus());
 			try {
-				message.put("respose", idDeliveryReturned);
+				message.put("response", idDeliveryReturned);
 				client.sendToClient(message);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -190,9 +190,9 @@ public class ServerMessageController {
 			boolean isInserted = AnaylzeCommand.insertDeliveryOrder(deliveryOrder.getIdOrder(), deliveryOrder.getIdDelivery());
 			try {
 				if(isInserted)
-					message.put("respose", "insert delivery order successful");
+					message.put("response", "insert delivery order successful");
 				else
-					message.put("respose", "insert delivery order failed");
+					message.put("response", "insert delivery order failed");
 				client.sendToClient(message);
 			} catch (IOException e) {
 				e.printStackTrace();

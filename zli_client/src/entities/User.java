@@ -1,12 +1,17 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import client.ClientFormController;
 import util.UserType;
 
-public class User {
+public class User implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int idUser = -1;
 	private String username = "guest";
 	private int idAccount = -1;
