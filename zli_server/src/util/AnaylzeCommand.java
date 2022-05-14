@@ -13,6 +13,7 @@ import entities.Branch;
 import entities.Delivery;
 import entities.Item;
 import entities.ManageUsers;
+import entities.OrderItem;
 import entities.Order;
 import entities.OrderProduct;
 import entities.Product;
@@ -301,6 +302,27 @@ public class AnaylzeCommand {
 		buff.append("INSERT INTO order_products (idOrder, idProduct, quantity) VALUES ");
 		for (OrderProduct currentInsert : orderProductsList) {
 			buff.append("(" + currentInsert.getIdOrder() + "," + currentInsert.getProduct().getId() + ","
+					+ currentInsert.getQuantity() + "),");
+		}
+		buff.deleteCharAt(buff.length() - 1);
+		buff.append(";");
+		try {
+			Connection conn;
+			conn = DataBaseController.getConn();
+			PreparedStatement preparedStmt = conn.prepareStatement(buff.toString());
+			preparedStmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public static boolean insertOrderItems(ArrayList<OrderItem> orderItemsList) {
+		StringBuffer buff = new StringBuffer();
+		buff.append("INSERT INTO order_items (idOrder, idItem, quantity) VALUES ");
+		for (OrderItem currentInsert : orderItemsList) {
+			buff.append("(" + currentInsert.getIdOrder() + "," + currentInsert.getItem().getId() + ","
 					+ currentInsert.getQuantity() + "),");
 		}
 		buff.deleteCharAt(buff.length() - 1);

@@ -11,6 +11,7 @@ import entities.Delivery;
 import entities.Item;
 import entities.ManageUsers;
 import entities.Order;
+import entities.OrderItem;
 import entities.OrderProduct;
 import entities.Product;
 import ocsf.server.ConnectionToClient;
@@ -111,6 +112,24 @@ public class ServerMessageController {
 			response = isOrderInserted ? "insert order products successful" : "insert order products failed";
 			message.put("response", response);
 			break;
+		case INSERT_ORDERS_ITEMS:
+			ArrayList<OrderItem> orderItemsList = (ArrayList<OrderItem>) message.get("list order items");
+			boolean isOrdersItemsInserted = AnaylzeCommand.insertOrderItems(orderItemsList);
+			if (isOrdersItemsInserted)
+				message.put("response", "insert order items successful");
+			else
+				message.put("response", "insert order items failed");
+			sendToClient(client);
+			break;
+		case LOGIN:// fix it
+			HashMap<String, Object> result = AnaylzeCommand.loginUser((String) message.get("username"),
+					(String) message.get("password"));
+			result.put("command", Commands.LOGIN);
+			try {
+				client.sendToClient(result);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		case LOGIN:
 			message = AnaylzeCommand.loginUser((String) message.get("username"), (String) message.get("password"));
 			message.put("command", Commands.LOGIN);

@@ -2,6 +2,7 @@ package order;
 
 import catalog.ProductVBox;
 import entities.Product;
+import entities.ProductsBase;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -21,11 +22,11 @@ public class OrderSummaryHBox extends HBox {
 
 	private Label quantityLabel = new Label();
 
-	private Product product;
+	private ProductsBase product;
 
 	private int quantity;
 
-	public OrderSummaryHBox(Product product, int quantity) {
+	public OrderSummaryHBox(ProductsBase product, int quantity) {
 		this.product = product;
 		this.quantity = quantity;
 	}
