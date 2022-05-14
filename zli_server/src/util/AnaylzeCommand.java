@@ -8,9 +8,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import entities.AccountPayment;
 import entities.Branch;
+import entities.Delivery;
 import entities.Item;
 import entities.ManageUsers;
+import entities.Order;
 import entities.OrderProduct;
 import entities.Product;
 import survey.SurveyQuestion;
@@ -248,18 +251,18 @@ public class AnaylzeCommand {
 		return response;
 	}
 
-	public static boolean insertAccountPayment(String fullName, String cardNumber, String cardDate, String cardVCC,
-			int idUser) {
+	public static boolean insertAccountPayment(AccountPayment accountPayment) {
+		
 		Connection conn;
 		conn = DataBaseController.getConn();
 		String query = "INSERT INTO account_payment (fullName, cardNumber, cardDate, cardVCC, idUser) VALUES (?, ?, ?, ?, ?);";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setString(1, fullName);
-			preparedStmt.setString(2, cardNumber);
-			preparedStmt.setString(3, cardDate);
-			preparedStmt.setString(4, cardVCC);
-			preparedStmt.setInt(5, idUser);
+			preparedStmt.setString(1, accountPayment.getFullName());
+			preparedStmt.setString(2,accountPayment.getCardNumber());
+			preparedStmt.setString(3,accountPayment.getCardDate());
+			preparedStmt.setString(4,accountPayment.getCardVCC());
+			preparedStmt.setInt(5,accountPayment.getUser().getIdUser());
 			preparedStmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {
@@ -268,8 +271,7 @@ public class AnaylzeCommand {
 		}
 	}
 
-	public static int insertNewOrder(double totalPrice, String greetingCard, String dOrder, int idBranch, String status,
-			String paymentMethod, int idUser) {
+	public static int insertNewOrder(Order order) {
 		Connection conn;
 		int idOrder = -1;
 		conn = DataBaseController.getConn();
@@ -277,13 +279,13 @@ public class AnaylzeCommand {
 		String query = "INSERT INTO orders (price, greetingCard, dOrder, idBranch, status, paymentMethod, idUser) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-			preparedStmt.setDouble(1, totalPrice);
-			preparedStmt.setString(2, greetingCard);
-			preparedStmt.setString(3, dOrder);
-			preparedStmt.setInt(4, idBranch);
-			preparedStmt.setString(5, status);
-			preparedStmt.setString(6, paymentMethod);
-			preparedStmt.setInt(7, idUser);
+			preparedStmt.setDouble(1,order.getPrice());
+			preparedStmt.setString(2,order.getGreetingCard());
+			preparedStmt.setString(3,order.getdOrder());
+			preparedStmt.setInt(4, order.getBranch().getIdBranch());
+			preparedStmt.setString(5, order.getStatus());
+			preparedStmt.setString(6, order.getPaymentMethod());
+			preparedStmt.setInt(7, order.getUser().getIdUser());
 			preparedStmt.executeUpdate();
 			rs = preparedStmt.getGeneratedKeys();
 			if (rs.next())
@@ -315,8 +317,7 @@ public class AnaylzeCommand {
 		}
 	}
 
-	public static int insertNewDelivery(String address, String recieverName, String phoneNumber, String deliveryDate,
-			String status) {
+	public static int insertNewDelivery(Delivery delivery) {
 		Connection conn;
 		ResultSet rs = null;
 		int idOrder = -1;
@@ -324,11 +325,11 @@ public class AnaylzeCommand {
 		String query = "INSERT INTO deliveries (address, receiverName, phoneNumber, deliveryDate, status) VALUES (?, ?, ?, ?, ?);";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-			preparedStmt.setString(1, address);
-			preparedStmt.setString(2, recieverName);
-			preparedStmt.setString(3, phoneNumber);
-			preparedStmt.setString(4, deliveryDate);
-			preparedStmt.setString(5, status);
+			preparedStmt.setString(1,delivery.getAddress());
+			preparedStmt.setString(2,delivery.getReceiverName());
+			preparedStmt.setString(3,delivery.getPhoneNumber());
+			preparedStmt.setString(4,delivery.getDeliveryDate());
+			preparedStmt.setString(5,delivery.getStatus());
 			preparedStmt.executeUpdate();
 			rs = preparedStmt.getGeneratedKeys();
 			if (rs.next())
