@@ -2,12 +2,13 @@ package order;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 import entities.Cart;
-import entities.Item;
 import entities.Product;
+import entities.ProductsBase;
 import entities.User;
 import home.LoginScreenController;
 import javafx.fxml.FXML;
@@ -20,10 +21,10 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import util.InputChecker;
 import util.ManageScreens;
 import util.Screens;
 import util.UserType;
-import util.InputChecker;
 
 public class CartController implements Initializable {
 	private static Cart cart = Cart.getInstance();
@@ -47,13 +48,19 @@ public class CartController implements Initializable {
 
 	public void initCart() {
 		instance = this;
-		Set<Product> products = cart.getProductCart().keySet();
+		Set<Product> products = new HashSet<>();
+		
+		for(ProductsBase current : cart.getCart().keySet()){
+			if(current instanceof Product)
+				products.add((Product)current);
+		}
+		
 		System.out.println("Adding all product to cart screen...");
 
-		for (Product product : products) {
-			Integer quantity = cart.getProductCart().get(product);
-			System.out.println("product to add is " + product.getProductName() + " with the quantity " + quantity);
-			CartHBox productHBox = new CartHBox(product, quantity);
+		for (Product currentProduct : products) {
+			Integer quantity = cart.getCart().get(currentProduct);
+			System.out.println("product to add is " + currentProduct.getName() + " with the quantity " + quantity);
+			CartHBox productHBox = new CartHBox(currentProduct, quantity);
 			productHBox.initHBox();
 			cartItemVBox.getChildren().add(productHBox);
 		}
@@ -103,7 +110,7 @@ public class CartController implements Initializable {
 
 	public void refreshTotalPrice() {
 		priceLabel.setText(InputChecker.price(cart.getTotalPrice()));
-		if (cart.isEmpty()) {
+		if (cart.isCartEmpty()) {
 			buyButton.setStyle("-fx-background-color: red");
 			buyButton.setDisable(true);
 			emptyCartButton.setVisible(false);

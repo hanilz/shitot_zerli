@@ -4,10 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Cart {
-	private Map<Product, Integer> productCart = new HashMap<>(); // saves the product and the quantity of the product in
-																	// the cart
+	private Map<ProductsBase, Integer> cart = new HashMap<>(); // saves the product or items and the quantity of the product in the cart
 
-	private Map<Item, Integer> itemCart = new HashMap<>(); // saves the item and the quantity of the item in the cart
+	//private Map<Item, Integer> itemCart = new HashMap<>(); // saves the item and the quantity of the item in the cart
 
 	private static Cart cartInstance = null;
 
@@ -21,30 +20,30 @@ public class Cart {
 	}
 
 	/**
-	 * This method is used to add/update and item in the cart
+	 * This method is used to add/update and item or products in the cart
 	 * 
-	 * @param product  we want to add/update
-	 * @param quantity we want to set for the product
+	 * @param product or item we want to add/update
+	 * @param quantity we want to set for the product or item
 	 * @return if added/updated successfully
 	 */
-	public Boolean addToProductCart(Product product, int quantity, boolean add) {
+	public boolean addToCart(ProductsBase product, int quantity, boolean add) {
 		if (product == null || quantity < 0)
 			return false;
 		int deltaQuantity = 0;
-		Product foundProduct = findProductByID(product.getProductID());
+		ProductsBase foundProduct = findProductByID(product.getId());
 		if (quantity == 0)
 			removeFromProductCart(foundProduct);
 		else if (add) {
 			if (foundProduct == null)
-				productCart.put(product, quantity);
+				cart.put(product, quantity);
 			else
-				productCart.put(foundProduct, productCart.get(foundProduct) + quantity);
+				cart.put(foundProduct, cart.get(foundProduct) + quantity);
 			deltaQuantity = quantity;
 		} else {
-			deltaQuantity = quantity - productCart.get(foundProduct);
-			productCart.put(foundProduct, quantity);
+			deltaQuantity = quantity - cart.get(foundProduct);
+			cart.put(foundProduct, quantity);
 		}
-		calculateTotalPrice(deltaQuantity * product.getProductPrice());
+		calculateTotalPrice(deltaQuantity * product.getPrice());
 		return true;
 	}
 
@@ -55,7 +54,7 @@ public class Cart {
 	 * @param quantity we want to set for the product
 	 * @return if added/updated successfully
 	 */
-	public Boolean addToItemCart(Item item, int quantity) {
+	/*public Boolean addToItemCart(Item item, int quantity) {
 		if (item == null || quantity < 0)
 			return false;
 		int deltaQuantity = 0;
@@ -74,11 +73,11 @@ public class Cart {
 		}
 		calculateTotalPrice(deltaQuantity * item.getItemPrice());
 		return true;
-	}
+	}*/
 
 	public void emptyCart() {
-		productCart.clear();
-		itemCart.clear();
+		cart.clear();
+		//itemCart.clear();
 		totalPrice = 0;
 	}
 
@@ -91,17 +90,17 @@ public class Cart {
 	}
 
 	/**
-	 * This method is used to remove an item form the cart if it is in the cart
+	 * This method is used to remove an item or product form the cart if it is in the cart
 	 * 
-	 * @param product we want to remove
-	 * @return if item was removed successfully
+	 * @param product or item we want to remove
+	 * @return if item or product was removed successfully
 	 */
-	public Boolean removeFromProductCart(Product product) {
-		Product foundProduct = findProductByID(product.getProductID());
-		if (!productCart.containsKey(foundProduct))
+	public Boolean removeFromProductCart(ProductsBase product) {
+		ProductsBase foundProduct = findProductByID(product.getId());
+		if (!cart.containsKey(foundProduct))
 			return false;
-		calculateTotalPrice(-(productCart.get(foundProduct)) * product.getProductPrice());
-		productCart.remove(foundProduct);
+		calculateTotalPrice(-(cart.get(foundProduct)) * product.getPrice());
+		cart.remove(foundProduct);
 		return true;
 	}
 
@@ -111,55 +110,57 @@ public class Cart {
 	 * @param item we want to remove
 	 * @return if item was removed successfully
 	 */
-	public Boolean removeFromItemCart(Item item) {
+	/*public Boolean removeFromItemCart(Item item) {
 		Item foundItem = findItemByID(item.getItemID());
 		if (!itemCart.containsKey(foundItem))
 			return false;
 		calculateTotalPrice(-(itemCart.get(foundItem)) * item.getItemPrice());
 		itemCart.remove(foundItem);
 		return true;
-	}
+	}*/
 
 	/**
-	 * @return the product cart
+	 * @return the cart map
 	 */
-	public Map<Product, Integer> getProductCart() {
-		return productCart;
+	public Map<ProductsBase, Integer> getCart() {
+		return cart;
 	}
 
-	public Map<Item, Integer> getItemCart() {
+	/*public Map<Item, Integer> getItemCart() {
 		return itemCart;
-	}
+	}*/
 
-	private Product findProductByID(int id) {
-		for (Product product : productCart.keySet()) {
-			if (id == product.getProductID())
+	private ProductsBase findProductByID(int id) {
+		for (ProductsBase product : cart.keySet()) {
+			if (id == product.getId())
 				return product;
 		}
 		return null;
 	}
 
-	private Item findItemByID(int id) {
+	/*private Item findItemByID(int id) {
 		for (Item item : itemCart.keySet()) {
 			if (id == item.getItemID()) 
 				return item;
 		}
 		return null;
+	}*/
+
+	public boolean isCartEmpty() {
+		return cart.isEmpty();
 	}
 
-	public boolean isProductCartEmpty() {
-		return productCart.isEmpty();
-	}
-
-	public boolean isItemCartEmpty() {
+	/*public boolean isItemCartEmpty() {
 		return itemCart.isEmpty();
-	}
-	public boolean isEmpty()
+	}*/
+	
+	
+	/*public boolean isEmpty()
 	{
 		return isProductCartEmpty()&&isItemCartEmpty();
-	}
+	}*/
 
 	public String toString() {
-		return "products: " + productCart + "\n" + "itmes: " + itemCart;
+		return "cart: " + cart + "\n";
 	}
 }

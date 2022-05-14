@@ -34,7 +34,7 @@ public class ProductVBox extends VBox {
 		
 		// set page title
 		Label productName;
-		productName = new Label("Product Details\n" + product.getProductName());
+		productName = new Label("Product Details\n" + product.getName());
 		productName.setTextAlignment(TextAlignment.CENTER);
 		productName.setFont(new Font("-fx-font-weight: bold", 35));
 		this.getChildren().add(productName);
@@ -67,7 +67,7 @@ public class ProductVBox extends VBox {
 		cell = new Label("Type:");
 		cell.setFont(new Font("-fx-font-weight: bold", 23));
 		mainGrid.add(cell, 0, 0);
-		cell = new Label(product.getProductType());
+		cell = new Label(product.getType());
 		cell.setFont(new Font("-fx-font-weight: bold", 23));
 		mainGrid.add(cell, 1, 0);
 
@@ -92,7 +92,7 @@ public class ProductVBox extends VBox {
 		cell = new Label("Price:");
 		cell.setFont(new Font("-fx-font-weight: bold", 23));
 		mainGrid.add(cell, 0, 3);
-		cell = new Label(product.getProductPrice() + " ILS");
+		cell = new Label(product.getPrice() + " ILS");
 		cell.setWrapText(true);
 		cell.setFont(new Font("-fx-font-weight: bold", 23));
 		mainGrid.add(cell, 1, 3);

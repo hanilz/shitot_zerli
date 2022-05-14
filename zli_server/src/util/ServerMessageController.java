@@ -9,13 +9,12 @@ import entities.Branch;
 import entities.DeliveriesOrders;
 import entities.Delivery;
 import entities.Item;
+import entities.ManageUsers;
 import entities.Order;
 import entities.OrderProduct;
 import entities.Product;
-import entities.ManageUsers;
 import ocsf.server.ConnectionToClient;
 import server.ServerController;
-import survey.Survey;
 import survey.SurveyQuestion;
 
 public class ServerMessageController {
@@ -162,7 +161,7 @@ public class ServerMessageController {
 			sendToClient(client);
 			break;
 		case SUBMIT_SURVEY:
-			boolean isSubmitted = AnaylzeCommand.submitSurvey((HashMap) message.get("answers"));
+			boolean isSubmitted = AnaylzeCommand.submitSurvey((HashMap<SurveyQuestion, Integer>) message.get("answers"));
 			String submissionResult = isSubmitted ? "insert survey answer successful" : "insert survey answer failed";
 			message.put("response", submissionResult);
 			sendToClient(client);
