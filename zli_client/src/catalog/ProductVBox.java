@@ -1,6 +1,7 @@
 package catalog;
 
 import entities.Product;
+import entities.ProductsBase;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -15,13 +16,13 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class ProductVBox extends VBox {
-	private Product product;
+	private ProductsBase product;
 
 	private ImageView image;
 	private GridPane mainGrid;
 	private Button closeBtn;
 
-	public ProductVBox(Product p) {
+	public ProductVBox(ProductsBase p) {
 		this.product = p;
 	}
 
@@ -71,22 +72,22 @@ public class ProductVBox extends VBox {
 		cell.setFont(new Font("-fx-font-weight: bold", 23));
 		mainGrid.add(cell, 1, 0);
 
-		// set product flower type
-		cell = new Label("Flower Type:");
-		cell.setFont(new Font("-fx-font-weight: bold", 23));
-		mainGrid.add(cell, 0, 1);
-		cell = new Label(product.getFlowerType());
-		cell.setFont(new Font("-fx-font-weight: bold", 23));
-		mainGrid.add(cell, 1, 1);
-
-		// set product Description
-		cell = new Label("Description:");
-		cell.setFont(new Font("-fx-font-weight: bold", 23));
-		mainGrid.add(cell, 0, 2);
-		cell = new Label(product.getProductDescription());
-		cell.setWrapText(true);
-		cell.setFont(new Font("-fx-font-weight: bold", 23));
-		mainGrid.add(cell, 1, 2);
+//		// set product flower type
+//		cell = new Label("Flower Type:");
+//		cell.setFont(new Font("-fx-font-weight: bold", 23));
+//		mainGrid.add(cell, 0, 1);
+//		cell = new Label(product.getFlowerType());
+//		cell.setFont(new Font("-fx-font-weight: bold", 23));
+//		mainGrid.add(cell, 1, 1);
+//
+//		// set product Description
+//		cell = new Label("Description:");
+//		cell.setFont(new Font("-fx-font-weight: bold", 23));
+//		mainGrid.add(cell, 0, 2);
+//		cell = new Label(product.getProductDescription());
+//		cell.setWrapText(true);
+//		cell.setFont(new Font("-fx-font-weight: bold", 23));
+//		mainGrid.add(cell, 1, 2);
 
 		// set product Price
 		cell = new Label("Price:");

@@ -12,7 +12,9 @@ import entities.AccountPayment;
 import entities.Branch;
 import entities.Cart;
 import entities.DeliveriesOrders;
+import entities.Item;
 import entities.Order;
+import entities.OrderItem;
 import entities.OrderProduct;
 import entities.Product;
 import entities.ProductsBase;
@@ -74,27 +76,34 @@ public class CheckoutController implements Initializable {
 	@FXML
 	private TextField yearField;
 
+	private ArrayList<Product> products = new ArrayList<>();
+	
+	private ArrayList<Item> items = new ArrayList<>();
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		Set<Product> products = new HashSet<>();
-
-		for (ProductsBase current : Cart.getInstance().getCart().keySet()) // temp foreach,
-			if (current instanceof Product)
-				products.add((Product) current);
-
 		System.out.println("Adding all product to cart screen...");
 
-		for (Product product : products) {
+		for (ProductsBase product : Cart.getInstance().getCart().keySet()) {
 			Integer quantity = Cart.getInstance().getCart().get(product);
 			System.out.println("product to add is " + product.getName() + " with the quantity " + quantity);
 
 			OrderSummaryHBox productSummaryHBox = new OrderSummaryHBox(product, quantity);
 			productSummaryHBox.initHBox();
 			orderSummaryVBox.getChildren().add(productSummaryHBox);
+			
+			addToLists(product);
 		}
 		totalPriceLabel.setText(InputChecker.price(Cart.getInstance().getTotalPrice()));
 	}
 
+	private void addToLists(ProductsBase product) {
+		if(product instanceof Product)
+			products.add((Product) product);
+		else if(product instanceof Item)
+			items.add((Item) product);
+	}
+	
 	@FXML
 	void changeToDeliveryScreen(MouseEvent event) {
 		ManageScreens.changeScreenTo(Screens.DELIVERY_DETAILS);
@@ -138,7 +147,7 @@ public class CheckoutController implements Initializable {
 				User.getUserInstance());
 
 		HashMap<String, Object> message = new HashMap<>();
-		message.put("command", "insert account payment");
+		message.put("command", Commands.INSERT_ACCOUNT_PAYMENT);
 		message.put("account payment", accountPayment);
 		Object response = ClientFormController.client.accept(message);
 		if (response.equals("insert account payment successful"))
@@ -156,14 +165,16 @@ public class CheckoutController implements Initializable {
 		String paymentMethod = "credit card"; // TODO: talk with everyone about this field in the db.
 		User user = User.getUserInstance();
 		HashMap<String, Object> message = new HashMap<>();
-		message.put("command", "insert order");
+		message.put("command", Commands.INSERT_ORDER);
 		message.put("order", new Order(totalPrice, greetingCard, dOrder, branch, status, paymentMethod, user));
 		Object response = ClientFormController.client.accept(message);
-		if ((Integer) response != -1) {
+		Integer orderId = (Integer) response;
+		if (orderId != -1) {
 			System.out.println("yayy!! order added to the db");
-			insertOrderProductsToDB((Integer) response);
+			insertOrderProductsToDB(orderId);
+			insertOrderItemsToDB(orderId);
 			if (SingletonOrder.getInstance().getDelivery() != null)
-				insertDelivery((Integer) response);
+				insertDelivery(orderId);
 		} else
 			System.out.println("of pufff, insert failed!");
 
@@ -173,19 +184,33 @@ public class CheckoutController implements Initializable {
 		HashMap<String, Object> message = new HashMap<>();
 		ArrayList<OrderProduct> orderProductsList = new ArrayList<>();
 		message.put("command", Commands.INSERT_ORDERS_PRODUCT);
-		for (ProductsBase currentProduct : Cart.getInstance().getCart().keySet())
-			if (currentProduct instanceof Product) {
-				orderProductsList.add(new OrderProduct(idOrder, (Product) currentProduct,
-						Cart.getInstance().getCart().get(currentProduct)));
-				message.put("list order products", orderProductsList);
-				Object response = ClientFormController.client.accept(message);
-				if (response.equals("insert order products successful"))
-					System.out.println("yayy!! order products added to the db");
-				else
-					System.out.println("of pufff, insert failed!");
-			}
+		for (Product currentProduct : products)
+			orderProductsList.add(new OrderProduct(idOrder, (Product) currentProduct,
+					Cart.getInstance().getCart().get(currentProduct)));
+		message.put("list order products", orderProductsList);
+		Object response = ClientFormController.client.accept(message);
+		if (response.equals("insert order products successful"))
+			System.out.println("yayy!! order products added to the db");
+		else
+			System.out.println("of pufff, insert failed!");
 	}
 
+	private void insertOrderItemsToDB(int idOrder) {
+		HashMap<String, Object> message = new HashMap<>();
+		ArrayList<OrderItem> orderItemsList = new ArrayList<>();
+		message.put("command", Commands.INSERT_ORDERS_ITEMS);
+		for (Item currentItem : items)
+			orderItemsList.add(new OrderItem(idOrder, (Item) currentItem,
+					Cart.getInstance().getCart().get(currentItem)));
+		message.put("list order items", orderItemsList);
+		Object response = ClientFormController.client.accept(message);
+		if (response.equals("insert order items successful"))
+			System.out.println("yayy!! order items added to the db");
+		else
+			System.out.println("of pufff, insert failed!");
+	}
+
+	
 	private void insertDelivery(int idOrder) {
 		// first - insert the delivery into the db
 		HashMap<String, Object> message = new HashMap<>();
