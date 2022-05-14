@@ -2,114 +2,39 @@ package entities;
 
 import java.io.Serializable;
 
-public class Product implements Serializable{
+public class Product extends ProductsBase implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int productID;
-	private String productName;
+	//private int productID; //
+	//private String productName; //
 	private String flowerType;
-	private String productColor;
-	private double productPrice;
-	private String productType;
+	//private String productColor; //
+	//private double productPrice; //
+	//private String productType; //
 	private String productDescription;
-	private String imagePath;
-
-	public Product(int productID, String productName, String flowerType, String productColor, double productPrice,
-			String productType, String productDescription, String imagePath) {
-		this.productID = productID;
-		this.productName = productName;
+	//private String imagePath; //
+	
+	public Product(int id, String name, String color, double price, String type, String imagePath, String flowerType,
+			String productDescription) {
+		super(id, name, color, price, type, imagePath);
 		this.flowerType = flowerType;
-		this.productColor = productColor;
-		this.productPrice = productPrice;
-		this.productType = productType;
 		this.productDescription = productDescription;
-		this.imagePath = imagePath;
 	}
-
-	/**
-	 * @return the productID
-	 */
-	public int getProductID() {
-		return productID;
-	}
-
-	/**
-	 * @param productID the productID to set
-	 */
-	public void setProductID(int productID) {
-		this.productID = productID;
-	}
-
-	/**
-	 * @return the productName
-	 */
-	public String getProductName() {
-		return productName;
-	}
-
-	/**
-	 * @param productName the productName to set
-	 */
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-
+	
 	/**
 	 * @return the flowerType
 	 */
 	public String getFlowerType() {
 		return flowerType;
 	}
-
+	
 	/**
 	 * @param flowerType the flowerType to set
 	 */
 	public void setFlowerType(String flowerType) {
 		this.flowerType = flowerType;
-	}
-
-	/**
-	 * @return the productColor
-	 */
-	public String getProductColor() {
-		return productColor;
-	}
-
-	/**
-	 * @param productColor the productColor to set
-	 */
-	public void setProductColor(String productColor) {
-		this.productColor = productColor;
-	}
-
-	/**
-	 * @return the productPrice
-	 */
-	public double getProductPrice() {
-		return productPrice;
-	}
-
-	/**
-	 * @param productPrice the productPrice to set
-	 */
-	public void setProductPrice(int productPrice) {
-		this.productPrice = productPrice;
-	}
-
-	/**
-	 * @return the productType
-	 */
-	public String getProductType() {
-		return productType;
-	}
-
-	/**
-	 * @param productType the productType to set
-	 */
-	public void setProductType(String productType) {
-		this.productType = productType;
 	}
 
 	/**
@@ -124,20 +49,6 @@ public class Product implements Serializable{
 	 */
 	public void setProductDescription(String productDescription) {
 		this.productDescription = productDescription;
-	}
-
-	/**
-	 * @return the imagePath
-	 */
-	public String getImagePath() {
-		return imagePath;
-	}
-
-	/**
-	 * @param imagePath the imagePath to set
-	 */
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
 	}
 
 }

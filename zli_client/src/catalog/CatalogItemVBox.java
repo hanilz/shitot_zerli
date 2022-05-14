@@ -29,10 +29,10 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 	 * 
 	 */
 	public void initVBox() {
-		nameLabel.setText(item.getItemName() + " - " + item.getItemColor());
+		nameLabel.setText(item.getName() + " - " + item.getColor());
 		setImageProp();
 
-		amountLabel.setText("" + InputChecker.price(((int) item.getItemPrice())));
+		amountLabel.setText("" + InputChecker.price(((int) item.getPrice())));
 
 		// force the field to be numeric only
 		quantityField.textProperty().addListener(new ChangeListener<String>() {
@@ -85,9 +85,9 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 				int quantity = Integer.valueOf(quantityField.getText());
 				if(quantity<1)
 					return;
-				Cart.getInstance().addToItemCart(item, quantity);
-				System.out.println("Cart is: " + Cart.getInstance().getItemCart());
-				System.out.println(item.getItemName() + " added to cart woohoooo");
+				Cart.getInstance().addToCart(item, quantity, true);
+				System.out.println("Cart is: " + Cart.getInstance().getCart());
+				System.out.println(item.getName() + " added to cart woohoooo");
 			}
 		});
 	}

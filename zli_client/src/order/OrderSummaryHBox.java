@@ -39,7 +39,7 @@ public class OrderSummaryHBox extends HBox {
 		quantityLabel.setText("" + quantity);
 
 		priceLabel.setFont(new Font(20));
-		priceLabel.setText(InputChecker.price(product.getProductPrice()));
+		priceLabel.setText(InputChecker.price(product.getPrice()));
 
 		this.getChildren().add(image);
 		this.getChildren().add(quantityLabel);
@@ -64,7 +64,7 @@ public class OrderSummaryHBox extends HBox {
 				popup.initProductVBox();
 				Scene scene = new Scene(popup);
 				Stage stage = new Stage();
-				stage.setTitle("Product Details - " + product.getProductName());
+				stage.setTitle("Product Details - " + product.getName());
 				stage.setScene(scene);
 				stage.showAndWait();
 			}

@@ -75,9 +75,9 @@ public class CartHBox extends HBox {
 	}
 
 	private void initProductDetailsVBox() {
-		idLabel = new Label("CatID: " + product.getProductID());
+		idLabel = new Label("CatID: " + product.getId());
 
-		nameLabel = new Label(product.getProductName());
+		nameLabel = new Label(product.getName());
 		nameLabel.setFont(new Font(30));
 		nameLabel.setMinWidth(520);
 		nameLabel.setPrefWidth(520);
@@ -88,7 +88,7 @@ public class CartHBox extends HBox {
 
 	private void initPriceDetailsVBox() {
 		priceLabel.setFont(new Font(20));
-		totalSumPrice = product.getProductPrice() * quantity;
+		totalSumPrice = product.getPrice() * quantity;
 		amountLabel = new Label(InputChecker.price(totalSumPrice));
 		amountLabel.setFont(new Font(20));
 
@@ -114,8 +114,8 @@ public class CartHBox extends HBox {
 				if (quantityField.getText().isEmpty())
 					return;
 				newQuantity = Integer.parseInt(quantityField.getText());
-				cart.addToProductCart(product, newQuantity, false);
-				totalSumPrice = product.getProductPrice() * newQuantity;
+				cart.addToCart(product, newQuantity, false);
+				totalSumPrice = product.getPrice() * newQuantity;
 				System.out.println("new price is " + totalSumPrice);
 				amountLabel.setText(InputChecker.price(totalSumPrice));
 				quantity = newQuantity;

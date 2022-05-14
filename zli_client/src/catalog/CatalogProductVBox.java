@@ -23,11 +23,11 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 	 * 
 	 */
 	public void initVBox() {
-		nameLabel.setText(product.getProductName());
+		nameLabel.setText(product.getName());
 		initImageProduct();
 		initProductIcon();
 		
-		amountLabel.setText("" + InputChecker.price(((int) product.getProductPrice())));
+		amountLabel.setText("" + InputChecker.price(((int) product.getPrice())));
 
 		initPriceHBox();
 
@@ -43,9 +43,9 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 		addToCartButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Cart.getInstance().addToProductCart(product, 1, true);
-				System.out.println("Cart is: " + Cart.getInstance().getProductCart());
-				System.out.println(product.getProductName() + " added to cart woohoooo");
+				Cart.getInstance().addToCart(product, 1, true);
+				System.out.println("Cart is: " + Cart.getInstance().getCart());
+				System.out.println(product.getName() + " added to cart woohoooo");
 			}
 		});
 	}
@@ -61,7 +61,7 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 				popup.initProductVBox();
 				Scene scene = new Scene(popup);
 				Stage stage = new Stage();
-				stage.setTitle("Product Details - " + product.getProductName());
+				stage.setTitle("Product Details - " + product.getName());
 				stage.setScene(scene);
 				stage.showAndWait();
 			}

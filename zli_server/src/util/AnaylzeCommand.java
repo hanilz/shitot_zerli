@@ -13,7 +13,6 @@ import entities.Item;
 import entities.ManageUsers;
 import entities.OrderProduct;
 import entities.Product;
-import survey.Survey;
 import survey.SurveyQuestion;
 
 /**
@@ -38,8 +37,8 @@ public class AnaylzeCommand {
 				String productType = rs.getString(6);
 				String productDesc = rs.getString(7);
 				String imagePath = rs.getString(8);
-				Product productResult = new Product(productId, productName, flowerType, productColor, productPrice,
-						productType, productDesc, imagePath);
+				Product productResult = new Product(productId, productName, productColor, productPrice, productType,
+						imagePath, flowerType, productDesc);
 				products.add(productResult);
 			}
 		} catch (SQLException e) {
@@ -47,7 +46,7 @@ public class AnaylzeCommand {
 		}
 		return products;
 	}
-	
+
 	public static ArrayList<Item> selectAllItems() {
 		ArrayList<Item> items = new ArrayList<>();
 		try {
@@ -159,7 +158,7 @@ public class AnaylzeCommand {
 					preparedStmt.setString(3, password);
 					if (preparedStmt.executeUpdate() == 1)
 						status = Status.NEW_LOG_IN;
-        }
+				}
 			}
 		} catch (SQLException e) {
 			System.out.println("failed to fetch user");
@@ -299,7 +298,7 @@ public class AnaylzeCommand {
 		StringBuffer buff = new StringBuffer();
 		buff.append("INSERT INTO order_products (idOrder, idProduct, quantity) VALUES ");
 		for (OrderProduct currentInsert : orderProductsList) {
-			buff.append("(" + currentInsert.getIdOrder() + "," + currentInsert.getProduct().getProductID() + ","
+			buff.append("(" + currentInsert.getIdOrder() + "," + currentInsert.getProduct().getId() + ","
 					+ currentInsert.getQuantity() + "),");
 		}
 		buff.deleteCharAt(buff.length() - 1);
@@ -378,7 +377,7 @@ public class AnaylzeCommand {
 		Connection conn = DataBaseController.getConn();
 		String query = "SELECT * FROM survey_questions where idSurvey = ?;";
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			//Statement selectStmt = DataBaseController.getConn().createStatement(); why???
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, surveyID);
 			ResultSet rs = preparedStmt.executeQuery();
@@ -392,7 +391,7 @@ public class AnaylzeCommand {
 		return questions;
 	}
 
-	public static boolean submitSurvey(HashMap<SurveyQuestion,Integer> answers) {
+	public static boolean submitSurvey(HashMap<SurveyQuestion, Integer> answers) {
 		StringBuffer buff = new StringBuffer();
 		buff.append("INSERT INTO survey_answers (idQuestion, answer) VALUES ");
 		for (SurveyQuestion sq : answers.keySet()) {
