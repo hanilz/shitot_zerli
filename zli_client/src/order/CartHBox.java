@@ -2,6 +2,7 @@ package order;
 
 import entities.Cart;
 import entities.Product;
+import entities.ProductsBase;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -21,7 +22,7 @@ import util.InputChecker;
 public class CartHBox extends HBox {
 	private Cart cart = Cart.getInstance();
 
-	private Product product;
+	private ProductsBase product;
 
 	private int quantity;
 
@@ -39,7 +40,7 @@ public class CartHBox extends HBox {
 	private Label amountLabel;
 	private Button removeButton = new Button("X");
 
-	public CartHBox(Product product, int quantity) {
+	public CartHBox(ProductsBase product, int quantity) {
 		this.product = product;
 		this.quantity = quantity;
 	}
@@ -62,7 +63,7 @@ public class CartHBox extends HBox {
 		removeButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				cart.removeFromProductCart(product);
+				cart.removeFromCart(product);
 				CartController.connectionWithCartHBox("refresh cart");
 			}
 		});
