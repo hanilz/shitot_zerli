@@ -81,7 +81,6 @@ public class CatalogController implements Initializable {
 		message.put("command",Commands.FETCH_ITEMS);
 		Object response = ClientFormController.client.accept(message);
 		items = (ObservableList<Item>) response;
-		System.out.println(products);
 	}
 
 	private void fetchProducts() {
@@ -89,7 +88,6 @@ public class CatalogController implements Initializable {
 		message.put("command",Commands.FETCH_PRODUCTS);
 		Object response = ClientFormController.client.accept(message);
 		products = (ObservableList<Product>) response;
-		System.out.println(products);
 	}
 
 	private void initGrid() {

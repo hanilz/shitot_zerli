@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import entities.Cart;
+import entities.Item;
 import entities.Product;
 import entities.ProductsBase;
 import entities.User;
@@ -48,19 +49,14 @@ public class CartController implements Initializable {
 
 	public void initCart() {
 		instance = this;
-		Set<Product> products = new HashSet<>();
-		
-		for(ProductsBase current : cart.getCart().keySet()){
-			if(current instanceof Product)
-				products.add((Product)current);
-		}
+		Set<ProductsBase> totalCart = cart.getCart().keySet();
 		
 		System.out.println("Adding all product to cart screen...");
 
-		for (Product currentProduct : products) {
-			Integer quantity = cart.getCart().get(currentProduct);
-			System.out.println("product to add is " + currentProduct.getName() + " with the quantity " + quantity);
-			CartHBox productHBox = new CartHBox(currentProduct, quantity);
+		for (ProductsBase currentItem : totalCart) {
+			Integer quantity = cart.getCart().get(currentItem);
+			System.out.println("product to add is " + currentItem.getName() + " with the quantity " + quantity);
+			CartHBox productHBox = new CartHBox(currentItem, quantity);
 			productHBox.initHBox();
 			cartItemVBox.getChildren().add(productHBox);
 		}
