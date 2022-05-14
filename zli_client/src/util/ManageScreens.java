@@ -4,6 +4,7 @@ import java.net.URL;
 
 import catalog.CatalogController;
 import client.ClientScreen;
+import customerComplaint.CustomerComplaintHomeController;
 import entities.User;
 import home.HomeGuestController;
 import home.HomeUserTypesController;
@@ -130,10 +131,16 @@ public class ManageScreens {
 				ManageScreens.changeScene(ManageUsersController.class.getResource("ManageUsers.fxml"), "Manage Users");
 				break;
 			case SURVEY_HOME:
-				ManageScreens.changeScene(SurveyHomeController.class.getResource("SurveyHomeScreen.fxml"), "Survey Home Screen");
+				ManageScreens.changeScene(SurveyHomeController.class.getResource("SurveyHomeScreen.fxml"), "Survey Home");
 				break;
 			case SURVEY:
 				ManageScreens.changeScene(SurveyHomeController.class.getResource("Survey.fxml"), "Survey");
+				break;
+			case COMPLAINT_HOME:
+				ManageScreens.changeScene(CustomerComplaintHomeController.class.getResource("CustomerComplaintHomeScreen.fxml"), "Customer Complaint Home");
+				break;
+			case COMPLAINT:
+				ManageScreens.changeScene(CustomerComplaintHomeController.class.getResource("CustomerComplaintScreen.fxml"), "Customer Complaint");
 				break;
 			default:
 				break;
@@ -150,6 +157,7 @@ public class ManageScreens {
 			ManageScreens.changeScreenTo(Screens.GUEST_HOME);
 	}
 
+	//set the name for the button in the home screen
 	public static String getName(Screens user) {
 		switch (user) {
 		case CART:
@@ -187,7 +195,9 @@ public class ManageScreens {
 		case MANAGE_USERS:
 			return "Manage Users";
 		case SURVEY_HOME:
-			return "Surveys";
+			return "Survey";
+		case COMPLAINT_HOME:
+			return "Customer Complaints";
 		}
 		return null;
 	}
@@ -230,6 +240,8 @@ public class ManageScreens {
 			return "resources/home/manageUsers.png";
 		case SURVEY_HOME:
 			return "resources/home/survey.png";
+		case COMPLAINT_HOME:
+			return "resources/home/complaint.png";
 		default:
 			return "";// no such user//
 		}

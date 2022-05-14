@@ -1,7 +1,7 @@
 package survey;
 
 import java.net.URL;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -14,14 +14,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
-import javafx.scene.web.HTMLEditorSkin.Command;
 import util.Commands;
 import util.ManageScreens;
 import util.Screens;
 
+/**
+ * @author Eitan
+ *	SurveyController class is used to display a single survey once it is selected
+ *	to initialize the survey the method calling this class has to first initialize the survey in order for it to be displayed
+ */
 public class SurveyController implements Initializable{
 
-	private static Survey survey;
+	private static Survey survey = new Survey(0, "Not Initialized", new ArrayList<SurveyQuestion>());
 	
     @FXML
     private Label errorLabel;
@@ -45,7 +49,6 @@ public class SurveyController implements Initializable{
 
     @FXML
     void saveSurveyAnswer(ActionEvent event) {
-    	//int[] answers = new int[survey.getQuestions().size()];
     	HashMap<SurveyQuestion,Integer> answers = new HashMap<>();
     	for (int i = 0; i < survey.getQuestions().size(); i++) {
     		int ans = ((questionHBox) questionVbox.getChildren().get(i*2)).getSelected();
@@ -72,7 +75,6 @@ public class SurveyController implements Initializable{
 		surveyTitleLabel.setText(survey.getSurveyName());
 		
 		for (int i = 0; i < survey.getQuestions().size(); i++) {
-			//TODO add questions using question hBox
 			questionHBox question = new questionHBox(survey.getQuestion(i));
 			questionVbox.getChildren().add(question);
 			questionVbox.getChildren().add(new Separator(Orientation.HORIZONTAL));

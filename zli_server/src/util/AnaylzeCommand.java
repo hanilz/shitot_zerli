@@ -412,4 +412,40 @@ public class AnaylzeCommand {
 		}
 	}
 
+	public static boolean submitComplaint(String id, String complaint) {
+		Connection conn = DataBaseController.getConn();
+		String query = "SELECT U.idUser FROM users U , user_details UD where UD.id = ? AND U.idAccount = UD.idAccount;";
+		PreparedStatement preparedStmt;
+		ResultSet rs;
+		int idUser = 0;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setString(1, id);
+			rs = preparedStmt.executeQuery();
+			if(!rs.next()) {
+				System.out.println("Failed to find user");
+				return false;
+			}
+			else
+				idUser = rs.getInt(1);
+		} catch (SQLException e) {
+			System.out.println("Failed to fetch user");
+			e.printStackTrace();
+			return false;
+		}
+		//System.out.println("user id :"+idUser + "found for id: "+ id);
+		query = "INSERT INTO complaints (status, content, idUser) VALUES ('Active', ?, ?)";
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setString(1, complaint);
+			preparedStmt.setInt(2, idUser);
+			preparedStmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Failed to insert complaint");
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }
