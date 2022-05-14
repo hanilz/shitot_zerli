@@ -4,9 +4,10 @@
 package client;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import ocsf.client.AbstractClient;
-import util.MessageController;
+import util.ClientMessageController;
 
 /**
  * ClientController extends the superclass AbstractClient for implementing and overriding the functions for our server-client project (zli)
@@ -26,11 +27,6 @@ public class ClientController extends AbstractClient {
 	 * waiting for response after the client sent the message
 	 */
 	public static boolean awaitResponse = false;
-	
-	/**
-	 * Will help us the send the messages for handling different type of commands that been sent by the client
-	 */
-	private MessageController messageController;
 
 	// private ServerController sv;
 
@@ -43,7 +39,6 @@ public class ClientController extends AbstractClient {
 	 */
 	public ClientController(String host) throws IOException {
 		super(host, DEFAULT_PORT);
-		messageController = new MessageController();
 		openConnection();
 	}
 
@@ -56,7 +51,7 @@ public class ClientController extends AbstractClient {
 	 * This method waits for input from the console. Once it is received, it sends
 	 * it to the client's message handler.
 	 */
-	public Object accept(Object message) {
+	public Object accept(HashMap<String, Object> message) {
 		handleMessageFromClientUI(message);
 		return response;
 	}
@@ -67,7 +62,7 @@ public class ClientController extends AbstractClient {
 	 * @param message The message from the UI.
 	 */
 
-	public void handleMessageFromClientUI(Object message) {
+	public void handleMessageFromClientUI(HashMap<String, Object> message) {
 		try {
 			openConnection();// in order to send more than one message
 			awaitResponse = true;
@@ -93,7 +88,7 @@ public class ClientController extends AbstractClient {
 	@Override
 	protected void handleMessageFromServer(Object msg) {
 		awaitResponse = false;
-		messageController.handleMessages(msg);
+		ClientMessageController.getClientMessageController().handleMessages(msg);
 	}
 
 	/**

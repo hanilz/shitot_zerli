@@ -124,7 +124,8 @@ public class ServerFormController implements Initializable {
 		List<String> connectionArray = Arrays.asList(stringArray);
 
 		DataBaseController.setConnection(connectionArray);
-		sv = new ServerController(Integer.parseInt(port), ip);
+		sv = ServerController.getServerController();
+		sv.setIp(ip);
 		StringBuffer buff = new StringBuffer();
 		buff.append(sv.connectToDB());
 		if (DataBaseController.isConnected) {
