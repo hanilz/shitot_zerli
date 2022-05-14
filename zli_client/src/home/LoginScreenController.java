@@ -5,8 +5,9 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import client.ClientFormController;
-import client.ClientScreen;
 import entities.User;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -15,15 +16,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.web.HTMLEditorSkin.Command;
 import javafx.stage.Stage;
 import util.Commands;
 import util.ManageScreens;
-import util.Screens;
 import util.Status;
 import util.UserType;
 
 public class LoginScreenController implements Initializable {
+	private HashMap<String, Object> response;
 	@FXML
 	private Label errorLabel;
 
@@ -41,63 +41,63 @@ public class LoginScreenController implements Initializable {
 
 	private static boolean isPopup;
 
+	@SuppressWarnings("unchecked")
 	@FXML
 	void loginUserIntoSystem(MouseEvent event) {
 		String username = usernameLabel.getText();
 		String password = passwordLabel.getText();
-		HashMap<String, Object> message = new HashMap<String, Object>();
-		message.put("command",Commands.LOGIN);
-		message.put("username", username);
-		message.put("password", password);
-		checkUserInputAndLogin(username, password);
-		@SuppressWarnings("unchecked")
-		HashMap<String, Object> response = (HashMap<String, Object>) ClientFormController.client.accept(message);
+		if (!isUserInputValid(username, password))
+			return;
+		HashMap<String, Object> message = setRespondToServer(username, password);
+		response = (HashMap<String, Object>) ClientFormController.client.accept(message);
 		responseAction(event, username, response);
 	}
 
-	private void checkUserInputAndLogin(String username, String password) {
-		if (User.getUserInstance().isUserLoggedIn() || username.equals("") || password.equals("")) {
-			if (User.getUserInstance().isUserLoggedIn())// one user is already active in this client
-			{
-				if (User.getUserInstance().getUsername().equals(username))// user already logged in this computer
-					errorLabel.setText("You already logged in as " + User.getUserInstance().getUsername());
-				else// trying to log to a different account but must to logout first
-					errorLabel.setText("First logout from user " + User.getUserInstance().getUsername());
-				loginButton.setDisable(true);// user logged in
-			} else// exist combination of the labels in which at least one is empty
-				errorLabel.setText("Please enter Username and Password!");
-			errorLabel.setVisible(true);// show error
-			return;
-		}
+	private HashMap<String, Object> setRespondToServer(String username, String password) {
+		HashMap<String, Object> message = new HashMap<String, Object>();
+		message.put("command", Commands.LOGIN);
+		message.put("username", username);
+		message.put("password", password);
+		return message;
+	}
+
+	private boolean isUserInputValid(String username, String password) {
+		boolean isInputValid = false;
+		if (User.getUserInstance().isUserLoggedIn()) {
+			setError("Already logged in");
+			loginButton.setDisable(true);
+		} else if (username.equals("") || password.equals(""))
+			setError("Please enter Username and Password!");
+		else
+			isInputValid = true;
+		return isInputValid;
 	}
 
 	private void responseAction(MouseEvent event, String username, HashMap<String, Object> response) {
 		switch ((Status) (response).get("response")) {
 		case NEW_LOG_IN:
-				errorLabel.setVisible(false);
-				System.out.println(response.get("idUser"));
-				int idUser = (Integer) response.get("idUser");
-				int idAccount = (Integer) response.get("idAccount");
-				UserType userType = (UserType) response.get("userType");
-
-				User.getUserInstance().login(idUser, username, idAccount, userType);// creating running user
-				System.out.println("running : " + User.getUserInstance());
-				if (popup(event))
-					return;
+			loginUser(username);
+			if (isCatalogPopUp(event)) {
+				if (User.getUserInstance().getType() != UserType.CUSTOMER)
+					setError("Only Customers can buy from catalog");
+				return;
+			} else
 				ManageScreens.home();
 			break;
 		case ALREADY_LOGGED_IN:
-			errorLabel.setText("User already logged in");
-			errorLabel.setVisible(true);
+			setError("User already logged in");
 			break;
 		case NOT_REGISTERED:
-			errorLabel.setText("Username or Password are incorrect");
-			errorLabel.setVisible(true);
+			setError("Username or Password are incorrect");
 			break;
 		case SUSPENDED:
-			errorLabel.setText("User Suspended");
-			errorLabel.setVisible(true);
+			setError("User Suspended");
 		}
+	}
+
+	private void setError(String err) {
+		errorLabel.setText(err);
+		errorLabel.setVisible(true);
 	}
 
 	public static void enablePopup(boolean Popup) {
@@ -106,16 +106,26 @@ public class LoginScreenController implements Initializable {
 
 	@FXML
 	void changeToHomeScreen(MouseEvent event) {
-		if (popup(event))
-			return;
-		ManageScreens.home();
+		if (isCatalogPopUp(event)) {
+			CloseWindow(event);
+		} else
+			ManageScreens.home();
 	}
 
-	private boolean popup(MouseEvent event) {
+	private void loginUser(String username) {
+		errorLabel.setVisible(false);
+		int idUser = (Integer) response.get("idUser");
+		int idAccount = (Integer) response.get("idAccount");
+		UserType userType = (UserType) response.get("userType");
+		User.getUserInstance().login(idUser, username, idAccount, userType);// creating running user
+	}
+
+	private boolean isCatalogPopUp(MouseEvent event) {
 		if (isPopup) {
-			Node n = ((Node) (event.getSource()));
-			Stage s = ((Stage) n.getScene().getWindow());
-			s.close();
+			if (User.getUserInstance().getType() == UserType.CUSTOMER)
+				CloseWindow(event);
+			else
+				User.getUserInstance().logout();
 			return true;
 		}
 		return false;
@@ -128,6 +138,11 @@ public class LoginScreenController implements Initializable {
 			errorLabel.setText("You already logged in as " + User.getUserInstance().getUsername());
 			errorLabel.setVisible(true);
 		}
+	}
 
+	private void CloseWindow(Event event) {
+		Node n = ((Node) (event.getSource()));
+		Stage s = ((Stage) n.getScene().getWindow());
+		s.close();
 	}
 }
