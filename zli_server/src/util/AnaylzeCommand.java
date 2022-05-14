@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+import customerComplaint.Complaint;
+
 import entities.AccountPayment;
 import entities.Branch;
 import entities.Delivery;
@@ -468,6 +471,32 @@ public class AnaylzeCommand {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	
+	public static ArrayList<Complaint> getAllComplaints() {
+		System.out.println("getting all users");
+		ArrayList<Complaint> complaints = new ArrayList<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt.executeQuery(
+					"SELECT * FROM complaints c where status = 'Active';");
+			while (rs.next()) {
+				int idComplaint = rs.getInt(1);
+				String date = rs.getString(2);
+				String status = rs.getString(3);
+				String content = rs.getString(4);
+				int idUser = rs.getInt(5);
+				String[] str = content.split(": ");
+				//String name
+				Complaint resultOrder = new Complaint(idComplaint, status, str[3],"", idUser);
+				complaints.add(resultOrder);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("returned users");
+		return complaints;
 	}
 
 }
