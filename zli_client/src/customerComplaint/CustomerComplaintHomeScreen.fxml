@@ -63,7 +63,7 @@
       </ScrollPane>
       <HBox alignment="CENTER" prefHeight="66.0" prefWidth="980.0">
          <children>
-            <Button fx:id="newCustomerComplaintButton" mnemonicParsing="false" onAction="#createNewCustomerComplaint" text="New Cutomer Comlaint" />
+            <Button fx:id="newCustomerComplaintButton" mnemonicParsing="false" onAction="#createNewCustomerComplaint" text="New Cutomer Complaint" />
          </children>
       </HBox>
    </children>
