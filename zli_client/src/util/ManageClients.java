@@ -38,7 +38,7 @@ public class ManageClients {
 		case CUSTOMER:
 			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.CATALOG}));
 		case CUSTOMER_SERVICE:
-			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.SURVEY_HOME}));
+			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.SURVEY_HOME,Screens.COMPLAINT_HOME}));
 		case DELIVERY_COORDINATOR:
 			break;
 		case MARKETING_WORKER:

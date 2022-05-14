@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="customerComplaint.CustomerComplaintController">
+   <children>
+      <Label text="New Customer Complaint">
+         <font>
+            <Font name="System Bold" size="42.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="980.0" spacing="20.0">
+         <children>
+            <Label text="Full Name: ">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="nameString" prefHeight="25.0" prefWidth="300.0">
+               <HBox.margin>
+                  <Insets left="85.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="980.0" spacing="20.0">
+         <children>
+            <Label text="Personal ID: ">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="personalID">
+               <HBox.margin>
+                  <Insets left="70.0" />
+               </HBox.margin>
+            </TextField>
+            <Label fx:id="idLabel" text="*9 digits" textFill="BLUE" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="980.0" spacing="20.0">
+         <children>
+            <Label text="Complaint Reason:">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="complaintReason" prefHeight="26.0" prefWidth="686.0" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="980.0" spacing="20.0">
+         <children>
+            <Label text="Complaint Content:">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <TextArea fx:id="complaintText" prefHeight="295.0" prefWidth="920.0" wrapText="true">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextArea>
+      <Label text="*Limited to 1024 characters (all fields combined)" textFill="#0400ff" />
+      <HBox alignment="TOP_CENTER" prefHeight="30.0" prefWidth="960.0" spacing="70.0">
+         <children>
+            <Button fx:id="discardButton" mnemonicParsing="false" onAction="#discardComplaint" text="Discard And Close" />
+            <Button fx:id="submitButton" mnemonicParsing="false" onAction="#saveComplaint" text="Submit Complaint" />
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </HBox>
+      <Label fx:id="errorLabel" text="*Please fill all the fields before submiting" textFill="RED" visible="false">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+   </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <padding>
+      <Insets bottom="10.0" left="40.0" right="40.0" top="10.0" />
+   </padding>
+</VBox>

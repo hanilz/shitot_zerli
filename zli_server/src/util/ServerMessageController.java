@@ -165,6 +165,10 @@ public class ServerMessageController {
 			String submissionResult = isSubmitted ? "insert survey answer successful" : "insert survey answer failed";
 			message.put("response", submissionResult);
 			sendToClient(client);
+		case SUBMIT_COMPLAINT:
+			boolean compailntSubmited = AnaylzeCommand.submitComplaint((String) message.get("Personal ID"),(String) message.get("Complaint"));
+			message.put("response", compailntSubmited);
+			sendToClient(client);
 		default:
 			break;
 		}
