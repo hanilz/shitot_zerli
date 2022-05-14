@@ -31,10 +31,11 @@ public class ClientMessageController {
 		return instance;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void handleMessages(Object msg) {
 		message = (HashMap<String, Object>) msg;
 		Commands command = (Commands) message.get("command");
-		
+
 		switch (command) {
 		case CLIENT_DISCONNECTED:
 			ClientController.setResponse("client disconnected");
@@ -49,27 +50,15 @@ public class ClientMessageController {
 			returnServerListRespond(new ArrayList<Item>());
 			break;
 		case FETCH_ORDERS:
-			ArrayList<Order> ordersList = (ArrayList<Order>) message.get("response");
-			if (!ordersList.isEmpty()) {
-				Order messageOrder = ordersList.get(0);
-				int orderNumber = messageOrder.getIdOrder();
-				switch (orderNumber) {
-				case -1: // is fetch all orders
-					ordersList.remove(0); // get rid of indicative order
-					break;
-				}
-			}
-			returnServerListRespond(ordersList);
 			break;
 		case FETCH_PRODUCTS:
 			returnServerListRespond(new ArrayList<Product>());
 			break;
 		case LOGIN:
-			System.out.println(message);
 			ClientController.setResponse(message);
 			break;
 		case LOGOUT:
-			ClientController.setResponse((boolean)message.get("logout"));
+			ClientController.setResponse((boolean) message.get("logout"));
 			break;
 		case SERVER_DISCONNEDTED:
 			System.out.println("disconnected from server, back to client main.");
@@ -78,102 +67,8 @@ public class ClientMessageController {
 		default:
 			returnServerRespond();
 			break;
-
 		}
-
 	}
-
-	/**
-	 * handleMessages handles the messages that the client send to the server. This
-	 * function will execute the correct command that been sent.
-	 * 
-	 * @param msg
-	 */
-//	@SuppressWarnings("unchecked")
-//	public void handleMessages(Object msg) {//from server To client
-//		message = (HashMap<String, Object>) msg;
-//		String command = (String) message.get("command");
-////start of if commands
-//		if (command.contains("fetch orders")) {
-//			ArrayList<Order> ordersList = (ArrayList<Order>) message.get("response");
-//			if (!ordersList.isEmpty()) {
-//				Order messageOrder = ordersList.get(0);
-//				int orderNumber = messageOrder.getIdOrder();
-//				switch (orderNumber) { // because we will use the orders table for the next assignment, we will use
-//										// switch-case for extending the behavior of the orders table queries
-//				case -1: // is fetch all orders
-//					ordersList.remove(0); // get rid of indicative order
-//					break;
-//				}
-//			}
-//			returnServerListRespond(ordersList);
-//		} else if (command.contains("fetch items")) {
-//			returnServerListRespond(new ArrayList<Item>());
-//		}
-//		
-//		else if (command.contains("server disconnected")) {
-//				System.out.println("disconnected from server, back to client main.");
-//				ManageScreens.changeScreenTo(Screens.CLIENT);
-//		}
-//		else if (command.contains("client disconnected")) {
-//				ClientController.setResponse("client disconnected");
-//		}
-//		else if(command.contains("logout"))
-//				ClientController.setResponse((boolean)message.get("logout"));//logout 
-//		
-//		else if (command.contains("login user")) {
-//				ClientController.setResponse(message);
-//		}
-//		
-//		else if(command.contains("fetch products")) {
-//			returnServerListRespond(new ArrayList<Product>());
-//		}	
-//
-//		else if(command.contains("fetch branches")) {
-//			returnServerListRespond(new ArrayList<Branch>());
-//		}
-//
-//		else if(command.contains("fetch all user details")) {
-//			returnServerListRespond(new ArrayList<ManageUsers>());
-//		}
-//		//////////else
-//		else if(command.equals("change user status")) {
-//			returnServerRespond();
-//		}
-//		
-//		else if(command.equals("insert account payment")) {
-//			returnServerRespond();
-//		}
-//		
-//		else if(command.equals("insert order")) {
-//			returnServerRespond();
-//		}
-//		
-//		else if(command.equals("insert order products")) {
-//			returnServerRespond();
-//		}
-//		
-//		else if(command.equals("insert delivery")) {
-//			returnServerRespond();
-//		}
-//		
-//		else if(command.equals("insert delivery order")) {
-//			returnServerRespond();
-//		}
-//		
-//		else if(command.equals("Fetch Surveys")) {
-//			returnServerRespond();
-//		}
-//		
-//		else if(command.equals("Get Survey")) {
-//			returnServerRespond();
-//		}
-//		
-//		else if(command.equals("Submit survey Answer")) {
-//			returnServerRespond();
-//		}
-//		//////////else
-//	}
 
 	private void returnServerRespond() {
 		ClientController.setResponse(message.get("response"));
