@@ -11,6 +11,7 @@ import entities.Delivery;
 import entities.Item;
 import entities.ManageUsers;
 import entities.Order;
+import entities.OrderItem;
 import entities.OrderProduct;
 import entities.Product;
 import entities.ProductsBase;
@@ -22,6 +23,7 @@ public class ServerMessageController {
 
 	private static ServerMessageController instance = null;
 	private HashMap<String, Object> message;
+	private String response;
 
 	private ServerMessageController() {
 	}
@@ -47,12 +49,10 @@ public class ServerMessageController {
 	@SuppressWarnings("unchecked")
 	public void handleMessages(Object msg, ConnectionToClient client) {
 		message = (HashMap<String, Object>) msg;
-		// String command = (String) message.get("command");
 		Commands command = (Commands) message.get("command");
 		switch (command) {
 		case CHANGE_USER_STATUS:
-			message.get("id");
-			String response = AnaylzeCommand.changeUserStatus(message.get("id"));
+			response = AnaylzeCommand.changeUserStatus(message.get("id"));
 			message.put("response", response);
 			break;
 		case CLIENT_DISCONNECTED:
@@ -66,7 +66,6 @@ public class ServerMessageController {
 					break;
 				}
 			}
-			message.put("command", Commands.CLIENT_DISCONNECTED);
 			break;
 		case FETCH_ALL_USERS_DETAILS:
 			ArrayList<ManageUsers> users = AnaylzeCommand.selectAllUsers();
@@ -88,50 +87,56 @@ public class ServerMessageController {
 			break;
 		case INSERT_ACCOUNT_PAYMENT:
 			AccountPayment accountPayment = (AccountPayment) message.get("account payment");
-			boolean isInsert = AnaylzeCommand.insertAccountPayment(accountPayment.getFullName(),
-					accountPayment.getCardNumber(), accountPayment.getCardDate(), accountPayment.getCardVCC(),
-					accountPayment.getUser().getIdUser());
-			String insertionResult = isInsert ? "insert account payment successful" : "insert account payment failed";
-			message.put("response", insertionResult);
+			boolean isInsert = AnaylzeCommand.insertAccountPayment(accountPayment);
+			response = isInsert ? "insert account payment successful" : "insert account payment failed";
+			message.put("response", response);
 			break;
 		case INSERT_DELIVERY:
 			Delivery delivery = (Delivery) message.get("delivery");
-			int idDeliveryReturned = AnaylzeCommand.insertNewDelivery(delivery.getAddress(), delivery.getReceiverName(),
-					delivery.getPhoneNumber(), delivery.getDeliveryDate(), delivery.getStatus());
+			int idDeliveryReturned = AnaylzeCommand.insertNewDelivery(delivery);
 			message.put("response", idDeliveryReturned);
 			break;
 		case INSERT_DELIVERY_ORDER:
 			DeliveriesOrders deliveryOrder = (DeliveriesOrders) message.get("delivery order");
-			boolean isInserted = AnaylzeCommand.insertDeliveryOrder(deliveryOrder.getIdOrder(),
-					deliveryOrder.getIdDelivery());
-			if (isInserted)
-				message.put("response", "insert delivery order successful");
-			else
-				message.put("response", "insert delivery order failed");
+			boolean isInserted = AnaylzeCommand.insertDeliveryOrder(deliveryOrder.getIdOrder(),deliveryOrder.getIdDelivery());
+			response = isInserted ? "insert delivery order successful" : "insert delivery order failed";
+			message.put("response", response);
 			break;
 		case INSERT_ORDER:
 			Order order = (Order) message.get("order");
-			Integer idOrderReturned = AnaylzeCommand.insertNewOrder(order.getPrice(), order.getGreetingCard(),
-					order.getdOrder(), order.getBranch().getIdBranch(), order.getStatus(), order.getPaymentMethod(),
-					order.getUser().getIdUser());
+			Integer idOrderReturned = AnaylzeCommand.insertNewOrder(order);
 			message.put("response", idOrderReturned);
 			break;
 		case INSERT_ORDERS_PRODUCT:
 			ArrayList<OrderProduct> orderProductsList = (ArrayList<OrderProduct>) message.get("list order products");
 			boolean isOrderInserted = AnaylzeCommand.insertOrderProducts(orderProductsList);
-			if (isOrderInserted)
-				message.put("response", "insert order products successful");
-			else
-				message.put("response", "insert order products failed");
+			response = isOrderInserted ? "insert order products successful" : "insert order products failed";
+			message.put("response", response);
 			break;
+		case INSERT_ORDERS_ITEMS:
+			ArrayList<OrderItem> orderItemsList = (ArrayList<OrderItem>) message.get("list order items");
+			boolean isOrdersItemsInserted = AnaylzeCommand.insertOrderItems(orderItemsList);
+			if (isOrdersItemsInserted)
+				message.put("response", "insert order items successful");
+			else
+				message.put("response", "insert order items failed");
+			sendToClient(client);
+			break;
+		case LOGIN:// fix it
+			HashMap<String, Object> result = AnaylzeCommand.loginUser((String) message.get("username"),
+					(String) message.get("password"));
+			result.put("command", Commands.LOGIN);
+			try {
+				client.sendToClient(result);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		case LOGIN:
 			message = AnaylzeCommand.loginUser((String) message.get("username"), (String) message.get("password"));
 			message.put("command", Commands.LOGIN);
 			break;
 		case LOGOUT:
 			message.put("logout", AnaylzeCommand.logoutUser((int) message.get("logoutID")));
-			break;
-		case SERVER_DISCONNEDTED:
 			break;
 		case FETCH_ITEMS:
 			ArrayList<Item> items = AnaylzeCommand.selectAllItems();
@@ -144,8 +149,8 @@ public class ServerMessageController {
 		case SUBMIT_SURVEY:
 			boolean isSubmitted = AnaylzeCommand
 					.submitSurvey((HashMap<SurveyQuestion, Integer>) message.get("answers"));
-			String submissionResult = isSubmitted ? "insert survey answer successful" : "insert survey answer failed";
-			message.put("response", submissionResult);
+			response = isSubmitted ? "insert survey answer successful" : "insert survey answer failed";
+			message.put("response",response);
 		case SUBMIT_COMPLAINT:
 			boolean compailntSubmited = AnaylzeCommand.submitComplaint((String) message.get("Personal ID"),
 					(String) message.get("Complaint"));

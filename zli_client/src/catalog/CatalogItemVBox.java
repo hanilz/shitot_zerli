@@ -8,10 +8,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import util.InputChecker;
 
 public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
@@ -30,7 +33,7 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 	 */
 	public void initVBox() {
 		nameLabel.setText(item.getName() + " - " + item.getColor());
-		setImageProp();
+		initImageProduct();
 
 		amountLabel.setText("" + InputChecker.price(((int) item.getPrice())));
 
@@ -77,6 +80,24 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 		this.getChildren().add(addToCartButton);
 	}
 
+	private void initImageProduct() { //same function but not with the event so we will call super.
+		image = new ImageView(item.getImagePath());
+		setImageProp();
+
+		image.setOnMouseReleased(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				ProductVBox popup = new ProductVBox(item);
+				popup.initProductVBox();
+				Scene scene = new Scene(popup);
+				Stage stage = new Stage();
+				stage.setTitle("Product Details - " + item.getName());
+				stage.setScene(scene);
+				stage.showAndWait();
+			}
+		});
+	}
+	
 	private void initAddToCartButton() {
 		addToCartButton.setCursor(Cursor.HAND);
 		addToCartButton.setOnAction(new EventHandler<ActionEvent>() {

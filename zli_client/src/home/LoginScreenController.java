@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 import client.ClientFormController;
 import entities.User;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
