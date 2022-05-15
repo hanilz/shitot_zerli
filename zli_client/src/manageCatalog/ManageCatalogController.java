@@ -10,10 +10,14 @@ import entities.Item;
 import entities.Product;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -39,9 +43,20 @@ public class ManageCatalogController implements Initializable {// might extends
 	private ObservableList<Product> products = FXCollections.observableArrayList();
 
 	private ObservableList<Item> items = FXCollections.observableArrayList();
+	
+	private ObservableList<String> searchBy = FXCollections.observableArrayList("Name","Id","Type","Color");
 
 	@FXML
 	private GridPane catalogGrid;
+	
+    @FXML
+    private Button searchBtn;
+
+    @FXML
+    private ComboBox<String> searchOptions;
+
+    @FXML
+    private TextArea searchText;
 
 	private ArrayList<ManageCatalogVBox> catalogVBoxList = new ArrayList<>();
 
@@ -55,6 +70,7 @@ public class ManageCatalogController implements Initializable {// might extends
 		fetchItems();
 		initCatalogItemVBoxes();
 		initGrid();
+		searchOptions.setItems(searchBy);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -98,5 +114,15 @@ public class ManageCatalogController implements Initializable {// might extends
 			catalogVBoxList.add(catalogItemVBox);
 		}
 	}
+
+    @FXML
+    void search(MouseEvent event) {
+
+    }
+    @FXML
+    void selectSearchOption(ActionEvent event) {
+    	String s=searchOptions.getSelectionModel().getSelectedItem().toString();
+    	System.out.println(s);
+    }
 
 }

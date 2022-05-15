@@ -58,8 +58,7 @@ public class PVBox extends VBox {
 		closeBtn = new Button("Close");
 		closeBtn.setCursor(Cursor.HAND);
 		closeBtn.setOnAction(e -> {
-			Stage stage = (Stage) closeBtn.getScene().getWindow();
-			stage.close();
+			close(closeBtn);
 		});
 		removeBtn = new Button("Remove");
 		removeBtn.setCursor(Cursor.HAND);
@@ -88,12 +87,18 @@ public class PVBox extends VBox {
 			 }
 			 message.put("item", Commands.UPDATE_PRODUCTS_BASE);
 			 ClientFormController.client.accept(message);
+			 close(saveEditBtn);
 			 ManageScreens.changeScreenTo(Screens.EDIT_CATALOG);
 		});
 		buttons.getChildren().addAll(closeBtn, removeBtn, saveEditBtn);
 		this.getChildren().addAll(buttons);
 		
 
+	}
+	private void close(Button btn)
+	{
+		 Stage stage = (Stage) btn.getScene().getWindow();
+			stage.close();
 	}
 	private void addSubjectCell(String lableSubject, int y) {
 		Label cell;
