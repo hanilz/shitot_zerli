@@ -122,15 +122,6 @@ public class ServerMessageController {
 				message.put("response", "insert order items failed");
 			sendToClient(client);
 			break;
-		case LOGIN:// fix it
-			HashMap<String, Object> result = AnaylzeCommand.loginUser((String) message.get("username"),
-					(String) message.get("password"));
-			result.put("command", Commands.LOGIN);
-			try {
-				client.sendToClient(result);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 		case LOGIN:
 			message = AnaylzeCommand.loginUser((String) message.get("username"), (String) message.get("password"));
 			message.put("command", Commands.LOGIN);
