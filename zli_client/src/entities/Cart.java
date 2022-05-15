@@ -90,7 +90,7 @@ public class Cart {
 		for (ProductsBase product : cart.keySet()) {
 			if (check.getId() == product.getId() && product instanceof Product && check instanceof Product)
 				return product;
-			if (check.getId() == product.getId() && product instanceof Item && check instanceof Item)
+			else if (check.getId() == product.getId() && product instanceof Item && check instanceof Item)
 				return product;
 		}
 		return null;

@@ -14,9 +14,12 @@ import entities.Item;
 import entities.Product;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -25,6 +28,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import util.Commands;
 import util.ManageScreens;
@@ -91,16 +95,40 @@ public class CatalogController implements Initializable {
 	}
 
 	private void initGrid() {
-		int numberOfRows = (int) Math.ceil((products.size() + items.size())/3.0);
+		int numberOfRows = (int) Math.ceil((products.size() + items.size() + 1)/3.0);
         for (int i = 0; i < numberOfRows; i++) {
             RowConstraints rowConst = new RowConstraints();
             rowConst.setPercentHeight(100.0 / numberOfRows);
             catalogGrid.getRowConstraints().add(rowConst);         
-        }		
-		for (int i = 0; i < catalogVBoxList.size(); i++) {
+        }
+        initCustomProduct();
+		for (int i = 1; i < catalogVBoxList.size(); i++) {
 				catalogGrid.add(catalogVBoxList.get(i), i%3, i/3);
 		}
 		catalogGrid.setVgap(20);
+	}
+
+	private void initCustomProduct() {
+		VBox customProductVBox = new VBox();
+		customProductVBox.setAlignment(Pos.CENTER);
+        ImageView customProductImage = new ImageView("/resources/catalog/customProductImage.png");
+        initCustomProductImage(customProductImage);
+        customProductImage.setOnMouseReleased(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				ManageScreens.changeScreenTo(Screens.CUSTOM_PRODUCT_BUILDER);
+			}
+		});
+        
+        customProductVBox.getChildren().add(customProductImage);
+        catalogGrid.add(customProductVBox, 0, 0);  // set as first VBox in Grid
+	}
+
+	private void initCustomProductImage(ImageView customProductImage) {
+		customProductImage.setFitHeight(200);
+        customProductImage.setFitWidth(300);
+        customProductImage.setPreserveRatio(true);
+        customProductImage.setCursor(Cursor.HAND);
 	}
 
 	private void initCatalogItemVBoxes() {
@@ -118,22 +146,4 @@ public class CatalogController implements Initializable {
 			catalogVBoxList.add(catalogProductVBox);
 		}
 	}
-	
-	@FXML
-	void openProductDetails(MouseEvent event) {
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader();
-			fxmlLoader.setLocation(getClass().getResource("ProductDetailsPopup.fxml"));
-			Scene scene = new Scene(fxmlLoader.load(), 456, 595);
-			Stage stage = new Stage();
-			stage.setTitle("New Window");
-			stage.setScene(scene);
-			stage.showAndWait();
-			// productImage1.setDisable(false);
-		} catch (IOException e) {
-			Logger logger = Logger.getLogger(getClass().getName());
-			logger.log(Level.SEVERE, "Failed to create new Window.", e);
-		}
-	}
-
 }
