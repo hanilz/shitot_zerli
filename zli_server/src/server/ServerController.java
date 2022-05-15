@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 import util.ClientDetails;
+import util.Commands;
 import util.DataBaseController;
 import util.ServerMessageController;
 
@@ -79,7 +80,7 @@ public class ServerController extends AbstractServer implements Runnable {
 	public void disconnectServer() {
 		try {
 			HashMap<String, Object> message = new HashMap<>();
-			message.put("command", "server disconnected");
+			message.put("command",Commands.SERVER_DISCONNEDTED);
 			sendToAllClients(message); // make all clients go back to main client screen
 			close();
 			disconnectAllClients();

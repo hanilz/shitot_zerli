@@ -13,6 +13,7 @@ import entities.ManageUsers;
 import entities.Order;
 import entities.OrderProduct;
 import entities.Product;
+import entities.ProductsBase;
 import ocsf.server.ConnectionToClient;
 import server.ServerController;
 import survey.SurveyQuestion;
@@ -124,7 +125,7 @@ public class ServerMessageController {
 				message.put("response", "insert order products failed");
 			break;
 		case LOGIN:
-			message=AnaylzeCommand.loginUser((String) message.get("username"),(String) message.get("password"));
+			message = AnaylzeCommand.loginUser((String) message.get("username"), (String) message.get("password"));
 			message.put("command", Commands.LOGIN);
 			break;
 		case LOGOUT:
@@ -141,16 +142,24 @@ public class ServerMessageController {
 			message.put("response", returnedSurveys);
 			break;
 		case SUBMIT_SURVEY:
-			boolean isSubmitted = AnaylzeCommand.submitSurvey((HashMap<SurveyQuestion, Integer>) message.get("answers"));
+			boolean isSubmitted = AnaylzeCommand
+					.submitSurvey((HashMap<SurveyQuestion, Integer>) message.get("answers"));
 			String submissionResult = isSubmitted ? "insert survey answer successful" : "insert survey answer failed";
 			message.put("response", submissionResult);
 		case SUBMIT_COMPLAINT:
-			boolean compailntSubmited = AnaylzeCommand.submitComplaint((String) message.get("Personal ID"),(String) message.get("Complaint"));
+			boolean compailntSubmited = AnaylzeCommand.submitComplaint((String) message.get("Personal ID"),
+					(String) message.get("Complaint"));
 			message.put("response", compailntSubmited);
+		case UPDATE_PRODUCTS_BASE:
+ 			boolean isUpdated;
+			isUpdated = message.get("type").equals("item") ? AnaylzeCommand.updateItem((Item) message.get("unit"))
+					: AnaylzeCommand.updateProduct((Product) message.get("unit"));
+			message.put("response", isUpdated);
 		default:
 			break;
 		}
 		sendToClient(client);
+
 	}
 
 	private void sendToClient(ConnectionToClient client) {

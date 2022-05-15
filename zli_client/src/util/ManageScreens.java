@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import manageCatalog.ManageCatalogController;
 import order.CartController;
 import order.CheckoutController;
 import order.DeliveryController;
@@ -142,6 +143,8 @@ public class ManageScreens {
 			case COMPLAINT:
 				ManageScreens.changeScene(CustomerComplaintHomeController.class.getResource("CustomerComplaintScreen.fxml"), "Customer Complaint");
 				break;
+			case EDIT_CATALOG:
+				ManageScreens.changeScene(ManageCatalogController.class.getResource("ManageCatalog.fxml"), "Manage Catalog");
 			default:
 				break;
 			}
@@ -198,6 +201,8 @@ public class ManageScreens {
 			return "Survey";
 		case COMPLAINT_HOME:
 			return "Customer Complaints";
+		case EDIT_CATALOG:
+			return "Manage Catalog";
 		}
 		return null;
 	}
@@ -242,6 +247,8 @@ public class ManageScreens {
 			return "resources/home/survey.png";
 		case COMPLAINT_HOME:
 			return "resources/home/complaint.png";
+		case EDIT_CATALOG:
+			return "resources/catalog/editCatalog.png";
 		default:
 			return "";// no such user//
 		}

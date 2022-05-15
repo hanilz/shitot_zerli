@@ -377,7 +377,7 @@ public class AnaylzeCommand {
 		Connection conn = DataBaseController.getConn();
 		String query = "SELECT * FROM survey_questions where idSurvey = ?;";
 		try {
-			//Statement selectStmt = DataBaseController.getConn().createStatement(); why???
+			// Statement selectStmt = DataBaseController.getConn().createStatement(); why???
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, surveyID);
 			ResultSet rs = preparedStmt.executeQuery();
@@ -421,18 +421,17 @@ public class AnaylzeCommand {
 			preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setString(1, id);
 			rs = preparedStmt.executeQuery();
-			if(!rs.next()) {
+			if (!rs.next()) {
 				System.out.println("Failed to find user");
 				return false;
-			}
-			else
+			} else
 				idUser = rs.getInt(1);
 		} catch (SQLException e) {
 			System.out.println("Failed to fetch user");
 			e.printStackTrace();
 			return false;
 		}
-		//System.out.println("user id :"+idUser + "found for id: "+ id);
+		// System.out.println("user id :"+idUser + "found for id: "+ id);
 		query = "INSERT INTO complaints (status, content, idUser) VALUES ('Active', ?, ?)";
 		try {
 			preparedStmt = conn.prepareStatement(query);
@@ -442,6 +441,53 @@ public class AnaylzeCommand {
 			return true;
 		} catch (SQLException e) {
 			System.out.println("Failed to insert complaint");
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static boolean updateItem(Item item) {
+		Connection conn;
+		conn = DataBaseController.getConn();
+		String query = "UPDATE items SET itemName = ? , itemColor=? , itemPrice=? WHERE itemID = ?";
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setString(1, item.getName());
+			preparedStmt.setString(2, item.getColor());
+			preparedStmt.setInt(3, (int) item.getPrice());
+			preparedStmt.setInt(4,  item.getId());
+			System.out.println(preparedStmt.executeUpdate());
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static boolean updateProduct(Product product) {
+		Connection conn;
+		conn = DataBaseController.getConn();
+		String query = "UPDATE products SET productName = ? , flowerType=? , productColor=? , productPrice=? , productType=? , productDescription=?  WHERE productID = ?;";
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			System.out.println( product.getName());
+			preparedStmt.setString(1, product.getName());
+			System.out.println(product.getFlowerType());
+			preparedStmt.setString(2, product.getFlowerType());
+			System.out.println(product.getColor());
+			preparedStmt.setString(3, product.getColor());
+			System.out.println(product.getPrice());
+			preparedStmt.setInt(4, (int) product.getPrice());
+			System.out.println(product.getType());
+			preparedStmt.setString(5, product.getType());
+			System.out.println(product.getProductDescription());
+			preparedStmt.setString(6, product.getProductDescription());
+			System.out.println(product.getId());
+			preparedStmt.setInt(7, product.getId());
+			preparedStmt.executeUpdate();
+			System.out.println("done");
+			return true;
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
