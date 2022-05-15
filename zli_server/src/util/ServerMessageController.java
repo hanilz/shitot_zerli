@@ -14,6 +14,7 @@ import entities.Order;
 import entities.OrderItem;
 import entities.OrderProduct;
 import entities.Product;
+import entities.ProductsBase;
 import ocsf.server.ConnectionToClient;
 import server.ServerController;
 import survey.SurveyQuestion;
@@ -154,10 +155,16 @@ public class ServerMessageController {
 			boolean compailntSubmited = AnaylzeCommand.submitComplaint((String) message.get("Personal ID"),
 					(String) message.get("Complaint"));
 			message.put("response", compailntSubmited);
+		case UPDATE_PRODUCTS_BASE:
+ 			boolean isUpdated;
+			isUpdated = message.get("type").equals("item") ? AnaylzeCommand.updateItem((Item) message.get("unit"))
+					: AnaylzeCommand.updateProduct((Product) message.get("unit"));
+			message.put("response", isUpdated);
 		default:
 			break;
 		}
 		sendToClient(client);
+
 	}
 
 	private void sendToClient(ConnectionToClient client) {

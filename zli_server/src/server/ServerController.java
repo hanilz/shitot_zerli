@@ -80,6 +80,7 @@ public class ServerController extends AbstractServer implements Runnable {
 	public void disconnectServer() {
 		try {
 			HashMap<String, Object> message = new HashMap<>();
+
 			message.put("command", Commands.SERVER_DISCONNEDTED);
 			sendToAllClients(message); // make all clients go back to main client screen
 			close();

@@ -42,7 +42,7 @@ public class ManageClients {
 		case DELIVERY_COORDINATOR:
 			break;
 		case MARKETING_WORKER:
-			break;
+			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.EDIT_CATALOG}));
 		case SERVICE_EXPERT:
 			break;
 		case STORE_MANGER:

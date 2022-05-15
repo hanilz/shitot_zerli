@@ -3,6 +3,7 @@ package home;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
 import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -50,6 +51,7 @@ public class HomeGuestController implements Initializable {
 	
     @FXML
     private Label TypeLabel;
+
 
 	@FXML
 	void changeToLoginScreen(MouseEvent event) {
