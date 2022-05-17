@@ -111,7 +111,7 @@ public class CustomerComplaintController implements Initializable {
 			orderLabel.setText("OK");
 			orderLabel.setTextFill(Color.GREEN);
 		}
-		if (complaintReason.getText().length() == 0) {
+		if (complaintReason.getText().length() == 0 || complaintText.getText().length() == 0) {
 			complaintError.setTextFill(Color.RED);
 			errorLabel.setVisible(true);
 			return false;

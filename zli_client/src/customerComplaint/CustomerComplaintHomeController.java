@@ -58,7 +58,7 @@ public class CustomerComplaintHomeController implements Initializable{
 
     @FXML
     void returnHome(MouseEvent event) {
-    	ManageScreens.changeScreenTo(Screens.USER_HOME);
+    	ManageScreens.home();
     }
 
 	@SuppressWarnings("unchecked")

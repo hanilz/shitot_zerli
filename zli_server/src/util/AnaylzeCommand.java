@@ -553,4 +553,40 @@ public class AnaylzeCommand {
 		return orders;
 	}
 
+	public static boolean deleteComlaint(int complaintID) {
+		Connection conn = DataBaseController.getConn();
+		String query = "DELETE FROM complaints WHERE idComplaint = ?;";
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, complaintID);
+			int row = preparedStmt.executeUpdate();
+			if (row == 0)
+				return false;
+		} catch (SQLException e) {
+			System.out.println("failed to fetch order numbers");
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	public static Double getOrderPrice(Integer orderNum) {
+		double idOrder = -1;
+		Connection conn = DataBaseController.getConn();
+		String query = "SELECT O.price FROM orders O WHERE O.idOrder = ?;";
+
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, orderNum);
+			ResultSet rs = preparedStmt.executeQuery();
+			if(!rs.next()) {
+				System.out.println("failed to fetch order price");
+			}
+			idOrder = rs.getDouble(1);
+		} catch (SQLException e) {
+			System.out.println("failed to fetch order numbers");
+			e.printStackTrace();
+		}
+		return idOrder;
+	}
+
 }
