@@ -33,28 +33,53 @@ public class AnaylzeCommand {
 
 	public static ArrayList<Product> selectAllProducts() {
 		ArrayList<Product> products = new ArrayList<>();
+		HashMap<Integer, ArrayList<Item>> products_items = new HashMap<>();  // {productID : items}
 		try {
 			Statement selectStmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = selectStmt.executeQuery("SELECT * FROM products;");
+			ResultSet rs = selectStmt.executeQuery(
+					"SELECT p.*, i.* FROM products p JOIN product_items pi ON p.productID = pi.idProduct JOIN items i ON pi.idItem = i.itemID ORDER BY p.productID;");
 			while (rs.next()) {
 				int productId = rs.getInt(1);
-				String productName = rs.getString(2);
-				String flowerType = rs.getString(3);
-				String productColor = rs.getString(4);
-				double productPrice = rs.getInt(5);
-				String productType = rs.getString(6);
-				String productDesc = rs.getString(7);
-				String imagePath = rs.getString(8);
-				Product productResult = new Product(productId, productName, productColor, productPrice, productType,
-						imagePath, flowerType, productDesc);
-				products.add(productResult);
+				Item currentItem = getItemFromResultSet(rs);
+				if(!products_items.containsKey(productId)) {
+					String productName = rs.getString(2);
+					String flowerType = rs.getString(3);
+					String productColor = rs.getString(4);
+					double productPrice = rs.getInt(5);
+					String productType = rs.getString(6);
+					String productDesc = rs.getString(7);
+					String imagePath = rs.getString(8);
+					Product productResult = new Product(productId, productName, productColor, productPrice, productType,
+							imagePath, flowerType, productDesc);
+					products.add(productResult);
+					ArrayList<Item> items = new ArrayList<>();
+					items.add(currentItem);
+					products_items.put(productId, items);
+				}
+				else 
+					products_items.get(productId).add(currentItem);
 			}
+			
+			for(Product product : products) 
+				product.setItems(products_items.get(product.getId()));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return products;
 	}
 
+	private static Item getItemFromResultSet(ResultSet rs) throws SQLException {
+		int itemID = rs.getInt(9);
+		String itemName = rs.getString(10);
+		String itemColor = rs.getString(11);
+		double itemPrice = rs.getDouble(12);
+		String itemType = rs.getString(13);
+		String imagePath = rs.getString(14);
+		Item itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath);
+		
+		return itemResult;
+	}
+	
 	public static ArrayList<Item> selectAllItems() {
 		ArrayList<Item> items = new ArrayList<>();
 		try {
@@ -451,7 +476,8 @@ public class AnaylzeCommand {
 				String status = rs.getString(5);
 				String complaintReason = rs.getString(6);
 				String complaintContent = rs.getString(7);
-				Complaint complaint = new Complaint(complaintID,orderID,date,status,complaintReason,complaintContent);
+				Complaint complaint = new Complaint(complaintID, orderID, date, status, complaintReason,
+						complaintContent);
 				complaints.add(complaint);
 			}
 			// String name

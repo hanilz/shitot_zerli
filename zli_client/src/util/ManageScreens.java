@@ -150,8 +150,10 @@ public class ManageScreens {
 				break;
 			case CUSTOM_PRODUCT_BUILDER:
 				ManageScreens.changeScene(CustomProductBuilderController.class.getResource("CustomProductBuilder.fxml"), "Custom Product Builder");
+				break;
 			case COMPLAINT_VIEW:
 				ManageScreens.changeScene(ComplaintViewController.class.getResource("CustomerComplaintView.fxml"), "Customer Complaint View");
+				break;
 			default:
 				break;
 			}

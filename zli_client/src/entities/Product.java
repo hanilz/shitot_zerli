@@ -1,21 +1,25 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
-public class Product extends ProductsBase implements Serializable{
-	/**
-	 * 
-	 */
+public class Product extends ProductsBase implements Serializable {
 	private static final long serialVersionUID = 1L;
-	//private int productID; //
-	//private String productName; //
-	private String flowerType;
-	//private String productColor; //
-	//private double productPrice; //
-	//private String productType; //
-	private String productDescription;
-	//private String imagePath; //
 	
+	private String flowerType;
+	private String productDescription;
+	private ArrayList<Item> items;
+
+	// constructor with items
+	public Product(int id, String name, String color, double price, String type, String imagePath, String flowerType,
+			String productDescription, ArrayList<Item> items) {
+		super(id, name, color, price, type, imagePath);
+		this.flowerType = flowerType;
+		this.productDescription = productDescription;
+		this.items = items;
+	}
+	
+	// constructor without items
 	public Product(int id, String name, String color, double price, String type, String imagePath, String flowerType,
 			String productDescription) {
 		super(id, name, color, price, type, imagePath);
@@ -51,4 +55,11 @@ public class Product extends ProductsBase implements Serializable{
 		this.productDescription = productDescription;
 	}
 
+	public ArrayList<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(ArrayList<Item> items) {
+		this.items = items;
+	}
 }
