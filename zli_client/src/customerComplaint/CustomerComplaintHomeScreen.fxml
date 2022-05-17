@@ -3,7 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -52,15 +53,14 @@
             </ImageView>
          </children>
       </GridPane>
-      <ScrollPane prefHeight="476.0" prefWidth="980.0">
-         <content>
-            <VBox fx:id="complaintList" prefHeight="440.0" prefWidth="973.0" spacing="5.0">
-               <padding>
-                  <Insets bottom="10.0" left="20.0" right="20.0" top="5.0" />
-               </padding>
-            </VBox>
-         </content>
-      </ScrollPane>
+      <TableView fx:id="complaintsTable" prefHeight="423.0" prefWidth="980.0">
+        <columns>
+          <TableColumn fx:id="complaintID" prefWidth="92.0" text="Compliant ID" />
+          <TableColumn fx:id="orderID" prefWidth="73.0" text="Order ID" />
+            <TableColumn fx:id="complaintReason" prefWidth="623.0" text="Title" />
+            <TableColumn fx:id="date" prefWidth="127.0" text="Remaining Time" />
+        </columns>
+      </TableView>
       <HBox alignment="CENTER" prefHeight="66.0" prefWidth="980.0">
          <children>
             <Button fx:id="newCustomerComplaintButton" mnemonicParsing="false" onAction="#createNewCustomerComplaint" text="New Cutomer Complaint" />

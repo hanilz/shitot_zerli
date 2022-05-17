@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import client.ClientController;
+import customerComplaint.Complaint;
 import entities.Branch;
 import entities.Item;
 import entities.Order;
@@ -63,6 +64,12 @@ public class ClientMessageController {
 		case SERVER_DISCONNEDTED:
 			System.out.println("disconnected from server, back to client main.");
 			ManageScreens.changeScreenTo(Screens.CLIENT);
+			break;
+		case GET_ORDER_NUMBERS:
+			returnServerListRespond(new ArrayList<Integer>());
+			break;
+		case FETCH_COMPLAINTS:
+			returnServerListRespond(new ArrayList<Complaint>());
 			break;
 		default:
 			returnServerRespond();

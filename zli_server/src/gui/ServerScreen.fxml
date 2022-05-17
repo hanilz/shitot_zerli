@@ -79,7 +79,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <PasswordField fx:id="DBPasswordTextField" text="Almogal013" />
+                        <PasswordField fx:id="DBPasswordTextField" text="rfsgo8p" />
                      </children>
                   </HBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">

@@ -5,19 +5,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
-
 import customerComplaint.Complaint;
-
 import entities.AccountPayment;
 import entities.Branch;
 import entities.Delivery;
 import entities.Item;
 import entities.ManageUsers;
-import entities.OrderItem;
 import entities.Order;
+import entities.OrderItem;
 import entities.OrderProduct;
 import entities.Product;
 import survey.SurveyQuestion;
@@ -113,27 +114,6 @@ public class AnaylzeCommand {
 			return;
 		}
 	}
-
-	/**
-	 * selectAllOrder will execute select * from the order table for presenting the
-	 * data to the client screen
-	 * 
-	 * @return
-	 */
-	/*
-	 * public static ArrayList<Order> selectAllOrders() { ArrayList<Order> orders =
-	 * new ArrayList<>(); orders.add(new Order(-1, 0.0, "", "", "", null, "", null,
-	 * "")); try { Statement selectStmt =
-	 * DataBaseController.getConn().createStatement(); ResultSet rs =
-	 * selectStmt.executeQuery("SELECT * FROM orders;"); while (rs.next()) { int
-	 * orderNumber = rs.getInt(1); double price = rs.getDouble(2); String
-	 * greetingCard = rs.getString(3); String color = rs.getString(4); String dOrder
-	 * = rs.getString(5); String shop = rs.getString(6); String date =
-	 * rs.getString(7); String orderDate = rs.getString(8); Order resultOrder = new
-	 * Order(orderNumber, price, greetingCard, color, dOrder, shop, date,
-	 * orderDate); orders.add(resultOrder); } } catch (SQLException e) {
-	 * e.printStackTrace(); } return orders; }
-	 */
 
 	public static HashMap<String, Object> loginUser(String username, String password) {
 		Connection conn;
@@ -256,17 +236,17 @@ public class AnaylzeCommand {
 	}
 
 	public static boolean insertAccountPayment(AccountPayment accountPayment) {
-		
+
 		Connection conn;
 		conn = DataBaseController.getConn();
 		String query = "INSERT INTO account_payment (fullName, cardNumber, cardDate, cardVCC, idUser) VALUES (?, ?, ?, ?, ?);";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setString(1, accountPayment.getFullName());
-			preparedStmt.setString(2,accountPayment.getCardNumber());
-			preparedStmt.setString(3,accountPayment.getCardDate());
-			preparedStmt.setString(4,accountPayment.getCardVCC());
-			preparedStmt.setInt(5,accountPayment.getUser().getIdUser());
+			preparedStmt.setString(2, accountPayment.getCardNumber());
+			preparedStmt.setString(3, accountPayment.getCardDate());
+			preparedStmt.setString(4, accountPayment.getCardVCC());
+			preparedStmt.setInt(5, accountPayment.getUser().getIdUser());
 			preparedStmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {
@@ -283,9 +263,9 @@ public class AnaylzeCommand {
 		String query = "INSERT INTO orders (price, greetingCard, dOrder, idBranch, status, paymentMethod, idUser) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-			preparedStmt.setDouble(1,order.getPrice());
-			preparedStmt.setString(2,order.getGreetingCard());
-			preparedStmt.setString(3,order.getdOrder());
+			preparedStmt.setDouble(1, order.getPrice());
+			preparedStmt.setString(2, order.getGreetingCard());
+			preparedStmt.setString(3, order.getdOrder());
 			preparedStmt.setInt(4, order.getBranch().getIdBranch());
 			preparedStmt.setString(5, order.getStatus());
 			preparedStmt.setString(6, order.getPaymentMethod());
@@ -320,7 +300,7 @@ public class AnaylzeCommand {
 			return false;
 		}
 	}
-	
+
 	public static boolean insertOrderItems(ArrayList<OrderItem> orderItemsList) {
 		StringBuffer buff = new StringBuffer();
 		buff.append("INSERT INTO order_items (idOrder, idItem, quantity) VALUES ");
@@ -350,11 +330,11 @@ public class AnaylzeCommand {
 		String query = "INSERT INTO deliveries (address, receiverName, phoneNumber, deliveryDate, status) VALUES (?, ?, ?, ?, ?);";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-			preparedStmt.setString(1,delivery.getAddress());
-			preparedStmt.setString(2,delivery.getReceiverName());
-			preparedStmt.setString(3,delivery.getPhoneNumber());
-			preparedStmt.setString(4,delivery.getDeliveryDate());
-			preparedStmt.setString(5,delivery.getStatus());
+			preparedStmt.setString(1, delivery.getAddress());
+			preparedStmt.setString(2, delivery.getReceiverName());
+			preparedStmt.setString(3, delivery.getPhoneNumber());
+			preparedStmt.setString(4, delivery.getDeliveryDate());
+			preparedStmt.setString(5, delivery.getStatus());
 			preparedStmt.executeUpdate();
 			rs = preparedStmt.getGeneratedKeys();
 			if (rs.next())
@@ -437,32 +417,16 @@ public class AnaylzeCommand {
 		}
 	}
 
-	public static boolean submitComplaint(String id, String complaint) {
+	public static boolean submitComplaint(int idHandler, int orderNumber, String reason, String complaint) {
 		Connection conn = DataBaseController.getConn();
-		String query = "SELECT U.idUser FROM users U , user_details UD where UD.id = ? AND U.idAccount = UD.idAccount;";
+		String query = "INSERT INTO complaints (idUser, orderId, reason, content) VALUES (?, ?, ?, ?)";
 		PreparedStatement preparedStmt;
-		ResultSet rs;
-		int idUser = 0;
 		try {
 			preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setString(1, id);
-			rs = preparedStmt.executeQuery();
-			if (!rs.next()) {
-				System.out.println("Failed to find user");
-				return false;
-			} else
-				idUser = rs.getInt(1);
-		} catch (SQLException e) {
-			System.out.println("Failed to fetch user");
-			e.printStackTrace();
-			return false;
-		}
-		// System.out.println("user id :"+idUser + "found for id: "+ id);
-		query = "INSERT INTO complaints (status, content, idUser) VALUES ('Active', ?, ?)";
-		try {
-			preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setString(1, complaint);
-			preparedStmt.setInt(2, idUser);
+			preparedStmt.setInt(1, idHandler);
+			preparedStmt.setInt(2, orderNumber);
+			preparedStmt.setString(3, reason);
+			preparedStmt.setString(4, complaint);
 			preparedStmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {
@@ -471,30 +435,29 @@ public class AnaylzeCommand {
 			return false;
 		}
 	}
-	
-	
-	public static ArrayList<Complaint> getAllComplaints() {
-		System.out.println("getting all users");
+
+	public static ArrayList<Complaint> getAllComplaints(Integer handlerID) {
+		Connection conn = DataBaseController.getConn();
 		ArrayList<Complaint> complaints = new ArrayList<>();
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = selectStmt.executeQuery(
-					"SELECT * FROM complaints c where status = 'Active';");
+			String query = "SELECT C.*, TIMESTAMPDIFF(MINUTE, C.date, now()) AS 'diff_of_day' FROM complaints C WHERE C.idUser = ? AND C.status = 'Active';";
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, handlerID);
+			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
-				int idComplaint = rs.getInt(1);
-				String date = rs.getString(2);
-				String status = rs.getString(3);
-				String content = rs.getString(4);
-				int idUser = rs.getInt(5);
-				String[] str = content.split(": ");
-				//String name
-				Complaint resultOrder = new Complaint(idComplaint, status, str[3],"", idUser);
-				complaints.add(resultOrder);
+				int complaintID = rs.getInt(1);
+				int orderID = rs.getInt(3);
+				int date = rs.getInt(8);
+				String status = rs.getString(5);
+				String complaintReason = rs.getString(6);
+				String complaintContent = rs.getString(7);
+				Complaint complaint = new Complaint(complaintID,orderID,date,status,complaintReason,complaintContent);
+				complaints.add(complaint);
 			}
+			// String name
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println("returned users");
 		return complaints;
 	}
 
@@ -507,7 +470,7 @@ public class AnaylzeCommand {
 			preparedStmt.setString(1, item.getName());
 			preparedStmt.setString(2, item.getColor());
 			preparedStmt.setInt(3, (int) item.getPrice());
-			preparedStmt.setInt(4,  item.getId());
+			preparedStmt.setInt(4, item.getId());
 			System.out.println(preparedStmt.executeUpdate());
 			return true;
 		} catch (SQLException e) {
@@ -522,7 +485,7 @@ public class AnaylzeCommand {
 		String query = "UPDATE products SET productName = ? , flowerType=? , productColor=? , productPrice=? , productType=? , productDescription=?  WHERE productID = ?;";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			System.out.println( product.getName());
+			System.out.println(product.getName());
 			preparedStmt.setString(1, product.getName());
 			System.out.println(product.getFlowerType());
 			preparedStmt.setString(2, product.getFlowerType());
@@ -543,6 +506,25 @@ public class AnaylzeCommand {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public static ArrayList<Integer> getOrderNumbers() {
+		ArrayList<Integer> orders = new ArrayList<>();
+		Connection conn = DataBaseController.getConn();
+		String query = "SELECT O.idOrder FROM orders O WHERE O.idOrder NOT IN (SELECT C.orderId FROM complaints C);";
+		Statement selectStmt;
+		try {
+			selectStmt = conn.createStatement();
+			ResultSet rs = selectStmt.executeQuery(query);
+			while (rs.next()) {
+				int idOrder = rs.getInt(1);
+				orders.add(idOrder);
+			}
+		} catch (SQLException e) {
+			System.out.println("failed to fetch order numbers");
+			e.printStackTrace();
+		}
+		return orders;
 	}
 
 }

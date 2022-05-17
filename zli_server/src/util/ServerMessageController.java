@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import customerComplaint.Complaint;
 import entities.AccountPayment;
 import entities.Branch;
 import entities.DeliveriesOrders;
@@ -98,7 +99,8 @@ public class ServerMessageController {
 			break;
 		case INSERT_DELIVERY_ORDER:
 			DeliveriesOrders deliveryOrder = (DeliveriesOrders) message.get("delivery order");
-			boolean isInserted = AnaylzeCommand.insertDeliveryOrder(deliveryOrder.getIdOrder(),deliveryOrder.getIdDelivery());
+			boolean isInserted = AnaylzeCommand.insertDeliveryOrder(deliveryOrder.getIdOrder(),
+					deliveryOrder.getIdDelivery());
 			response = isInserted ? "insert delivery order successful" : "insert delivery order failed";
 			message.put("response", response);
 			break;
@@ -141,16 +143,29 @@ public class ServerMessageController {
 			boolean isSubmitted = AnaylzeCommand
 					.submitSurvey((HashMap<SurveyQuestion, Integer>) message.get("answers"));
 			response = isSubmitted ? "insert survey answer successful" : "insert survey answer failed";
-			message.put("response",response);
+			message.put("response", response);
+			break;
 		case SUBMIT_COMPLAINT:
-			boolean compailntSubmited = AnaylzeCommand.submitComplaint((String) message.get("Personal ID"),
-					(String) message.get("Complaint"));
+			boolean compailntSubmited = AnaylzeCommand.submitComplaint((Integer)message.get("HandelingAgent"),(Integer)message.get("OrderNumber"),(String) message.get("ComplaintReason"),
+					(String) message.get("ComplaintText"));
 			message.put("response", compailntSubmited);
+			break;
 		case UPDATE_PRODUCTS_BASE:
- 			boolean isUpdated;
+			boolean isUpdated;
 			isUpdated = message.get("type").equals("item") ? AnaylzeCommand.updateItem((Item) message.get("unit"))
 					: AnaylzeCommand.updateProduct((Product) message.get("unit"));
 			message.put("response", isUpdated);
+			break;
+		case GET_ORDER_NUMBERS:
+			ArrayList<Integer> orderNumbers;
+			orderNumbers = AnaylzeCommand.getOrderNumbers();
+			message.put("response", orderNumbers);
+			break;
+		case FETCH_COMPLAINTS:
+			ArrayList<Complaint> complaints;
+			complaints = AnaylzeCommand.getAllComplaints((Integer)message.get("HandlerID"));
+			message.put("response", complaints);
+			break;
 		default:
 			break;
 		}

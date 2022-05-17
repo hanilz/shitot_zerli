@@ -5,6 +5,7 @@ import java.net.URL;
 import catalog.CatalogController;
 import client.ClientScreen;
 import customProduct.CustomProductBuilderController;
+import customerComplaint.ComplaintViewController;
 import customerComplaint.CustomerComplaintHomeController;
 import entities.User;
 import home.HomeGuestController;
@@ -149,6 +150,8 @@ public class ManageScreens {
 				break;
 			case CUSTOM_PRODUCT_BUILDER:
 				ManageScreens.changeScene(CustomProductBuilderController.class.getResource("CustomProductBuilder.fxml"), "Custom Product Builder");
+			case COMPLAINT_VIEW:
+				ManageScreens.changeScene(ComplaintViewController.class.getResource("CustomerComplaintView.fxml"), "Customer Complaint View");
 			default:
 				break;
 			}

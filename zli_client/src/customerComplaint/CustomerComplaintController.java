@@ -1,25 +1,39 @@
 package customerComplaint;
 
+import java.net.URL;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 
 import client.ClientFormController;
+import entities.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import util.Commands;
-import util.InputChecker;
 import util.ManageScreens;
 import util.Screens;
 
-public class CustomerComplaintController {
-	
-    @FXML
-    private Label idLabel;
-    
+/**
+ * @author Eitan
+ *
+ */
+public class CustomerComplaintController implements Initializable {
+	private ObservableList<Integer> orderNumbers = FXCollections.observableArrayList();
+
+	@FXML
+	private Label complaintError;
+
 	@FXML
 	private TextField complaintReason;
 
@@ -33,13 +47,22 @@ public class CustomerComplaintController {
 	private Label errorLabel;
 
 	@FXML
-	private TextField nameString;
+	private Label orderLabel;
 
 	@FXML
-	private TextField personalID;
+	private ComboBox<Integer> orderNumberCombo;
 
 	@FXML
 	private Button submitButton;
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.GET_ORDER_NUMBERS);
+		orderNumbers = (ObservableList<Integer>) ClientFormController.client.accept(message);
+		orderNumberCombo.setItems(orderNumbers);
+	}
 
 	@FXML
 	void discardComplaint(ActionEvent event) {
@@ -48,54 +71,50 @@ public class CustomerComplaintController {
 
 	@FXML
 	void saveComplaint(ActionEvent event) {
-		if(!checkID())//check if id format is correct
+		if (!checkInput())
 			return;
-		if(!sendComplaintToDB()) {
-			idLabel.setText("*ID does not exist in DB");
-			idLabel.setTextFill(Color.RED);
+		// System.out.println(orderNumberCombo.getValue());
+
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.SUBMIT_COMPLAINT);
+		message.put("OrderNumber", orderNumberCombo.getValue());
+		message.put("ComplaintReason", complaintReason.getText());
+		message.put("ComplaintText", complaintText.getText());
+		message.put("HandelingAgent", User.getUserInstance().getIdUser());
+		Object response = ClientFormController.client.accept(message);
+		if (!(boolean) response) {
+			errorLabel.setVisible(true);
 			return;
 		}
-		//ManageScreens.changeScreenTo(Screens.COMPLAINT_HOME);
+		errorLabel.setText("Submitted Successfuly");
+		errorLabel.setTextFill(Color.GREEN);
+		errorLabel.setVisible(true);
+		displayPopUp();
+		ManageScreens.changeScreenTo(Screens.COMPLAINT_HOME);
 	}
 
-	//returns true if id format is incorrect
-	private boolean checkID() {
-		if(!InputChecker.checkID(personalID.getText())) {
-			idLabel.setText("*Please enter correct ID");
-			idLabel.setTextFill(Color.RED);
-			return false;
-		}
-		else {
-			if(!idLabel.getText().equals("*9 digits")) {
-				idLabel.setText("Valid!");
-				idLabel.setTextFill(Color.BLUE);
-			}
-		}
-		return true;
+	private void displayPopUp() {
+		Alert a = new Alert(AlertType.NONE,"Complaint Submitted",ButtonType.CLOSE);
+		a.setTitle("Complaint Submitted");
+		a.setContentText("Your complaint has been submitted\nplease make sure to review it within the next 24 hours");
+		a.show();
 	}
-	
-	
-	/**
-	 * @return
-	 * this method is used to send the complaint to the db
-	 * will return false if the id of the user does not exist in db
-	 * 
-	 */
-	private boolean sendComplaintToDB() {
-		StringBuilder sb = new StringBuilder("Complainer Name: "+ nameString.getText());
-		sb.append("\nComplainer ID: " + personalID.getText());
-		sb.append("\nComplaint Reason: " + complaintReason.getText());
-		sb.append("\nComplaint Content:\n" + complaintText.getText());
-		if(sb.length()>1024)
+
+	// used to make sure that all the fields have been filled
+	private boolean checkInput() {
+		if (orderNumberCombo.getValue() == null) {
+			// idLabel.setText("*ID does not exist in DB");
+			orderLabel.setTextFill(Color.RED);
+			errorLabel.setVisible(true);
 			return false;
-		else {
-			HashMap<String, Object> message = new HashMap<>();
-			message.put("command", Commands.SUBMIT_COMPLAINT);
-			message.put("Personal ID", personalID.getText());
-			message.put("Complaint", sb.toString());
-			Object response = ClientFormController.client.accept(message);
-			if(!(boolean)response)
-				return false;
+		} else {
+			orderLabel.setText("OK");
+			orderLabel.setTextFill(Color.GREEN);
+		}
+		if (complaintReason.getText().length() == 0) {
+			complaintError.setTextFill(Color.RED);
+			errorLabel.setVisible(true);
+			return false;
 		}
 		return true;
 	}
