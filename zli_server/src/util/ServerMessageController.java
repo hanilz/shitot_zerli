@@ -166,6 +166,14 @@ public class ServerMessageController {
 			complaints = AnaylzeCommand.getAllComplaints((Integer)message.get("HandlerID"));
 			message.put("response", complaints);
 			break;
+		case DELETE_COMPLAINT:
+			boolean ans = AnaylzeCommand.deleteComlaint((Integer)message.get("Complaint Number"));
+			message.put("response", ans);
+			break;
+		case GET_ORDER_SUM:
+			Double sum = AnaylzeCommand.getOrderPrice((Integer)message.get("Order Number"));
+			message.put("response", sum);
+			break;
 		default:
 			break;
 		}
