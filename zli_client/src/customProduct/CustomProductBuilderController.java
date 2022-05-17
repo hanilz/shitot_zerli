@@ -17,6 +17,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import util.Commands;
+import util.ManageScreens;
+import util.Screens;
 
 public class CustomProductBuilderController implements Initializable {
 
@@ -80,12 +82,12 @@ public class CustomProductBuilderController implements Initializable {
 
     @FXML
     void changeToCatalog(MouseEvent event) {
-
+		ManageScreens.changeScreenTo(Screens.CATALOG);
     }
 
     @FXML
     void goToHomeScreen(MouseEvent event) {
-
+		ManageScreens.home();
     }
 
 	@Override
