@@ -55,17 +55,12 @@
       </GridPane>
       <HBox minHeight="-Infinity" prefHeight="406.0" prefWidth="940.0" VBox.vgrow="ALWAYS">
          <children>
-            <ScrollPane fx:id="scrollCatalogPane" pannable="true" prefHeight="453.0" prefWidth="746.0" style="-fx-border-color: transparent;" HBox.hgrow="ALWAYS">
-               <padding>
-                  <Insets bottom="15.0" />
-               </padding>
-            </ScrollPane>
-            <VBox prefHeight="406.0" prefWidth="174.0" spacing="15.0">
+            <VBox prefHeight="446.0" prefWidth="149.0" spacing="15.0">
                <HBox.margin>
-                  <Insets left="20.0" />
+                  <Insets />
                </HBox.margin>
                <children>
-                  <VBox alignment="CENTER">
+                  <VBox alignment="CENTER" prefHeight="30.0" prefWidth="156.0">
                      <children>
                         <Label text="Filtering options">
                            <font>
@@ -137,11 +132,73 @@
                   </VBox>
                </children>
             </VBox>
-         </children>
-      </HBox>
-      <HBox prefHeight="2.0" prefWidth="783.0">
-         <children>
-            <Label text="* Clicking on an image opens the product details window" textFill="#4170d0" />
+            <Separator orientation="VERTICAL" prefHeight="429.0" prefWidth="13.0" />
+            <VBox alignment="TOP_CENTER" prefHeight="446.0" prefWidth="361.0" spacing="10.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="30.0" prefWidth="156.0" VBox.vgrow="NEVER">
+                     <children>
+                        <Label text="Item Selector">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Separator maxWidth="-Infinity" prefHeight="2.0" prefWidth="111.0" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="5.0">
+                     <children>
+                        <ScrollPane fx:id="scrollCatalogPane" maxWidth="-Infinity" pannable="true" prefHeight="368.0" prefWidth="352.0" style="-fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                           <padding>
+                              <Insets bottom="15.0" top="15.0" />
+                           </padding>
+                        </ScrollPane>
+                        <HBox prefHeight="2.0" prefWidth="783.0" VBox.vgrow="NEVER">
+                           <children>
+                              <Label text="* Clicking on an image opens the product details window" textFill="#4170d0" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+            <Separator orientation="VERTICAL" prefHeight="429.0" prefWidth="21.0" />
+            <VBox alignment="TOP_CENTER" prefHeight="429.0" prefWidth="447.0" spacing="10.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="30.0" prefWidth="156.0" VBox.vgrow="NEVER">
+                     <children>
+                        <Label text="Custom Product Overview">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Separator maxWidth="-Infinity" prefWidth="224.0" />
+                     </children>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <ScrollPane fx:id="customProductOverviewScrollPane" maxWidth="-Infinity" pannable="true" prefHeight="431.0" prefWidth="439.0" style="-fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                           <padding>
+                              <Insets bottom="15.0" top="15.0" />
+                           </padding>
+                        </ScrollPane>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="25.0" VBox.vgrow="NEVER">
+                           <children>
+                              <Label text="Total Price:">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="totalAmountField" text="1234 NIS">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
          </children>
       </HBox>
       <GridPane prefHeight="51.0" prefWidth="940.0">
@@ -175,6 +232,6 @@
       </GridPane>
    </children>
    <padding>
-      <Insets bottom="20.0" left="30.0" right="30.0" top="10.0" />
+      <Insets bottom="20.0" left="25.0" right="25.0" top="10.0" />
    </padding>
 </VBox>
