@@ -1,4 +1,4 @@
-package userScreens;
+package mangeUsers;
 
 import java.net.URL;
 import java.util.HashMap;

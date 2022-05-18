@@ -19,13 +19,13 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import manageCatalog.ManageCatalogController;
+import mangeUsers.ManageUsersController;
 import order.CartController;
 import order.CheckoutController;
 import order.DeliveryController;
 import order.GreetingCardController;
 import order.PaymentSuccessfulController;
 import survey.SurveyHomeController;
-import userScreens.ManageUsersController;
 
 public class ManageScreens {
 	private static Stage stage;

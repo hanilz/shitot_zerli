@@ -548,7 +548,8 @@ public class AnaylzeCommand {
 
 	public static boolean deleteComlaint(int complaintID) {
 		Connection conn = DataBaseController.getConn();
-		String query = "DELETE FROM complaints WHERE idComplaint = ?;";
+		String query = "UPDATE complaints SET status = 'Closed' WHERE idComplaint = ? ;";
+		//String query = "UPDATE FROM complaints WHERE idComplaint = ?;";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, complaintID);
@@ -565,6 +566,7 @@ public class AnaylzeCommand {
 	public static Double getOrderPrice(Integer orderNum) {
 		double idOrder = -1;
 		Connection conn = DataBaseController.getConn();
+
 		String query = "SELECT O.price FROM orders O WHERE O.idOrder = ?;";
 
 		try {
