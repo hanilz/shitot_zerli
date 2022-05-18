@@ -166,7 +166,7 @@ public class ServerMessageController {
 			complaints = AnaylzeCommand.getAllComplaints((Integer)message.get("HandlerID"));
 			message.put("response", complaints);
 			break;
-		case DELETE_COMPLAINT:
+		case CLOSE_COMPLAINT:
 			boolean ans = AnaylzeCommand.deleteComlaint((Integer)message.get("Complaint Number"));
 			message.put("response", ans);
 			break;

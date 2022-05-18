@@ -96,7 +96,7 @@
                      <children>
                         <Label prefHeight="19.0" prefWidth="41.0" text="Refund" />
                         <Slider fx:id="refundSlider" blockIncrement="1.0" onMouseClicked="#setRefund" onMouseDragged="#setRefund" prefHeight="14.0" prefWidth="139.0" />
-                        <TextField fx:id="refundText" alignment="CENTER" maxWidth="85.0" minWidth="85.0" onAction="#setRefundBox" onKeyReleased="#setRefundBox" prefHeight="25.0" prefWidth="85.0" text="0" VBox.vgrow="NEVER" />
+                        <TextField fx:id="refundText" alignment="CENTER" maxWidth="85.0" minWidth="85.0" onKeyReleased="#setRefundBox" prefHeight="25.0" prefWidth="85.0" text="0" VBox.vgrow="NEVER" />
                      </children>
                   </VBox>
                   <Label fx:id="maxLabel" prefHeight="17.0" prefWidth="87.0" text="0 NIS" />

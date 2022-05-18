@@ -12,6 +12,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -75,7 +76,7 @@ public class ComplaintViewController implements Initializable {
     @FXML
     void closeAndDeleteRequest(ActionEvent event) {
     	HashMap<String, Object> message = new HashMap<>();
-		message.put("command", Commands.DELETE_COMPLAINT);
+		message.put("command", Commands.CLOSE_COMPLAINT);
 		message.put("Complaint Number", complaint.getComplaintID());
 		Object response = ClientFormController.client.accept(message);
 		if (!(boolean) response) {
@@ -98,7 +99,7 @@ public class ComplaintViewController implements Initializable {
     void refundUser(ActionEvent event) {
     	//refund = Double.parseDouble(refundText.getText());
     	HashMap<String, Object> message = new HashMap<>();
-		message.put("command", Commands.DELETE_COMPLAINT);//might need to be changed in the future to save the refund to the user
+		message.put("command", Commands.CLOSE_COMPLAINT);//might need to be changed in the future to save the refund to the user
 		message.put("Complaint Number", complaint.getComplaintID());
 		Object response = ClientFormController.client.accept(message);
 		if (!(boolean) response) {
@@ -114,29 +115,22 @@ public class ComplaintViewController implements Initializable {
     @FXML
     void setRefund(MouseEvent event) {//slider Event
     	refund = refundSlider.getValue();
-    	refundText.setText(String.format("%.2f", refundSlider.getValue()));
+    	refundText.setText(String.format("%.0f", refundSlider.getValue()));
     }
     
 
     @FXML
     void setRefundBox(KeyEvent event) {
-//    	Double value ;
-//    	if(!refundText.getText().isEmpty()) {
-//    		value = Double.parseDouble(refundText.getText());
-//    	}
-//    	else
-//    		value =0.0;
     	Double value = !refundText.getText().isEmpty() ? Double.parseDouble(refundText.getText()) : 0.0;
-    	if(value < orderPrice) {
+    	if(value <= orderPrice) {
     		refund = value;
     	}
     	else {
     		refundText.setText(orderPrice+"");
     		refund = orderPrice;
     	}
-    	//refund = value < orderPrice ? value : orderPrice;
     	refundSlider.setValue(refund);
-    	
+    	refundText.positionCaret(refundText.getText().length());
     	
 
     	System.out.println(refundText.getText());
@@ -170,6 +164,7 @@ public class ComplaintViewController implements Initializable {
 		        }
 		    }
 		});
+		
 	}
 
 }
