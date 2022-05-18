@@ -7,6 +7,7 @@ import catalog.CatalogItemVBox;
 import catalog.CatalogProductVBox;
 import catalog.CatalogVBox;
 import client.ClientFormController;
+import customProduct.CustomProductItemHBox;
 import entities.Item;
 import entities.Product;
 import javafx.collections.FXCollections;
@@ -24,6 +25,7 @@ public class ManageData {
 	public static ObservableList<Product> products = FXCollections.observableArrayList();
 	public static ObservableList<Item> items = FXCollections.observableArrayList();
 	public static GridPane catalogGrid = new GridPane();
+	public static VBox itemSelectorVBox = new VBox();
 	
 	private static final int NUMBER_OF_COLUMNS = 3; 
 
@@ -108,6 +110,14 @@ public class ManageData {
 			CatalogProductVBox catalogProductVBox = new CatalogProductVBox(products.get(i));
 			catalogProductVBox.initVBox();
 			catalogVBoxList.add(catalogProductVBox);
+		}
+	}
+	
+	public static void initCustomProductItemHBoxes() {
+		for (int i = 0; i < items.size(); i++) {
+			CustomProductItemHBox customProductItemHBox = new CustomProductItemHBox(items.get(i));
+			customProductItemHBox.initHBox();
+			itemSelectorVBox.getChildren().add(customProductItemHBox);
 		}
 	}
 }

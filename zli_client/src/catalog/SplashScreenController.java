@@ -3,7 +3,6 @@ package catalog;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import util.ManageData;
 import util.ManageScreens;
@@ -22,6 +21,7 @@ public class SplashScreenController implements Initializable {
 			ManageData.fetchAllProducts();
 			ManageData.fetchAllItems();
 			ManageData.initCatalogGrid();
+			ManageData.initCustomProductItemHBoxes();
 			
 			ManageScreens.changeScreenTo(Screens.CATALOG);						
 		}

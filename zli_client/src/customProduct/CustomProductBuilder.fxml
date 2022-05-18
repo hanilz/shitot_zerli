@@ -28,7 +28,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fx:id="homeImage" fitHeight="80.0" fitWidth="124.0" onMousePressed="#goToHomeScreen" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="homeImage" fitHeight="80.0" fitWidth="124.0" onMouseClicked="#changeToHomeScreen" pickOnBounds="true" preserveRatio="true">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
@@ -59,9 +59,6 @@
                <padding>
                   <Insets bottom="15.0" />
                </padding>
-               <content>
-                  <VBox fx:id="itemSelectorVBox" prefHeight="444.0" prefWidth="731.0" />
-               </content>
             </ScrollPane>
             <VBox prefHeight="406.0" prefWidth="174.0" spacing="15.0">
                <HBox.margin>

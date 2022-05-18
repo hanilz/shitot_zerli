@@ -48,41 +48,45 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 		});
 		quantityField.setMaxWidth(50);
 		quantityField.setAlignment(Pos.CENTER);
-		
+
 		subtractQuantityButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				int quantity = 0;
 				try {
 					quantity = Integer.valueOf(quantityField.getText());
-				} catch (Exception e) { return;}
+				} catch (Exception e) {
+					return;
+				}
 				if (quantity >= 1)
 					quantityField.setText("" + (--quantity));
 			}
 		});
-		
+
 		addQuantityButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				int quantity = 0;
 				try {
-					quantity = Integer.valueOf(quantityField.getText());	
-				} catch (Exception e) { return;}
+					quantity = Integer.valueOf(quantityField.getText());
+				} catch (Exception e) {
+					return;
+				}
 				quantityField.setText("" + (++quantity));
 			}
 		});
-		
+
 		initPriceHBox();
 		initQuantityHBox();
 
 		initAddToCartButton();
-		
+
 		super.initVBox();
 		this.getChildren().add(quantityHBox);
 		this.getChildren().add(addToCartButton);
 	}
 
-	private void initImageProduct() { //same function but not with the event so we will call super.
+	private void initImageProduct() { // same function but not with the event so we will call super.
 		image = new ImageView(item.getImagePath());
 		setImageProp();
 
@@ -99,14 +103,14 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 			}
 		});
 	}
-	
+
 	private void initAddToCartButton() {
 		addToCartButton.setCursor(Cursor.HAND);
 		addToCartButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				int quantity = Integer.valueOf(quantityField.getText());
-				if(quantity<1)
+				if (quantity < 1)
 					return;
 				Cart.getInstance().addToCart(item, quantity, true);
 				System.out.println("Cart is: " + Cart.getInstance().getCart());
@@ -115,7 +119,6 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 		});
 	}
 
-	
 	private void initQuantityHBox() {
 		quantityHBox.getChildren().add(subtractQuantityButton);
 		quantityHBox.getChildren().add(quantityField);
