@@ -23,7 +23,6 @@ public class ProductsBase implements Serializable {
 		this.imagePath = imagePath;
 	}
 	
-	
 	/**
 	 * @return the id
 	 */
