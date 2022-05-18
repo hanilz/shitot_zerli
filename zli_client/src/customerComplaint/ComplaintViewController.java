@@ -1,10 +1,14 @@
 package customerComplaint;
 
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import client.ClientFormController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,9 +18,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Alert.AlertType;
 import util.Commands;
+import util.InputChecker;
 import util.ManageScreens;
 import util.Screens;
 
@@ -45,6 +51,9 @@ public class ComplaintViewController implements Initializable {
 
     @FXML
     private Label maxLabel;
+    
+    @FXML
+    private Label minLabel;
 
     @FXML
     private Label orderNumber;
@@ -87,7 +96,7 @@ public class ComplaintViewController implements Initializable {
 
     @FXML
     void refundUser(ActionEvent event) {
-    	refund = Double.parseDouble(refundText.getText());
+    	//refund = Double.parseDouble(refundText.getText());
     	HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.DELETE_COMPLAINT);//might need to be changed in the future to save the refund to the user
 		message.put("Complaint Number", complaint.getComplaintID());
@@ -105,20 +114,32 @@ public class ComplaintViewController implements Initializable {
     @FXML
     void setRefund(MouseEvent event) {//slider Event
     	refund = refundSlider.getValue();
-    	refundText.setText(refundSlider.getValue()+"");
+    	refundText.setText(String.format("%.2f", refundSlider.getValue()));
     }
     
 
     @FXML
-    void setRefundBox(ActionEvent event) {
-    	Double value = Double.parseDouble(refundText.getText());
+    void setRefundBox(KeyEvent event) {
+//    	Double value ;
+//    	if(!refundText.getText().isEmpty()) {
+//    		value = Double.parseDouble(refundText.getText());
+//    	}
+//    	else
+//    		value =0.0;
+    	Double value = !refundText.getText().isEmpty() ? Double.parseDouble(refundText.getText()) : 0.0;
     	if(value < orderPrice) {
-    		refund = Double.parseDouble(refundText.getText());
-    		refundSlider.setValue(refund);    		
+    		refund = value;
     	}
-    	else
-    		refundText.setText("0");
-    		
+    	else {
+    		refundText.setText(orderPrice+"");
+    		refund = orderPrice;
+    	}
+    	//refund = value < orderPrice ? value : orderPrice;
+    	refundSlider.setValue(refund);
+    	
+    	
+
+    	System.out.println(refundText.getText());
     }
     
     public static void setComplaint(Complaint complaint2) {
@@ -131,15 +152,24 @@ public class ComplaintViewController implements Initializable {
 		complaintContent.setText(complaint.getComplaintContent());
 		comlaintReason.setText(complaint.getComplaintReason());
 		orderNumber.setText(""+complaint.getOrderID());
+		minLabel.setText(InputChecker.price(0));
 		
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.GET_ORDER_SUM);//might need to be changed in the future to save the refund to the user
 		message.put("Order Number", complaint.getOrderID());
 		Object response = ClientFormController.client.accept(message);
 		orderPrice = (Double)response;
-		
 		refundSlider.setMax(orderPrice);
-		maxLabel.setText(orderPrice+" NIS");
+		maxLabel.setText(InputChecker.price(orderPrice));
+		refundText.textProperty().addListener(new ChangeListener<String>() {
+		    @Override
+		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+		        String newValue) {
+		        if (!newValue.matches("\\d*")) {
+		        	refundText.setText(newValue.replaceAll("[^\\d]", ""));
+		        }
+		    }
+		});
 	}
 
 }
