@@ -74,7 +74,7 @@ public class PVBox extends VBox {
 				copy.setType(texts.get(1).getText());
 				copy.setFlowerType(texts.get(2).getText());
 				copy.setProductDescription(texts.get(3).getText());
-				copy.setPrice(Integer.valueOf(texts.get(4).getText()));
+				copy.setPrice(Double.valueOf(texts.get(4).getText()));//Integer->Double
 				message.put("unit",copy);
 			}
 			 else {
@@ -82,7 +82,7 @@ public class PVBox extends VBox {
 					copy.setName(texts.get(0).getText());
 					copy.setType(texts.get(1).getText());
 					copy.setColor(texts.get(2).getText());
-					copy.setPrice(Integer.valueOf(texts.get(3).getText()));
+					copy.setPrice(Double.valueOf(texts.get(3).getText()));//Integer->Double
 					message.put("unit",copy);
 			 }
 			 message.put("item", Commands.UPDATE_PRODUCTS_BASE);
@@ -148,7 +148,7 @@ public class PVBox extends VBox {
 			addTextAreaCell("Description", amount++, ((Product) product).getProductDescription(),1000,150);
 		} else
 			addTextCell("Color", amount++, (((Item) product).getColor()));
-		addTextCell("Price", amount++, ("" + (int)product.getPrice()));
+		addTextCell("Price", amount++, ("" + product.getPrice()));//int->double
 	}
 
 	private void initGrid() {

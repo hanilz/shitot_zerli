@@ -32,7 +32,7 @@ public class ManageCatalogVBox extends VBox {
 		this.getChildren().add(nameLabel);
 		initImageProduct();
 		this.getChildren().add(image);
-		amountLabel.setText("" + InputChecker.price(((int) product.getPrice())));
+		amountLabel.setText("" + InputChecker.price(((double) product.getPrice())));//int->double
 		initPriceHBox();
 		this.getChildren().add(priceHBox);
 		this.setAlignment(Pos.CENTER);

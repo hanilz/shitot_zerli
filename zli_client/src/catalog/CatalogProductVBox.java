@@ -27,7 +27,7 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 		initImageProduct();
 		initProductIcon();
 		
-		amountLabel.setText("" + InputChecker.price(((int) product.getPrice())));
+		amountLabel.setText("" + InputChecker.price(( product.getPrice())));
 
 		initPriceHBox();
 
