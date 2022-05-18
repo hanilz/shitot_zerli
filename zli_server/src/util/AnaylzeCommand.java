@@ -45,7 +45,7 @@ public class AnaylzeCommand {
 					String productName = rs.getString(2);
 					String flowerType = rs.getString(3);
 					String productColor = rs.getString(4);
-					double productPrice = rs.getInt(5);
+					double productPrice = rs.getDouble(5);//double
 					String productType = rs.getString(6);
 					String productDesc = rs.getString(7);
 					String imagePath = rs.getString(8);
@@ -495,7 +495,8 @@ public class AnaylzeCommand {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setString(1, item.getName());
 			preparedStmt.setString(2, item.getColor());
-			preparedStmt.setInt(3, (int) item.getPrice());
+			preparedStmt.setDouble(3, item.getPrice());
+			System.out.println(item.getPrice());
 			preparedStmt.setInt(4, item.getId());
 			System.out.println(preparedStmt.executeUpdate());
 			return true;
@@ -511,22 +512,14 @@ public class AnaylzeCommand {
 		String query = "UPDATE products SET productName = ? , flowerType=? , productColor=? , productPrice=? , productType=? , productDescription=?  WHERE productID = ?;";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			System.out.println(product.getName());
 			preparedStmt.setString(1, product.getName());
-			System.out.println(product.getFlowerType());
 			preparedStmt.setString(2, product.getFlowerType());
-			System.out.println(product.getColor());
 			preparedStmt.setString(3, product.getColor());
-			System.out.println(product.getPrice());
-			preparedStmt.setInt(4, (int) product.getPrice());
-			System.out.println(product.getType());
+			preparedStmt.setDouble(4, product.getPrice());
 			preparedStmt.setString(5, product.getType());
-			System.out.println(product.getProductDescription());
 			preparedStmt.setString(6, product.getProductDescription());
-			System.out.println(product.getId());
 			preparedStmt.setInt(7, product.getId());
 			preparedStmt.executeUpdate();
-			System.out.println("done");
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();

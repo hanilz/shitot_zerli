@@ -35,7 +35,7 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 		nameLabel.setText(item.getName() + " - " + item.getColor());
 		initImageProduct();
 
-		amountLabel.setText("" + InputChecker.price(((int) item.getPrice())));
+		amountLabel.setText("" + InputChecker.price((item.getPrice())));
 
 		// force the field to be numeric only
 		quantityField.textProperty().addListener(new ChangeListener<String>() {
