@@ -12,8 +12,8 @@ import javafx.stage.Stage;
 import util.InputChecker;
 
 public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
-		private Product product; // will be used to get the data from
-		private ImageView productIcon;
+	private Product product; // will be used to get the data from
+	private ImageView productIcon;
 
 	public CatalogProductVBox(Product product) {
 		this.product = product;
@@ -26,13 +26,13 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 		nameLabel.setText(product.getName());
 		initImageProduct();
 		initProductIcon();
-		
-		amountLabel.setText("" + InputChecker.price(( product.getPrice())));
+
+		amountLabel.setText("" + InputChecker.price((product.getPrice())));
 
 		initPriceHBox();
 
 		initAddToCartButton();
-		
+
 		super.initVBox();
 		this.getChildren().add(productIcon);
 		this.getChildren().add(addToCartButton);
@@ -50,7 +50,7 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 		});
 	}
 
-	private void initImageProduct() { //same function but not with the event so we will call super.
+	private void initImageProduct() { // same function but not with the event so we will call super.
 		image = new ImageView(product.getImagePath());
 		setImageProp();
 
@@ -67,7 +67,7 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 			}
 		});
 	}
-	
+
 	private void initProductIcon() {
 		productIcon = new ImageView("/resources/productImages/icon/bouquet_icon.png");
 		productIcon.setFitHeight(30);

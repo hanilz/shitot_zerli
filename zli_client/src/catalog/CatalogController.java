@@ -1,149 +1,74 @@
 package catalog;
 
-
-import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import client.ClientFormController;
 import entities.Item;
 import entities.Product;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.Cursor;
-import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import util.Commands;
+import util.ManageData;
 import util.ManageScreens;
 import util.Screens;
 
-public class CatalogController implements Initializable {
+public class CatalogController implements Initializable{
 
-	@FXML
-	private ImageView cartImage;
-
-	@FXML
-	private Label catalogLbl;
-
-	@FXML
-	private HBox hbox;
-
-	@FXML
-	private ImageView homeImage;
-
-	@FXML
-	private ScrollPane scrollCatalogPane;
-
-	private ObservableList<Product> products = FXCollections.observableArrayList();
-
-	private ObservableList<Item> items = FXCollections.observableArrayList();
-	
     @FXML
-    private GridPane catalogGrid;
+    private ImageView cartImage;
 
-	private ArrayList<CatalogVBox> catalogVBoxList = new ArrayList<>();
+    @FXML
+    private Label catalogLbl;
+
+    @FXML
+    private ScrollPane catalogScrollPane;
+
+    @FXML
+    private ImageView homeImage;
+
+    @FXML
+    private HBox loginHBox;
+
+    @FXML
+    private TextField searchBar;
+
+    @FXML
+    private Button searchButton;
 	
-	@FXML
-	void goToHomeScreen(MouseEvent event) {
-		ManageScreens.home();
-	}
-
+	private GridPane catalogGrid = ManageData.catalogGrid;
+    
     @FXML
     void changeToCartScreen(MouseEvent event) {
     	ManageScreens.changeScreenTo(Screens.CART);
     }
-	
+
+    @FXML
+    void changeToHomeScreen(MouseEvent event) {
+		ManageScreens.home();
+    }
+
+    @FXML
+    void openLoginPopup(MouseEvent event) {
+
+    }
+
+    @FXML
+    void search(MouseEvent event) {
+
+    }
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// first - we will fetch all the products and items from the db
-		fetchProducts();
-		fetchItems();
-		initCatalogProductVBoxes();
-		initCatalogItemVBoxes();
-		initGrid();
-	}
-
-	private void fetchItems() {
-		HashMap<String, Object> message = new HashMap<>();
-		message.put("command",Commands.FETCH_ITEMS);
-		Object response = ClientFormController.client.accept(message);
-		items = (ObservableList<Item>) response;
-	}
-
-	private void fetchProducts() {
-		HashMap<String, Object> message = new HashMap<>();
-		message.put("command",Commands.FETCH_PRODUCTS);
-		Object response = ClientFormController.client.accept(message);
-		products = (ObservableList<Product>) response;
-	}
-
-	private void initGrid() {
-		int numberOfRows = (int) Math.ceil((products.size() + items.size() + 1)/3.0);
-        for (int i = 0; i < numberOfRows; i++) {
-            RowConstraints rowConst = new RowConstraints();
-            rowConst.setPercentHeight(100.0 / numberOfRows);
-            catalogGrid.getRowConstraints().add(rowConst);         
-        }
-        initCustomProduct();
-		for (int i = 1; i < catalogVBoxList.size(); i++) {
-				catalogGrid.add(catalogVBoxList.get(i), i%3, i/3);
-		}
-		catalogGrid.setVgap(20);
-	}
-
-	private void initCustomProduct() {
-		VBox customProductVBox = new VBox();
-		customProductVBox.setAlignment(Pos.CENTER);
-        ImageView customProductImage = new ImageView("/resources/catalog/customProductImage.png");
-        initCustomProductImage(customProductImage);
-        customProductImage.setOnMouseReleased(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				ManageScreens.changeScreenTo(Screens.CUSTOM_PRODUCT_BUILDER);
-			}
-		});
-        
-        customProductVBox.getChildren().add(customProductImage);
-        catalogGrid.add(customProductVBox, 0, 0);  // set as first VBox in Grid
-	}
-
-	private void initCustomProductImage(ImageView customProductImage) {
-		customProductImage.setFitHeight(200);
-        customProductImage.setFitWidth(300);
-        customProductImage.setPreserveRatio(true);
-        customProductImage.setCursor(Cursor.HAND);
-	}
-
-	private void initCatalogItemVBoxes() {
-		for (int i = 0; i < items.size(); i++) {
-			CatalogItemVBox catalogItemVBox = new CatalogItemVBox(items.get(i));
-			catalogItemVBox.initVBox();
-			catalogVBoxList.add(catalogItemVBox);
-		}
-	}
-
-	private void initCatalogProductVBoxes() {
-		for (int i = 0; i < products.size(); i++) {
-			CatalogProductVBox catalogProductVBox = new CatalogProductVBox(products.get(i));
-			catalogProductVBox.initVBox();
-			catalogVBoxList.add(catalogProductVBox);
-		}
+		catalogGrid = ManageData.catalogGrid;
+		
+		catalogScrollPane.setContent(catalogGrid);
 	}
 }

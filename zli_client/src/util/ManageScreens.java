@@ -3,6 +3,7 @@ package util;
 import java.net.URL;
 
 import catalog.CatalogController;
+import catalog.SplashScreenController;
 import client.ClientScreen;
 import customProduct.CustomProductBuilderController;
 import customerComplaint.ComplaintViewController;
@@ -103,6 +104,9 @@ public class ManageScreens {
 				break;
 			case LOGIN:
 				ManageScreens.changeScene(LoginScreenController.class.getResource("LoginScreen.fxml"), "Login");
+				break;
+			case CATALOG_SPLASH_SCREEN:
+				ManageScreens.changeScene(SplashScreenController.class.getResource("SplashScreen.fxml"), "Loading Catalog...");
 				break;
 			case CATALOG:
 				ManageScreens.changeScene(CatalogController.class.getResource("CatalogScreen.fxml"), "Catalog");

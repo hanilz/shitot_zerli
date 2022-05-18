@@ -46,6 +46,8 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 				}
 			}
 		});
+		quantityField.setMaxWidth(50);
+		quantityField.setAlignment(Pos.CENTER);
 		
 		subtractQuantityButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override

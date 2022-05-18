@@ -57,7 +57,7 @@ public class ClientFormController {
 	}
 	
 	public void exitFromWindow() {
-		ManageScreens.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {// Windows X button pressed
+		ManageScreens.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {  // Windows X button pressed
 			@Override
 			public void handle(WindowEvent e) {
 				ManageClients.exitClient();
@@ -70,7 +70,7 @@ public class ClientFormController {
 	 * connected to the server-ip
 	 */
 	private void changeSceneToCatalog() {
-		ManageScreens.changeScreenTo(Screens.CATALOG);
+		ManageScreens.changeScreenTo(Screens.CATALOG_SPLASH_SCREEN);
 
 	}
 

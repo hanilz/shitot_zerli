@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import util.Commands;
+import util.ManageData;
 import util.ManageScreens;
 import util.Screens;
 
@@ -73,7 +74,7 @@ public class CustomProductBuilderController implements Initializable {
     @FXML
     private CheckBox yellowFilterCheckBox;
 
-	private ObservableList<Item> items = FXCollections.observableArrayList();
+	private ObservableList<Item> items = ManageData.items;
     
     @FXML
     void addToCart(MouseEvent event) {
@@ -92,15 +93,7 @@ public class CustomProductBuilderController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		fetchItems();
 		initCatalogItemVBoxes();
-	}
-
-	private void fetchItems() {
-		HashMap<String, Object> message = new HashMap<>();
-		message.put("command",Commands.FETCH_ITEMS);
-		Object response = ClientFormController.client.accept(message);
-		items = (ObservableList<Item>) response;
 	}
 
 	private void initCatalogItemVBoxes() {
