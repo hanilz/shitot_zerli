@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
@@ -15,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="customerComplaint.CustomerComplaintHomeController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="registerUser.RegistrationController">
    <opaqueInsets>
       <Insets />
    </opaqueInsets>
@@ -35,12 +34,12 @@
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="761.0" GridPane.columnIndex="1">
                <children>
-                  <Label text="User Registration Form">
+                  <Label text="Customer Registration Form">
                      <font>
                         <Font name="System Bold" size="42.0" />
                      </font>
                   </Label>
-                  <Label text="Please fill the entire form to create a new user">
+                  <Label text="Please fill the entire form to create a new custmer account">
                      <font>
                         <Font size="17.0" />
                      </font>
@@ -58,7 +57,7 @@
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="425.0" prefWidth="483.0" style="-fx-border-color: LightGray;">
                <children>
-                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="484.0" text="User Details">
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="484.0" text="Customer Details">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -102,12 +101,12 @@
                               <Font name="System Bold" size="28.0" />
                            </font>
                         </Label>
-                        <TextField GridPane.columnIndex="1" />
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="firstNameLabel" promptText="enter first name here" GridPane.columnIndex="1" />
+                        <TextField fx:id="lastNameLabel" promptText="enter last name here" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <VBox prefHeight="55.0" prefWidth="243.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <children>
                               <Label text="* 9 Digits" textFill="BLUE" />
-                              <TextField />
+                              <TextField fx:id="idLabel" promptText="example : 123456789" />
                            </children>
                            <padding>
                               <Insets top="10.0" />
@@ -115,8 +114,8 @@
                         </VBox>
                         <VBox GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <children>
-                              <Label text="example: user@service.com" textFill="#7c7c7c" />
-                              <TextField />
+                              <Label text="example: user@service.com" textFill="BLUE" />
+                              <TextField fx:id="emailLabel" promptText="example: user@service.com" />
                            </children>
                            <padding>
                               <Insets top="10.0" />
@@ -125,7 +124,7 @@
                         <VBox GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <children>
                               <Label text="* 9-10 Digits" textFill="BLUE" />
-                              <TextField />
+                              <TextField fx:id="phoneLabel" promptText="0531234567" />
                            </children>
                            <padding>
                               <Insets top="10.0" />
@@ -141,13 +140,13 @@
             <Separator orientation="VERTICAL" prefHeight="425.0" prefWidth="0.0" />
             <VBox alignment="TOP_CENTER" prefHeight="425.0" prefWidth="487.0" style="-fx-border-color: LightGray;">
                <children>
-                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="484.0" text="User System Information">
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="484.0" text="Customer Login Credentials">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
                   <Separator prefWidth="200.0" />
-                  <GridPane prefHeight="354.0" prefWidth="438.0">
+                  <GridPane prefHeight="139.0" prefWidth="462.0">
                      <columnConstraints>
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -155,12 +154,9 @@
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label text="UserName:">
+                        <Label text="Username:">
                            <font>
                               <Font name="System Bold" size="28.0" />
                            </font>
@@ -170,14 +166,55 @@
                               <Font name="System Bold" size="28.0" />
                            </font>
                         </Label>
-                        <Label text="User Type:" GridPane.rowIndex="2">
+                        <TextField fx:id="usernameLabel" promptText="enter username here" GridPane.columnIndex="1" />
+                        <TextField fx:id="passwordLabel" promptText="enter password here" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="484.0" text="Default Payment Method">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Separator prefWidth="200.0" />
+                  <GridPane prefHeight="174.0" prefWidth="462.0">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Card Number:">
                            <font>
                               <Font name="System Bold" size="28.0" />
                            </font>
                         </Label>
-                        <TextField GridPane.columnIndex="1" />
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <ComboBox prefHeight="25.0" prefWidth="247.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Expiration Date:" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="28.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="cardNumberLabel" alignment="CENTER" prefHeight="25.0" prefWidth="118.0" promptText="example: 1111222233334444" GridPane.columnIndex="1" />
+                        <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <TextField fx:id="monthLabel" alignment="CENTER" promptText="mm" />
+                              <Label text="/" />
+                              <TextField fx:id="yearLabel" alignment="CENTER" promptText="yy" />
+                           </children>
+                        </HBox>
+                        <Label text="CVV:" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="System Bold" size="28.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="cvvLabel" alignment="CENTER" prefHeight="25.0" prefWidth="114.0" promptText="XXX" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="70.0" right="70.0" />
+                           </GridPane.margin>
+                        </TextField>
                      </children>
                   </GridPane>
                </children>
@@ -189,11 +226,11 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="66.0" prefWidth="980.0" spacing="170.0">
          <children>
-            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#createNewCustomerComplaint" text="Close and Cancel" />
+            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#returnHome" text="Close and Cancel" />
             <Button fx:id="completeRegistrationButton" mnemonicParsing="false" onAction="#createNewCustomerComplaint" text="Complete Registration" />
          </children>
       </HBox>
-      <Label text="*Please fill all the fields before submitting" textFill="RED">
+      <Label fx:id="errorLabel" text="*Please fill all the fields before submitting" textFill="RED">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>

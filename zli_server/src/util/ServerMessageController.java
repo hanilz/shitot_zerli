@@ -16,6 +16,7 @@ import entities.OrderItem;
 import entities.OrderProduct;
 import entities.Product;
 import entities.ProductsBase;
+import entities.UserDetails;
 import ocsf.server.ConnectionToClient;
 import server.ServerController;
 import survey.SurveyQuestion;
@@ -173,6 +174,18 @@ public class ServerMessageController {
 		case GET_ORDER_SUM:
 			Double sum = AnaylzeCommand.getOrderPrice((Integer)message.get("Order Number"));
 			message.put("response", sum);
+			break;
+		case NEW_USER_DETAILS:
+			int idAccount = AnaylzeCommand.insertNewUserDetails((UserDetails)message.get("User Details"));
+			message.put("response",idAccount);
+			break;
+		case NEW_USERS:
+			int idUser = AnaylzeCommand.insertNewUser((String)message.get("username"),(String)message.get("password"),(int)message.get("idAccount"));
+			message.put("response",idUser);
+			break;
+		case DELETE_USER_DETAILS:
+			boolean remove = AnaylzeCommand.deleteUserDetails((int)message.get("idAccount"));
+			message.put("response",remove);
 			break;
 		default:
 			break;

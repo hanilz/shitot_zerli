@@ -25,6 +25,7 @@ import order.CheckoutController;
 import order.DeliveryController;
 import order.GreetingCardController;
 import order.PaymentSuccessfulController;
+import registerUser.RegistrationController;
 import survey.SurveyHomeController;
 
 public class ManageScreens {
@@ -158,6 +159,9 @@ public class ManageScreens {
 			case COMPLAINT_VIEW:
 				ManageScreens.changeScene(ComplaintViewController.class.getResource("CustomerComplaintView.fxml"), "Customer Complaint View");
 				break;
+			case REGISTER_CUSTMER:
+				ManageScreens.changeScene(RegistrationController.class.getResource("RegistrationScreen.fxml"), "Register New Customer");
+				break;
 			default:
 				break;
 			}
@@ -216,6 +220,8 @@ public class ManageScreens {
 			return "Customer Complaints";
 		case EDIT_CATALOG:
 			return "Manage Catalog";
+		case REGISTER_CUSTMER:
+			return "Register Customer";
 		}
 		return null;
 	}
@@ -262,6 +268,8 @@ public class ManageScreens {
 			return "resources/home/complaint.png";
 		case EDIT_CATALOG:
 			return "resources/catalog/editCatalog.png";
+		case REGISTER_CUSTMER:
+			return "resources/home/newUser.png";
 		default:
 			return "";// no such user//
 		}

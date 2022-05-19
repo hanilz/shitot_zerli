@@ -14,6 +14,7 @@ public class AccountPayment implements Serializable{
 	private String cardDate; //format: mm/yy
 	private String cardVCC;
 	private User user;
+	private int idUser=-1;
 	
 	public AccountPayment(int id, String cardNumber, String cardDate, String cardVCC, User user) {
 		this.id = id;
@@ -29,6 +30,14 @@ public class AccountPayment implements Serializable{
 		this.cardDate = cardDate;
 		this.cardVCC = cardVCC;
 		this.user = user;
+	}
+	
+	public AccountPayment(String fullName, String cardNumber, String cardDate, String cardVCC, int idUser) {
+		this.fullName = fullName;
+		this.cardNumber = cardNumber;
+		this.cardDate = cardDate;
+		this.cardVCC = cardVCC;
+		this.idUser = idUser;
 	}
 
 	public String getFullName() {
@@ -77,6 +86,10 @@ public class AccountPayment implements Serializable{
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public int getIdUser() {
+		return idUser;
 	}
 
 }

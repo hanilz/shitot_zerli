@@ -21,6 +21,7 @@ import entities.Order;
 import entities.OrderItem;
 import entities.OrderProduct;
 import entities.Product;
+import entities.UserDetails;
 import survey.SurveyQuestion;
 
 /**
@@ -33,7 +34,7 @@ public class AnaylzeCommand {
 
 	public static ArrayList<Product> selectAllProducts() {
 		ArrayList<Product> products = new ArrayList<>();
-		HashMap<Integer, ArrayList<Item>> products_items = new HashMap<>();  // {productID : items}
+		HashMap<Integer, ArrayList<Item>> products_items = new HashMap<>(); // {productID : items}
 		try {
 			Statement selectStmt = DataBaseController.getConn().createStatement();
 			ResultSet rs = selectStmt.executeQuery(
@@ -41,11 +42,11 @@ public class AnaylzeCommand {
 			while (rs.next()) {
 				int productId = rs.getInt(1);
 				Item currentItem = getItemFromResultSet(rs);
-				if(!products_items.containsKey(productId)) {
+				if (!products_items.containsKey(productId)) {
 					String productName = rs.getString(2);
 					String flowerType = rs.getString(3);
 					String productColor = rs.getString(4);
-					double productPrice = rs.getDouble(5);//double
+					double productPrice = rs.getDouble(5);// double
 					String productType = rs.getString(6);
 					String productDesc = rs.getString(7);
 					String imagePath = rs.getString(8);
@@ -55,12 +56,11 @@ public class AnaylzeCommand {
 					ArrayList<Item> items = new ArrayList<>();
 					items.add(currentItem);
 					products_items.put(productId, items);
-				}
-				else 
+				} else
 					products_items.get(productId).add(currentItem);
 			}
-			
-			for(Product product : products) 
+
+			for (Product product : products)
 				product.setItems(products_items.get(product.getId()));
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -76,10 +76,10 @@ public class AnaylzeCommand {
 		String itemType = rs.getString(13);
 		String imagePath = rs.getString(14);
 		Item itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath);
-		
+
 		return itemResult;
 	}
-	
+
 	public static ArrayList<Item> selectAllItems() {
 		ArrayList<Item> items = new ArrayList<>();
 		try {
@@ -261,7 +261,6 @@ public class AnaylzeCommand {
 	}
 
 	public static boolean insertAccountPayment(AccountPayment accountPayment) {
-
 		Connection conn;
 		conn = DataBaseController.getConn();
 		String query = "INSERT INTO account_payment (fullName, cardNumber, cardDate, cardVCC, idUser) VALUES (?, ?, ?, ?, ?);";
@@ -271,12 +270,61 @@ public class AnaylzeCommand {
 			preparedStmt.setString(2, accountPayment.getCardNumber());
 			preparedStmt.setString(3, accountPayment.getCardDate());
 			preparedStmt.setString(4, accountPayment.getCardVCC());
-			preparedStmt.setInt(5, accountPayment.getUser().getIdUser());
+			if (accountPayment.getIdUser() == -1)
+				preparedStmt.setInt(5, accountPayment.getUser().getIdUser());
+			else
+				preparedStmt.setInt(5, accountPayment.getIdUser());
 			preparedStmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
+		}
+	}
+
+	// insert new user into user_details table
+	public static int insertNewUserDetails(UserDetails userDetails) {
+		int idAccount = -1;
+		Connection conn;
+		conn = DataBaseController.getConn();
+		String query = "INSERT INTO user_details (firstName, lastName, id, email, phoneNumber) VALUES (?, ?, ?, ?, ?);";
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			preparedStmt.setString(1, userDetails.getFirstName());
+			preparedStmt.setString(2, userDetails.getLastName());
+			preparedStmt.setString(3, userDetails.getId());
+			preparedStmt.setString(4, userDetails.getEmail());
+			preparedStmt.setString(5, userDetails.getPhoneNumber());
+			preparedStmt.executeUpdate();
+			ResultSet rs = preparedStmt.getGeneratedKeys();
+			if (rs.next())
+				idAccount = rs.getInt(1);
+			return idAccount;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	// insert new user into users table
+	public static int insertNewUser(String username, String password, int idAccount) {
+		int iduser = -1;
+		Connection conn;
+		conn = DataBaseController.getConn();
+		String query = "INSERT INTO users (username, password, idAccount) VALUES (?, ?, ?);";
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			preparedStmt.setString(1, username);
+			preparedStmt.setString(2, password);
+			preparedStmt.setInt(3, idAccount);
+			preparedStmt.executeUpdate();
+			ResultSet rs = preparedStmt.getGeneratedKeys();
+			if (rs.next())
+				iduser = rs.getInt(1);
+			return iduser;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
 		}
 	}
 
@@ -549,7 +597,7 @@ public class AnaylzeCommand {
 	public static boolean deleteComlaint(int complaintID) {
 		Connection conn = DataBaseController.getConn();
 		String query = "UPDATE complaints SET status = 'Closed' WHERE idComplaint = ? ;";
-		//String query = "UPDATE FROM complaints WHERE idComplaint = ?;";
+		// String query = "UPDATE FROM complaints WHERE idComplaint = ?;";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, complaintID);
@@ -573,7 +621,7 @@ public class AnaylzeCommand {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, orderNum);
 			ResultSet rs = preparedStmt.executeQuery();
-			if(!rs.next()) {
+			if (!rs.next()) {
 				System.out.println("failed to fetch order price");
 			}
 			idOrder = rs.getDouble(1);
@@ -582,6 +630,22 @@ public class AnaylzeCommand {
 			e.printStackTrace();
 		}
 		return idOrder;
+	}
+
+	public static boolean deleteUserDetails(int idAccount) {
+		Connection conn = DataBaseController.getConn();
+		String query = "DELETE FROM user_details WHERE idAccount = ?;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idAccount);
+			preparedStmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Failed to delete user_details");
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 }
