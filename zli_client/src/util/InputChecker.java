@@ -77,6 +77,8 @@ public class InputChecker {
 			return false;
 		else if (!firstName.matches("^[ A-Za-z]+$") || !lastName.matches("^[ A-Za-z]+$"))
 			return false;
+		if(Integer.parseInt(month)<=0 || Integer.parseInt(month)>12)
+			return false;
 		return true;
 	}
 
@@ -95,9 +97,9 @@ public class InputChecker {
 	}
 
 	public static boolean isPhoneNumberVaild(String phoneNumber) {
-		if (phoneNumber.length() == 10) // if mobile
+		if (phoneNumber.length() == 10 && phoneNumber.matches("[0-9]+")) // if mobile
 			return true;
-		else if (phoneNumber.length() == 9) // if regular phone number
+		else if (phoneNumber.length() == 9 && phoneNumber.matches("[0-9]+")) // if regular phone number
 			return true;
 		return false;
 	}
