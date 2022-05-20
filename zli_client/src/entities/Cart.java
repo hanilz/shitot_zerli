@@ -32,6 +32,12 @@ public class Cart {
 		if (product == null || quantity < 0)
 			return false;
 		int deltaQuantity = 0;
+		if (product instanceof CustomProduct) {
+			cart.put(product, quantity);
+			
+			calculateTotalPrice(product.getPrice());
+			return true;
+		}
 		ProductsBase foundProduct = findByID(product);
 		if (quantity == 0)
 			removeFromCart(foundProduct);
@@ -71,7 +77,11 @@ public class Cart {
 	 * @return if item or product was removed successfully
 	 */
 	public Boolean removeFromCart(ProductsBase product) {
-		ProductsBase foundProduct = findByID(product);
+		ProductsBase foundProduct;
+		if(product instanceof CustomProduct) 
+			foundProduct = findByName(product);
+		else
+			foundProduct = findByID(product);
 		if (!cart.containsKey(foundProduct))
 			return false;
 		calculateTotalPrice(-(cart.get(foundProduct)) * product.getPrice());
@@ -79,6 +89,14 @@ public class Cart {
 		return true;
 	}
 
+	private ProductsBase findByName(ProductsBase check) {
+		for (ProductsBase product : cart.keySet()) {
+			if (product.getName().equals(check.getName()))
+				return product;
+		}
+		return null;		
+	}
+	
 	/**
 	 * @return the cart map
 	 */

@@ -1,8 +1,15 @@
 package customProduct;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import entities.Cart;
+import entities.CustomProduct;
+import entities.Item;
+import entities.Product;
+import entities.ProductsBase;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -13,6 +20,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import util.InputChecker;
 import util.ManageData;
 import util.ManageScreens;
@@ -32,6 +40,9 @@ public class CustomProductBuilderController implements Initializable {
 	@FXML
 	private Label catalogLbl;
 
+	@FXML
+    private Label warningLabel;
+	
 	@FXML
 	private CheckBox chocolateFilterCheckBox;
 
@@ -77,13 +88,55 @@ public class CustomProductBuilderController implements Initializable {
 	@FXML
 	private CheckBox yellowFilterCheckBox;
 
-	private static CustomProductBuilderController customControllerInstace;
+	private static CustomProductBuilderController customControllerInstance;
 
 	private VBox overViewVBox = new VBox();
+	private ArrayList<Item> items = new ArrayList<>();
+	private ArrayList<Product> products = new ArrayList<>();
 
 	@FXML
 	void addToCart(MouseEvent event) {
+		if (overViewVBox.getChildren().size() == 0) {
+			switchFillAllFields();
+			return;
+		}
+		getAllProductsFromOverview();
+		CustomProduct customProduct = new CustomProduct(0, "Custom Product " + ManageData.customProductNumber++, "Custom", getTotalPriceFromOverview(),
+				"Custom", "/resources/catalog/customProductImage.png", items, products);
+		
+		Cart.getInstance().addToCart(customProduct, 1, true);
+		System.out.println("Cart is: " + Cart.getInstance().getCart());
+		System.out.println(customProduct.getName() + " added to cart woohoooo");
+		
+		try {
+			ManageScreens.openPopupFXML(getClass().getResource("CustomProductSuccessfulPopup.fxml"),
+					"Custom Product Successful!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
+	private void switchFillAllFields() {
+		warningLabel.setText("* Please select some products first");
+		PauseTransition pause = new PauseTransition(Duration.seconds(3));
+		pause.setOnFinished(e -> warningLabel.setText(""));
+		pause.play();
+	}
+
+	private void getAllProductsFromOverview() {
+		for (Node currentNode : overViewVBox.getChildren()) {
+			if (currentNode instanceof SelectedHBox) {
+				SelectedHBox currentSelected = (SelectedHBox) currentNode;
+				ProductsBase currentProductsBase = currentSelected.getProduct();
+				if (currentProductsBase instanceof Product) {
+					Product currentProduct = (Product) currentProductsBase;
+					products.add(currentProduct);
+				} else { // is Item
+					Item currentItem = (Item) currentProductsBase;
+					items.add(currentItem);
+				}
+			}
+		}
 	}
 
 	@FXML
@@ -98,13 +151,14 @@ public class CustomProductBuilderController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		overViewVBox.setMinWidth(610);
 		setCheckBoxToFalse();
 		customProductScrollPane.setContent(ManageData.customSelectorVBox);
-		customControllerInstace = this;
+		customControllerInstance = this;
 	}
 
 	public static void updateOverViewVBox(String command, SelectedHBox overViewSelected) {
-		customControllerInstace.updateOverviewScrollPane(command, overViewSelected);
+		customControllerInstance.updateOverviewScrollPane(command, overViewSelected);
 	}
 
 	public void updateOverviewScrollPane(String command, SelectedHBox overViewSelected) {
@@ -162,10 +216,16 @@ public class CustomProductBuilderController implements Initializable {
 	}
 
 	public static void updateTotalPriceLabel() {
-		customControllerInstace.updateTotalPrice();
+		customControllerInstance.updateTotalPrice();
 	}
 
 	private void updateTotalPrice() {
+		double totalPrice = getTotalPriceFromOverview();
+
+		totalPriceLabel.setText(InputChecker.price(totalPrice));
+	}
+
+	private double getTotalPriceFromOverview() {
 		double totalPrice = 0;
 		for (Node currentSelected : overViewVBox.getChildren()) {
 			if (currentSelected instanceof SelectedHBox) {
@@ -173,8 +233,7 @@ public class CustomProductBuilderController implements Initializable {
 						* (((SelectedHBox) currentSelected).getProduct().getPrice());
 			}
 		}
-
-		totalPriceLabel.setText(InputChecker.price(totalPrice));
+		return totalPrice;
 	}
 
 }

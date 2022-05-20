@@ -21,7 +21,6 @@ public class PaymentSuccessfulController {
 		Cart.getInstance().emptyCart();
 		SingletonOrder.getInstance().emptySingletonOrder();
     	ManageScreens.changeScreenTo(Screens.CATALOG);
-
     }
 
 }

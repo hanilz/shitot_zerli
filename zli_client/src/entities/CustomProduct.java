@@ -2,18 +2,20 @@ package entities;
 
 import java.util.ArrayList;
 
-public class CustomProduct extends ProductsBase{
+public class CustomProduct extends ProductsBase {
 
 	private static final long serialVersionUID = 1L;
 
 	private ArrayList<Item> items;
-	
+
 	private ArrayList<Product> products;
-	
-	public CustomProduct(int id, String name, String color, double price, String type, String imagePath, ArrayList<Item> items) {
+
+	public CustomProduct(int id, String name, String color, double price, String type, String imagePath,
+			ArrayList<Item> items, ArrayList<Product> products) {
 		super(id, name, color, price, type, imagePath);
-		
+
 		this.items = items;
+		this.products = products;
 	}
 
 	public ArrayList<Item> getItems() {

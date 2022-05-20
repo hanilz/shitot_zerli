@@ -11,7 +11,7 @@ import javafx.scene.layout.HBox;
 import util.InputChecker;
 
 public class SelectedHBox extends CustomProductHBox implements ICustomProductHBox {
-	private int quantity=1;
+	private int quantity = 1;
 	private HBox quantityHBox = new HBox();
 	private Label quantityLabel = new Label("" + quantity);
 	private Button addQuantity = new Button("+");
@@ -36,8 +36,10 @@ public class SelectedHBox extends CustomProductHBox implements ICustomProductHBo
 			}
 		});
 		super.initHBox();
-		this.getChildren().add(quantityHBox);
-		this.getChildren().add(removeButton);
+		this.setMinWidth(610);
+		priceHBox.setSpacing(5);
+		priceHBox.getChildren().add(quantityHBox);
+		priceHBox.getChildren().add(removeButton);
 	}
 	
 	private void initQuantityVBox() {
@@ -65,18 +67,16 @@ public class SelectedHBox extends CustomProductHBox implements ICustomProductHBo
                 CustomProductBuilderController.updateTotalPriceLabel();
             }
         });
-
+		
 		quantityHBox.setAlignment(Pos.CENTER);
 		quantityHBox.setSpacing(10);
 
 		quantityHBox.getChildren().add(removeQuantity);
 		quantityHBox.getChildren().add(quantityLabel);
 		quantityHBox.getChildren().add(addQuantity);
-
 	}
 
 	public int getQuantity() {
 		return quantity;
 	}
-
 }

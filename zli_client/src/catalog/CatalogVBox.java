@@ -21,7 +21,7 @@ public class CatalogVBox extends VBox implements ICatalogVBox {
 	@Override
 	public void initVBox() {
 //		this.setPrefHeight(150);
-//		this.setPrefWidth(100);
+		this.setPrefWidth(200);
 ////
 ////		this.setMinHeight(USE_PREF_SIZE);
 ////		this.setMaxHeight(USE_PREF_SIZE);
@@ -30,8 +30,11 @@ public class CatalogVBox extends VBox implements ICatalogVBox {
 //		nameVBox.setMinHeight(USE_PREF_SIZE);
 //		nameVBox.setPrefHeight(20);
 //		nameVBox.setAlignment(Pos.CENTER);
-//		nameLabel.setMinHeight(20);
-////		nameLabel.setWrapText(true);
+		nameLabel.setMinHeight(40);
+		nameLabel.setMaxWidth(200);
+
+		nameLabel.setWrapText(true);
+		nameLabel.setAlignment(Pos.BOTTOM_CENTER);
 //		nameVBox.getChildren().add(nameLabel);
 		
 		addToCartButton.setId("catalogBtn");
