@@ -1,6 +1,8 @@
 package order;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -166,10 +168,12 @@ public class DeliveryController implements Initializable {
 	}
 
 	private Branch selectBranch(String checkString) {
+		ArrayList<Branch> randomBranch = new ArrayList<>();
 		for (Branch currentBranch : branches)
 			if (currentBranch.getRegion().contains(checkString))
-				return currentBranch;
-		return null;
+				randomBranch.add(currentBranch);
+		Collections.shuffle(randomBranch); //shuffle the list to select a random branch
+		return randomBranch.get(0);
 	}
 
 	private void switchFillAllFields(Label label, String textToShow) {

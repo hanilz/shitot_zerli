@@ -8,6 +8,8 @@ public class CustomProduct extends ProductsBase{
 
 	private ArrayList<Item> items;
 	
+	private ArrayList<Product> products;
+	
 	public CustomProduct(int id, String name, String color, double price, String type, String imagePath, ArrayList<Item> items) {
 		super(id, name, color, price, type, imagePath);
 		
@@ -20,6 +22,14 @@ public class CustomProduct extends ProductsBase{
 
 	public void setItems(ArrayList<Item> items) {
 		this.items = items;
+	}
+
+	public ArrayList<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(ArrayList<Product> products) {
+		this.products = products;
 	}
 
 }
