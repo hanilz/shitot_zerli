@@ -188,7 +188,7 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="totalAmountField" text="1234 NIS">
+                              <Label fx:id="totalPriceLabel" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
