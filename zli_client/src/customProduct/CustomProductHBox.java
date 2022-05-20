@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import util.InputChecker;
 
-public class CustomProductItemHBox extends HBox {
+public class CustomProductHBox extends HBox {
 	private ProductsBase product;
 
 	private CheckBox selectItem = new CheckBox();
@@ -25,7 +25,7 @@ public class CustomProductItemHBox extends HBox {
 	private Label priceLabel = new Label("Price:");
 	private Label amountLabel;
 
-	public CustomProductItemHBox(ProductsBase product) {
+	public CustomProductHBox(ProductsBase product) {
 		this.product = product;
 	}
 

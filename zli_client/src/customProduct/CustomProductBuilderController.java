@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -16,53 +17,62 @@ import util.Screens;
 
 public class CustomProductBuilderController implements Initializable {
 
-	@FXML
-	private Button addToCartButton;
+    @FXML
+    private Button addToCartButton;
 
-	@FXML
-	private Button backToCatalogButton;
+    @FXML
+    private Button backToCatalogButton;
 
-	@FXML
-	private CheckBox carnationFilterCheckBox;
+    @FXML
+    private CheckBox carnationFilterCheckBox;
 
-	@FXML
-	private CheckBox chocolateFilterCheckBox;
+    @FXML
+    private Label catalogLbl;
 
-	@FXML
-	private CheckBox daffodilFilterCheckBox;
+    @FXML
+    private CheckBox chocolateFilterCheckBox;
 
-	@FXML
-	private CheckBox flowerFilterCheckBox;
+    @FXML
+    private ScrollPane customProductOverviewScrollPane;
 
-	@FXML
-	private ImageView homeImage;
+    @FXML
+    private ScrollPane customProductScrollPane;
 
-	@FXML
-	private CheckBox lilyFilterCheckBox;
+    @FXML
+    private CheckBox daffodilFilterCheckBox;
 
-	@FXML
-	private CheckBox orchidFilterCheckBox;
+    @FXML
+    private CheckBox flowerFilterCheckBox;
 
-	@FXML
-	private CheckBox peonyFilterCheckBox;
+    @FXML
+    private ImageView homeImage;
 
-	@FXML
-	private CheckBox pinklFilterCheckBox;
+    @FXML
+    private CheckBox lilyFilterCheckBox;
 
-	@FXML
-	private CheckBox redFilterCheckBox;
+    @FXML
+    private CheckBox orchidFilterCheckBox;
 
-	@FXML
-	private CheckBox roseFilterCheckBox;
+    @FXML
+    private CheckBox peonyFilterCheckBox;
 
-	@FXML
-	private ScrollPane scrollCatalogPane;
+    @FXML
+    private CheckBox pinklFilterCheckBox;
 
-	@FXML
-	private CheckBox whiteFilterCheckBox;
+    @FXML
+    private CheckBox redFilterCheckBox;
 
-	@FXML
-	private CheckBox yellowFilterCheckBox;
+    @FXML
+    private CheckBox roseFilterCheckBox;
+
+    @FXML
+    private Label totalAmountField;
+
+    @FXML
+    private CheckBox whiteFilterCheckBox;
+
+    @FXML
+    private CheckBox yellowFilterCheckBox;
 
 	@FXML
 	void addToCart(MouseEvent event) {
@@ -81,7 +91,7 @@ public class CustomProductBuilderController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		scrollCatalogPane.setContent(ManageData.itemSelectorVBox);
+		customProductScrollPane.setContent(ManageData.customSelectorVBox);
 	}
 
 }
