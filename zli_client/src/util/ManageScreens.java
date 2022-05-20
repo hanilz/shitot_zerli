@@ -31,7 +31,7 @@ import survey.SurveyHomeController;
 public class ManageScreens {
 	private static Stage stage;
 	private static Stage popupStage;
-
+	
 	/**
 	 * This method will help us to switch between the screens
 	 * 
@@ -49,6 +49,10 @@ public class ManageScreens {
 		Parent root = loader.load();
 		root.styleProperty();
 		Scene scene = new Scene(root);
+		String style = url.toString();
+		style = style.substring(0,style.length() - 4);
+		style+="css";
+		scene.getStylesheets().add(style);
 		Platform.runLater(new Runnable() { // this thread will help us change between scenes and avoid exceptions
 			@Override
 			public void run() {
@@ -58,7 +62,7 @@ public class ManageScreens {
 			}
 		});
 	}
-
+	
 	public static void openPopupFXML(URL url, String title) throws Exception {
 		FXMLLoader loader = new FXMLLoader();
 		try {

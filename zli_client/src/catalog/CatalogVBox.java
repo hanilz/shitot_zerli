@@ -3,6 +3,7 @@ package catalog;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -33,6 +34,10 @@ public class CatalogVBox extends VBox implements ICatalogVBox {
 ////		nameLabel.setWrapText(true);
 //		nameVBox.getChildren().add(nameLabel);
 		
+		addToCartButton.setId("catalogBtn");
+		nameLabel.setId("productsLabel");
+		priceLabel.setId("priceLabel");
+		amountLabel.setId("priceLabel");
 		this.getChildren().add(nameLabel);
 		this.getChildren().add(image);
 		this.getChildren().add(priceHBox);
@@ -47,7 +52,7 @@ public class CatalogVBox extends VBox implements ICatalogVBox {
 	}
 	
 	protected void setImageProp() {
-		image.setFitHeight(120);
+		image.setFitHeight(140);
 		image.setFitWidth(200);
 		image.setPreserveRatio(true);
 		image.setCursor(Cursor.HAND);

@@ -54,7 +54,7 @@ public class ManageData {
 	}
 	
 	private static void initCellsInGrid() {
-		initGridDimensions();
+		//initGridDimensions();
 		
 		int numberOfRows = (int) Math.ceil((products.size() + items.size() + 1)/((float)NUMBER_OF_COLUMNS));
         for (int i = 0; i < numberOfRows; i++) {
@@ -69,12 +69,11 @@ public class ManageData {
 		catalogGrid.setVgap(20);
 	}
 	
-	private static void initGridDimensions() {
+	/*private static void initGridDimensions() {
 		catalogGrid.setPrefWidth(600);
 		catalogGrid.setPrefHeight(438);
-		catalogGrid.setAlignment(Pos.CENTER_LEFT);
 		catalogGrid.setHgap(20);
-	}
+	}*/
 	
 	private static void initCustomProductInCatalog() {
 		VBox customProductVBox = new VBox();
@@ -89,6 +88,7 @@ public class ManageData {
 		});
         
         customProductVBox.getChildren().add(customProductImage);
+        catalogGrid.setId("catalogGrid");
         catalogGrid.add(customProductVBox, 0, 0);  // set as first VBox in Grid
 	}
 
@@ -103,6 +103,7 @@ public class ManageData {
 		for (int i = 0; i < items.size(); i++) {
 			CatalogItemVBox catalogItemVBox = new CatalogItemVBox(items.get(i));
 			catalogItemVBox.initVBox();
+			catalogItemVBox.setId("catalogCard");
 			catalogVBoxList.add(catalogItemVBox);
 		}
 	}
@@ -111,6 +112,7 @@ public class ManageData {
 		for (int i = 0; i < products.size(); i++) {
 			CatalogProductVBox catalogProductVBox = new CatalogProductVBox(products.get(i));
 			catalogProductVBox.initVBox();
+			catalogProductVBox.setId("catalogCard");
 			catalogVBoxList.add(catalogProductVBox);
 		}
 	}
