@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import manageCatalog.ManageCatalogController;
+import mangeCustomerOrders.ManageCustomerOrdersController;
 import mangeUsers.ManageUsersController;
 import order.CartController;
 import order.CheckoutController;
@@ -162,6 +163,9 @@ public class ManageScreens {
 			case REGISTER_CUSTMER:
 				ManageScreens.changeScene(RegistrationController.class.getResource("RegistrationScreen.fxml"), "Register New Customer");
 				break;
+			case VIEW_ORDERS_MANAGER:
+				ManageScreens.changeScene(ManageCustomerOrdersController.class.getResource("ManageCustomerOrdersScreen.fxml"), "Manage Customer Orders");
+				break;
 			default:
 				break;
 			}
@@ -222,6 +226,8 @@ public class ManageScreens {
 			return "Manage Catalog";
 		case REGISTER_CUSTMER:
 			return "Register Customer";
+		case VIEW_ORDERS_MANAGER:
+			return "Manage Orders";
 		}
 		return null;
 	}
@@ -270,6 +276,8 @@ public class ManageScreens {
 			return "resources/catalog/editCatalog.png";
 		case REGISTER_CUSTMER:
 			return "resources/home/newUser.png";
+		case VIEW_ORDERS_MANAGER:
+			return "resources/home/order.png";
 		default:
 			return "";// no such user//
 		}
