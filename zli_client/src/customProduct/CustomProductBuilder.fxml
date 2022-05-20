@@ -16,13 +16,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="customProduct.CustomProductBuilderController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="customProduct.CustomProductBuilderController">
    <children>
-      <GridPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="73.0" prefWidth="941.0">
+      <GridPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="73.0" prefWidth="1232.0">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="189.0" minWidth="9.0" prefWidth="94.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="844.0" minWidth="10.0" prefWidth="726.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="844.0" minWidth="0.0" prefWidth="108.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="189.0" minWidth="9.0" prefWidth="50.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="990.0" minWidth="10.0" prefWidth="972.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="844.0" minWidth="0.0" prefWidth="50.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -41,10 +41,7 @@
             </ImageView>
             <VBox alignment="CENTER" prefHeight="100.0" prefWidth="667.0" GridPane.columnIndex="1">
                <children>
-                  <Label fx:id="catalogLbl" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="97.0" prefWidth="325.0" text="Custom Product Builder" textAlignment="CENTER">
-                     <padding>
-                        <Insets bottom="40.0" left="40.0" />
-                     </padding>
+                  <Label fx:id="catalogLbl" alignment="TOP_CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="97.0" prefWidth="325.0" text="Custom Product Builder" textAlignment="CENTER">
                      <font>
                         <Font size="49.0" />
                      </font>
@@ -133,7 +130,7 @@
                </children>
             </VBox>
             <Separator orientation="VERTICAL" prefHeight="429.0" prefWidth="13.0" />
-            <VBox alignment="TOP_CENTER" prefHeight="446.0" prefWidth="361.0" spacing="10.0">
+            <VBox alignment="TOP_CENTER" prefHeight="566.0" prefWidth="419.0" spacing="10.0">
                <children>
                   <VBox alignment="CENTER" prefHeight="30.0" prefWidth="156.0" VBox.vgrow="NEVER">
                      <children>
@@ -147,7 +144,7 @@
                   </VBox>
                   <VBox spacing="5.0">
                      <children>
-                        <ScrollPane fx:id="customProductScrollPane" maxWidth="-Infinity" pannable="true" prefHeight="368.0" prefWidth="352.0" style="-fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                        <ScrollPane fx:id="customProductScrollPane" maxWidth="-Infinity" pannable="true" prefHeight="497.0" prefWidth="419.0" style="-fx-border-color: transparent;" VBox.vgrow="ALWAYS">
                            <padding>
                               <Insets bottom="15.0" top="15.0" />
                            </padding>
@@ -162,7 +159,7 @@
                </children>
             </VBox>
             <Separator orientation="VERTICAL" prefHeight="429.0" prefWidth="21.0" />
-            <VBox alignment="TOP_CENTER" prefHeight="429.0" prefWidth="447.0" spacing="10.0">
+            <VBox alignment="TOP_CENTER" prefHeight="566.0" prefWidth="628.0" spacing="10.0">
                <children>
                   <VBox alignment="CENTER" prefHeight="30.0" prefWidth="156.0" VBox.vgrow="NEVER">
                      <children>
@@ -174,14 +171,14 @@
                         <Separator maxWidth="-Infinity" prefWidth="224.0" />
                      </children>
                   </VBox>
-                  <VBox>
+                  <VBox prefHeight="527.0" prefWidth="447.0">
                      <children>
-                        <ScrollPane fx:id="customProductOverviewScrollPane" maxWidth="-Infinity" pannable="true" prefHeight="431.0" prefWidth="439.0" style="-fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                        <ScrollPane fx:id="customProductOverviewScrollPane" maxWidth="-Infinity" pannable="true" prefHeight="497.0" prefWidth="628.0" style="-fx-border-color: transparent;" VBox.vgrow="ALWAYS">
                            <padding>
                               <Insets bottom="15.0" top="15.0" />
                            </padding>
                         </ScrollPane>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="25.0" VBox.vgrow="NEVER">
+                        <HBox alignment="CENTER" prefHeight="26.0" prefWidth="447.0" spacing="25.0" VBox.vgrow="NEVER">
                            <children>
                               <Label text="Total Price:">
                                  <font>
@@ -210,15 +207,16 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+            <HBox alignment="CENTER_RIGHT" spacing="20.0" GridPane.columnIndex="1">
                <children>
+                  <Label fx:id="warningLabel" textFill="RED" />
                   <Button fx:id="addToCartButton" mnemonicParsing="false" onMouseClicked="#addToCart" prefHeight="39.0" prefWidth="120.0" text="Add To Cart" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
                </children>
-            </VBox>
+            </HBox>
             <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
                <children>
                   <Button fx:id="backToCatalogButton" mnemonicParsing="false" onMouseClicked="#changeToCatalog" prefHeight="39.0" prefWidth="161.0" text="Back To Catalog" textAlignment="CENTER" wrapText="true">
@@ -232,6 +230,6 @@
       </GridPane>
    </children>
    <padding>
-      <Insets bottom="20.0" left="25.0" right="25.0" top="10.0" />
+      <Insets bottom="20.0" left="30.0" right="30.0" top="10.0" />
    </padding>
 </VBox>

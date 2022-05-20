@@ -10,55 +10,63 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="customerComplaint.CustomerComplaintController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="customerComplaint.CustomerComplaintController">
    <children>
       <Label text="New Customer Complaint">
          <font>
             <Font name="System Bold" size="42.0" />
          </font>
       </Label>
-      <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="980.0" spacing="20.0">
+      <VBox alignment="CENTER" prefHeight="537.0" prefWidth="1200.0">
          <children>
-            <Label text="Order Number: ">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <ComboBox fx:id="orderNumberCombo" prefWidth="150.0">
-               <HBox.margin>
-                  <Insets left="35.0" />
-               </HBox.margin>
-            </ComboBox>
-            <Label fx:id="orderLabel" text="*Please select an order number from the list" textFill="BLUE" />
+            <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="980.0" spacing="20.0">
+               <children>
+                  <Label text="Order Number: ">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="orderNumberCombo" prefWidth="150.0">
+                     <HBox.margin>
+                        <Insets left="35.0" />
+                     </HBox.margin>
+                  </ComboBox>
+                  <Label fx:id="orderLabel" text="*Please select an order number from the list" textFill="BLUE" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="980.0" spacing="20.0">
+               <children>
+                  <Label text="Complaint Reason:">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="complaintReason" prefHeight="26.0" prefWidth="683.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="220.0" prefWidth="1200.0" spacing="11.0">
+               <children>
+                  <Label text="Complaint Content:">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <TextArea fx:id="complaintText" prefHeight="315.0" prefWidth="959.0" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextArea>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" spacing="70.0">
+               <children>
+                  <Label fx:id="complaintError" text="*Please make sure to fill a complaint reason and content before submitting" textFill="BLUE" />
+                  <Label text="*Limited to 1024 characters!" textFill="#0400ff" />
+               </children>
+            </HBox>
          </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="980.0" spacing="20.0">
-         <children>
-            <Label text="Complaint Reason:">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <TextField fx:id="complaintReason" prefHeight="26.0" prefWidth="686.0" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="980.0" spacing="20.0">
-         <children>
-            <Label text="Complaint Content:">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <Label fx:id="complaintError" text="*Please make sure to fill a complaint reason and content before submitting" textFill="BLUE" />
-         </children>
-      </HBox>
-      <TextArea fx:id="complaintText" prefHeight="308.0" prefWidth="920.0" wrapText="true">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </TextArea>
-      <Label text="*Limited to 1024 characters!" textFill="#0400ff" />
-      <HBox alignment="TOP_CENTER" prefHeight="30.0" prefWidth="960.0" spacing="70.0">
+      </VBox>
+      <HBox alignment="BOTTOM_CENTER" prefHeight="274.0" prefWidth="1200.0" spacing="70.0">
          <children>
             <Button fx:id="discardButton" mnemonicParsing="false" onAction="#discardComplaint" text="Discard And Close" />
             <Button fx:id="submitButton" mnemonicParsing="false" onAction="#saveComplaint" text="Submit Complaint" />

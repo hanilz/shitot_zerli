@@ -28,6 +28,7 @@ public class ManageData {
 	public static GridPane catalogGrid = new GridPane();
 	public static VBox customSelectorVBox = new VBox();
 	
+	public static int customProductNumber = 1;
 	private static final int NUMBER_OF_COLUMNS = 3; 
 
 	private static ArrayList<CatalogVBox> catalogVBoxList = new ArrayList<>();
@@ -116,6 +117,7 @@ public class ManageData {
 	}
 	
 	public static void initCustomProductItemHBoxes() {
+		customSelectorVBox.setPrefWidth(400);
 		for (int i = 0; i < items.size(); i++) {
 			CustomProductHBox customProductItemHBox = new SelectorHBox(items.get(i));
 			customProductItemHBox.initHBox();

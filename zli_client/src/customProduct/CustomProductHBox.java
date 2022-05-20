@@ -15,11 +15,12 @@ public class CustomProductHBox extends HBox implements ICustomProductHBox {
 	protected ProductsBase product;
 
 	private ImageView image;
-	private VBox imageVBox = new VBox();
-	private VBox idNameVBox = new VBox();
+	protected VBox imageVBox = new VBox();
+	protected VBox idNameVBox = new VBox();
 	private Label idLabel;
 	private Label nameLabel;
 	private VBox priceVBox = new VBox();
+	protected HBox priceHBox = new HBox();
 	private Label priceLabel = new Label("Price:");
 	protected Label amountLabel;
 
@@ -35,30 +36,31 @@ public class CustomProductHBox extends HBox implements ICustomProductHBox {
 		this.setMinHeight(20);
 
 		initImageProduct();
-		initPriceVBox();
+		initPriceHBox();
 		initProductDetailsVBox();
 
 		this.getChildren().add(imageVBox);
 		this.getChildren().add(idNameVBox);
-		this.getChildren().add(priceVBox);
-
+		this.getChildren().add(priceHBox);
 	}
 	
-	private void initPriceVBox() {
+	private void initPriceHBox() {
 		amountLabel = new Label(InputChecker.price(product.getPrice()));
 		amountLabel.setFont(new Font(23));
 		priceVBox.getChildren().add(priceLabel);
 		priceVBox.getChildren().add(amountLabel);
 		priceVBox.setSpacing(5);
+		priceHBox.setAlignment(Pos.CENTER_RIGHT);
+		priceHBox.getChildren().add(priceVBox);
 	}
 
 	private void initProductDetailsVBox() {
 		idLabel = new Label("CatID: " + product.getId());
 
 		nameLabel = new Label(product.getName());
-		nameLabel.setFont(new Font(30));
+		nameLabel.setFont(new Font(20));
 		nameLabel.setMinWidth(Control.USE_PREF_SIZE);
-		nameLabel.setPrefWidth(160);
+		nameLabel.setPrefWidth(200);
 
 		idNameVBox.getChildren().add(idLabel);
 		idNameVBox.getChildren().add(nameLabel);
