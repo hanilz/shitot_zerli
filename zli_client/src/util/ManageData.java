@@ -48,10 +48,10 @@ public class ManageData {
 	public static void initCatalogGrid() {
 		initCatalogProductVBoxes();
 		initCatalogItemVBoxes();
-		initGrid();
+		initCellsInGrid();
 	}
 	
-	private static void initGrid() {
+	private static void initCellsInGrid() {
 		initGridDimensions();
 		
 		int numberOfRows = (int) Math.ceil((products.size() + items.size() + 1)/((float)NUMBER_OF_COLUMNS));
@@ -60,7 +60,7 @@ public class ManageData {
             rowConst.setPercentHeight(100.0 / numberOfRows);
             catalogGrid.getRowConstraints().add(rowConst);         
         }
-        initCustomProduct();
+        initCustomProductInCatalog();
 		for (int i = 0; i < catalogVBoxList.size(); i++) {
 				catalogGrid.add(catalogVBoxList.get(i), (i+1)%NUMBER_OF_COLUMNS, (i+1)/NUMBER_OF_COLUMNS);
 		}
@@ -74,7 +74,7 @@ public class ManageData {
 		catalogGrid.setHgap(20);
 	}
 	
-	private static void initCustomProduct() {
+	private static void initCustomProductInCatalog() {
 		VBox customProductVBox = new VBox();
 		customProductVBox.setAlignment(Pos.CENTER);
         ImageView customProductImage = new ImageView("/resources/catalog/customProductImage.png");

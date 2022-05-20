@@ -1,7 +1,6 @@
 package order;
 
 import catalog.ProductVBox;
-import entities.Product;
 import entities.ProductsBase;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;

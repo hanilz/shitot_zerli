@@ -1,7 +1,6 @@
 package order;
 
 import entities.Cart;
-import entities.Product;
 import entities.ProductsBase;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

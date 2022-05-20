@@ -2,13 +2,10 @@ package order;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 import entities.Cart;
-import entities.Item;
-import entities.Product;
 import entities.ProductsBase;
 import entities.User;
 import home.LoginScreenController;

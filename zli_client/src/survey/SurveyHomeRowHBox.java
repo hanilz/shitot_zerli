@@ -47,7 +47,8 @@ public class SurveyHomeRowHBox extends HBox{
 				message.put("surveyID", surveyID);
 				Object response = ClientFormController.client.accept(message);
 				
-				ArrayList<SurveyQuestion> questions = (ArrayList)response;//(ObservableList<Survey>) response;
+				@SuppressWarnings("unchecked")
+				ArrayList<SurveyQuestion> questions = (ArrayList<SurveyQuestion>)response;//(ObservableList<Survey>) response;
 				System.out.println("got surveys");
 				survey = new Survey(surveyID,title,questions);
 		        SurveyController.setSurvey(survey);

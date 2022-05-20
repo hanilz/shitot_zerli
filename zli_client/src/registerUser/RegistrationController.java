@@ -1,25 +1,22 @@
 package registerUser;
 
-import java.awt.Color;
 import java.util.HashMap;
 
 import client.ClientFormController;
 import entities.AccountPayment;
-import entities.User;
 import entities.UserDetails;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import util.Commands;
 import util.InputChecker;
 import util.ManageScreens;
-import util.Screens;
 
 public class RegistrationController {
 
