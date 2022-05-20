@@ -21,7 +21,6 @@ public class ManageCatalogVBox extends VBox {
 	protected Label amountLabel = new Label(); // will show the price
 	protected HBox priceHBox = new HBox();
 	private ProductsBase product; // will be used to get the data from
-	private ImageView productIcon;
 
 	public ManageCatalogVBox(ProductsBase product) {
 		this.product = product;

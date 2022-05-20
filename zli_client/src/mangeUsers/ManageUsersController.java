@@ -79,7 +79,7 @@ public class ManageUsersController implements Initializable {
 
 	//method to add a button to the last column in the table for each row
 	private void addButtonToTable() {
-		TableColumn<ManageUsers, Void> colBtn = new TableColumn("Action");
+		TableColumn<ManageUsers, Void> colBtn = new TableColumn<>("Action");
 
 		Callback<TableColumn<ManageUsers, Void>, TableCell<ManageUsers, Void>> cellFactory = new Callback<TableColumn<ManageUsers, Void>, TableCell<ManageUsers, Void>>() {
 			@Override

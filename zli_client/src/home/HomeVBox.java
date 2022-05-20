@@ -8,7 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import util.ManageScreens;
 import util.Screens;
-import util.UserType;
 
 public class HomeVBox extends VBox {
 	private ImageView image;

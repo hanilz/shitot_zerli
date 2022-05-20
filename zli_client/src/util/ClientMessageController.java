@@ -7,9 +7,8 @@ import client.ClientController;
 import customerComplaint.Complaint;
 import entities.Branch;
 import entities.Item;
-import entities.Order;
-import entities.Product;
 import entities.ManageUsers;
+import entities.Product;
 import javafx.collections.FXCollections;
 
 /**

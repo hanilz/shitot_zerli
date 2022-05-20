@@ -1,9 +1,7 @@
 package survey;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import client.ClientFormController;
@@ -32,13 +30,14 @@ public class SurveyHomeController implements Initializable {
 		ManageScreens.changeScreenTo(Screens.USER_HOME);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// create a request to fetch the table data
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.FETCH_SURVEYS);
 		Object response = ClientFormController.client.accept(message);
-		surveys = (HashMap) response;// (ObservableList<Survey>) response;
+		surveys = (HashMap<Integer, String>) response;// (ObservableList<Survey>) response;
 		System.out.println("got surveys");
 
 		for (int surveyID : surveys.keySet()) {

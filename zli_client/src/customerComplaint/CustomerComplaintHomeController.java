@@ -4,10 +4,9 @@ package customerComplaint;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+
 import client.ClientFormController;
-import entities.ManageUsers;
 import entities.User;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -82,7 +81,7 @@ public class CustomerComplaintHomeController implements Initializable{
 	}
     
 	private void addButtonToTable() {
-		TableColumn<Complaint, Void> colBtn = new TableColumn("Action");
+		TableColumn<Complaint, Void> colBtn = new TableColumn<>("Action");
 
 		Callback<TableColumn<Complaint, Void>, TableCell<Complaint, Void>> cellFactory = new Callback<TableColumn<Complaint, Void>, TableCell<Complaint, Void>>() {
 			@Override
