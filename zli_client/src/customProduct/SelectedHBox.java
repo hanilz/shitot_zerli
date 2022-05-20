@@ -34,9 +34,9 @@ public class SelectedHBox extends CustomProductHBox implements ICustomProductHBo
 				CustomProductBuilderController.updateOverViewVBox("remove from overview", selectedProduct);
 			}
 		});
-		this.getChildren().add(removeButton);
-		this.getChildren().add(quantityHBox);
 		super.initHBox();
+		this.getChildren().add(quantityHBox);
+		this.getChildren().add(removeButton);
 	}
 	
 	private void initQuantityVBox() {
