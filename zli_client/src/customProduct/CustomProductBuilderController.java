@@ -93,5 +93,9 @@ public class CustomProductBuilderController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		customProductScrollPane.setContent(ManageData.customSelectorVBox);
 	}
+	
+	public void updateOverviewScrollPane() {
+		//customProductOverviewScrollPane.setContent(addToCartButton);
+	}
 
 }

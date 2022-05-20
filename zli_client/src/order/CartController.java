@@ -121,6 +121,7 @@ public class CartController implements Initializable {
 			instance.initCart();
 		}
 	}
+	
     @FXML
     void emptyCart(MouseEvent event) {
     	cart.emptyCart();

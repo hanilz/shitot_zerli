@@ -8,6 +8,7 @@ import catalog.CatalogProductVBox;
 import catalog.CatalogVBox;
 import client.ClientFormController;
 import customProduct.CustomProductHBox;
+import customProduct.SelectorHBox;
 import entities.Item;
 import entities.Product;
 import javafx.collections.FXCollections;
@@ -115,7 +116,7 @@ public class ManageData {
 	
 	public static void initCustomProductItemHBoxes() {
 		for (int i = 0; i < items.size(); i++) {
-			CustomProductHBox customProductItemHBox = new CustomProductHBox(items.get(i));
+			CustomProductHBox customProductItemHBox = new SelectorHBox(items.get(i));
 			customProductItemHBox.initHBox();
 			customSelectorVBox.getChildren().add(customProductItemHBox);
 		}
@@ -123,7 +124,7 @@ public class ManageData {
 	
 	public static void initCustomProductProductsHBoxes() {
 		for (int i = 0; i < products.size(); i++) {
-			CustomProductHBox customProductHBox = new CustomProductHBox(products.get(i));
+			CustomProductHBox customProductHBox = new SelectorHBox(products.get(i));
 			customProductHBox.initHBox();
 			customSelectorVBox.getChildren().add(customProductHBox);
 		}
