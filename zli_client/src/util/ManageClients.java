@@ -46,7 +46,7 @@ public class ManageClients {
 		case SERVICE_EXPERT:
 			break;
 		case STORE_MANGER:
-			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.MANAGE_USERS, Screens.REGISTER_CUSTMER}));
+			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.MANAGE_USERS, Screens.REGISTER_CUSTMER,Screens.VIEW_ORDERS_MANAGER}));
 		case STORE_WORKER:
 			break;
 		default:

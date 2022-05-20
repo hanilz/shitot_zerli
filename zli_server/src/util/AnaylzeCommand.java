@@ -22,6 +22,7 @@ import entities.OrderItem;
 import entities.OrderProduct;
 import entities.Product;
 import entities.UserDetails;
+import mangeCustomerOrders.ManagerOrderView;
 import survey.SurveyQuestion;
 
 /**
@@ -646,6 +647,31 @@ public class AnaylzeCommand {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public static ArrayList<ManagerOrderView> selectOrdersForManager(int mangerID) {
+		ArrayList<ManagerOrderView> orders = new ArrayList<>();
+		Connection conn = DataBaseController.getConn();
+		String query = "SELECT O.idOrder, O.price, UD.firstName,UD.lastName,O.date,O.status FROM zli.orders o, zli.branches b,zli.user_details UD,zli.users U WHERE o.idBranch=b.idBranch AND b.idManager =? AND (O.status = 'Waiting for Approvel' OR O.status = 'Waiting for Cancelation' ) AND U.idUser = O.idUser AND UD.idAccount=U.idAccount;";
+		
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, mangerID);
+			ResultSet rs = preparedStmt.executeQuery();
+			while (rs.next()) {
+				int idOrder = rs.getInt(1);
+				Double price = rs.getDouble(2);
+				String firstName = rs.getString(3);
+				String lastName = rs.getString(4);
+				String date= rs.getString(5);
+				String status= rs.getString(6);
+				orders.add(new ManagerOrderView(idOrder, price, firstName, lastName, date, status));
+			}
+		} catch (SQLException e) {
+			System.out.println("failed to fetch orders for manager");
+			e.printStackTrace();
+		}
+		return orders;
 	}
 
 }

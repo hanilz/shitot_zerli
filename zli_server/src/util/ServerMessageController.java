@@ -17,6 +17,7 @@ import entities.OrderProduct;
 import entities.Product;
 import entities.ProductsBase;
 import entities.UserDetails;
+import mangeCustomerOrders.ManagerOrderView;
 import ocsf.server.ConnectionToClient;
 import server.ServerController;
 import survey.SurveyQuestion;
@@ -78,6 +79,7 @@ public class ServerMessageController {
 			message.put("response", branches);
 			break;
 		case FETCH_ORDERS:
+
 			break;
 		case FETCH_PRODUCTS:
 			ArrayList<Product> products = AnaylzeCommand.selectAllProducts();
@@ -186,6 +188,10 @@ public class ServerMessageController {
 		case DELETE_USER_DETAILS:
 			boolean remove = AnaylzeCommand.deleteUserDetails((int)message.get("idAccount"));
 			message.put("response",remove);
+			break;
+		case FETCH_ORDERS_MANAGER:
+			ArrayList<ManagerOrderView> orders = AnaylzeCommand.selectOrdersForManager((Integer)message.get("manager id"));
+			message.put("response", orders);
 			break;
 		default:
 			break;
