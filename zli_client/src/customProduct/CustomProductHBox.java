@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import util.InputChecker;
 
 public class CustomProductHBox extends HBox implements ICustomProductHBox {
 	protected ProductsBase product;
@@ -18,6 +19,9 @@ public class CustomProductHBox extends HBox implements ICustomProductHBox {
 	private VBox idNameVBox = new VBox();
 	private Label idLabel;
 	private Label nameLabel;
+	private VBox priceVBox = new VBox();
+	private Label priceLabel = new Label("Price:");
+	private Label amountLabel;
 
 	public CustomProductHBox(ProductsBase product) {
 		this.product = product;
@@ -31,12 +35,21 @@ public class CustomProductHBox extends HBox implements ICustomProductHBox {
 		this.setMinHeight(20);
 
 		initImageProduct();
-
+		initPriceVBox();
 		initProductDetailsVBox();
 
 		this.getChildren().add(imageVBox);
 		this.getChildren().add(idNameVBox);
+		this.getChildren().add(priceVBox);
 
+	}
+	
+	private void initPriceVBox() {
+		amountLabel = new Label(InputChecker.price(product.getPrice()));
+		amountLabel.setFont(new Font(23));
+		priceVBox.getChildren().add(priceLabel);
+		priceVBox.getChildren().add(amountLabel);
+		priceVBox.setSpacing(5);
 	}
 
 	private void initProductDetailsVBox() {
