@@ -140,7 +140,7 @@ public class CustomProductBuilderController implements Initializable {
 		for (Node current : ManageData.customSelectorVBox.getChildren()) {
 			if (current instanceof SelectorHBox) {
 				SelectorHBox currentSelector = (SelectorHBox) current;
-				if (overViewSelected != null && currentSelector.getSelectedHBox() !=null) {
+				if (overViewSelected != null && currentSelector.getSelectedHBox() != null) {
 					if (currentSelector.getSelectedHBox().equals(overViewSelected)
 							&& currentSelector.getSelected().isSelected()) {
 						currentSelector.getSelected().setSelected(false);
@@ -159,19 +159,20 @@ public class CustomProductBuilderController implements Initializable {
 			}
 		}
 	}
-	
+
 	public static void updateTotalPriceLabel() {
 		customControllerInstace.updateTotalPrice();
 	}
-	
+
 	private void updateTotalPrice() {
 		double totalPrice = 0;
-		for(Node currentSelected : overViewVBox.getChildren()) {
-			if(currentSelected instanceof SelectedHBox) {
-				totalPrice += (((SelectedHBox) currentSelected).getQuantity())*(((SelectedHBox) currentSelected).getProduct().getPrice());
+		for (Node currentSelected : overViewVBox.getChildren()) {
+			if (currentSelected instanceof SelectedHBox) {
+				totalPrice += (((SelectedHBox) currentSelected).getQuantity())
+						* (((SelectedHBox) currentSelected).getProduct().getPrice());
 			}
 		}
-		
+
 		totalPriceLabel.setText("" + totalPrice);
 	}
 
