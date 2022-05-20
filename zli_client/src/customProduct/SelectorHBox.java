@@ -1,7 +1,5 @@
 package customProduct;
 
-import java.util.ArrayList;
-
 import entities.ProductsBase;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,7 +16,7 @@ public class SelectorHBox extends CustomProductHBox implements ICustomProductHBo
 	private Label priceLabel = new Label("Price:");
 	private Label amountLabel;
 	
-	private ArrayList<SelectedHBox> selectedList = new ArrayList<>();
+	private SelectedHBox selectedHBox;
 
 	public SelectorHBox(ProductsBase product) {
 		super(product);
@@ -27,6 +25,7 @@ public class SelectorHBox extends CustomProductHBox implements ICustomProductHBo
 	@Override
 	public void initHBox() {
 		initPriceVBox();
+		setCheckBoxEvent();
 		super.initHBox();
 		this.getChildren().add(selected);
 		this.getChildren().add(priceVBox);
@@ -40,25 +39,36 @@ public class SelectorHBox extends CustomProductHBox implements ICustomProductHBo
 		priceVBox.setSpacing(5);
 	}
 
-	private void checkSelected() {
+	private void setCheckBoxEvent() {
 		EventHandler<ActionEvent> event = new EventHandler<>() {
 			@Override
 			public void handle(ActionEvent event) {
 				if (event.getSource() instanceof CheckBox) {
 					if(selected.isSelected()) {
-						//init selectedHBox
-						selectedList.add(new SelectedHBox(product));
-						for(SelectedHBox current : selectedList)
-							current.initHBox();
+						//init selectedHBox when the product/item is selected
+						selectedHBox = new SelectedHBox(product);
+						selectedHBox.initHBox();
+						CustomProductBuilderController.updateOverViewVBox("add to overview", selectedHBox);
+						selected.setSelected(true);
 					}
 					else {
-						//if not selected
+						//if not selected - remove the product/item from the overview
+						selectedHBox = null;
+						CustomProductBuilderController.updateOverViewVBox("remove from overview", selectedHBox);
+						selected.setSelected(false);
 					}
-					selected.setSelected(!selected.isSelected());
 				}
 			}
 		};
 		selected.setOnAction(event);
+	}
+
+	public SelectedHBox getSelectedHBox() {
+		return selectedHBox;
+	}
+
+	public CheckBox getSelected() {
+		return selected;
 	}
 
 }

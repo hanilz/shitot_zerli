@@ -31,6 +31,7 @@ public class ManageData {
 	private static final int NUMBER_OF_COLUMNS = 3; 
 
 	private static ArrayList<CatalogVBox> catalogVBoxList = new ArrayList<>();
+	private static ArrayList<CustomProductHBox> customProductsCheckBox = new ArrayList<>();
 	
 	public static void fetchAllProducts() {
 		HashMap<String, Object> message = new HashMap<>();
@@ -118,6 +119,7 @@ public class ManageData {
 		for (int i = 0; i < items.size(); i++) {
 			CustomProductHBox customProductItemHBox = new SelectorHBox(items.get(i));
 			customProductItemHBox.initHBox();
+			customProductsCheckBox.add(customProductItemHBox);
 			customSelectorVBox.getChildren().add(customProductItemHBox);
 		}
 	}
@@ -126,7 +128,12 @@ public class ManageData {
 		for (int i = 0; i < products.size(); i++) {
 			CustomProductHBox customProductHBox = new SelectorHBox(products.get(i));
 			customProductHBox.initHBox();
+			customProductsCheckBox.add(customProductHBox);
 			customSelectorVBox.getChildren().add(customProductHBox);
 		}
+	}
+
+	public static ArrayList<CustomProductHBox> getCustomProductsCheckBox() {
+		return customProductsCheckBox;
 	}
 }

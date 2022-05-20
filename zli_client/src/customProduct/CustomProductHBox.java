@@ -63,4 +63,8 @@ public class CustomProductHBox extends HBox implements ICustomProductHBox {
 		imageVBox.setPrefWidth(60);
 		imageVBox.setAlignment(Pos.CENTER_LEFT);
 	}
+
+	public ProductsBase getProduct() {
+		return product;
+	}
 }
