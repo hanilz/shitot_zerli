@@ -13,6 +13,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import util.InputChecker;
 import util.ManageData;
 import util.ManageScreens;
 import util.Screens;
@@ -173,7 +174,7 @@ public class CustomProductBuilderController implements Initializable {
 			}
 		}
 
-		totalPriceLabel.setText("" + totalPrice);
+		totalPriceLabel.setText(InputChecker.price(totalPrice));
 	}
 
 }
