@@ -23,8 +23,7 @@ public class SplashScreenController implements Initializable {
 			ManageData.initCatalogGrid();
 			ManageData.initCustomProductItemHBoxes();
 			ManageData.initCustomProductProductsHBoxes();
-			
-			ManageScreens.changeScreenTo(Screens.CATALOG);						
+	        ManageScreens.changeScreenTo(Screens.CATALOG);						
 		}
 	}
 }
