@@ -5,92 +5,151 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.CartController">
+<VBox prefHeight="720.0" prefWidth="1280.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.CartController">
    <children>
-      <HBox alignment="CENTER" prefHeight="46.0" prefWidth="804.0" spacing="300.0">
+      <GridPane prefHeight="76.0" prefWidth="1260.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="422.0" minWidth="0.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="964.0" minWidth="10.0" prefWidth="964.0" />
+          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <ImageView fitHeight="80.0" fitWidth="103.0" nodeOrientation="INHERIT" onMouseClicked="#changeToHomeScreen" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../resources/catalog/home.png" />
-               </image>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="49.0" prefWidth="114.0" text="Cart" textAlignment="CENTER">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="69.0" prefWidth="965.0" text="Cart" textAlignment="CENTER" GridPane.columnIndex="1">
                <font>
                   <Font size="47.0" />
                </font>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
                <padding>
                   <Insets right="4.0" />
                </padding>
             </Label>
-            <Button fx:id="emptyCartButton" mnemonicParsing="false" onMouseClicked="#emptyCart" text="Empty Cart" textFill="#942b2b">
+            <Button fx:id="emptyCartButton" mnemonicParsing="false" onMouseClicked="#emptyCart" text="Empty Cart" textFill="#942b2b" GridPane.columnIndex="2">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-         </children>
-      </HBox>
-      <ScrollPane prefHeight="386.0" prefWidth="894.0">
-         <content>
-            <VBox fx:id="cartItemVBox" prefHeight="380.0" prefWidth="985.0" />
-         </content>
-      </ScrollPane>
-      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="51.0">
-         <children>
-            <Button fx:id="backToCatalogButton" mnemonicParsing="false" onMousePressed="#changeToCatalogScreen" prefHeight="27.0" prefWidth="127.0" text="Back To Catalog">
-               <HBox.margin>
-                  <Insets right="430.0" />
-               </HBox.margin>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <VBox alignment="CENTER" prefHeight="99.0" prefWidth="173.0" spacing="5.0">
+            <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Label text="Total Price">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="priceLabel" text="59 $">
-                     <font>
-                        <Font size="34.0" />
-                     </font>
-                  </Label>
+                  <ImageView fitHeight="80.0" fitWidth="103.0" nodeOrientation="INHERIT" onMouseClicked="#changeToHomeScreen" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/catalog/home.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
                </children>
             </VBox>
-            <Button fx:id="buyButton" mnemonicParsing="false" onMousePressed="#buy" prefHeight="25.0" prefWidth="89.0" text="Buy">
-               <HBox.margin>
-                  <Insets right="20.0" />
-               </HBox.margin>
-               <padding>
-                  <Insets right="2.0" />
-               </padding>
+         </children>
+      </GridPane>
+      <HBox spacing="10.0">
+         <children>
+            <VBox alignment="TOP_CENTER" spacing="10.0">
+               <children>
+                  <VBox alignment="TOP_CENTER">
+                     <children>
+                        <Label text="Products &amp; Items">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Separator maxWidth="-Infinity" prefHeight="4.0" prefWidth="166.0" />
+                     </children>
+                  </VBox>
+                  <ScrollPane prefHeight="458.0" prefWidth="1260.0">
+                     <content>
+                        <VBox fx:id="cartItemVBox" prefHeight="300.0" prefWidth="822.0" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <VBox alignment="TOP_CENTER" prefHeight="470.0" prefWidth="781.0" spacing="10.0">
+               <children>
+                  <VBox alignment="TOP_CENTER">
+                     <children>
+                        <Label text="Custom Products">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Separator maxWidth="-Infinity" prefHeight="6.0" prefWidth="170.0" />
+                     </children>
+                  </VBox>
+                  <ScrollPane prefHeight="458.0" prefWidth="1260.0">
+                     <content>
+                        <VBox fx:id="cartItemVBox1" prefHeight="251.0" prefWidth="343.0" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <GridPane prefHeight="104.0" prefWidth="1260.0">
+        <columnConstraints>
+          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="625.0" minWidth="10.0" prefWidth="175.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1100.0" minWidth="10.0" prefWidth="1085.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="backToCatalogButton" mnemonicParsing="false" onMousePressed="#changeToCatalogScreen" prefHeight="27.0" prefWidth="127.0" text="Back To Catalog">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
             </Button>
+            <HBox alignment="CENTER_RIGHT" prefHeight="192.0" prefWidth="1085.0" spacing="51.0" GridPane.columnIndex="1">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="99.0" prefWidth="173.0" spacing="5.0">
+                     <children>
+                        <Label text="Total Price">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="priceLabel" text="59 $">
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <Button fx:id="buyButton" mnemonicParsing="false" onMousePressed="#buy" prefHeight="25.0" prefWidth="89.0" text="Buy">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets right="2.0" />
+                     </padding>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets left="13.0" right="13.0" />
+               </padding>
+            </HBox>
          </children>
-         <padding>
-            <Insets left="13.0" right="13.0" />
-         </padding>
-      </HBox>
+      </GridPane>
    </children>
+   <padding>
+      <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+   </padding>
 </VBox>
