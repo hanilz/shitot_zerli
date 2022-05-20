@@ -1,6 +1,5 @@
 package catalog;
 
-import entities.Product;
 import entities.ProductsBase;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
