@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import util.ManageScreens;
 
 public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 	private Product product; // will be used to get the data from
@@ -61,7 +62,9 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 				Stage stage = new Stage();
 				stage.setTitle("Product Details - " + product.getName());
 				stage.setScene(scene);
+				ManageScreens.addPopup(stage);
 				stage.showAndWait();
+				ManageScreens.removePopup(stage);
 			}
 		});
 	}
