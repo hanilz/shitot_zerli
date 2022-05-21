@@ -9,6 +9,7 @@ import client.ClientFormController;
 import entities.AccountPayment;
 import entities.Branch;
 import entities.Cart;
+import entities.CustomProduct;
 import entities.DeliveriesOrders;
 import entities.Item;
 import entities.Order;
@@ -74,6 +75,8 @@ public class CheckoutController implements Initializable {
 	@FXML
 	private TextField yearField;
 
+	private ArrayList<CustomProduct> customProducts = new ArrayList<>();
+
 	private ArrayList<Product> products = new ArrayList<>();
 	
 	private ArrayList<Item> items = new ArrayList<>();
@@ -96,7 +99,9 @@ public class CheckoutController implements Initializable {
 	}
 
 	private void addToLists(ProductsBase product) {
-		if(product instanceof Product)
+		if(product instanceof CustomProduct)
+			customProducts.add((CustomProduct) product);
+		else if(product instanceof Product)
 			products.add((Product) product);
 		else if(product instanceof Item)
 			items.add((Item) product);
@@ -171,11 +176,20 @@ public class CheckoutController implements Initializable {
 			System.out.println("yayy!! order added to the db");
 			insertOrderProductsToDB(orderId);
 			insertOrderItemsToDB(orderId);
+			if(customProducts.size() > 0)
+				insertCustomProductsData(orderId);
 			if (SingletonOrder.getInstance().getDelivery() != null)
 				insertDelivery(orderId);
 		} else
 			System.out.println("of pufff, insert failed!");
 
+	}
+
+	private void insertCustomProductsData(Integer orderId) {
+		insertCustomProductsToDB();
+		insertCustomProductProductsToDB();
+		insertCustomProductItemsToDB();
+		insertOrderCustomProductsToDB(orderId);
 	}
 
 	private void insertOrderProductsToDB(int idOrder) {
@@ -233,6 +247,49 @@ public class CheckoutController implements Initializable {
 			System.out.println("of pufff, insert failed!");
 	}
 
+	private void insertCustomProductsToDB() {
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.INSERT_CUSTOM_PRODUCTS);
+		message.put("custom products", customProducts);
+		Object response = ClientFormController.client.accept(message);
+		customProducts = (ArrayList<CustomProduct>) response;  // will update the ids of the custom products
+	}
+
+	private void insertCustomProductProductsToDB() {
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.INSERT_CUSTOM_PRODUCT_PRODUCTS);
+		message.put("custom products", customProducts);
+		Object response = ClientFormController.client.accept(message);
+		if (response.equals("insert custom product products successful"))
+			System.out.println("yayy!! custom product products added to the db");
+		else
+			System.out.println("pufff of, insert custom product products failed!");
+	}
+
+	private void insertCustomProductItemsToDB() {
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.INSERT_CUSTOM_PRODUCT_ITEMS);
+		message.put("custom products", customProducts);
+		Object response = ClientFormController.client.accept(message);
+		if (response.equals("insert custom product items successful"))
+			System.out.println("yayy!! custom product items added to the db");
+		else
+			System.out.println("pufff of, insert custom product items failed!");
+		
+	}
+
+	private void insertOrderCustomProductsToDB(Integer orderId) {
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.INSERT_ORDER_CUSTOM_PRODUCTS);
+		message.put("custom products", customProducts);
+		message.put("idOrder", orderId);
+		Object response = ClientFormController.client.accept(message);
+		if (response.equals("insert order custom products successful"))
+			System.out.println("yayy!! order custom products added to the db");
+		else
+			System.out.println("pufff of, insert order custom products failed!");		
+	}
+	
 	private void showMessage(String textToShow) {
 		messageLabel.setText(textToShow);
 		PauseTransition pause = new PauseTransition(Duration.seconds(3));

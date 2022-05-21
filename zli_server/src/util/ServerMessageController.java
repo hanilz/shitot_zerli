@@ -7,6 +7,7 @@ import java.util.HashMap;
 import customerComplaint.Complaint;
 import entities.AccountPayment;
 import entities.Branch;
+import entities.CustomProduct;
 import entities.DeliveriesOrders;
 import entities.Delivery;
 import entities.Item;
@@ -111,6 +112,30 @@ public class ServerMessageController {
 			Order order = (Order) message.get("order");
 			Integer idOrderReturned = AnaylzeCommand.insertNewOrder(order);
 			message.put("response", idOrderReturned);
+			break;
+		case INSERT_CUSTOM_PRODUCTS:
+			ArrayList<CustomProduct> insertCustomProductsList = (ArrayList<CustomProduct>) message.get("custom products");
+			insertCustomProductsList = AnaylzeCommand.insertCustomProducts(insertCustomProductsList);
+			message.put("response", insertCustomProductsList);
+			break;
+		case INSERT_CUSTOM_PRODUCT_PRODUCTS:
+			ArrayList<CustomProduct> insertCustomProductProductsList = (ArrayList<CustomProduct>) message.get("custom products");
+			boolean isInsertCustomProductProducts = AnaylzeCommand.insertCustomProductProducts(insertCustomProductProductsList);
+			response = isInsertCustomProductProducts ? "insert custom product products successful" : "insert custom product products failed";
+			message.put("response", response);
+			break;
+		case INSERT_CUSTOM_PRODUCT_ITEMS:
+			ArrayList<CustomProduct> insertCustomProductItemsList = (ArrayList<CustomProduct>) message.get("custom products");
+			boolean isInsertCustomProductItems = AnaylzeCommand.insertCustomProductItems(insertCustomProductItemsList);
+			response = isInsertCustomProductItems ? "insert custom product items successful" : "insert custom product items failed";
+			message.put("response", response);
+			break;
+		case INSERT_ORDER_CUSTOM_PRODUCTS:
+			ArrayList<CustomProduct> insertOrderCustomProductsList = (ArrayList<CustomProduct>) message.get("custom products");
+			Integer idOrder = (Integer) message.get("idOrder");
+			boolean isInsertOrderCustomProducts = AnaylzeCommand.insertOrderCustomProducts(insertOrderCustomProductsList, idOrder);
+			response = isInsertOrderCustomProducts ? "insert order custom products successful" : "insert order custom products failed";
+			message.put("response", response);
 			break;
 		case INSERT_ORDERS_PRODUCT:
 			ArrayList<OrderProduct> orderProductsList = (ArrayList<OrderProduct>) message.get("list order products");
