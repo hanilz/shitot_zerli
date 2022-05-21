@@ -1,6 +1,9 @@
-package order;
+package cart;
 
 import entities.Cart;
+import entities.CustomProduct;
+import entities.Item;
+import entities.Product;
 import entities.ProductsBase;
 import inputs.InputChecker;
 import javafx.beans.value.ChangeListener;
@@ -38,6 +41,7 @@ public class CartHBox extends HBox {
 	private Label priceLabel = new Label("Price");
 	private Label amountLabel;
 	private Button removeButton = new Button("X");
+	private Button viewContentsButton = new Button("View Contents");
 
 	public CartHBox(ProductsBase product, int quantity) {
 		this.product = product;
@@ -53,6 +57,9 @@ public class CartHBox extends HBox {
 
 		initProductDetailsVBox();
 
+		if(!isItem())
+			initViewContentsButton();
+		
 		initQuantityVBox();
 
 		initPriceDetailsVBox();
@@ -69,18 +76,24 @@ public class CartHBox extends HBox {
 
 		this.getChildren().add(image);
 		this.getChildren().add(idNameVBox);
+		if(!isItem())
+			this.getChildren().add(viewContentsButton);
 		this.getChildren().add(quantityVBox);
 		this.getChildren().add(priceVBox);
 		this.getChildren().add(removeButton);
+	}
+
+	private boolean isItem() {
+		return product instanceof Item;
 	}
 
 	private void initProductDetailsVBox() {
 		idLabel = new Label("CatID: " + product.getId());
 
 		nameLabel = new Label(product.getName());
-		nameLabel.setFont(new Font(30));
-		nameLabel.setMinWidth(520);
-		nameLabel.setPrefWidth(520);
+		nameLabel.setFont(new Font(26));
+		nameLabel.setMinWidth(360);
+		nameLabel.setPrefWidth(360);
 
 		idNameVBox.getChildren().add(idLabel);
 		idNameVBox.getChildren().add(nameLabel);
@@ -93,7 +106,8 @@ public class CartHBox extends HBox {
 		amountLabel.setFont(new Font(20));
 
 		priceVBox.setAlignment(Pos.CENTER);
-
+		priceVBox.setPrefWidth(180);
+		
 		priceVBox.getChildren().add(priceLabel);
 		priceVBox.getChildren().add(amountLabel);
 	}
@@ -141,6 +155,27 @@ public class CartHBox extends HBox {
 		image.setPreserveRatio(true);
 	}
 
+	private void initViewContentsButton() {
+		viewContentsButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				CartProductOverviewVBox overviewVBox;
+				if(product instanceof CustomProduct) {
+					CustomProduct customProduct = (CustomProduct) product;
+					overviewVBox = new CartProductOverviewEditVBox(customProduct);
+				}
+				else {
+					Product currentProduct = (Product) product;
+					overviewVBox = new CartProductOverviewNoEditVBox(currentProduct);
+				}
+				overviewVBox.initVBox();
+				
+				CartController.setOverviewVBox(overviewVBox);
+			}
+		});
+		
+	}
+	
 	public double getTotalSumPrice() {
 		return totalSumPrice;
 	}

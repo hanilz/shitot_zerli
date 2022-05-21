@@ -35,11 +35,11 @@ public class AnaylzeCommand {
 
 	public static ArrayList<Product> selectAllProducts() {
 		ArrayList<Product> products = new ArrayList<>();
-		HashMap<Integer, ArrayList<Item>> products_items = new HashMap<>(); // {productID : items}
+		HashMap<Integer, HashMap<Item, Integer>> products_items = new HashMap<>(); // {productID : items}
 		try {
 			Statement selectStmt = DataBaseController.getConn().createStatement();
 			ResultSet rs = selectStmt.executeQuery(
-					"SELECT p.*, i.* FROM products p JOIN product_items pi ON p.productID = pi.idProduct JOIN items i ON pi.idItem = i.itemID ORDER BY p.productID;");
+					"SELECT p.*, pi.quantity, i.* FROM products p JOIN product_items pi ON p.productID = pi.idProduct JOIN items i ON pi.idItem = i.itemID ORDER BY p.productID;");
 			while (rs.next()) {
 				int productId = rs.getInt(1);
 				Item currentItem = getItemFromResultSet(rs);
@@ -54,11 +54,11 @@ public class AnaylzeCommand {
 					Product productResult = new Product(productId, productName, productColor, productPrice, productType,
 							imagePath, flowerType, productDesc);
 					products.add(productResult);
-					ArrayList<Item> items = new ArrayList<>();
-					items.add(currentItem);
+					HashMap<Item, Integer> items = new HashMap<>();
+					items.put(currentItem, rs.getInt(9));
 					products_items.put(productId, items);
 				} else
-					products_items.get(productId).add(currentItem);
+					products_items.get(productId).put(currentItem, rs.getInt(9));
 			}
 
 			for (Product product : products)
@@ -70,12 +70,12 @@ public class AnaylzeCommand {
 	}
 
 	private static Item getItemFromResultSet(ResultSet rs) throws SQLException {
-		int itemID = rs.getInt(9);
-		String itemName = rs.getString(10);
-		String itemColor = rs.getString(11);
-		double itemPrice = rs.getDouble(12);
-		String itemType = rs.getString(13);
-		String imagePath = rs.getString(14);
+		int itemID = rs.getInt(10);
+		String itemName = rs.getString(11);
+		String itemColor = rs.getString(12);
+		double itemPrice = rs.getDouble(13);
+		String itemType = rs.getString(14);
+		String imagePath = rs.getString(15);
 		Item itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath);
 
 		return itemResult;
