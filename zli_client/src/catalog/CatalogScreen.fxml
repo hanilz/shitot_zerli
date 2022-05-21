@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="catalogVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="15.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.CatalogController">
+<VBox fx:id="catalogVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="15.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.CatalogController">
    <children>
       <GridPane id="upperGrid" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="73.0" prefWidth="1172.0">
         <columnConstraints>
@@ -74,10 +74,13 @@
             </VBox>
             <HBox fx:id="loginHBox" alignment="CENTER_LEFT" prefHeight="73.0" prefWidth="119.0" GridPane.columnIndex="1">
                <children>
-                  <ImageView fx:id="loginIcon" fitHeight="48.0" fitWidth="50.0" onMouseClicked="#openLoginPopup" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="loginIcon" fitHeight="48.0" fitWidth="50.0" onMouseClicked="#openLogin" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/home/login.png" />
                      </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </ImageView>
                   <VBox id="loginVBox" fx:id="loginVBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="73.0" prefWidth="63.0">
                      <HBox.margin>
@@ -93,7 +96,7 @@
                   </VBox>
                </children>
                <cursor>
-                  <Cursor fx:constant="HAND" />
+                  <Cursor fx:constant="DEFAULT" />
                </cursor>
             </HBox>
          </children>

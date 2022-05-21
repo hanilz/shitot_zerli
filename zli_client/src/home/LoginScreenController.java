@@ -18,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import util.Commands;
 import util.ManageScreens;
+import util.Screens;
 import util.Status;
 import util.UserType;
 
@@ -37,8 +38,8 @@ public class LoginScreenController implements Initializable {
 
 	@FXML
 	private Button backButton; // TODO - We need to remove the back button
-
-	private static boolean isPopup;
+	
+	private static boolean isPopup,isHome=true;
 
 	@SuppressWarnings("unchecked")
 	@FXML
@@ -102,13 +103,19 @@ public class LoginScreenController implements Initializable {
 	public static void enablePopup(boolean Popup) {
 		isPopup = Popup;
 	}
+	public static void enableHomeFlow(boolean flowToHome) {
+		isHome = flowToHome;
+	}
 
 	@FXML
 	void changeToHomeScreen(MouseEvent event) {
+		System.out.println(isHome);
 		if (isCatalogPopUp(event)) {
 			CloseWindow(event);
-		} else
+		} else if(isHome)
 			ManageScreens.home();
+		else 
+			ManageScreens.changeScreenTo(Screens.CATALOG);
 	}
 
 	private void loginUser(String username) {
