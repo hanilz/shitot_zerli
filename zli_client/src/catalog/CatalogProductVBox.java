@@ -43,6 +43,7 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 				Cart.getInstance().addToCart(product, 1, true);
 				System.out.println("Cart is: " + Cart.getInstance().getCart());
 				System.out.println(product.getName() + " added to cart woohoooo");
+				CatalogController.refreshTotalAmountInCart();
 			}
 		});
 	}
