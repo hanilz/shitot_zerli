@@ -2,22 +2,35 @@ package home;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import client.ClientFormController;
 import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import notifications.Notification;
+import notifications.NotificationController;
+import util.Commands;
 import util.ManageClients;
 import util.ManageScreens;
 import util.Screens;
 
 public class HomeUserTypesController implements HomeInterface,Initializable {
+	private ArrayList<Notification> notifications = new ArrayList<>(); 
+	
+    @FXML
+    private ImageView notificationIcon;
 
+    @FXML
+    private Label notificationLabel;
+    
     @FXML
     private Button exitButton;
 
@@ -50,11 +63,19 @@ public class HomeUserTypesController implements HomeInterface,Initializable {
 	}
 	
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		ArrayList<Screens> userScreens = ManageClients.getUserScreens(User.getUserInstance().getType());
 		setScreen(userScreens);// 
-		userNameLabel.setText(User.getUserInstance().getUsername());	
+		userNameLabel.setText(User.getUserInstance().getUsername());
+		
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.FETCH_NOTIFICATIONS);
+		message.put("idUser", User.getUserInstance().getIdUser());
+		Object response = ClientFormController.client.accept(message);
+		notifications = (ArrayList<Notification>)response;
+		notificationLabel.setText(""+notifications.size());
 	}
 
 	private void setScreen(ArrayList<Screens> userScreens) {// 
@@ -67,6 +88,16 @@ public class HomeUserTypesController implements HomeInterface,Initializable {
 			}
 	}
 	
+
+    @FXML
+    void showNotifications(MouseEvent event) {
+    	try {
+    		NotificationController.notifications = notifications;
+			ManageScreens.openPopupFXML(NotificationController.class.getResource("NotificationMainScreen.fxml"), "Notification Center");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
 
 
 }
