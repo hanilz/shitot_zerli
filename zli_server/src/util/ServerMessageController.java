@@ -17,6 +17,7 @@ import entities.OrderProduct;
 import entities.Product;
 import entities.UserDetails;
 import mangeCustomerOrders.ManagerOrderView;
+import notifications.Notification;
 import ocsf.server.ConnectionToClient;
 import server.ServerController;
 import survey.SurveyQuestion;
@@ -191,6 +192,18 @@ public class ServerMessageController {
 		case FETCH_ORDERS_MANAGER:
 			ArrayList<ManagerOrderView> orders = AnaylzeCommand.selectOrdersForManager((Integer)message.get("manager id"));
 			message.put("response", orders);
+			break;
+		case APPROVE_ORDER:
+			boolean approve = AnaylzeCommand.approveOrder((Integer)message.get("order id"));
+			message.put("response", approve);
+			break;
+		case CANCEL_ORDER:
+			boolean cancel = AnaylzeCommand.cancelOrder((Integer)message.get("order id"));
+			message.put("response", cancel);
+			break;
+		case FETCH_NOTIFICATIONS:
+			ArrayList<Notification> notifications = AnaylzeCommand.getNotification((Integer)message.get("idUser"));
+			message.put("response", notifications);
 			break;
 		default:
 			break;

@@ -23,6 +23,7 @@ import entities.OrderProduct;
 import entities.Product;
 import entities.UserDetails;
 import mangeCustomerOrders.ManagerOrderView;
+import notifications.Notification;
 import survey.SurveyQuestion;
 
 /**
@@ -652,7 +653,7 @@ public class AnaylzeCommand {
 	public static ArrayList<ManagerOrderView> selectOrdersForManager(int mangerID) {
 		ArrayList<ManagerOrderView> orders = new ArrayList<>();
 		Connection conn = DataBaseController.getConn();
-		String query = "SELECT O.idOrder, O.price, UD.firstName,UD.lastName,O.date,O.status FROM zli.orders o, zli.branches b,zli.user_details UD,zli.users U WHERE o.idBranch=b.idBranch AND b.idManager =? AND (O.status = 'Waiting for Approvel' OR O.status = 'Waiting for Cancelation' ) AND U.idUser = O.idUser AND UD.idAccount=U.idAccount;";
+		String query = "SELECT O.idOrder, O.price, UD.firstName,UD.lastName,O.date,O.status FROM zli.orders o, zli.branches b,zli.user_details UD,zli.users U WHERE o.idBranch=b.idBranch AND b.idManager =? AND (O.status = 'Waiting for Approval' OR O.status = 'Waiting for Cancelation' ) AND U.idUser = O.idUser AND UD.idAccount=U.idAccount;";
 		
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -672,6 +673,65 @@ public class AnaylzeCommand {
 			e.printStackTrace();
 		}
 		return orders;
+	}
+
+	public static boolean approveOrder(int idOrder) {
+		Connection conn = DataBaseController.getConn();
+		String query = "UPDATE orders SET status = 'Approved' WHERE idOrder = ? ;";
+		// String query = "UPDATE FROM complaints WHERE idComplaint = ?;";
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idOrder);
+			int row = preparedStmt.executeUpdate();
+			if (row == 0)
+				return false;
+			query = "UPDATE deliveries INNER JOIN deliveries_orders do ON do.idDelivery = deliveries.idDelivery SET deliveries.status = 'Awaiting Delivery' WHERE idOrder = ?;";
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idOrder);
+			preparedStmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("failed to fetch order numbers");
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
+	public static boolean cancelOrder(int idOrder) {
+		Connection conn = DataBaseController.getConn();
+		String query = "UPDATE orders SET status = 'Canceled' WHERE idOrder = ? ;";
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idOrder);
+			int row = preparedStmt.executeUpdate();
+			if (row == 0)
+				return false;
+			query = "UPDATE deliveries INNER JOIN deliveries_orders do ON do.idDelivery = deliveries.idDelivery SET deliveries.status = 'Canceled' WHERE idOrder = ?;";
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idOrder);
+			preparedStmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("failed to cancel order");
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	public static ArrayList<Notification> getNotification(int idUser) {
+		ArrayList<Notification> notification = new ArrayList<>();
+		Connection conn = DataBaseController.getConn();
+		String query = "SELECT * FROM notifications WHERE idUser = ?;";
+		try {
+			// Statement selectStmt = DataBaseController.getConn().createStatement(); why???
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idUser);
+			ResultSet rs = preparedStmt.executeQuery();
+			while (rs.next()) {
+				notification.add(new Notification(rs.getInt(1), rs.getInt(2), rs.getBoolean(3), rs.getString(4)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return notification;
 	}
 
 }
