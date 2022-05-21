@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 //this class is used to view a row of orders in the manager screen
 public class ManagerOrderView implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -878188029093139769L;
 	private int idOrder;
 	private Double price;
 	private String firstName;
