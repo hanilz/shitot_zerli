@@ -61,6 +61,7 @@ public class ClientFormController {
 			@Override
 			public void handle(WindowEvent e) {
 				ManageClients.exitClient();
+				ManageScreens.closeAllPopups();
 			}
 		});
 	}

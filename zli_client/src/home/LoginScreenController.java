@@ -109,7 +109,6 @@ public class LoginScreenController implements Initializable {
 
 	@FXML
 	void changeToHomeScreen(MouseEvent event) {
-		System.out.println(isHome);
 		if (isCatalogPopUp(event)) {
 			CloseWindow(event);
 		} else if(isHome)
