@@ -1,4 +1,4 @@
-package order;
+package cart;
 
 import java.io.IOException;
 import java.net.URL;
@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -39,6 +40,9 @@ public class CartController implements Initializable {
 	@FXML
 	private Label priceLabel;
 
+    @FXML
+    private ScrollPane overviewScrollPane;
+	
     @FXML
     private Button emptyCartButton;
 
@@ -128,7 +132,14 @@ public class CartController implements Initializable {
     	connectionWithCartHBox("refresh cart");
     }
     
-
+    public static void setOverviewVBox(VBox vBox) {
+    	instance.setOverviewScrollPane(vBox);
+    }
+    
+    private void setOverviewScrollPane(VBox vBox) {
+    	overviewScrollPane.setContent(vBox);
+    }
+    
 	/**
 	 * we need to clear the cart VBox in order to prevent duplicates from appearing
 	 * when we need to refresh the cart.

@@ -1,24 +1,24 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Product extends ProductsBase implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private String flowerType;
 	private String productDescription;
-	private ArrayList<Item> items;
+	private HashMap<Item, Integer> items;
 
 	// constructor with items
 	public Product(int id, String name, String color, double price, String type, String imagePath, String flowerType,
-			String productDescription, ArrayList<Item> items) {
+			String productDescription, HashMap<Item, Integer> items) {
 		super(id, name, color, price, type, imagePath);
 		this.flowerType = flowerType;
 		this.productDescription = productDescription;
 		this.items = items;
 	}
-	
+
 	// constructor without items
 	public Product(int id, String name, String color, double price, String type, String imagePath, String flowerType,
 			String productDescription) {
@@ -26,14 +26,14 @@ public class Product extends ProductsBase implements Serializable {
 		this.flowerType = flowerType;
 		this.productDescription = productDescription;
 	}
-	
+
 	/**
 	 * @return the flowerType
 	 */
 	public String getFlowerType() {
 		return flowerType;
 	}
-	
+
 	/**
 	 * @param flowerType the flowerType to set
 	 */
@@ -55,11 +55,11 @@ public class Product extends ProductsBase implements Serializable {
 		this.productDescription = productDescription;
 	}
 
-	public ArrayList<Item> getItems() {
+	public HashMap<Item, Integer> getItems() {
 		return items;
 	}
 
-	public void setItems(ArrayList<Item> items) {
+	public void setItems(HashMap<Item, Integer> items) {
 		this.items = items;
 	}
 }

@@ -159,7 +159,7 @@ public class CheckoutController implements Initializable {
 		String greetingCard = SingletonOrder.getInstance().getGreetingCard();
 		String dOrder = ""; // TODO: for now, we need to insert new text area for dOrder
 		Branch branch = SingletonOrder.getInstance().getBranch();
-		String status = "Waiting for approvel"; // TODO: const class or enum for order status
+		String status = "Waiting for approval"; // TODO: const class or enum for order status
 		String paymentMethod = "credit card"; // TODO: talk with everyone about this field in the db.
 		User user = User.getUserInstance();
 		HashMap<String, Object> message = new HashMap<>();

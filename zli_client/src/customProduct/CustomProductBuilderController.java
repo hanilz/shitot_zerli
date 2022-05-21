@@ -2,6 +2,7 @@ package customProduct;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import entities.Cart;
@@ -91,13 +92,13 @@ public class CustomProductBuilderController implements Initializable {
 	private static CustomProductBuilderController customControllerInstance;
 
 	private VBox overViewVBox = new VBox();
-	private ArrayList<Item> items = new ArrayList<>();
-	private ArrayList<Product> products = new ArrayList<>();
+	private HashMap<Item, Integer> items = new HashMap<>();
+	private HashMap<Product, Integer> products = new HashMap<>();
 
 	@FXML
 	void addToCart(MouseEvent event) {
-		if (overViewVBox.getChildren().size() == 0) {
-			switchFillAllFields();
+		if (overViewVBox.getChildren().size() == 0) {  // if no items/products were selected
+			switchFillAllFields();  // alert the user
 			return;
 		}
 		getAllProductsFromOverview();
@@ -130,10 +131,10 @@ public class CustomProductBuilderController implements Initializable {
 				ProductsBase currentProductsBase = currentSelected.getProduct();
 				if (currentProductsBase instanceof Product) {
 					Product currentProduct = (Product) currentProductsBase;
-					products.add(currentProduct);
+					products.put(currentProduct, currentSelected.getQuantity());
 				} else { // is Item
 					Item currentItem = (Item) currentProductsBase;
-					items.add(currentItem);
+					items.put(currentItem, currentSelected.getQuantity());
 				}
 			}
 		}

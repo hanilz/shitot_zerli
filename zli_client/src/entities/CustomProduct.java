@@ -1,37 +1,25 @@
 package entities;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
-public class CustomProduct extends ProductsBase {
+public class CustomProduct extends Product {
 
 	private static final long serialVersionUID = 1L;
 
-	private ArrayList<Item> items;
-
-	private ArrayList<Product> products;
+	private HashMap<Product, Integer> products;
 
 	public CustomProduct(int id, String name, String color, double price, String type, String imagePath,
-			ArrayList<Item> items, ArrayList<Product> products) {
-		super(id, name, color, price, type, imagePath);
+			HashMap<Item, Integer> items, HashMap<Product, Integer> products) {
+		super(id, name, color, price, type, imagePath, "Custom", "Custom", items);
 
-		this.items = items;
 		this.products = products;
 	}
 
-	public ArrayList<Item> getItems() {
-		return items;
-	}
-
-	public void setItems(ArrayList<Item> items) {
-		this.items = items;
-	}
-
-	public ArrayList<Product> getProducts() {
+	public HashMap<Product, Integer> getProducts() {
 		return products;
 	}
 
-	public void setProducts(ArrayList<Product> products) {
+	public void setProducts(HashMap<Product, Integer> products) {
 		this.products = products;
 	}
-
 }
