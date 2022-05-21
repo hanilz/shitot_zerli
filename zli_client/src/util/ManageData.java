@@ -87,7 +87,7 @@ public class ManageData {
 				ManageScreens.changeScreenTo(Screens.CUSTOM_PRODUCT_BUILDER);
 			}
 		});
-        
+        customProductVBox.setId("customProductCard");
         customProductVBox.getChildren().add(customProductImage);
         catalogGrid.setId("catalogGrid");
         catalogGrid.add(customProductVBox, 0, 0);  // set as first VBox in Grid

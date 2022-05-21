@@ -1,0 +1,14 @@
+#zliClientImage {
+	-fx-image: url(../connectWallpaper.png);
+}
+
+#connectToIPButton {
+	-fx-background-color: #F4F4F4;
+	-fx-background-radius: 30;
+	-fx-background-insets: 0, 1, 1;
+	-fx-text-fill: black;
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
+	-fx-font-weight: bold;
+	-fx-padding: 5 10 5 10;
+	-fx-font-size: 14px;
+}

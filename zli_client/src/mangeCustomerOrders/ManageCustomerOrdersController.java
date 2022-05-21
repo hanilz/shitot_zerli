@@ -5,11 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-import buttonStrategy.ApproveOrder;
-import buttonStrategy.ColumnAdder;
 import client.ClientFormController;
-import entities.ManageUsers;
-import entities.Order;
 import entities.User;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;

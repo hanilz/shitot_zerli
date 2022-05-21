@@ -5,6 +5,7 @@ import java.util.HashMap;
 import client.ClientFormController;
 import entities.AccountPayment;
 import entities.UserDetails;
+import inputs.InputChecker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -16,7 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import util.Commands;
-import util.InputChecker;
 import util.ManageScreens;
 
 public class RegistrationController {

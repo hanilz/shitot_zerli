@@ -16,6 +16,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import manageCatalog.ManageCatalogController;
@@ -41,6 +42,7 @@ public class ManageScreens {
 	 * @throws Exception
 	 */
 	public static void changeScene(URL url, String title) throws Exception {
+		//setIconApplication();
 		FXMLLoader loader = new FXMLLoader();
 		try {
 			loader = new FXMLLoader(url);
@@ -50,10 +52,7 @@ public class ManageScreens {
 		Parent root = loader.load();
 		root.styleProperty();
 		Scene scene = new Scene(root);
-		String style = url.toString();
-		style = style.substring(0,style.length() - 4);
-		style+="css";
-		scene.getStylesheets().add(style);
+		setStyleSheet(url, scene);
 		Platform.runLater(new Runnable() { // this thread will help us change between scenes and avoid exceptions
 			@Override
 			public void run() {
@@ -63,8 +62,17 @@ public class ManageScreens {
 			}
 		});
 	}
+
+	private static void setStyleSheet(URL url, Scene scene) {
+		String[] splitedUrl = url.toString().split("/");
+		String style = splitedUrl[splitedUrl.length-1];
+		style = style.substring(0,style.length() - 4);
+		style+="css";
+		scene.getStylesheets().add("resources/css/"+style);
+	}
 	
 	public static void openPopupFXML(URL url, String title) throws Exception {
+		//setIconApplication();
 		FXMLLoader loader = new FXMLLoader();
 		try {
 			loader = new FXMLLoader(url);
@@ -84,9 +92,14 @@ public class ManageScreens {
 			}
 		});
 	}
+	
+	private static void setIconApplication() {
+		stage.getIcons().add(new Image("/resources/icon.png"));
+	}
 
 	public static void setStage(Stage stage) {
 		ManageScreens.stage = stage;
+		setIconApplication();
 	}
 
 	public static Stage getStage() {
@@ -112,10 +125,10 @@ public class ManageScreens {
 				ManageScreens.changeScene(LoginScreenController.class.getResource("LoginScreen.fxml"), "Login");
 				break;
 			case CATALOG_SPLASH_SCREEN:
-				ManageScreens.changeScene(SplashScreenController.class.getResource("SplashScreen.fxml"), "Loading Catalog...");
+				ManageScreens.changeScene(SplashScreenController.class.getResource("SplashScreen.fxml"), "Loading Zli Catalog...");
 				break;
 			case CATALOG:
-				ManageScreens.changeScene(CatalogController.class.getResource("CatalogScreen.fxml"), "Catalog");
+				ManageScreens.changeScene(CatalogController.class.getResource("CatalogScreen.fxml"), "Zli: Catalog");
 				break;
 			case CART:
 				ManageScreens.changeScene(CartController.class.getResource("CartScreen.fxml"), "Cart Screen");
@@ -138,7 +151,7 @@ public class ManageScreens {
 						"Checkout Screen");
 				break;
 			case CLIENT:
-				ManageScreens.changeScene(ClientScreen.class.getResource("ClientScreen.fxml"), "Zli Client");
+				ManageScreens.changeScene(ClientScreen.class.getResource("ClientScreen.fxml"), "Zli: Connect To Client");
 				break;
 			case MANAGE_USERS:
 				ManageScreens.changeScene(ManageUsersController.class.getResource("ManageUsers.fxml"), "Manage Users");
