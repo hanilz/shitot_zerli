@@ -67,6 +67,11 @@
 		0.0, 5.0);
 }
 
+#loginVBox {
+	-fx-PrefHeight: 73;
+	-fx-PrefWidth: 63;
+}
+
 #upperGrid {
 	-fx-Hgap: 10;
 }

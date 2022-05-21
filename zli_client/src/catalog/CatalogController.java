@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -62,7 +63,10 @@ public class CatalogController implements Initializable {
     private ImageView loginIcon;
 
     @FXML
-    private Label loginLable;
+    private Label loginLabel;
+    
+    @FXML
+    private VBox loginVBox;
 
 	private GridPane catalogGrid = ManageData.catalogGrid;
 
@@ -79,8 +83,6 @@ public class CatalogController implements Initializable {
 	@FXML
 	void openLoginPopup(MouseEvent event) {
 		ManageScreens.changeScreenTo(Screens.LOGIN);
-		
-
 	}
 
 	@FXML
@@ -95,7 +97,9 @@ public class CatalogController implements Initializable {
 		if(User.getUserInstance().isUserLoggedIn())
 		{
 			loginIcon.setVisible(false);
-			loginLable.setText("Welcom "+User.getUserInstance().getUsername());
+			loginLabel.setText("Welcome "+User.getUserInstance().getUsername());
+			loginVBox.setPrefHeight(73);
+			loginVBox.setPrefWidth(100);
 		}
 	}
 }

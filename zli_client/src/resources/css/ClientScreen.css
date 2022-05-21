@@ -12,3 +12,14 @@
 	-fx-padding: 5 10 5 10;
 	-fx-font-size: 14px;
 }
+
+#connectToServerBox {
+	-fx-background-color: #FFEEEB;
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
+	-fx-background-radius: 50;
+}
+
+#serverField {
+	 -fx-text-box-border: #000000; 
+	 -fx-focus-color: #000000
+}
