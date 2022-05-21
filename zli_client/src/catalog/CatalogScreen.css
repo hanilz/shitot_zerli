@@ -46,8 +46,8 @@
 }
 
 #catalogCard {
-	-fx-background-color: #D8E2DC, linear-gradient(#D8E2DC 50%, white 100%),
-		radial-gradient(center 50% -40%, radius 200%, #D8E2DC 45%, rgba(0, 0, 0,
+	-fx-background-color: #D8EFDC, linear-gradient(#D8EFDC 50%, white 100%),
+		radial-gradient(center 50% -40%, radius 200%, #D8EFDC 45%, rgba(0, 0, 0,
 		0) 50%);
 	-fx-padding: 5 10 15 10;
 	-fx-background-radius: 20;
@@ -67,11 +67,11 @@
 }
 
 #filterScrollPane {
-	-fx-border-color: #D8E2DC;
+	-fx-border-color: #D8EFDC;
 	-fx-border-width: 3px;
 }
 
 #cartVBox {
-	-fx-background-color: #D8E2DC;
+	-fx-background-color: #D8EFDC;
 	-fx-background-radius: 15;
 }
