@@ -1,13 +1,13 @@
 package cart;
 
 import entities.Product;
-import inputs.InputChecker;
 import javafx.geometry.Pos;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import util.InputChecker;
 
 public class CartProductOverviewVBox extends VBox {
 	protected Product product;

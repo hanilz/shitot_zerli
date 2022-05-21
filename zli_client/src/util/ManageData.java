@@ -34,22 +34,16 @@ public class ManageData {
 	private static ArrayList<CatalogVBox> catalogVBoxList = new ArrayList<>();
 	private static ArrayList<CustomProductHBox> customProductsCheckBox = new ArrayList<>();
 	
-	@SuppressWarnings("unchecked")
 	public static void fetchAllProducts() {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command",Commands.FETCH_PRODUCTS);
-		MessageHandler.getHandlerInstance().setMessageType(Messages.SELECT_ALL_PRODUCTS);
-		message.put("message type",MessageHandler.getHandlerInstance());
 		Object response = ClientFormController.client.accept(message);
 		products = (ObservableList<Product>) response;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public static void fetchAllItems() {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command",Commands.FETCH_ITEMS);
-		MessageHandler.getHandlerInstance().setMessageType(Messages.SELECT_ALL_ITEMS);
-		message.put("message type",MessageHandler.getHandlerInstance());
 		Object response = ClientFormController.client.accept(message);
 		items = (ObservableList<Item>) response;
 	}

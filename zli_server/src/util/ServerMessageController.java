@@ -4,10 +4,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import customerComplaint.Complaint;
+import entities.AccountPayment;
 import entities.Branch;
-import entities.Complaint;
+import entities.DeliveriesOrders;
+import entities.Delivery;
 import entities.Item;
 import entities.ManageUsers;
+import entities.Order;
+import entities.OrderItem;
+import entities.OrderProduct;
 import entities.Product;
 import entities.UserDetails;
 import mangeCustomerOrders.ManagerOrderView;
@@ -76,8 +82,7 @@ public class ServerMessageController {
 
 			break;
 		case FETCH_PRODUCTS:
-			AnaylzeCommand.execueQuery(((MessageHandler)message.get("message type")));
-			ArrayList<Product> products = (ArrayList<Product>) ((MessageHandler)message.get("message type")).getResponseFromDb();
+			ArrayList<Product> products = AnaylzeCommand.selectAllProducts();
 			message.put("response", products);
 			break;
 		case FETCH_SURVEYS:
@@ -85,36 +90,37 @@ public class ServerMessageController {
 			message.put("response", surveys);
 			break;
 		case INSERT_ACCOUNT_PAYMENT:
-			AnaylzeCommand.execueQuery(((MessageHandler)message.get("message type")));
-			boolean isInsert = (boolean) ((MessageHandler)message.get("message type")).getResponseFromDb();
+			AccountPayment accountPayment = (AccountPayment) message.get("account payment");
+			boolean isInsert = AnaylzeCommand.insertAccountPayment(accountPayment);
 			response = isInsert ? "insert account payment successful" : "insert account payment failed";
 			message.put("response", response);
 			break;
 		case INSERT_DELIVERY:
-			AnaylzeCommand.execueQuery(((MessageHandler)message.get("message type")));
-			int idDeliveryReturned = (int) ((MessageHandler)message.get("message type")).getResponseFromDb();
+			Delivery delivery = (Delivery) message.get("delivery");
+			int idDeliveryReturned = AnaylzeCommand.insertNewDelivery(delivery);
 			message.put("response", idDeliveryReturned);
 			break;
 		case INSERT_DELIVERY_ORDER:
-			AnaylzeCommand.execueQuery(((MessageHandler)message.get("message type")));
-			boolean isInserted = (boolean) ((MessageHandler)message.get("message type")).getResponseFromDb();
+			DeliveriesOrders deliveryOrder = (DeliveriesOrders) message.get("delivery order");
+			boolean isInserted = AnaylzeCommand.insertDeliveryOrder(deliveryOrder.getIdOrder(),
+					deliveryOrder.getIdDelivery());
 			response = isInserted ? "insert delivery order successful" : "insert delivery order failed";
 			message.put("response", response);
 			break;
 		case INSERT_ORDER:
-			AnaylzeCommand.execueQuery(((MessageHandler)message.get("message type")));
-			Integer idOrderReturned = (Integer) ((MessageHandler)message.get("message type")).getResponseFromDb();
+			Order order = (Order) message.get("order");
+			Integer idOrderReturned = AnaylzeCommand.insertNewOrder(order);
 			message.put("response", idOrderReturned);
 			break;
 		case INSERT_ORDERS_PRODUCT:
-			AnaylzeCommand.execueQuery(((MessageHandler)message.get("message type")));
-			boolean isOrderInserted = (boolean) ((MessageHandler)message.get("message type")).getResponseFromDb();
+			ArrayList<OrderProduct> orderProductsList = (ArrayList<OrderProduct>) message.get("list order products");
+			boolean isOrderInserted = AnaylzeCommand.insertOrderProducts(orderProductsList);
 			response = isOrderInserted ? "insert order products successful" : "insert order products failed";
 			message.put("response", response);
 			break;
 		case INSERT_ORDERS_ITEMS:
-			AnaylzeCommand.execueQuery(((MessageHandler)message.get("message type")));
-			boolean isOrdersItemsInserted = (boolean) ((MessageHandler)message.get("message type")).getResponseFromDb();
+			ArrayList<OrderItem> orderItemsList = (ArrayList<OrderItem>) message.get("list order items");
+			boolean isOrdersItemsInserted = AnaylzeCommand.insertOrderItems(orderItemsList);
 			if (isOrdersItemsInserted)
 				message.put("response", "insert order items successful");
 			else
@@ -129,8 +135,7 @@ public class ServerMessageController {
 			message.put("logout", AnaylzeCommand.logoutUser((int) message.get("logoutID")));
 			break;
 		case FETCH_ITEMS:
-			AnaylzeCommand.execueQuery(((MessageHandler)message.get("message type")));
-			ArrayList<Item> items = (ArrayList<Item>) ((MessageHandler)message.get("message type")).getResponseFromDb();
+			ArrayList<Item> items = AnaylzeCommand.selectAllItems();
 			message.put("response", items);
 			break;
 		case GET_SERVEY:
@@ -144,8 +149,8 @@ public class ServerMessageController {
 			message.put("response", response);
 			break;
 		case SUBMIT_COMPLAINT:
-			AnaylzeCommand.execueQuery(((MessageHandler)message.get("message type")));
-			boolean compailntSubmited = (boolean) ((MessageHandler)message.get("message type")).getResponseFromDb();
+			boolean compailntSubmited = AnaylzeCommand.submitComplaint((Integer)message.get("HandelingAgent"),(Integer)message.get("OrderNumber"),(String) message.get("ComplaintReason"),
+					(String) message.get("ComplaintText"));
 			message.put("response", compailntSubmited);
 			break;
 		case UPDATE_PRODUCTS_BASE:
@@ -155,23 +160,21 @@ public class ServerMessageController {
 			message.put("response", isUpdated);
 			break;
 		case GET_ORDER_NUMBERS:
-			AnaylzeCommand.execueQuery(((MessageHandler)message.get("message type")));
-			ArrayList<Integer> orderNumbers  = (ArrayList<Integer>) ((MessageHandler)message.get("message type")).getResponseFromDb();
+			ArrayList<Integer> orderNumbers;
+			orderNumbers = AnaylzeCommand.getOrderNumbers();
 			message.put("response", orderNumbers);
 			break;
 		case FETCH_COMPLAINTS:
-			AnaylzeCommand.execueQuery(((MessageHandler)message.get("message type")));
-			ArrayList<Complaint> complaints = (ArrayList<Complaint>) ((MessageHandler)message.get("message type")).getResponseFromDb();
+			ArrayList<Complaint> complaints;
+			complaints = AnaylzeCommand.getAllComplaints((Integer)message.get("HandlerID"));
 			message.put("response", complaints);
 			break;
 		case CLOSE_COMPLAINT:
-			AnaylzeCommand.execueQuery(((MessageHandler)message.get("message type")));
-			boolean ans = (boolean) ((MessageHandler)message.get("message type")).getResponseFromDb();
+			boolean ans = AnaylzeCommand.deleteComlaint((Integer)message.get("Complaint Number"));
 			message.put("response", ans);
 			break;
 		case GET_ORDER_SUM:
-			AnaylzeCommand.execueQuery(((MessageHandler)message.get("message type")));
-			Double sum = (Double) ((MessageHandler)message.get("message type")).getResponseFromDb();
+			Double sum = AnaylzeCommand.getOrderPrice((Integer)message.get("Order Number"));
 			message.put("response", sum);
 			break;
 		case NEW_USER_DETAILS:
