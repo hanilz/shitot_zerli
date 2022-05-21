@@ -1,6 +1,8 @@
 package util;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import catalog.CatalogController;
 import catalog.SplashScreenController;
@@ -33,7 +35,8 @@ import survey.SurveyHomeController;
 public class ManageScreens {
 	private static Stage stage;
 	private static Stage popupStage;
-	
+	private static ArrayList<Stage> openedPopups = new ArrayList<>();
+
 	/**
 	 * This method will help us to switch between the screens
 	 * 
@@ -42,7 +45,7 @@ public class ManageScreens {
 	 * @throws Exception
 	 */
 	public static void changeScene(URL url, String title) throws Exception {
-		//setIconApplication();
+		// setIconApplication();
 		FXMLLoader loader = new FXMLLoader();
 		try {
 			loader = new FXMLLoader(url);
@@ -65,14 +68,14 @@ public class ManageScreens {
 
 	private static void setStyleSheet(URL url, Scene scene) {
 		String[] splitedUrl = url.toString().split("/");
-		String style = splitedUrl[splitedUrl.length-1];
-		style = style.substring(0,style.length() - 4);
-		style+="css";
-		scene.getStylesheets().add("resources/css/"+style);
+		String style = splitedUrl[splitedUrl.length - 1];
+		style = style.substring(0, style.length() - 4);
+		style += "css";
+		scene.getStylesheets().add("resources/css/" + style);
 	}
-	
+
 	public static void openPopupFXML(URL url, String title) throws Exception {
-		//setIconApplication();
+		// setIconApplication();
 		FXMLLoader loader = new FXMLLoader();
 		try {
 			loader = new FXMLLoader(url);
@@ -82,6 +85,7 @@ public class ManageScreens {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		popupStage = new Stage();
+		addPopup(popupStage);
 		Platform.runLater(new Runnable() { // this thread will help us change between scenes and avoid exceptions
 			@Override
 			public void run() {
@@ -89,12 +93,27 @@ public class ManageScreens {
 				popupStage.setScene(scene);
 				popupStage.initModality(Modality.APPLICATION_MODAL);
 				popupStage.showAndWait();
+				removePopup(popupStage);
 			}
 		});
 	}
-	
+
 	private static void setIconApplication() {
 		stage.getIcons().add(new Image("/resources/icon.png"));
+	}
+
+	public static void addPopup(Stage popup) {
+		openedPopups.add(popup);
+	}
+
+	public static void removePopup(Stage popup) {
+		openedPopups.remove(popup);
+	}
+
+	public static void closeAllPopups() {
+		for (int i = 0; i < openedPopups.size(); i++)
+			openedPopups.get(i).close();
+		openedPopups.clear();
 	}
 
 	public static void setStage(Stage stage) {
@@ -125,7 +144,8 @@ public class ManageScreens {
 				ManageScreens.changeScene(LoginScreenController.class.getResource("LoginScreen.fxml"), "Login");
 				break;
 			case CATALOG_SPLASH_SCREEN:
-				ManageScreens.changeScene(SplashScreenController.class.getResource("SplashScreen.fxml"), "Loading Zli Catalog...");
+				ManageScreens.changeScene(SplashScreenController.class.getResource("SplashScreen.fxml"),
+						"Loading Zli Catalog...");
 				break;
 			case CATALOG:
 				ManageScreens.changeScene(CatalogController.class.getResource("CatalogScreen.fxml"), "Zli: Catalog");
@@ -151,37 +171,49 @@ public class ManageScreens {
 						"Checkout Screen");
 				break;
 			case CLIENT:
-				ManageScreens.changeScene(ClientScreen.class.getResource("ClientScreen.fxml"), "Zli: Connect To Client");
+				ManageScreens.changeScene(ClientScreen.class.getResource("ClientScreen.fxml"),
+						"Zli: Connect To Client");
 				break;
 			case MANAGE_USERS:
 				ManageScreens.changeScene(ManageUsersController.class.getResource("ManageUsers.fxml"), "Manage Users");
 				break;
 			case SURVEY_HOME:
-				ManageScreens.changeScene(SurveyHomeController.class.getResource("SurveyHomeScreen.fxml"), "Survey Home");
+				ManageScreens.changeScene(SurveyHomeController.class.getResource("SurveyHomeScreen.fxml"),
+						"Survey Home");
 				break;
 			case SURVEY:
 				ManageScreens.changeScene(SurveyHomeController.class.getResource("Survey.fxml"), "Survey");
 				break;
 			case COMPLAINT_HOME:
-				ManageScreens.changeScene(CustomerComplaintHomeController.class.getResource("CustomerComplaintHomeScreen.fxml"), "Customer Complaint Home");
+				ManageScreens.changeScene(
+						CustomerComplaintHomeController.class.getResource("CustomerComplaintHomeScreen.fxml"),
+						"Customer Complaint Home");
 				break;
 			case COMPLAINT:
-				ManageScreens.changeScene(CustomerComplaintHomeController.class.getResource("CustomerComplaintScreen.fxml"), "Customer Complaint");
+				ManageScreens.changeScene(
+						CustomerComplaintHomeController.class.getResource("CustomerComplaintScreen.fxml"),
+						"Customer Complaint");
 				break;
 			case EDIT_CATALOG:
-				ManageScreens.changeScene(ManageCatalogController.class.getResource("ManageCatalog.fxml"), "Manage Catalog");
+				ManageScreens.changeScene(ManageCatalogController.class.getResource("ManageCatalog.fxml"),
+						"Manage Catalog");
 				break;
 			case CUSTOM_PRODUCT_BUILDER:
-				ManageScreens.changeScene(CustomProductBuilderController.class.getResource("CustomProductBuilder.fxml"), "Custom Product Builder");
+				ManageScreens.changeScene(CustomProductBuilderController.class.getResource("CustomProductBuilder.fxml"),
+						"Custom Product Builder");
 				break;
 			case COMPLAINT_VIEW:
-				ManageScreens.changeScene(ComplaintViewController.class.getResource("CustomerComplaintView.fxml"), "Customer Complaint View");
+				ManageScreens.changeScene(ComplaintViewController.class.getResource("CustomerComplaintView.fxml"),
+						"Customer Complaint View");
 				break;
 			case REGISTER_CUSTMER:
-				ManageScreens.changeScene(RegistrationController.class.getResource("RegistrationScreen.fxml"), "Register New Customer");
+				ManageScreens.changeScene(RegistrationController.class.getResource("RegistrationScreen.fxml"),
+						"Register New Customer");
 				break;
 			case VIEW_ORDERS_MANAGER:
-				ManageScreens.changeScene(ManageCustomerOrdersController.class.getResource("ManageCustomerOrdersScreen.fxml"), "Manage Customer Orders");
+				ManageScreens.changeScene(
+						ManageCustomerOrdersController.class.getResource("ManageCustomerOrdersScreen.fxml"),
+						"Manage Customer Orders");
 				break;
 			default:
 				break;
@@ -198,7 +230,7 @@ public class ManageScreens {
 			ManageScreens.changeScreenTo(Screens.GUEST_HOME);
 	}
 
-	//set the name for the button in the home screen
+	// set the name for the button in the home screen
 	public static String getName(Screens user) {
 		switch (user) {
 		case CART:

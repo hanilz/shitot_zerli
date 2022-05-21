@@ -86,7 +86,9 @@ public class CartController implements Initializable {
 			Stage stage = new Stage();
 			stage.setScene(scene);
 			LoginScreenController.enablePopup(true);// enable popup
+			ManageScreens.addPopup(stage);
 			stage.showAndWait();
+			ManageScreens.removePopup(stage);
 			LoginScreenController.enablePopup(false);// disable popup
 			if(User.getUserInstance().getType()!=UserType.CUSTOMER)//need to FIX!!!!!need to show message only customers can buy
 				User.getUserInstance().logout();
