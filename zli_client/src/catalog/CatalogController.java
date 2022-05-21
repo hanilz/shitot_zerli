@@ -3,11 +3,11 @@ package catalog;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import entities.Cart;
 import entities.User;
 import home.LoginScreenController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -18,7 +18,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import util.ManageData;
 import util.ManageScreens;
 import util.Screens;
@@ -69,6 +68,11 @@ public class CatalogController implements Initializable {
     
     @FXML
     private VBox loginVBox;
+    
+    @FXML
+    private Label totalAmountCartLabel;
+    
+    private static CatalogController instance;
 
 	private GridPane catalogGrid = ManageData.catalogGrid;
 
@@ -98,9 +102,19 @@ public class CatalogController implements Initializable {
 	void search(MouseEvent event) {
 
 	}
+	
+	public static void refreshTotalAmountInCart() {
+		instance.setTotalAmountCartLabel();
+	}
+	
+	private void setTotalAmountCartLabel() {
+		totalAmountCartLabel.setText(""+Cart.getInstance().getCart().size());
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		instance = this;
+		setTotalAmountCartLabel();
 		catalogGrid = ManageData.catalogGrid;
 		catalogScrollPane.setContent(catalogGrid);
 		LoginScreenController.enableHomeFlow(false);
