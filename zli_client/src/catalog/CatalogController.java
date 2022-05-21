@@ -3,6 +3,7 @@ package catalog;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -55,6 +56,12 @@ public class CatalogController implements Initializable {
     
     @FXML
     private ScrollPane filterScrollPane;
+    
+    @FXML
+    private ImageView loginIcon;
+
+    @FXML
+    private Label loginLable;
 
 	private GridPane catalogGrid = ManageData.catalogGrid;
 
@@ -70,6 +77,8 @@ public class CatalogController implements Initializable {
 
 	@FXML
 	void openLoginPopup(MouseEvent event) {
+		ManageScreens.changeScreenTo(Screens.LOGIN);
+		
 
 	}
 
@@ -82,5 +91,10 @@ public class CatalogController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		catalogGrid = ManageData.catalogGrid;
 		catalogScrollPane.setContent(catalogGrid);
+		if(User.getUserInstance().isUserLoggedIn())
+		{
+			loginIcon.setVisible(false);
+			loginLable.setText("Welcom "+User.getUserInstance().getUsername());
+		}
 	}
 }
