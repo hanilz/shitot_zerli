@@ -15,7 +15,6 @@ import entities.Order;
 import entities.OrderItem;
 import entities.OrderProduct;
 import entities.Product;
-import entities.ProductsBase;
 import entities.UserDetails;
 import mangeCustomerOrders.ManagerOrderView;
 import ocsf.server.ConnectionToClient;
