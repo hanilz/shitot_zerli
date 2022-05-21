@@ -7,24 +7,31 @@ import java.util.ResourceBundle;
 
 import client.ClientFormController;
 import entities.User;
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 import util.Commands;
 import util.ManageScreens;
+import util.Screens;
 
 public class ManageCustomerOrdersController implements Initializable{
 	private static ObservableList<ManagerOrderView> ordersToApprove = FXCollections.observableArrayList();
 	private static ObservableList<ManagerOrderView> ordersToCancel = FXCollections.observableArrayList();
-	
+	private int messageDelay = 3;
 
     @FXML
     private Button approveCancelButton;
@@ -87,14 +94,16 @@ public class ManageCustomerOrdersController implements Initializable{
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		ordersToApprove.clear();
+		ordersToCancel.clear();
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.FETCH_ORDERS_MANAGER);
 		message.put("manager id", User.getUserInstance().getIdUser());
 		Object response = ClientFormController.client.accept(message);
 		for(ManagerOrderView mov : (ArrayList<ManagerOrderView>)response) {
-			if(mov.getStatus().equals("Waiting for approvel"))
+			if(mov.getStatus().equals("Waiting for Approval"))
 				ordersToApprove.add(mov);
-			else
+			else if(mov.getStatus().equals("Waiting for Cancelation"))
 				ordersToCancel.add(mov);
 		}
 		//table1
@@ -115,30 +124,107 @@ public class ManageCustomerOrdersController implements Initializable{
 		cancelOrdersTable.setItems(ordersToCancel);//set the information in the table	
 	}
 
-	@FXML
-	void returnHome(ActionEvent event) {
-		ManageScreens.home();
-	}
-	
+	//returns user to home screen
     @FXML
-    void approveCancelRequest(ActionEvent event) {
-
+    void returnHome(MouseEvent event) {
+    	ManageScreens.home();
     }
 
+    @FXML
+    void returnHomeBtn(ActionEvent event) {
+    	ManageScreens.home();
+    }
+	
+
+    //approves a new order - changes status to Approved
     @FXML
     void approveOrder(ActionEvent event) {
-
+    	ManagerOrderView mov = newOrderTable.getSelectionModel().getSelectedItem();
+    	if(mov == null) {
+    		displayError(messageDelay);
+    		return;
+    	}
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.APPROVE_ORDER);
+		message.put("order id", mov.getIdOrder());
+		Object response = ClientFormController.client.accept(message);
+		if((boolean)response) {
+			displayAlert("Order Approved","Order "+ mov.getIdOrder()+" Approved!");
+			ordersToApprove.remove(mov);
+			newOrderTable.refresh();
+		}
     }
 
+
+    //cancels new order
     @FXML
     void cancelOrder(ActionEvent event) {
-
+    	ManagerOrderView mov = newOrderTable.getSelectionModel().getSelectedItem();
+    	if(mov == null) {
+    		displayError(messageDelay);
+    		return;
+    	}
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.CANCEL_ORDER);
+		message.put("order id", mov.getIdOrder());
+		Object response = ClientFormController.client.accept(message);
+		if((boolean)response) {
+			displayAlert("Order Canceled","Order "+ mov.getIdOrder()+" Canceled!");
+			ordersToApprove.remove(mov);
+			newOrderTable.refresh();
+		}
     }
 
+    //cancels an order that was already in accepted
+    @FXML
+    void approveCancelRequest(ActionEvent event) {
+    	ManagerOrderView mov = cancelOrdersTable.getSelectionModel().getSelectedItem();
+    	if(mov == null) {
+    		displayError(messageDelay);
+    		return;
+    	}
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.CANCEL_ORDER);
+		message.put("order id", mov.getIdOrder());
+		Object response = ClientFormController.client.accept(message);
+		if((boolean)response) {
+			displayAlert("Order Canceled","Cancel request accepted!\nOrder "+ mov.getIdOrder()+" Canceled!");
+			ordersToCancel.remove(mov);
+			newOrderTable.refresh();
+		}
+    }
+
+    //denies cancel request
     @FXML
     void denyCancelRequest(ActionEvent event) {
-
+    	ManagerOrderView mov =cancelOrdersTable.getSelectionModel().getSelectedItem();
+    	if(mov == null) {
+    		displayError(messageDelay);
+    		return;
+    	}
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.APPROVE_ORDER);
+		message.put("order id", mov.getIdOrder());
+		Object response = ClientFormController.client.accept(message);
+		if((boolean)response) {
+			displayAlert("Cancel Request Not Approved","Cancel Request Not Approved!\nOrder "+ mov.getIdOrder()+" returned to status Approved");
+			ordersToCancel.remove(mov);
+			newOrderTable.refresh();
+		}
     }
 
+    //displays error message for n seconds
+    private void displayError(int n) {
+    	errorLabel.setVisible(true);
+    	PauseTransition pause = new PauseTransition(Duration.seconds(n));
+    	pause.setOnFinished(e -> errorLabel.setVisible(false));
+    	pause.play();
+    }
 
+	private void displayAlert(String title, String text) {
+		Alert a = new Alert(AlertType.NONE,title,ButtonType.CLOSE);
+		a.setTitle(title);
+		a.setContentText(text);
+		a.show();
+	}
 }

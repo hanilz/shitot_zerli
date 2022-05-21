@@ -15,6 +15,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import util.Commands;
 import util.ManageScreens;
 
@@ -185,10 +186,15 @@ public class RegistrationController {
 		return true;
 	}
 
-	@FXML
-	void returnHome(ActionEvent event) {
-		ManageScreens.home();
-	}
+    @FXML
+    void returnHome(MouseEvent event) {
+    	ManageScreens.home();
+    }
+
+    @FXML
+    void returnHomebtn(ActionEvent event) {
+    	ManageScreens.home();
+    }
 
 	// this method is used to check if all fields were filled in this form
 	private boolean checkFields() {

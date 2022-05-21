@@ -74,12 +74,12 @@
             </VBox>
             <HBox fx:id="loginHBox" alignment="CENTER_LEFT" onMouseClicked="#openLoginPopup" GridPane.columnIndex="1">
                <children>
-                  <ImageView fitHeight="48.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="loginIcon" fitHeight="48.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/home/login.png" />
                      </image>
                   </ImageView>
-                  <Label prefHeight="30.0" prefWidth="55.0" text="Login">
+                  <Label fx:id="loginLable" prefHeight="30.0" prefWidth="55.0" text="Login">
                      <font>
                         <Font size="16.0" />
                      </font>
