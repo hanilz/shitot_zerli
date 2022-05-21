@@ -1,21 +1,20 @@
-package customerComplaint;
+package entities;
 
 import java.io.Serializable;
 
-public class Complaint implements Serializable{
+public class Complaint implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4951050968131626674L;
 	private int complaintID;
+	private int userId;
 	private int orderID;
 	private String date;
 	private String status;
 	private String complaintReason;
 	private String complaintContent;
-	
 
-	
 	public Complaint(int complaintID, int orderID, int date, String status, String complaintReason,
 			String complaintContent) {
 		this.complaintID = complaintID;
@@ -25,14 +24,25 @@ public class Complaint implements Serializable{
 		this.complaintReason = complaintReason;
 		this.complaintContent = complaintContent;
 	}
-	
+
+	public Complaint(int orderID, int userId, String complaintReason, String complaintContent) {
+		this.orderID = orderID;
+		this.userId = userId;
+		this.complaintReason = complaintReason;
+		this.complaintContent = complaintContent;
+	}
+
 	private String getRemainingTime(int date) {
-		int minutes = date%60;
-		int hours = date/60;
-		if(hours<24) {
-			return String.format("%02d:%02d",23-hours,59-minutes);
+		int minutes = date % 60;
+		int hours = date / 60;
+		if (hours < 24) {
+			return String.format("%02d:%02d", 23 - hours, 59 - minutes);
 		}
 		return "DUE";
+	}
+
+	public int getUserId() {
+		return userId;
 	}
 
 	/**
@@ -126,11 +136,6 @@ public class Complaint implements Serializable{
 		return serialVersionUID;
 	}
 
-	
-	
-	
-	
-	
 //	public static void main(String[] args) {
 //		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
 //	    Date firstDate = null;
@@ -143,7 +148,7 @@ public class Complaint implements Serializable{
 //		}
 //		System.out.println(getRemainingTime(firstDate));
 //	}
-	
+
 //	LocalDateTime firstDate = date;
 //	//Date secondDate = new Date(System.currentTimeMillis());
 //	LocalDateTime secondDate = LocalDateTime.now();

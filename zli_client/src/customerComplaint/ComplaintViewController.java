@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import client.ClientFormController;
+import entities.Complaint;
 import inputs.InputChecker;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,6 +23,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import util.Commands;
 import util.ManageScreens;
+import util.MessageHandler;
+import util.Messages;
 import util.Screens;
 
 public class ComplaintViewController implements Initializable {
@@ -74,7 +77,10 @@ public class ComplaintViewController implements Initializable {
     void closeAndDeleteRequest(ActionEvent event) {
     	HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.CLOSE_COMPLAINT);
-		message.put("Complaint Number", complaint.getComplaintID());
+		MessageHandler.getHandlerInstance().setMessageType(Messages.DELETE_COMPLAINT);
+		MessageHandler.getHandlerInstance().setParametersQuery(complaint.getComplaintID());
+		message.put("message type",MessageHandler.getHandlerInstance());
+		//message.put("Complaint Number", complaint.getComplaintID());
 		Object response = ClientFormController.client.accept(message);
 		if (!(boolean) response) {
 			errorLabel.setText("*Failed to close request");
@@ -97,7 +103,10 @@ public class ComplaintViewController implements Initializable {
     	//refund = Double.parseDouble(refundText.getText());
     	HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.CLOSE_COMPLAINT);//might need to be changed in the future to save the refund to the user
-		message.put("Complaint Number", complaint.getComplaintID());
+		MessageHandler.getHandlerInstance().setMessageType(Messages.DELETE_COMPLAINT);
+		MessageHandler.getHandlerInstance().setParametersQuery(complaint.getComplaintID());
+		message.put("message type",MessageHandler.getHandlerInstance());
+		//message.put("Complaint Number", complaint.getComplaintID());
 		Object response = ClientFormController.client.accept(message);
 		if (!(boolean) response) {
 			errorLabel.setText("*Failed to close request");
@@ -147,7 +156,10 @@ public class ComplaintViewController implements Initializable {
 		
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.GET_ORDER_SUM);//might need to be changed in the future to save the refund to the user
-		message.put("Order Number", complaint.getOrderID());
+		MessageHandler.getHandlerInstance().setMessageType(Messages.GET_ORDER_PRICE);
+		MessageHandler.getHandlerInstance().setParametersQuery(complaint.getComplaintID());
+		message.put("message type",MessageHandler.getHandlerInstance());
+		//message.put("Order Number", complaint.getOrderID());
 		Object response = ClientFormController.client.accept(message);
 		orderPrice = (Double)response;
 		refundSlider.setMax(orderPrice);

@@ -31,6 +31,8 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import util.Commands;
 import util.ManageScreens;
+import util.MessageHandler;
+import util.Messages;
 import util.Screens;
 
 public class CheckoutController implements Initializable {
@@ -141,12 +143,13 @@ public class CheckoutController implements Initializable {
 		String cardNumber = cardNumberField.getText();
 		String cardDate = String.format("%s/%s", monthField.getText(), yearField.getText());
 		String cardVCC = vccField.getText();
-		AccountPayment accountPayment = new AccountPayment(fullName, cardNumber, cardDate, cardVCC,
-				User.getUserInstance());
-
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.INSERT_ACCOUNT_PAYMENT);
-		message.put("account payment", accountPayment);
+		//message.put("account payment", accountPayment);
+		MessageHandler.getHandlerInstance().setMessageType(Messages.INSERT_ACCOUNT_PAYMENT);
+		MessageHandler.getHandlerInstance().setParametersQuery(new AccountPayment(fullName, cardNumber, cardDate, cardVCC,
+				User.getUserInstance()));
+		message.put("message type",MessageHandler.getHandlerInstance());
 		Object response = ClientFormController.client.accept(message);
 		if (response.equals("insert account payment successful"))
 			System.out.println("yayy!! account payment added to the db");
@@ -164,7 +167,9 @@ public class CheckoutController implements Initializable {
 		User user = User.getUserInstance();
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.INSERT_ORDER);
-		message.put("order", new Order(totalPrice, greetingCard, dOrder, branch, status, paymentMethod, user));
+		MessageHandler.getHandlerInstance().setMessageType(Messages.INSERT_NEW_ORDER);
+		MessageHandler.getHandlerInstance().setParametersQuery(new Order(totalPrice, greetingCard, dOrder, branch, status, paymentMethod, user));
+		message.put("message type",MessageHandler.getHandlerInstance());
 		Object response = ClientFormController.client.accept(message);
 		Integer orderId = (Integer) response;
 		if (orderId != -1) {
@@ -185,7 +190,10 @@ public class CheckoutController implements Initializable {
 		for (Product currentProduct : products)
 			orderProductsList.add(new OrderProduct(idOrder, (Product) currentProduct,
 					Cart.getInstance().getCart().get(currentProduct)));
-		message.put("list order products", orderProductsList);
+		MessageHandler.getHandlerInstance().setMessageType(Messages.INSERT_ORDER_PRODUCTS);
+		MessageHandler.getHandlerInstance().setParametersQuery(orderProductsList);
+		message.put("message type",MessageHandler.getHandlerInstance());
+		//message.put("list order products", orderProductsList);
 		Object response = ClientFormController.client.accept(message);
 		if (response.equals("insert order products successful"))
 			System.out.println("yayy!! order products added to the db");
@@ -200,7 +208,10 @@ public class CheckoutController implements Initializable {
 		for (Item currentItem : items)
 			orderItemsList.add(new OrderItem(idOrder, (Item) currentItem,
 					Cart.getInstance().getCart().get(currentItem)));
-		message.put("list order items", orderItemsList);
+		MessageHandler.getHandlerInstance().setMessageType(Messages.INSERT_ORDER_ITEMS);
+		MessageHandler.getHandlerInstance().setParametersQuery(orderItemsList);
+		message.put("message type",MessageHandler.getHandlerInstance());
+		//message.put("list order items", orderItemsList);
 		Object response = ClientFormController.client.accept(message);
 		if (response.equals("insert order items successful"))
 			System.out.println("yayy!! order items added to the db");
@@ -213,7 +224,10 @@ public class CheckoutController implements Initializable {
 		// first - insert the delivery into the db
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.INSERT_DELIVERY);
-		message.put("delivery", SingletonOrder.getInstance().getDelivery());
+		MessageHandler.getHandlerInstance().setMessageType(Messages.INSERT_NEW_DELIVERY);
+		MessageHandler.getHandlerInstance().setParametersQuery(SingletonOrder.getInstance().getDelivery());
+		message.put("message type",MessageHandler.getHandlerInstance());
+		//message.put("delivery", SingletonOrder.getInstance().getDelivery());
 		Object response = ClientFormController.client.accept(message);
 		if ((Integer) response != -1) {
 			System.out.println("yayy!! delivery added to the db");
@@ -225,7 +239,10 @@ public class CheckoutController implements Initializable {
 		// second - insert the delivery order into the db
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.INSERT_DELIVERY_ORDER);
-		message.put("delivery order", new DeliveriesOrders(idOrder, idDelivery));
+		MessageHandler.getHandlerInstance().setMessageType(Messages.INSERT_DELIVERY_ORDER);
+		MessageHandler.getHandlerInstance().setParametersQuery(new DeliveriesOrders(idOrder, idDelivery));
+		message.put("message type",MessageHandler.getHandlerInstance());
+		//message.put("delivery order", new DeliveriesOrders(idOrder, idDelivery));
 		Object response = ClientFormController.client.accept(message);
 		if (response.equals("insert delivery order successful"))
 			System.out.println("yayy!! delivery order added to the db");

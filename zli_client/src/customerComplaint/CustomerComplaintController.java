@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import client.ClientFormController;
+import entities.Complaint;
 import entities.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,6 +23,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import util.Commands;
 import util.ManageScreens;
+import util.MessageHandler;
+import util.Messages;
 import util.Screens;
 
 /**
@@ -60,6 +63,8 @@ public class CustomerComplaintController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.GET_ORDER_NUMBERS);
+		MessageHandler.getHandlerInstance().setMessageType(Messages.GET_ORDER_NUMBERS);
+		message.put("message type",MessageHandler.getHandlerInstance());
 		orderNumbers = (ObservableList<Integer>) ClientFormController.client.accept(message);
 		orderNumberCombo.setItems(orderNumbers);
 	}
@@ -77,10 +82,13 @@ public class CustomerComplaintController implements Initializable {
 
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.SUBMIT_COMPLAINT);
-		message.put("OrderNumber", orderNumberCombo.getValue());
+		MessageHandler.getHandlerInstance().setMessageType(Messages.SUMBIT_COMPLAINT);
+		MessageHandler.getHandlerInstance().setParametersQuery(new Complaint(orderNumberCombo.getValue(), User.getUserInstance().getIdUser(), complaintReason.getText(), complaintText.getText()));
+		message.put("message type",MessageHandler.getHandlerInstance());
+		/*message.put("OrderNumber", orderNumberCombo.getValue());
 		message.put("ComplaintReason", complaintReason.getText());
 		message.put("ComplaintText", complaintText.getText());
-		message.put("HandelingAgent", User.getUserInstance().getIdUser());
+		message.put("HandelingAgent", User.getUserInstance().getIdUser());*/
 		Object response = ClientFormController.client.accept(message);
 		if (!(boolean) response) {
 			errorLabel.setVisible(true);
