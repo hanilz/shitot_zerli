@@ -5,11 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-import buttonStrategy.ApproveOrder;
-import buttonStrategy.ColumnAdder;
 import client.ClientFormController;
-import entities.ManageUsers;
-import entities.Order;
 import entities.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -88,6 +84,7 @@ public class ManageCustomerOrdersController implements Initializable{
     private TableColumn<ManagerOrderView, Double> priceCol1;
 
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		HashMap<String, Object> message = new HashMap<>();

@@ -3,12 +3,17 @@ package catalog;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
 import util.ManageData;
 import util.ManageScreens;
 import util.Screens;
 
 public class SplashScreenController implements Initializable {
+	
+    @FXML
+    private ImageView loadingScreen;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

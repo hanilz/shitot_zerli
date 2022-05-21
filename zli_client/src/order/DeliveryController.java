@@ -10,6 +10,7 @@ import client.ClientFormController;
 import entities.Branch;
 import entities.Delivery;
 import entities.SingletonOrder;
+import inputs.InputChecker;
 import javafx.animation.PauseTransition;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -27,7 +28,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import util.Commands;
-import util.InputChecker;
 import util.ManageScreens;
 import util.Screens;
 

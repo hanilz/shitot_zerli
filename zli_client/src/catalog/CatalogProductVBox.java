@@ -2,6 +2,7 @@ package catalog;
 
 import entities.Cart;
 import entities.Product;
+import inputs.InputChecker;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
@@ -9,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import util.InputChecker;
 
 public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 	private Product product; // will be used to get the data from
