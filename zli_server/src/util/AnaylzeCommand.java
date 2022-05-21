@@ -5,15 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
-import customerComplaint.Complaint;
 import entities.AccountPayment;
 import entities.Branch;
+import entities.Complaint;
+import entities.DeliveriesOrders;
 import entities.Delivery;
 import entities.Item;
 import entities.ManageUsers;
@@ -34,26 +32,69 @@ public class AnaylzeCommand {
 
 	public static boolean isUpdated = false;
 
-	public static ArrayList<Product> selectAllProducts() {
+	public static void execueQuery(MessageHandler handler) {
+		try {
+			Statement stmt = DataBaseController.getConn().createStatement();
+			switch (handler.getMessageType()) {
+			case SELECT_ALL_PRODUCTS:
+				selectAllProducts(stmt, handler);
+				break;
+			case SELECT_ALL_ITEMS:
+				selectAllItems(stmt, handler);
+				break;
+			case INSERT_ACCOUNT_PAYMENT:
+				insertAccountPayment(handler, DataBaseController.getConn());
+				break;
+			case INSERT_ORDER_ITEMS:
+				insertOrderItems(handler, DataBaseController.getConn());
+				break;
+			case INSERT_NEW_ORDER:
+				insertNewOrder(handler, DataBaseController.getConn());
+				break;
+			case INSERT_ORDER_PRODUCTS:
+				insertOrderProducts(handler, DataBaseController.getConn());
+				break;
+			case INSERT_NEW_DELIVERY:
+				insertNewDelivery(handler, DataBaseController.getConn());
+				break;
+			case INSERT_DELIVERY_ORDER:
+				insertDeliveryOrder(handler, DataBaseController.getConn());
+				break;
+			case DELETE_COMPLAINT:
+				deleteComlaint(handler, DataBaseController.getConn());
+				break;
+			case GET_ORDER_PRICE:
+				getOrderPrice(handler, DataBaseController.getConn());
+				break;
+			case GET_ORDER_NUMBERS:
+				getOrderNumbers(handler, stmt);
+				break;
+			case SUMBIT_COMPLAINT:
+				submitComplaint(handler, DataBaseController.getConn());
+				break;
+			case GET_ALL_COMPLAINTS:
+				getAllComplaints(handler, DataBaseController.getConn());
+				break;
+			default:
+				break;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void selectAllProducts(Statement stmt, MessageHandler handler) {
 		ArrayList<Product> products = new ArrayList<>();
 		HashMap<Integer, HashMap<Item, Integer>> products_items = new HashMap<>(); // {productID : items}
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = selectStmt.executeQuery(
+			ResultSet rs = stmt.executeQuery(
 					"SELECT p.*, pi.quantity, i.* FROM products p JOIN product_items pi ON p.productID = pi.idProduct JOIN items i ON pi.idItem = i.itemID ORDER BY p.productID;");
 			while (rs.next()) {
 				int productId = rs.getInt(1);
 				Item currentItem = getItemFromResultSet(rs);
 				if (!products_items.containsKey(productId)) {
-					String productName = rs.getString(2);
-					String flowerType = rs.getString(3);
-					String productColor = rs.getString(4);
-					double productPrice = rs.getDouble(5);// double
-					String productType = rs.getString(6);
-					String productDesc = rs.getString(7);
-					String imagePath = rs.getString(8);
-					Product productResult = new Product(productId, productName, productColor, productPrice, productType,
-							imagePath, flowerType, productDesc);
+					Product productResult = new Product(productId, rs.getString(2), rs.getString(4), rs.getDouble(5),
+							rs.getString(6), rs.getString(8), rs.getString(3), rs.getString(7));
 					products.add(productResult);
 					HashMap<Item, Integer> items = new HashMap<>();
 					items.put(currentItem, rs.getInt(9));
@@ -67,7 +108,22 @@ public class AnaylzeCommand {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return products;
+		handler.setResponseFromDb(products);
+	}
+
+	private static void selectAllItems(Statement stmt, MessageHandler handler) {
+		ArrayList<Item> items = new ArrayList<>();
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * FROM items;");
+			while (rs.next()) {
+				Item itemResult = new Item(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4),
+						rs.getString(5), rs.getString(6));
+				items.add(itemResult);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		handler.setResponseFromDb(items);
 	}
 
 	private static Item getItemFromResultSet(ResultSet rs) throws SQLException {
@@ -80,27 +136,6 @@ public class AnaylzeCommand {
 		Item itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath);
 
 		return itemResult;
-	}
-
-	public static ArrayList<Item> selectAllItems() {
-		ArrayList<Item> items = new ArrayList<>();
-		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = selectStmt.executeQuery("SELECT * FROM items;");
-			while (rs.next()) {
-				int itemID = rs.getInt(1);
-				String itemName = rs.getString(2);
-				String itemColor = rs.getString(3);
-				double itemPrice = rs.getDouble(4);
-				String itemType = rs.getString(5);
-				String imagePath = rs.getString(6);
-				Item itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath);
-				items.add(itemResult);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return items;
 	}
 
 	public static ArrayList<Branch> selectAllBranches() {
@@ -262,9 +297,8 @@ public class AnaylzeCommand {
 		return response;
 	}
 
-	public static boolean insertAccountPayment(AccountPayment accountPayment) {
-		Connection conn;
-		conn = DataBaseController.getConn();
+	private static void insertAccountPayment(MessageHandler handler, Connection conn) {
+		AccountPayment accountPayment = (AccountPayment) handler.getParametersQuery();
 		String query = "INSERT INTO account_payment (fullName, cardNumber, cardDate, cardVCC, idUser) VALUES (?, ?, ?, ?, ?);";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -277,10 +311,10 @@ public class AnaylzeCommand {
 			else
 				preparedStmt.setInt(5, accountPayment.getIdUser());
 			preparedStmt.executeUpdate();
-			return true;
+			handler.setResponseFromDb(true);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			handler.setResponseFromDb(false);
 		}
 	}
 
@@ -330,10 +364,9 @@ public class AnaylzeCommand {
 		}
 	}
 
-	public static int insertNewOrder(Order order) {
-		Connection conn;
+	private static void insertNewOrder(MessageHandler handler, Connection conn) {
+		Order order = (Order) handler.getParametersQuery();
 		int idOrder = -1;
-		conn = DataBaseController.getConn();
 		ResultSet rs = null;
 		String query = "INSERT INTO orders (price, greetingCard, dOrder, idBranch, status, paymentMethod, idUser) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		try {
@@ -352,10 +385,12 @@ public class AnaylzeCommand {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return idOrder;
+		handler.setResponseFromDb(idOrder);
 	}
 
-	public static boolean insertOrderProducts(ArrayList<OrderProduct> orderProductsList) {
+	private static void insertOrderProducts(MessageHandler handler, Connection conn) {
+		@SuppressWarnings("unchecked")
+		ArrayList<OrderProduct> orderProductsList = (ArrayList<OrderProduct>) handler.getParametersQuery();
 		StringBuffer buff = new StringBuffer();
 		buff.append("INSERT INTO order_products (idOrder, idProduct, quantity) VALUES ");
 		for (OrderProduct currentInsert : orderProductsList) {
@@ -365,18 +400,18 @@ public class AnaylzeCommand {
 		buff.deleteCharAt(buff.length() - 1);
 		buff.append(";");
 		try {
-			Connection conn;
-			conn = DataBaseController.getConn();
 			PreparedStatement preparedStmt = conn.prepareStatement(buff.toString());
 			preparedStmt.executeUpdate();
-			return true;
+			handler.setResponseFromDb(true);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			handler.setResponseFromDb(false);
 		}
 	}
 
-	public static boolean insertOrderItems(ArrayList<OrderItem> orderItemsList) {
+	private static void insertOrderItems(MessageHandler handler, Connection conn) {
+		@SuppressWarnings("unchecked")
+		ArrayList<OrderItem> orderItemsList = (ArrayList<OrderItem>) handler.getParametersQuery();
 		StringBuffer buff = new StringBuffer();
 		buff.append("INSERT INTO order_items (idOrder, idItem, quantity) VALUES ");
 		for (OrderItem currentInsert : orderItemsList) {
@@ -386,19 +421,17 @@ public class AnaylzeCommand {
 		buff.deleteCharAt(buff.length() - 1);
 		buff.append(";");
 		try {
-			Connection conn;
-			conn = DataBaseController.getConn();
 			PreparedStatement preparedStmt = conn.prepareStatement(buff.toString());
 			preparedStmt.executeUpdate();
-			return true;
+			handler.setResponseFromDb(true);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			handler.setResponseFromDb(false);
 		}
 	}
 
-	public static int insertNewDelivery(Delivery delivery) {
-		Connection conn;
+	private static void insertNewDelivery(MessageHandler handler, Connection conn) {
+		Delivery delivery = (Delivery) handler.getParametersQuery();
 		ResultSet rs = null;
 		int idOrder = -1;
 		conn = DataBaseController.getConn();
@@ -417,22 +450,21 @@ public class AnaylzeCommand {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return idOrder;
+		handler.setResponseFromDb(idOrder);
 	}
 
-	public static boolean insertDeliveryOrder(int idOrder, int idDelivery) {
-		Connection conn;
-		conn = DataBaseController.getConn();
+	private static void insertDeliveryOrder(MessageHandler handler, Connection conn) {
+		DeliveriesOrders deliveryOrder = (DeliveriesOrders) handler.getParametersQuery();
 		String query = "INSERT INTO deliveries_orders (idOrder, idDelivery) VALUES (?, ?);";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setInt(1, idOrder);
-			preparedStmt.setInt(2, idDelivery);
+			preparedStmt.setInt(1, deliveryOrder.getIdOrder());
+			preparedStmt.setInt(2, deliveryOrder.getIdDelivery());
 			preparedStmt.executeUpdate();
-			return true;
+			handler.setResponseFromDb(true);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			handler.setResponseFromDb(false);
 		}
 	}
 
@@ -492,32 +524,31 @@ public class AnaylzeCommand {
 		}
 	}
 
-	public static boolean submitComplaint(int idHandler, int orderNumber, String reason, String complaint) {
-		Connection conn = DataBaseController.getConn();
+	private static void submitComplaint(MessageHandler handler, Connection conn) {
+		Complaint complaint = (Complaint) handler.getParametersQuery();
 		String query = "INSERT INTO complaints (idUser, orderId, reason, content) VALUES (?, ?, ?, ?)";
 		PreparedStatement preparedStmt;
 		try {
 			preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setInt(1, idHandler);
-			preparedStmt.setInt(2, orderNumber);
-			preparedStmt.setString(3, reason);
-			preparedStmt.setString(4, complaint);
+			preparedStmt.setInt(1, complaint.getUserId());
+			preparedStmt.setInt(2, complaint.getOrderID());
+			preparedStmt.setString(3, complaint.getComplaintReason());
+			preparedStmt.setString(4, complaint.getComplaintContent());
 			preparedStmt.executeUpdate();
-			return true;
+			handler.setResponseFromDb(true);
 		} catch (SQLException e) {
 			System.out.println("Failed to insert complaint");
 			e.printStackTrace();
-			return false;
+			handler.setResponseFromDb(false);
 		}
 	}
 
-	public static ArrayList<Complaint> getAllComplaints(Integer handlerID) {
-		Connection conn = DataBaseController.getConn();
+	private static void getAllComplaints(MessageHandler handler, Connection conn) {
 		ArrayList<Complaint> complaints = new ArrayList<>();
 		try {
 			String query = "SELECT C.*, TIMESTAMPDIFF(MINUTE, C.date, now()) AS 'diff_of_day' FROM complaints C WHERE C.idUser = ? AND C.status = 'Active';";
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setInt(1, handlerID);
+			preparedStmt.setInt(1, (Integer) handler.getParametersQuery());
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
 				int complaintID = rs.getInt(1);
@@ -534,7 +565,7 @@ public class AnaylzeCommand {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return complaints;
+		handler.setResponseFromDb(complaints);
 	}
 
 	public static boolean updateItem(Item item) {
@@ -577,14 +608,11 @@ public class AnaylzeCommand {
 		}
 	}
 
-	public static ArrayList<Integer> getOrderNumbers() {
+	private static void getOrderNumbers(MessageHandler handler, Statement stmt) {
 		ArrayList<Integer> orders = new ArrayList<>();
-		Connection conn = DataBaseController.getConn();
 		String query = "SELECT O.idOrder FROM orders O WHERE O.idOrder NOT IN (SELECT C.orderId FROM complaints C);";
-		Statement selectStmt;
 		try {
-			selectStmt = conn.createStatement();
-			ResultSet rs = selectStmt.executeQuery(query);
+			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
 				int idOrder = rs.getInt(1);
 				orders.add(idOrder);
@@ -593,35 +621,32 @@ public class AnaylzeCommand {
 			System.out.println("failed to fetch order numbers");
 			e.printStackTrace();
 		}
-		return orders;
+		handler.setResponseFromDb(orders);
 	}
 
-	public static boolean deleteComlaint(int complaintID) {
-		Connection conn = DataBaseController.getConn();
+	private static void deleteComlaint(MessageHandler handler, Connection conn) {
 		String query = "UPDATE complaints SET status = 'Closed' WHERE idComplaint = ? ;";
 		// String query = "UPDATE FROM complaints WHERE idComplaint = ?;";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setInt(1, complaintID);
+			preparedStmt.setInt(1, (Integer) handler.getParametersQuery());
 			int row = preparedStmt.executeUpdate();
 			if (row == 0)
-				return false;
+				handler.setResponseFromDb(false);
 		} catch (SQLException e) {
 			System.out.println("failed to fetch order numbers");
 			e.printStackTrace();
 		}
-		return true;
+		handler.setResponseFromDb(true);
 	}
 
-	public static Double getOrderPrice(Integer orderNum) {
+	private static void getOrderPrice(MessageHandler handler, Connection conn) {
 		double idOrder = -1;
-		Connection conn = DataBaseController.getConn();
-
 		String query = "SELECT O.price FROM orders O WHERE O.idOrder = ?;";
 
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setInt(1, orderNum);
+			preparedStmt.setInt(1, (Integer) handler.getParametersQuery());
 			ResultSet rs = preparedStmt.executeQuery();
 			if (!rs.next()) {
 				System.out.println("failed to fetch order price");
@@ -631,7 +656,7 @@ public class AnaylzeCommand {
 			System.out.println("failed to fetch order numbers");
 			e.printStackTrace();
 		}
-		return idOrder;
+		handler.setResponseFromDb(idOrder);
 	}
 
 	public static boolean deleteUserDetails(int idAccount) {
@@ -654,7 +679,7 @@ public class AnaylzeCommand {
 		ArrayList<ManagerOrderView> orders = new ArrayList<>();
 		Connection conn = DataBaseController.getConn();
 		String query = "SELECT O.idOrder, O.price, UD.firstName,UD.lastName,O.date,O.status FROM zli.orders o, zli.branches b,zli.user_details UD,zli.users U WHERE o.idBranch=b.idBranch AND b.idManager =? AND (O.status = 'Waiting for Approval' OR O.status = 'Waiting for Cancelation' ) AND U.idUser = O.idUser AND UD.idAccount=U.idAccount;";
-		
+
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, mangerID);
@@ -664,8 +689,8 @@ public class AnaylzeCommand {
 				Double price = rs.getDouble(2);
 				String firstName = rs.getString(3);
 				String lastName = rs.getString(4);
-				String date= rs.getString(5);
-				String status= rs.getString(6);
+				String date = rs.getString(5);
+				String status = rs.getString(6);
 				orders.add(new ManagerOrderView(idOrder, price, firstName, lastName, date, status));
 			}
 		} catch (SQLException e) {
@@ -695,7 +720,7 @@ public class AnaylzeCommand {
 		}
 		return true;
 	}
-	
+
 	public static boolean cancelOrder(int idOrder) {
 		Connection conn = DataBaseController.getConn();
 		String query = "UPDATE orders SET status = 'Canceled' WHERE idOrder = ? ;";

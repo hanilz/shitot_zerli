@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import client.ClientController;
-import customerComplaint.Complaint;
 import entities.Branch;
+import entities.Complaint;
 import entities.Item;
 import entities.ManageUsers;
 import entities.Product;

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import client.ClientFormController;
+import entities.Complaint;
 import entities.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,6 +23,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import util.Commands;
 import util.ManageScreens;
+import util.MessageHandler;
+import util.Messages;
 import util.Screens;
 
 public class CustomerComplaintHomeController implements Initializable{
@@ -65,7 +68,10 @@ public class CustomerComplaintHomeController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.FETCH_COMPLAINTS);
-		message.put("HandlerID", User.getUserInstance().getIdUser());
+		MessageHandler.getHandlerInstance().setMessageType(Messages.GET_ALL_COMPLAINTS);
+		MessageHandler.getHandlerInstance().setParametersQuery(User.getUserInstance().getIdUser());
+		message.put("message type",MessageHandler.getHandlerInstance());
+		//message.put("HandlerID", User.getUserInstance().getIdUser());
 		Object response = ClientFormController.client.accept(message);
 		complaints = (ObservableList<Complaint>)response;
 //		for(Complaint complaint: complaints) {

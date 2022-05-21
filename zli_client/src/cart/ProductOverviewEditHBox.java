@@ -2,6 +2,7 @@ package cart;
 
 import customProduct.CustomProductHBox;
 import entities.ProductsBase;
+import inputs.InputChecker;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -10,8 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import util.InputChecker;
 
 public class ProductOverviewEditHBox extends CustomProductHBox {
 	private int quantity = 1;
