@@ -1,6 +1,7 @@
 package customProduct;
 
 import entities.ProductsBase;
+import inputs.InputChecker;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Control;
@@ -9,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import util.InputChecker;
 
 public class CustomProductHBox extends HBox implements ICustomProductHBox {
 	protected ProductsBase product;

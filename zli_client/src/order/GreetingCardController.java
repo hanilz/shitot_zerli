@@ -1,6 +1,7 @@
 package order;
 
 import entities.SingletonOrder;
+import inputs.InputChecker;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,7 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
-import util.InputChecker;
 import util.ManageScreens;
 import util.Screens;
 

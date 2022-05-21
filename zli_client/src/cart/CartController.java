@@ -9,6 +9,7 @@ import entities.Cart;
 import entities.ProductsBase;
 import entities.User;
 import home.LoginScreenController;
+import inputs.InputChecker;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,7 +21,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import util.InputChecker;
 import util.ManageScreens;
 import util.Screens;
 import util.UserType;
@@ -90,7 +90,9 @@ public class CartController implements Initializable {
 			Stage stage = new Stage();
 			stage.setScene(scene);
 			LoginScreenController.enablePopup(true);// enable popup
+			ManageScreens.addPopup(stage);
 			stage.showAndWait();
+			ManageScreens.removePopup(stage);
 			LoginScreenController.enablePopup(false);// disable popup
 			if(User.getUserInstance().getType()!=UserType.CUSTOMER)//need to FIX!!!!!need to show message only customers can buy
 				User.getUserInstance().logout();

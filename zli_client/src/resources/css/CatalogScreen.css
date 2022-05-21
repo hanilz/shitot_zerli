@@ -1,0 +1,77 @@
+#catalogVBox {
+	-fx-background: #FBF3F1;
+}
+
+#catalogBtn, #filterBtn, #searchBtn {
+	-fx-background-color: #F4F4F4;
+	-fx-background-radius: 30;
+	-fx-background-insets: 0, 1, 1;
+	-fx-text-fill: black;
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
+	-fx-font-weight: bold;
+	-fx-padding: 5 10 5 10;
+}
+
+#catalogScrollPane {
+	-fx-background-insets: 2;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical {
+	-fx-background-color: #FBF3F1;
+}
+
+.scroll-bar:horizontal .thumb, .scroll-bar:vertical .thumb {
+	-fx-background-color: #FEE1DC;
+	-fx-background-radius: 5em;
+}
+
+#productsLabel {
+	-fx-font-weight: bold;
+	-fx-font-size: 14px;
+	-fx-text-alignment: center;
+}
+
+#priceLabel {
+	-fx-font-weight: bold;
+	-fx-font-size: 16px;
+}
+
+#catalogCard, #customProductCard {
+	-fx-background-color: #FEE1DC;
+	-fx-padding: 5 10 15 10;
+	-fx-background-radius: 20;
+	-fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 10.0, 0.0,
+		0.0, 10.0);
+	-fx-spacing: 3;
+}
+
+#catalogGrid {
+	-fx-alignment: center;
+	-fx-Hgap: 40;
+	-fx-Vgap: 40;
+	-fx-PrefHeight: 438;
+	-fx-PrefWidth: 600;
+	-fx-padding: 0 0 0 13;
+	-fx-PrefHeight: 438;
+}
+
+#filterScrollPane {
+	-fx-border-color: #FEE1DC;
+	-fx-border-width: 2px;
+}
+
+#cartHBox, #homeVBox, #loginHBox {
+	-fx-background-color: #FEE1DC;
+	-fx-background-radius: 15;
+		-fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 5.0, 0.0,
+		0.0, 5.0);
+}
+
+#loginVBox {
+	-fx-PrefHeight: 73;
+	-fx-PrefWidth: 63;
+}
+
+#upperGrid {
+	-fx-Hgap: 10;
+}

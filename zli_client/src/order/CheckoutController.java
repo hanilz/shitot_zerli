@@ -18,6 +18,7 @@ import entities.Product;
 import entities.ProductsBase;
 import entities.SingletonOrder;
 import entities.User;
+import inputs.InputChecker;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,7 +30,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import util.Commands;
-import util.InputChecker;
 import util.ManageScreens;
 import util.Screens;
 

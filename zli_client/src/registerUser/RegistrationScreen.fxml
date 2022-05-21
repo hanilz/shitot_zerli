@@ -226,7 +226,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="66.0" prefWidth="980.0" spacing="170.0">
          <children>
-            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#returnHome" text="Close and Cancel" />
+            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#returnHomebtn" text="Close and Cancel" />
             <Button fx:id="completeRegistrationButton" mnemonicParsing="false" onAction="#createNewCustomerComplaint" text="Complete Registration" />
          </children>
       </HBox>

@@ -3,14 +3,18 @@ package mangeCustomerOrders;
 import java.io.Serializable;
 
 //this class is used to view a row of orders in the manager screen
-public class ManagerOrderView implements Serializable{
+public class ManagerOrderView implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int idOrder;
 	private Double price;
 	private String firstName;
 	private String lastName;
 	private String date;
 	private String status;
-	
+
 	public ManagerOrderView(int idOrder, Double price, String firstName, String lastName, String date, String status) {
 		this.idOrder = idOrder;
 		this.price = price;
@@ -97,8 +101,5 @@ public class ManagerOrderView implements Serializable{
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
-	
-	
+
 }

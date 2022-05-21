@@ -2,6 +2,7 @@ package catalog;
 
 import entities.Cart;
 import entities.Product;
+import inputs.InputChecker;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
@@ -9,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import util.InputChecker;
+import util.ManageScreens;
 
 public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 	private Product product; // will be used to get the data from
@@ -43,6 +44,7 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 				Cart.getInstance().addToCart(product, 1, true);
 				System.out.println("Cart is: " + Cart.getInstance().getCart());
 				System.out.println(product.getName() + " added to cart woohoooo");
+				CatalogController.refreshTotalAmountInCart();
 			}
 		});
 	}
@@ -60,7 +62,9 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 				Stage stage = new Stage();
 				stage.setTitle("Product Details - " + product.getName());
 				stage.setScene(scene);
+				ManageScreens.addPopup(stage);
 				stage.showAndWait();
+				ManageScreens.removePopup(stage);
 			}
 		});
 	}

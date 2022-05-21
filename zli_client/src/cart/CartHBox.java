@@ -5,6 +5,7 @@ import entities.CustomProduct;
 import entities.Item;
 import entities.Product;
 import entities.ProductsBase;
+import inputs.InputChecker;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -19,7 +20,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import util.InputChecker;
 
 public class CartHBox extends HBox {
 	private Cart cart = Cart.getInstance();

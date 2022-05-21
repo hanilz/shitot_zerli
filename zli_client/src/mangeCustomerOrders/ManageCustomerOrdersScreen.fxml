@@ -80,7 +80,7 @@
                   </VBox>
                </content>
           </Tab>
-          <Tab text="Wating for cancelation">
+          <Tab text="Waiting for cancelation">
                <content>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
@@ -107,10 +107,10 @@
       </TabPane>
       <HBox alignment="CENTER" prefHeight="27.0" prefWidth="980.0" spacing="170.0">
          <children>
-            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#returnHome" text="Close" />
+            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#returnHomeBtn" text="Close" />
          </children>
       </HBox>
-      <Label fx:id="errorLabel" text="*Please fill all the fields before submitting" textFill="RED">
+      <Label fx:id="errorLabel" text="*Please select an item to perform an operation" textFill="RED" visible="false">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>

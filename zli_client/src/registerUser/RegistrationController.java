@@ -5,6 +5,7 @@ import java.util.HashMap;
 import client.ClientFormController;
 import entities.AccountPayment;
 import entities.UserDetails;
+import inputs.InputChecker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -14,8 +15,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import util.Commands;
-import util.InputChecker;
 import util.ManageScreens;
 
 public class RegistrationController {
@@ -185,10 +186,15 @@ public class RegistrationController {
 		return true;
 	}
 
-	@FXML
-	void returnHome(ActionEvent event) {
-		ManageScreens.home();
-	}
+    @FXML
+    void returnHome(MouseEvent event) {
+    	ManageScreens.home();
+    }
+
+    @FXML
+    void returnHomebtn(ActionEvent event) {
+    	ManageScreens.home();
+    }
 
 	// this method is used to check if all fields were filled in this form
 	private boolean checkFields() {

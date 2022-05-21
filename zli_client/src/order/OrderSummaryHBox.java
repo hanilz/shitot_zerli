@@ -2,6 +2,7 @@ package order;
 
 import catalog.ProductVBox;
 import entities.ProductsBase;
+import inputs.InputChecker;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -12,7 +13,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import util.InputChecker;
 
 public class OrderSummaryHBox extends HBox {
 	private ImageView image;

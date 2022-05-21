@@ -1,6 +1,7 @@
 package manageCatalog;
 
 import entities.ProductsBase;
+import inputs.InputChecker;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -12,7 +13,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import util.InputChecker;
 
 public class ManageCatalogVBox extends VBox {
 	protected Label nameLabel = new Label(); // will show the product name
