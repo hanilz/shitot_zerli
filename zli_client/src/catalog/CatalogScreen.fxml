@@ -72,18 +72,25 @@
                   </ImageView>
                </children>
             </VBox>
-            <HBox fx:id="loginHBox" alignment="CENTER_LEFT" onMouseClicked="#openLoginPopup" GridPane.columnIndex="1">
+            <HBox fx:id="loginHBox" alignment="CENTER_LEFT" prefHeight="73.0" prefWidth="119.0" GridPane.columnIndex="1">
                <children>
-                  <ImageView fx:id="loginIcon" fitHeight="48.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="loginIcon" fitHeight="48.0" fitWidth="50.0" onMouseClicked="#openLoginPopup" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/home/login.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="loginLable" prefHeight="30.0" prefWidth="55.0" text="Login">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
+                  <VBox id="loginVBox" fx:id="loginVBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="73.0" prefWidth="63.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <children>
+                        <Label fx:id="loginLabel" prefHeight="30.0" prefWidth="109.0" text="Login" wrapText="true">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -206,7 +213,10 @@
                                     <Insets bottom="15.0" left="15.0" />
                                  </padding>
                               </ScrollPane>
-                              <Label text="* Clicking on an image opens the product details popup" />
+                              <Label text="* Click on a product image to see more details.">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font></Label>
                            </children>
                         </VBox>
                      </children>
