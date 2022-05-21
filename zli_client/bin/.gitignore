@@ -1,4 +1,7 @@
-/buttonStrategy/
-/mangeCustomerOrders/
+/catalog/
+/client/
+/home/
+/notifications/
 /resources/
 /util/
+/order/

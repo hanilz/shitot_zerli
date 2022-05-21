@@ -14,6 +14,7 @@ import java.util.HashMap;
 import customerComplaint.Complaint;
 import entities.AccountPayment;
 import entities.Branch;
+import entities.CustomProduct;
 import entities.Delivery;
 import entities.Item;
 import entities.ManageUsers;
@@ -654,7 +655,7 @@ public class AnaylzeCommand {
 		ArrayList<ManagerOrderView> orders = new ArrayList<>();
 		Connection conn = DataBaseController.getConn();
 		String query = "SELECT O.idOrder, O.price, UD.firstName,UD.lastName,O.date,O.status FROM zli.orders o, zli.branches b,zli.user_details UD,zli.users U WHERE o.idBranch=b.idBranch AND b.idManager =? AND (O.status = 'Waiting for Approval' OR O.status = 'Waiting for Cancelation' ) AND U.idUser = O.idUser AND UD.idAccount=U.idAccount;";
-		
+
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, mangerID);
@@ -664,8 +665,8 @@ public class AnaylzeCommand {
 				Double price = rs.getDouble(2);
 				String firstName = rs.getString(3);
 				String lastName = rs.getString(4);
-				String date= rs.getString(5);
-				String status= rs.getString(6);
+				String date = rs.getString(5);
+				String status = rs.getString(6);
 				orders.add(new ManagerOrderView(idOrder, price, firstName, lastName, date, status));
 			}
 		} catch (SQLException e) {
@@ -695,7 +696,7 @@ public class AnaylzeCommand {
 		}
 		return true;
 	}
-	
+
 	public static boolean cancelOrder(int idOrder) {
 		Connection conn = DataBaseController.getConn();
 		String query = "UPDATE orders SET status = 'Canceled' WHERE idOrder = ? ;";
@@ -734,4 +735,91 @@ public class AnaylzeCommand {
 		return notification;
 	}
 
+	public static ArrayList<CustomProduct> insertCustomProducts(ArrayList<CustomProduct> customProducts) {
+		StringBuffer buff = new StringBuffer();
+		buff.append("INSERT INTO custom_products (productName) VALUES ");
+		for (CustomProduct currentInsert : customProducts) {
+			buff.append("('" + currentInsert.getName() + "'),");
+		}
+		buff.deleteCharAt(buff.length() - 1);
+		buff.append(";");
+		try {
+			Connection conn;
+			conn = DataBaseController.getConn();
+			PreparedStatement preparedStmt = conn.prepareStatement(buff.toString(), Statement.RETURN_GENERATED_KEYS);
+			preparedStmt.executeUpdate();
+			ResultSet rs = preparedStmt.getGeneratedKeys();
+			for (CustomProduct customProduct : customProducts) {
+				rs.next();
+				customProduct.setId(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return customProducts;
+	}
+
+	public static boolean insertCustomProductProducts(ArrayList<CustomProduct> customProducts) {
+		StringBuffer buff = new StringBuffer();
+		buff.append("INSERT INTO custom_product_products (idCustomProduct, idProduct, quantity) VALUES ");
+		for (CustomProduct customProduct : customProducts) {
+			HashMap<Product, Integer> products = customProduct.getProducts();
+			for(Product product : products.keySet())
+				buff.append("(" + customProduct.getId() + ", " + product.getId() + ", " + products.get(product) + "),");
+		}
+		buff.deleteCharAt(buff.length() - 1);
+		buff.append(";");
+		try {
+			Connection conn;
+			conn = DataBaseController.getConn();
+			PreparedStatement preparedStmt = conn.prepareStatement(buff.toString());
+			preparedStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	public static boolean insertCustomProductItems(ArrayList<CustomProduct> customProducts) {
+		StringBuffer buff = new StringBuffer();
+		buff.append("INSERT INTO custom_product_items (idCustomProduct, idItem, quantity) VALUES ");
+		for (CustomProduct customProduct : customProducts) {
+			HashMap<Item, Integer> items = customProduct.getItems();
+			for(Item item : items.keySet())
+				buff.append("(" + customProduct.getId() + ", " + item.getId() + ", " + items.get(item) + "),");
+		}
+		buff.deleteCharAt(buff.length() - 1);
+		buff.append(";");
+		try {
+			Connection conn;
+			conn = DataBaseController.getConn();
+			PreparedStatement preparedStmt = conn.prepareStatement(buff.toString());
+			preparedStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean insertOrderCustomProducts(ArrayList<CustomProduct> customProducts,
+			Integer idOrder) {
+		StringBuffer buff = new StringBuffer();
+		buff.append("INSERT INTO order_custom_products (idOrder, idCustomProduct) VALUES ");
+		for (CustomProduct customProduct : customProducts) 
+			buff.append("(" + idOrder + ", " + customProduct.getId() + "),");
+		buff.deleteCharAt(buff.length() - 1);
+		buff.append(";");
+		try {
+			Connection conn;
+			conn = DataBaseController.getConn();
+			PreparedStatement preparedStmt = conn.prepareStatement(buff.toString());
+			preparedStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;	
+	}
 }
