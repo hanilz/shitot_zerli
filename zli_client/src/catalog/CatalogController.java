@@ -120,7 +120,10 @@ public class CatalogController implements Initializable {
 		LoginScreenController.enableHomeFlow(false);
 		if(User.getUserInstance().isUserLoggedIn())
 		{
-			loginLabel.setText("Welcome "+User.getUserInstance().getUsername());
+			loginLabel.setText("Welcome,\n"+User.getUserInstance().getUsername());
+			loginLabel.setWrapText(true);
+			loginLabel.setPrefHeight(50);
+			loginLabel.setPrefWidth(150);
 			loginVBox.setPrefHeight(73);
 			loginVBox.setPrefWidth(100);
 			loginIcon.setImage(new Image("resources/home/logout.png"));

@@ -9,21 +9,25 @@ public class Complaint implements Serializable{
 	private static final long serialVersionUID = -4951050968131626674L;
 	private int complaintID;
 	private int orderID;
+	private int idUser;
 	private String date;
 	private String status;
 	private String complaintReason;
 	private String complaintContent;
+	private int remainingMinutes;
 	
 
 	
-	public Complaint(int complaintID, int orderID, int date, String status, String complaintReason,
+	public Complaint(int complaintID,int idUser, int orderID, int date, String status, String complaintReason,
 			String complaintContent) {
 		this.complaintID = complaintID;
 		this.orderID = orderID;
 		this.date = getRemainingTime(date);
+		this.remainingMinutes= 24*60 - date;
 		this.status = status;
 		this.complaintReason = complaintReason;
 		this.complaintContent = complaintContent;
+		this.idUser=idUser;
 	}
 	
 	private String getRemainingTime(int date) {
@@ -124,6 +128,38 @@ public class Complaint implements Serializable{
 	 */
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	/**
+	 * @return the remainingMinutes
+	 */
+	public int getRemainingMinutes() {
+		return remainingMinutes;
+	}
+
+	/**
+	 * @param remainingMinutes the remainingMinutes to set
+	 */
+	public void setRemainingMinutes(int remainingMinutes) {
+		this.remainingMinutes = remainingMinutes;
+	}
+
+	public void decreaseRemainingTime() {
+		remainingMinutes-=1;
+	}
+
+	/**
+	 * @return the idUser
+	 */
+	public int getIdUser() {
+		return idUser;
+	}
+
+	/**
+	 * @param idUser the idUser to set
+	 */
+	public void setIdUser(int idUser) {
+		this.idUser = idUser;
 	}
 
 	

@@ -191,7 +191,7 @@ public class ServerMessageController {
 			break;
 		case FETCH_COMPLAINTS:
 			ArrayList<Complaint> complaints;
-			complaints = AnaylzeCommand.getAllComplaints((Integer)message.get("HandlerID"));
+			complaints = AnaylzeCommand.getAllComplaintsForManager((Integer)message.get("HandlerID"));
 			message.put("response", complaints);
 			break;
 		case CLOSE_COMPLAINT:
@@ -229,6 +229,18 @@ public class ServerMessageController {
 		case FETCH_NOTIFICATIONS:
 			ArrayList<Notification> notifications = AnaylzeCommand.getNotification((Integer)message.get("idUser"));
 			message.put("response", notifications);
+			break;
+		case SEND_NOTIFICATION:
+			boolean sent = AnaylzeCommand.sendNotification((Integer)message.get("idUser"),(String)message.get("notification"));
+			message.put("response", sent);
+			break;
+		case MARK_READ_NOTIFICATION:
+			boolean read = AnaylzeCommand.markReadNotification((Integer)message.get("idNotification"));
+			message.put("response", read);
+			break;
+		case DELETE_NOTIFICATION:
+			boolean deleted = AnaylzeCommand.deleteNotification((Integer)message.get("idNotification"));
+			message.put("response", deleted);
 			break;
 		default:
 			break;

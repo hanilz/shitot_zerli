@@ -1,16 +1,25 @@
 package server;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
+import client.ClientFormController;
+import customerComplaint.Complaint;
 import gui.ServerFormController;
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import notifications.NotificationController;
+import notifications.NotificationManager;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
+import util.AnaylzeCommand;
 import util.ClientDetails;
 import util.Commands;
 import util.DataBaseController;
+import util.NotificationType;
 import util.ServerMessageController;
 
 /**
@@ -107,8 +116,38 @@ public class ServerController extends AbstractServer implements Runnable {
 				System.out.println(e.getMessage());
 				return "Can not listen";
 			}
+		runComplaintsThread();
 		return isListening() ? "Server listening for connections on port " + getPort()
 				: "Server has stopped listening for connections.";
+	}
+
+	private	synchronized void runComplaintsThread() {
+		Thread complaints = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				ArrayList<Complaint> complaintList;
+				while(true) {
+					complaintList = AnaylzeCommand.getAllComplaintsForServer();
+					if(!complaintList.isEmpty()) {
+						for (Iterator<Complaint> iterator = complaintList.iterator(); iterator.hasNext();) {
+							Complaint comp = iterator.next();
+							if(comp.getRemainingMinutes()<=0) 
+								util.ServerNotificationManager.sendNotification(comp.getIdUser(),NotificationType.COMPLAINT_DUE,comp.getComplaintID() );
+							else
+								iterator.remove();
+						}
+						AnaylzeCommand.updateComplaintsStatus(complaintList);						
+					}
+					try {
+						Thread.sleep(60000);
+					} catch (InterruptedException e) {
+						System.out.println(e);
+					}
+					
+				}
+			}
+		});
+		complaints.start();
 	}
 
 	@Override
@@ -170,7 +209,8 @@ public class ServerController extends AbstractServer implements Runnable {
 			if (currentClient.getClientIP().equals(clientAddress)) {
 				System.out.println("Client " + currentClient.getClientIP() + " found - disconnecting.");
 				currentClient.setStatus("Disconnected");
-				System.out.println("Client " + currentClient.getClientIP() + " status is - " + currentClient.getStatus());
+				System.out
+						.println("Client " + currentClient.getClientIP() + " status is - " + currentClient.getStatus());
 			}
 		}
 		ServerFormController.get().refreshClientsTable();
