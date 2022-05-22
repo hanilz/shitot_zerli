@@ -512,22 +512,23 @@ public class AnaylzeCommand {
 		}
 	}
 
-	public static ArrayList<Complaint> getAllComplaints(Integer handlerID) {
+	public static ArrayList<Complaint> getAllComplaintsForManager(Integer handlerID) {
 		Connection conn = DataBaseController.getConn();
 		ArrayList<Complaint> complaints = new ArrayList<>();
 		try {
-			String query = "SELECT C.*, TIMESTAMPDIFF(MINUTE, C.date, now()) AS 'diff_of_day' FROM complaints C WHERE C.idUser = ? AND C.status = 'Active';";
+			String query = "SELECT C.*, TIMESTAMPDIFF(MINUTE, C.date, now()) AS 'diff_of_day' FROM complaints C WHERE C.idUser = ? AND (C.status = 'Active' OR C.status = 'Due');";
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, handlerID);
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
 				int complaintID = rs.getInt(1);
+				int idUser = rs.getInt(2);
 				int orderID = rs.getInt(3);
 				int date = rs.getInt(8);
 				String status = rs.getString(5);
 				String complaintReason = rs.getString(6);
 				String complaintContent = rs.getString(7);
-				Complaint complaint = new Complaint(complaintID, orderID, date, status, complaintReason,
+				Complaint complaint = new Complaint(complaintID,idUser, orderID, date, status, complaintReason,
 						complaintContent);
 				complaints.add(complaint);
 			}
@@ -536,6 +537,48 @@ public class AnaylzeCommand {
 			e.printStackTrace();
 		}
 		return complaints;
+	}
+	
+	public static ArrayList<Complaint> getAllComplaintsForServer() {
+		Connection conn = DataBaseController.getConn();
+		ArrayList<Complaint> complaints = new ArrayList<>();
+		try {
+			String query = "SELECT C.*, TIMESTAMPDIFF(MINUTE, C.date, now()) AS 'diff_of_day' FROM complaints C WHERE C.status = 'Active';";
+			Statement Stmt = conn.createStatement();
+			ResultSet rs = Stmt.executeQuery(query);
+			while (rs.next()) {
+				int complaintID = rs.getInt(1);
+				int idUser = rs.getInt(2);
+				int orderID = rs.getInt(3);
+				int date = rs.getInt(8);
+				String status = rs.getString(5);
+				String complaintReason = rs.getString(6);
+				String complaintContent = rs.getString(7);
+				Complaint complaint = new Complaint(complaintID,idUser, orderID, date, status, complaintReason,
+						complaintContent);
+				complaints.add(complaint);
+			}
+			// String name
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return complaints;
+	}
+	
+	//updates complaint status for complaint that are due
+	public static void updateComplaintsStatus(ArrayList<Complaint> complaintList) {
+		Connection conn;
+		conn = DataBaseController.getConn();
+		String query = "UPDATE complaints SET status = 'Due' WHERE idComplaint = ?";
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			for(Complaint comp : complaintList) {
+				preparedStmt.setInt(1, comp.getComplaintID());
+				preparedStmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static boolean updateItem(Item item) {
@@ -822,4 +865,54 @@ public class AnaylzeCommand {
 		}
 		return true;	
 	}
+
+	public static boolean sendNotification(Integer idUser, String title) {
+		Connection conn = DataBaseController.getConn();
+		String query = "INSERT INTO notifications (idUser, title) VALUES (?, ?)";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idUser);
+			preparedStmt.setString(2, title);
+			preparedStmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Failed to insert notification");
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static boolean markReadNotification(int idNotification) {
+		Connection conn = DataBaseController.getConn();
+		String query = "UPDATE notifications SET isRead = 1 WHERE idNotification = ? ;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idNotification);
+			preparedStmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Failed to insert notification");
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static boolean deleteNotification(int idNotification) {
+		Connection conn = DataBaseController.getConn();
+		String query = "DELETE FROM notifications WHERE idNotification = ?;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idNotification);
+			preparedStmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Failed to delete notification");
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }

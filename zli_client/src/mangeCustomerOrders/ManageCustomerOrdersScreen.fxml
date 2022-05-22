@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mangeCustomerOrders.ManageCustomerOrdersController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mangeCustomerOrders.ManageCustomerOrdersController">
    <opaqueInsets>
       <Insets />
    </opaqueInsets>
@@ -27,8 +27,8 @@
       <GridPane prefHeight="99.0" prefWidth="980.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="100.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="773.0" minWidth="10.0" prefWidth="753.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1073.0" minWidth="10.0" prefWidth="986.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="0.0" prefWidth="87.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="100.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -55,13 +55,13 @@
             </ImageView>
          </children>
       </GridPane>
-      <TabPane prefHeight="453.0" prefWidth="980.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="591.0" prefWidth="1260.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="New orders waiting for approval">
                <content>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <TableView fx:id="newOrderTable" prefHeight="373.0" prefWidth="980.0">
+                        <TableView fx:id="newOrderTable" prefHeight="491.0" prefWidth="1260.0">
                           <columns>
                             <TableColumn fx:id="idOrderCol" prefWidth="95.0" text="Order Number" />
                             <TableColumn fx:id="priceCol" prefWidth="89.0" text="Price" />
@@ -84,7 +84,7 @@
                <content>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <TableView fx:id="cancelOrdersTable" prefHeight="369.0" prefWidth="980.0">
+                        <TableView fx:id="cancelOrdersTable" prefHeight="491.0" prefWidth="1260.0">
                            <columns>
                               <TableColumn fx:id="idOrderCol1" prefWidth="95.0" text="Order Number" />
                               <TableColumn fx:id="priceCol1" prefWidth="89.0" text="Price" />
