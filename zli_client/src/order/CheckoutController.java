@@ -174,8 +174,10 @@ public class CheckoutController implements Initializable {
 		Integer orderId = (Integer) response;
 		if (orderId != -1) {
 			System.out.println("yayy!! order added to the db");
-			insertOrderProductsToDB(orderId);
-			insertOrderItemsToDB(orderId);
+			if(products.size() > 0)
+				insertOrderProductsToDB(orderId);
+			if(items.size() > 0)
+				insertOrderItemsToDB(orderId);
 			if(customProducts.size() > 0)
 				insertCustomProductsData(orderId);
 			if (SingletonOrder.getInstance().getDelivery() != null)
@@ -187,9 +189,25 @@ public class CheckoutController implements Initializable {
 
 	private void insertCustomProductsData(Integer orderId) {
 		insertCustomProductsToDB();
-		insertCustomProductProductsToDB();
-		insertCustomProductItemsToDB();
+		if(isCustomProductProducts())
+			insertCustomProductProductsToDB();
+		if(isCustomProductItems())
+			insertCustomProductItemsToDB();
 		insertOrderCustomProductsToDB(orderId);
+	}
+
+	private boolean isCustomProductItems() {
+		for(CustomProduct customProduct : customProducts)
+			if(customProduct.getItems().size() > 0)
+				return true;
+		return false;
+	}
+
+	private boolean isCustomProductProducts() {
+		for(CustomProduct customProduct : customProducts)
+			if(customProduct.getProducts().size() > 0)
+				return true;
+		return false;
 	}
 
 	private void insertOrderProductsToDB(int idOrder) {
