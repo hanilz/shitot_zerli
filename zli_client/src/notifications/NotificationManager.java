@@ -18,11 +18,11 @@ public class NotificationManager {
 	 * @param text
 	 * @return
 	 */
-	public static boolean sendNotification(int idUser,NotificationType nt, int param) {
+	public static boolean sendNotification(int idUser,NotificationType notificationType, int param) {
 		message.clear();
 		message.put("command", Commands.SEND_NOTIFICATION);
 		message.put("idUser", idUser);
-		String notification = getNotfication(nt,param);
+		String notification = getNotification(notificationType,param);
 		message.put("notification", notification);
 		Object response = ClientFormController.client.accept(message);
 		return (boolean)response;
@@ -42,8 +42,8 @@ public class NotificationManager {
 		ClientFormController.client.accept(message);
 	}
 	
-	protected static String getNotfication(NotificationType nt, int param) {
-		switch(nt) {
+	protected static String getNotification(NotificationType notificationType, int param) {
+		switch(notificationType) {
 		case COMPLAINT_DUE:
 			return "Complaint Number: " + param + " is Due, Please attend it as soon as possible.";
 		case DELIVERY_LATE_REFUND:

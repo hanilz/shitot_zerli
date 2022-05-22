@@ -56,14 +56,14 @@ public class ServerMessageController {
 		Commands command = (Commands) message.get("command");
 		switch (command) {
 		case CHANGE_USER_STATUS:
-			response = AnaylzeCommand.changeUserStatus(message.get("id"));
+			response = AnalayzeCommand.changeUserStatus(message.get("id"));
 			message.put("response", response);
 			break;
 		case CLIENT_DISCONNECTED:
 			String clientIP = client.getInetAddress().toString();
 			System.out.println("client disconnected detected: ip is " + clientIP);
 			if (message.get("logout") != null)
-				AnaylzeCommand.logoutUser((int) message.get("logout"));
+				AnalayzeCommand.logoutUser((int) message.get("logout"));
 			for (ClientDetails currentClient : ServerController.clients) {
 				if (clientIP.equals(currentClient.getClientIP())) {
 					ServerController.getServerController().disconnectClient(currentClient);
@@ -72,80 +72,80 @@ public class ServerMessageController {
 			}
 			break;
 		case FETCH_ALL_USERS_DETAILS:
-			ArrayList<ManageUsers> users = AnaylzeCommand.selectAllUsers();
+			ArrayList<ManageUsers> users = AnalayzeCommand.selectAllUsers();
 			message.put("response", users);
 			break;
 		case FETCH_BRANCHES:
-			ArrayList<Branch> branches = AnaylzeCommand.selectAllBranches();
+			ArrayList<Branch> branches = AnalayzeCommand.selectAllBranches();
 			message.put("response", branches);
 			break;
 		case FETCH_ORDERS:
 
 			break;
 		case FETCH_PRODUCTS:
-			ArrayList<Product> products = AnaylzeCommand.selectAllProducts();
+			ArrayList<Product> products = AnalayzeCommand.selectAllProducts();
 			message.put("response", products);
 			break;
 		case FETCH_SURVEYS:
-			HashMap<Integer, String> surveys = AnaylzeCommand.selectSurveys();
+			HashMap<Integer, String> surveys = AnalayzeCommand.selectSurveys();
 			message.put("response", surveys);
 			break;
 		case INSERT_ACCOUNT_PAYMENT:
 			AccountPayment accountPayment = (AccountPayment) message.get("account payment");
-			boolean isInsert = AnaylzeCommand.insertAccountPayment(accountPayment);
+			boolean isInsert = AnalayzeCommand.insertAccountPayment(accountPayment);
 			response = isInsert ? "insert account payment successful" : "insert account payment failed";
 			message.put("response", response);
 			break;
 		case INSERT_DELIVERY:
 			Delivery delivery = (Delivery) message.get("delivery");
-			int idDeliveryReturned = AnaylzeCommand.insertNewDelivery(delivery);
+			int idDeliveryReturned = AnalayzeCommand.insertNewDelivery(delivery);
 			message.put("response", idDeliveryReturned);
 			break;
 		case INSERT_DELIVERY_ORDER:
 			DeliveriesOrders deliveryOrder = (DeliveriesOrders) message.get("delivery order");
-			boolean isInserted = AnaylzeCommand.insertDeliveryOrder(deliveryOrder.getIdOrder(),
+			boolean isInserted = AnalayzeCommand.insertDeliveryOrder(deliveryOrder.getIdOrder(),
 					deliveryOrder.getIdDelivery());
 			response = isInserted ? "insert delivery order successful" : "insert delivery order failed";
 			message.put("response", response);
 			break;
 		case INSERT_ORDER:
 			Order order = (Order) message.get("order");
-			Integer idOrderReturned = AnaylzeCommand.insertNewOrder(order);
+			Integer idOrderReturned = AnalayzeCommand.insertNewOrder(order);
 			message.put("response", idOrderReturned);
 			break;
 		case INSERT_CUSTOM_PRODUCTS:
 			ArrayList<CustomProduct> insertCustomProductsList = (ArrayList<CustomProduct>) message.get("custom products");
-			insertCustomProductsList = AnaylzeCommand.insertCustomProducts(insertCustomProductsList);
+			insertCustomProductsList = AnalayzeCommand.insertCustomProducts(insertCustomProductsList);
 			message.put("response", insertCustomProductsList);
 			break;
 		case INSERT_CUSTOM_PRODUCT_PRODUCTS:
 			ArrayList<CustomProduct> insertCustomProductProductsList = (ArrayList<CustomProduct>) message.get("custom products");
-			boolean isInsertCustomProductProducts = AnaylzeCommand.insertCustomProductProducts(insertCustomProductProductsList);
+			boolean isInsertCustomProductProducts = AnalayzeCommand.insertCustomProductProducts(insertCustomProductProductsList);
 			response = isInsertCustomProductProducts ? "insert custom product products successful" : "insert custom product products failed";
 			message.put("response", response);
 			break;
 		case INSERT_CUSTOM_PRODUCT_ITEMS:
 			ArrayList<CustomProduct> insertCustomProductItemsList = (ArrayList<CustomProduct>) message.get("custom products");
-			boolean isInsertCustomProductItems = AnaylzeCommand.insertCustomProductItems(insertCustomProductItemsList);
+			boolean isInsertCustomProductItems = AnalayzeCommand.insertCustomProductItems(insertCustomProductItemsList);
 			response = isInsertCustomProductItems ? "insert custom product items successful" : "insert custom product items failed";
 			message.put("response", response);
 			break;
 		case INSERT_ORDER_CUSTOM_PRODUCTS:
 			ArrayList<CustomProduct> insertOrderCustomProductsList = (ArrayList<CustomProduct>) message.get("custom products");
 			Integer idOrder = (Integer) message.get("idOrder");
-			boolean isInsertOrderCustomProducts = AnaylzeCommand.insertOrderCustomProducts(insertOrderCustomProductsList, idOrder);
+			boolean isInsertOrderCustomProducts = AnalayzeCommand.insertOrderCustomProducts(insertOrderCustomProductsList, idOrder);
 			response = isInsertOrderCustomProducts ? "insert order custom products successful" : "insert order custom products failed";
 			message.put("response", response);
 			break;
 		case INSERT_ORDERS_PRODUCT:
 			ArrayList<OrderProduct> orderProductsList = (ArrayList<OrderProduct>) message.get("list order products");
-			boolean isOrderInserted = AnaylzeCommand.insertOrderProducts(orderProductsList);
+			boolean isOrderInserted = AnalayzeCommand.insertOrderProducts(orderProductsList);
 			response = isOrderInserted ? "insert order products successful" : "insert order products failed";
 			message.put("response", response);
 			break;
 		case INSERT_ORDERS_ITEMS:
 			ArrayList<OrderItem> orderItemsList = (ArrayList<OrderItem>) message.get("list order items");
-			boolean isOrdersItemsInserted = AnaylzeCommand.insertOrderItems(orderItemsList);
+			boolean isOrdersItemsInserted = AnalayzeCommand.insertOrderItems(orderItemsList);
 			if (isOrdersItemsInserted)
 				message.put("response", "insert order items successful");
 			else
@@ -153,93 +153,93 @@ public class ServerMessageController {
 			sendToClient(client);
 			break;
 		case LOGIN:
-			message = AnaylzeCommand.loginUser((String) message.get("username"), (String) message.get("password"));
+			message = AnalayzeCommand.loginUser((String) message.get("username"), (String) message.get("password"));
 			message.put("command", Commands.LOGIN);
 			break;
 		case LOGOUT:
-			message.put("logout", AnaylzeCommand.logoutUser((int) message.get("logoutID")));
+			message.put("logout", AnalayzeCommand.logoutUser((int) message.get("logoutID")));
 			break;
 		case FETCH_ITEMS:
-			ArrayList<Item> items = AnaylzeCommand.selectAllItems();
+			ArrayList<Item> items = AnalayzeCommand.selectAllItems();
 			message.put("response", items);
 			break;
 		case GET_SERVEY:
-			ArrayList<SurveyQuestion> returnedSurveys = AnaylzeCommand.getSurvey((Integer) message.get("surveyID"));
+			ArrayList<SurveyQuestion> returnedSurveys = AnalayzeCommand.getSurvey((Integer) message.get("surveyID"));
 			message.put("response", returnedSurveys);
 			break;
 		case SUBMIT_SURVEY:
-			boolean isSubmitted = AnaylzeCommand
+			boolean isSubmitted = AnalayzeCommand
 					.submitSurvey((HashMap<SurveyQuestion, Integer>) message.get("answers"));
 			response = isSubmitted ? "insert survey answer successful" : "insert survey answer failed";
 			message.put("response", response);
 			break;
 		case SUBMIT_COMPLAINT:
-			boolean compailntSubmited = AnaylzeCommand.submitComplaint((Integer)message.get("HandelingAgent"),(Integer)message.get("OrderNumber"),(String) message.get("ComplaintReason"),
+			boolean compailntSubmited = AnalayzeCommand.submitComplaint((Integer)message.get("HandelingAgent"),(Integer)message.get("OrderNumber"),(String) message.get("ComplaintReason"),
 					(String) message.get("ComplaintText"));
 			message.put("response", compailntSubmited);
 			break;
 		case UPDATE_PRODUCTS_BASE:
 			boolean isUpdated;
-			isUpdated = message.get("type").equals("item") ? AnaylzeCommand.updateItem((Item) message.get("unit"))
-					: AnaylzeCommand.updateProduct((Product) message.get("unit"));
+			isUpdated = message.get("type").equals("item") ? AnalayzeCommand.updateItem((Item) message.get("unit"))
+					: AnalayzeCommand.updateProduct((Product) message.get("unit"));
 			message.put("response", isUpdated);
 			break;
 		case GET_ORDER_NUMBERS:
 			ArrayList<Integer> orderNumbers;
-			orderNumbers = AnaylzeCommand.getOrderNumbers();
+			orderNumbers = AnalayzeCommand.getOrderNumbers();
 			message.put("response", orderNumbers);
 			break;
 		case FETCH_COMPLAINTS:
 			ArrayList<Complaint> complaints;
-			complaints = AnaylzeCommand.getAllComplaintsForManager((Integer)message.get("HandlerID"));
+			complaints = AnalayzeCommand.getAllComplaintsForManager((Integer)message.get("HandlerID"));
 			message.put("response", complaints);
 			break;
 		case CLOSE_COMPLAINT:
-			boolean ans = AnaylzeCommand.deleteComlaint((Integer)message.get("Complaint Number"));
+			boolean ans = AnalayzeCommand.deleteComlaint((Integer)message.get("Complaint Number"));
 			message.put("response", ans);
 			break;
 		case GET_ORDER_SUM:
-			Double sum = AnaylzeCommand.getOrderPrice((Integer)message.get("Order Number"));
+			Double sum = AnalayzeCommand.getOrderPrice((Integer)message.get("Order Number"));
 			message.put("response", sum);
 			break;
 		case NEW_USER_DETAILS:
-			int idAccount = AnaylzeCommand.insertNewUserDetails((UserDetails)message.get("User Details"));
+			int idAccount = AnalayzeCommand.insertNewUserDetails((UserDetails)message.get("User Details"));
 			message.put("response",idAccount);
 			break;
 		case NEW_USERS:
-			int idUser = AnaylzeCommand.insertNewUser((String)message.get("username"),(String)message.get("password"),(int)message.get("idAccount"));
+			int idUser = AnalayzeCommand.insertNewUser((String)message.get("username"),(String)message.get("password"),(int)message.get("idAccount"));
 			message.put("response",idUser);
 			break;
 		case DELETE_USER_DETAILS:
-			boolean remove = AnaylzeCommand.deleteUserDetails((int)message.get("idAccount"));
+			boolean remove = AnalayzeCommand.deleteUserDetails((int)message.get("idAccount"));
 			message.put("response",remove);
 			break;
 		case FETCH_ORDERS_MANAGER:
-			ArrayList<ManagerOrderView> orders = AnaylzeCommand.selectOrdersForManager((Integer)message.get("manager id"));
+			ArrayList<ManagerOrderView> orders = AnalayzeCommand.selectOrdersForManager((Integer)message.get("manager id"));
 			message.put("response", orders);
 			break;
 		case APPROVE_ORDER:
-			boolean approve = AnaylzeCommand.approveOrder((Integer)message.get("order id"));
+			boolean approve = AnalayzeCommand.approveOrder((Integer)message.get("order id"));
 			message.put("response", approve);
 			break;
 		case CANCEL_ORDER:
-			boolean cancel = AnaylzeCommand.cancelOrder((Integer)message.get("order id"));
+			boolean cancel = AnalayzeCommand.cancelOrder((Integer)message.get("order id"));
 			message.put("response", cancel);
 			break;
 		case FETCH_NOTIFICATIONS:
-			ArrayList<Notification> notifications = AnaylzeCommand.getNotification((Integer)message.get("idUser"));
+			ArrayList<Notification> notifications = AnalayzeCommand.getNotification((Integer)message.get("idUser"));
 			message.put("response", notifications);
 			break;
 		case SEND_NOTIFICATION:
-			boolean sent = AnaylzeCommand.sendNotification((Integer)message.get("idUser"),(String)message.get("notification"));
+			boolean sent = AnalayzeCommand.sendNotification((Integer)message.get("idUser"),(String)message.get("notification"));
 			message.put("response", sent);
 			break;
 		case MARK_READ_NOTIFICATION:
-			boolean read = AnaylzeCommand.markReadNotification((Integer)message.get("idNotification"));
+			boolean read = AnalayzeCommand.markReadNotification((Integer)message.get("idNotification"));
 			message.put("response", read);
 			break;
 		case DELETE_NOTIFICATION:
-			boolean deleted = AnaylzeCommand.deleteNotification((Integer)message.get("idNotification"));
+			boolean deleted = AnalayzeCommand.deleteNotification((Integer)message.get("idNotification"));
 			message.put("response", deleted);
 			break;
 		default:

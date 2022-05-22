@@ -15,7 +15,7 @@ import notifications.NotificationController;
 import notifications.NotificationManager;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
-import util.AnaylzeCommand;
+import util.AnalayzeCommand;
 import util.ClientDetails;
 import util.Commands;
 import util.DataBaseController;
@@ -127,7 +127,7 @@ public class ServerController extends AbstractServer implements Runnable {
 			public void run() {
 				ArrayList<Complaint> complaintList;
 				while(true) {
-					complaintList = AnaylzeCommand.getAllComplaintsForServer();
+					complaintList = AnalayzeCommand.getAllComplaintsForServer();
 					if(!complaintList.isEmpty()) {
 						for (Iterator<Complaint> iterator = complaintList.iterator(); iterator.hasNext();) {
 							Complaint comp = iterator.next();
@@ -136,7 +136,7 @@ public class ServerController extends AbstractServer implements Runnable {
 							else
 								iterator.remove();
 						}
-						AnaylzeCommand.updateComplaintsStatus(complaintList);						
+						AnalayzeCommand.updateComplaintsStatus(complaintList);						
 					}
 					try {
 						Thread.sleep(60000);
