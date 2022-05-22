@@ -31,7 +31,7 @@ import survey.SurveyQuestion;
  * AnaylzeCommand - will anaylze the command that given from the server
  * controller and will execute the sql query.
  */
-public class AnaylzeCommand {
+public class AnalayzeCommand {
 
 	public static boolean isUpdated = false;
 
