@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import util.ManageScreens;
@@ -41,7 +42,7 @@ public class CartController implements Initializable {
 	private Label priceLabel;
 
     @FXML
-    private ScrollPane overviewScrollPane;
+    private Pane overviewPane;
 	
     @FXML
     private Button emptyCartButton;
@@ -139,7 +140,8 @@ public class CartController implements Initializable {
     }
     
     private void setOverviewScrollPane(VBox vBox) {
-    	overviewScrollPane.setContent(vBox);
+    	overviewPane.getChildren().clear();
+    	overviewPane.getChildren().add(vBox);
     }
     
 	/**
