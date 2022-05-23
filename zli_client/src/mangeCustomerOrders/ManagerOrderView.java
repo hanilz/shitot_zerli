@@ -14,14 +14,16 @@ public class ManagerOrderView implements Serializable {
 	private String lastName;
 	private String date;
 	private String status;
+	private int idUser;
 
-	public ManagerOrderView(int idOrder, Double price, String firstName, String lastName, String date, String status) {
+	public ManagerOrderView(int idOrder, Double price, String firstName, String lastName, String date, String status,int idUser) {
 		this.idOrder = idOrder;
 		this.price = price;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.date = date;
 		this.status = status;
+		this.setIdUser(idUser);
 	}
 
 	/**
@@ -100,6 +102,14 @@ public class ManagerOrderView implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public int getIdUser() {
+		return idUser;
+	}
+
+	public void setIdUser(int idUser) {
+		this.idUser = idUser;
 	}
 
 }

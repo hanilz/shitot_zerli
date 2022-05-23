@@ -697,7 +697,7 @@ public class AnalayzeCommand {
 	public static ArrayList<ManagerOrderView> selectOrdersForManager(int mangerID) {
 		ArrayList<ManagerOrderView> orders = new ArrayList<>();
 		Connection conn = DataBaseController.getConn();
-		String query = "SELECT O.idOrder, O.price, UD.firstName,UD.lastName,O.date,O.status FROM zli.orders o, zli.branches b,zli.user_details UD,zli.users U WHERE o.idBranch=b.idBranch AND b.idManager =? AND (O.status = 'Waiting for Approval' OR O.status = 'Waiting for Cancelation' ) AND U.idUser = O.idUser AND UD.idAccount=U.idAccount;";
+		String query = "SELECT O.idOrder, O.price, UD.firstName,UD.lastName,O.date,O.status,O.idUser FROM zli.orders o, zli.branches b,zli.user_details UD,zli.users U WHERE o.idBranch=b.idBranch AND b.idManager =? AND (O.status = 'Waiting for Approval' OR O.status = 'Waiting for Cancelation' ) AND U.idUser = O.idUser AND UD.idAccount=U.idAccount;";
 
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -710,7 +710,8 @@ public class AnalayzeCommand {
 				String lastName = rs.getString(4);
 				String date = rs.getString(5);
 				String status = rs.getString(6);
-				orders.add(new ManagerOrderView(idOrder, price, firstName, lastName, date, status));
+				int idUser = rs.getInt(7);
+				orders.add(new ManagerOrderView(idOrder, price, firstName, lastName, date, status,idUser));
 			}
 		} catch (SQLException e) {
 			System.out.println("failed to fetch orders for manager");
