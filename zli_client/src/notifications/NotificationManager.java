@@ -18,7 +18,7 @@ public class NotificationManager {
 	 * @param text
 	 * @return
 	 */
-	public static boolean sendNotification(int idUser,NotificationType notificationType, int param) {
+	public static boolean sendNotification(int idUser,NotificationType notificationType, Object param) {
 		message.clear();
 		message.put("command", Commands.SEND_NOTIFICATION);
 		message.put("idUser", idUser);
@@ -42,16 +42,16 @@ public class NotificationManager {
 		ClientFormController.client.accept(message);
 	}
 	
-	protected static String getNotification(NotificationType notificationType, int param) {
+	protected static String getNotification(NotificationType notificationType, Object param) {
 		switch(notificationType) {
 		case COMPLAINT_DUE:
-			return "Complaint Number: " + param + " is Due, Please attend it as soon as possible.";
+			return "Complaint Number: " + (int)param + " is Due, Please attend it as soon as possible.";
 		case DELIVERY_LATE_REFUND:
-			return "We are deeply sorry for the delivery delay you will be issued a " +InputChecker.price(param) + " refund.";
+			return "We are deeply sorry for the delivery delay you will be issued a " +InputChecker.price((Double)param) + " refund.";
 		case ORDER_ACCEPTED:
-			return "Congrats! Your order with order number "+ param +" has been accepted and is now getting ready for delivery.";
+			return "Congrats! Your order with order number "+ (int)param +" has been accepted and is now getting ready for delivery.";
 		case ORDER_CANCELED_REFUND:
-			return "We are deeply sorry for the delivery delay you will be issued a " +InputChecker.price(param) + " refund.";
+			return "We are deeply sorry for the delivery delay you will be issued a " +InputChecker.price((Double)param) + " refund.";
 		case REGISTRATION_DISCOUNT:
 			return "Congrats on completing your registration, you will be eligible for a 20% discount on your first order.";
 		default:

@@ -29,7 +29,6 @@ public class NotificationRowController {
     		NotificationManager.deleteNotification(notifiction);
     		NotificationController.removeNotification(notificationRow,notifiction);  
     	}
-    	
     }
     
     private void setText(String notification) {
