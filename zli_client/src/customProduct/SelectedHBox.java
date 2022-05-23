@@ -13,14 +13,15 @@ import javafx.scene.layout.HBox;
 public class SelectedHBox extends CustomProductHBox implements ICustomProductHBox {
 	private int quantity = 1;
 	private HBox quantityHBox = new HBox();
-	private Label quantityLabel = new Label("" + quantity);
+	private Label quantityLabel;
 	private Button addQuantity = new Button("+");
 	private Button removeQuantity = new Button("-");
 	private Button removeButton = new Button("X");
 	private SelectedHBox selectedProduct;
 
-	public SelectedHBox(ProductsBase product) {
+	public SelectedHBox(ProductsBase product, int quantity) {
 		super(product);
+		this.quantity = quantity;
 	}
 
 	@Override
@@ -40,9 +41,11 @@ public class SelectedHBox extends CustomProductHBox implements ICustomProductHBo
 		priceHBox.setSpacing(5);
 		priceHBox.getChildren().add(quantityHBox);
 		priceHBox.getChildren().add(removeButton);
+		amountLabel.setText(InputChecker.price(getPrice()));
 	}
 	
 	private void initQuantityVBox() {
+		quantityLabel = new Label("" + quantity);
 		addQuantity.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -55,7 +58,8 @@ public class SelectedHBox extends CustomProductHBox implements ICustomProductHBo
             }
         });
 		
-		removeQuantity.setDisable(true);
+		if(quantity == 1)
+			removeQuantity.setDisable(true);
 		removeQuantity.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -78,5 +82,9 @@ public class SelectedHBox extends CustomProductHBox implements ICustomProductHBo
 
 	public int getQuantity() {
 		return quantity;
+	}
+	
+	public double getPrice() {
+		return product.getPrice() * quantity;
 	}
 }

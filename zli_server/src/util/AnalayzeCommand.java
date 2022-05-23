@@ -5,10 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import customerComplaint.Complaint;
@@ -528,7 +525,7 @@ public class AnalayzeCommand {
 				String status = rs.getString(5);
 				String complaintReason = rs.getString(6);
 				String complaintContent = rs.getString(7);
-				Complaint complaint = new Complaint(complaintID,idUser, orderID, date, status, complaintReason,
+				Complaint complaint = new Complaint(complaintID, idUser, orderID, date, status, complaintReason,
 						complaintContent);
 				complaints.add(complaint);
 			}
@@ -538,7 +535,7 @@ public class AnalayzeCommand {
 		}
 		return complaints;
 	}
-	
+
 	public static ArrayList<Complaint> getAllComplaintsForServer() {
 		Connection conn = DataBaseController.getConn();
 		ArrayList<Complaint> complaints = new ArrayList<>();
@@ -554,7 +551,7 @@ public class AnalayzeCommand {
 				String status = rs.getString(5);
 				String complaintReason = rs.getString(6);
 				String complaintContent = rs.getString(7);
-				Complaint complaint = new Complaint(complaintID,idUser, orderID, date, status, complaintReason,
+				Complaint complaint = new Complaint(complaintID, idUser, orderID, date, status, complaintReason,
 						complaintContent);
 				complaints.add(complaint);
 			}
@@ -564,15 +561,15 @@ public class AnalayzeCommand {
 		}
 		return complaints;
 	}
-	
-	//updates complaint status for complaint that are due
+
+	// updates complaint status for complaint that are due
 	public static void updateComplaintsStatus(ArrayList<Complaint> complaintList) {
 		Connection conn;
 		conn = DataBaseController.getConn();
 		String query = "UPDATE complaints SET status = 'Due' WHERE idComplaint = ?";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			for(Complaint comp : complaintList) {
+			for (Complaint comp : complaintList) {
 				preparedStmt.setInt(1, comp.getComplaintID());
 				preparedStmt.executeUpdate();
 			}
@@ -781,9 +778,9 @@ public class AnalayzeCommand {
 
 	public static ArrayList<CustomProduct> insertCustomProducts(ArrayList<CustomProduct> customProducts) {
 		StringBuffer buff = new StringBuffer();
-		buff.append("INSERT INTO custom_products (productName) VALUES ");
+		buff.append("INSERT INTO custom_products (productName,price) VALUES ");
 		for (CustomProduct currentInsert : customProducts) {
-			buff.append("('" + currentInsert.getName() + "'),");
+			buff.append("('" + currentInsert.getName() + "', " + currentInsert.getPrice() + "),");
 		}
 		buff.deleteCharAt(buff.length() - 1);
 		buff.append(";");
@@ -808,7 +805,7 @@ public class AnalayzeCommand {
 		buff.append("INSERT INTO custom_product_products (idCustomProduct, idProduct, quantity) VALUES ");
 		for (CustomProduct customProduct : customProducts) {
 			HashMap<Product, Integer> products = customProduct.getProducts();
-			for(Product product : products.keySet())
+			for (Product product : products.keySet())
 				buff.append("(" + customProduct.getId() + ", " + product.getId() + ", " + products.get(product) + "),");
 		}
 		buff.deleteCharAt(buff.length() - 1);
@@ -824,13 +821,13 @@ public class AnalayzeCommand {
 		}
 		return true;
 	}
-	
+
 	public static boolean insertCustomProductItems(ArrayList<CustomProduct> customProducts) {
 		StringBuffer buff = new StringBuffer();
 		buff.append("INSERT INTO custom_product_items (idCustomProduct, idItem, quantity) VALUES ");
 		for (CustomProduct customProduct : customProducts) {
 			HashMap<Item, Integer> items = customProduct.getItems();
-			for(Item item : items.keySet())
+			for (Item item : items.keySet())
 				buff.append("(" + customProduct.getId() + ", " + item.getId() + ", " + items.get(item) + "),");
 		}
 		buff.deleteCharAt(buff.length() - 1);
@@ -847,11 +844,10 @@ public class AnalayzeCommand {
 		return true;
 	}
 
-	public static boolean insertOrderCustomProducts(ArrayList<CustomProduct> customProducts,
-			Integer idOrder) {
+	public static boolean insertOrderCustomProducts(ArrayList<CustomProduct> customProducts, Integer idOrder) {
 		StringBuffer buff = new StringBuffer();
 		buff.append("INSERT INTO order_custom_products (idOrder, idCustomProduct) VALUES ");
-		for (CustomProduct customProduct : customProducts) 
+		for (CustomProduct customProduct : customProducts)
 			buff.append("(" + idOrder + ", " + customProduct.getId() + "),");
 		buff.deleteCharAt(buff.length() - 1);
 		buff.append(";");
@@ -864,7 +860,7 @@ public class AnalayzeCommand {
 			e.printStackTrace();
 			return false;
 		}
-		return true;	
+		return true;
 	}
 
 	public static boolean sendNotification(Integer idUser, String title) {

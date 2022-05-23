@@ -28,7 +28,7 @@ public class SelectorHBox extends CustomProductHBox implements ICustomProductHBo
 				if (event.getSource() instanceof CheckBox) {
 					if(selected.isSelected()) {
 						//init selectedHBox when the product/item is selected
-						selectedHBox = new SelectedHBox(product);
+						selectedHBox = new SelectedHBox(product, 1);
 						selectedHBox.initHBox();
 						CustomProductBuilderController.updateOverViewVBox("add to overview", selectedHBox);
 						selected.setSelected(true);
@@ -47,6 +47,10 @@ public class SelectorHBox extends CustomProductHBox implements ICustomProductHBo
 
 	public SelectedHBox getSelectedHBox() {
 		return selectedHBox;
+	}
+	
+	public void setSelectedHBox(SelectedHBox selectedHBox) {
+		this.selectedHBox = selectedHBox;
 	}
 
 	public CheckBox getSelected() {

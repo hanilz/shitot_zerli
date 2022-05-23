@@ -18,10 +18,10 @@ public class CustomProductHBox extends HBox implements ICustomProductHBox {
 	protected VBox imageVBox = new VBox();
 	protected VBox idNameVBox = new VBox();
 	private Label idLabel;
-	private Label nameLabel;
+	protected Label nameLabel;
 	protected HBox priceHBox = new HBox();
 	private VBox priceVBox = new VBox();
-	private Label priceLabel = new Label("Price:");
+	protected Label priceLabel = new Label("Price:");
 	protected Label amountLabel;
 
 	public CustomProductHBox(ProductsBase product) {
@@ -43,7 +43,7 @@ public class CustomProductHBox extends HBox implements ICustomProductHBox {
 		this.getChildren().add(idNameVBox);
 		this.getChildren().add(priceHBox);
 	}
-	
+
 	private void initPriceHBox() {
 		amountLabel = new Label(InputChecker.price(product.getPrice()));
 		amountLabel.setFont(new Font(23));

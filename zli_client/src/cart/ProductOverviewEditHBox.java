@@ -10,7 +10,6 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
 public class ProductOverviewEditHBox extends CustomProductHBox {
 	private int quantity = 1;
@@ -19,15 +18,15 @@ public class ProductOverviewEditHBox extends CustomProductHBox {
 	private Button addQuantity = new Button("+");
 	private Button removeQuantity = new Button("-");
 	private Button removeButton = new Button("X");
-	private VBox priceVBox = new VBox();
-	private Label priceLabel = new Label("Price:");
-	protected Label amountLabel;
 	private CartProductOverviewEditVBox cartProductOverviewVBox;
+	private ProductOverviewEditHBox instance;
 
-	public ProductOverviewEditHBox(ProductsBase product, CartProductOverviewEditVBox cartProductOverviewVBox, int quantity) {
+	public ProductOverviewEditHBox(ProductsBase product, CartProductOverviewEditVBox cartProductOverviewVBox,
+			int quantity) {
 		super(product);
 		this.cartProductOverviewVBox = cartProductOverviewVBox;
 		this.quantity = quantity;
+		instance = this;
 	}
 
 	public void initHBox() {
@@ -36,16 +35,17 @@ public class ProductOverviewEditHBox extends CustomProductHBox {
 		initQuantityVBox();
 		removeButton.setCursor(Cursor.HAND);
 		removeButton.setStyle("-fx-background-color : Red ; -fx-font-size:16 ; -fx-font-weight: bold");
-//		removeButton.setOnAction(new EventHandler<ActionEvent>() {
-//			@Override
-//			public void handle(ActionEvent e) {
-//				CustomProductBuilderController.updateOverViewVBox("remove from overview", selectedProduct);
-//			}
-//		});
+		removeButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				cartProductOverviewVBox.removeHBoxFromOverview(instance);
+			}
+		});
 		priceHBox.setSpacing(5);
 		priceHBox.getChildren().add(quantityHBox);
-		
+
 		priceHBox.getChildren().add(removeButton);
+		amountLabel.setText(InputChecker.price(getPrice()));
 	}
 
 	private void initQuantityVBox() {
@@ -58,10 +58,11 @@ public class ProductOverviewEditHBox extends CustomProductHBox {
 					removeQuantity.setDisable(false);
 				quantityLabel.setText("" + quantity);
 				amountLabel.setText(InputChecker.price(quantity * product.getPrice()));
+				cartProductOverviewVBox.addToTotalPrice(product.getPrice());
 			}
 		});
-
-		removeQuantity.setDisable(true);
+		if(quantity == 1)
+			removeQuantity.setDisable(true);
 		removeQuantity.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -70,6 +71,7 @@ public class ProductOverviewEditHBox extends CustomProductHBox {
 					removeQuantity.setDisable(true);
 				quantityLabel.setText("" + quantity);
 				amountLabel.setText(InputChecker.price(quantity * product.getPrice()));
+				cartProductOverviewVBox.addToTotalPrice(-product.getPrice());
 			}
 		});
 
@@ -79,6 +81,10 @@ public class ProductOverviewEditHBox extends CustomProductHBox {
 		quantityHBox.getChildren().add(removeQuantity);
 		quantityHBox.getChildren().add(quantityLabel);
 		quantityHBox.getChildren().add(addQuantity);
+	}
+
+	public double getPrice() {
+		return quantity * product.getPrice();
 	}
 
 	public int getQuantity() {

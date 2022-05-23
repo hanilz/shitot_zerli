@@ -13,6 +13,8 @@ public class Cart {
 	private static Cart cartInstance = null;
 
 	private double totalPrice = 0;
+	
+	private Product productToEdit = null;
 
 	private Cart() {
 	}
@@ -120,5 +122,13 @@ public class Cart {
 
 	public String toString() {
 		return "cart: " + cart + "\n";
+	}
+
+	public Product getProductToEdit() {
+		return productToEdit;
+	}
+
+	public void setProductToEdit(Product productToEdit) {
+		this.productToEdit = productToEdit;
 	}
 }

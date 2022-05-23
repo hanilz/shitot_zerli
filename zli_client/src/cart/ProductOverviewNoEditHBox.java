@@ -5,11 +5,14 @@ import entities.ProductsBase;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class ProductOverviewNoEditHBox extends CustomProductHBox {
 	private int quantity = 1;
-	private HBox quantityHBox = new HBox();
-	private Label quantityLabel;
+	private Label quantityLabel = new Label("Quantity:");
+	private Label quantityAmountLabel;
+	private VBox quantityVBox = new VBox(quantityLabel);
+	
 
 	public ProductOverviewNoEditHBox(ProductsBase product, int quantity) {
 		super(product);
@@ -18,19 +21,20 @@ public class ProductOverviewNoEditHBox extends CustomProductHBox {
 
 	public void initHBox() {
 		super.initHBox();
+		nameLabel.setPrefWidth(190);
 
 		initQuantityVBox();
 		priceHBox.setSpacing(5);
-		priceHBox.getChildren().add(quantityHBox);
+		priceHBox.getChildren().add(quantityVBox);
 	}
 
 	private void initQuantityVBox() {
-		quantityLabel = new Label("" + quantity);
+		quantityAmountLabel = new Label("" + quantity);
 		
-		quantityHBox.setAlignment(Pos.CENTER);
-		quantityHBox.setSpacing(10);	
+		quantityVBox.setAlignment(Pos.CENTER);
+		quantityVBox.setSpacing(10);	
 		
-		quantityHBox.getChildren().add(quantityLabel);
+		quantityVBox.getChildren().add(quantityAmountLabel);
 	}
 
 	public int getQuantity() {
