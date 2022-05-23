@@ -54,8 +54,14 @@ public class NotificationManager {
 			return "We are deeply sorry for the delivery delay you will be issued a " +InputChecker.price((Double)param) + " refund.";
 		case REGISTRATION_DISCOUNT:
 			return "Congrats on completing your registration, you will be eligible for a 20% discount on your first order.";
+		case CANCEL_REQUEST_DENIED:
+			return "Unfortunately your request to cancel for order number "+ (int)param+" was denied, don't wory you will still get the order anyway.";
+		case CANCEL_REQUEST_APPROVED:
+			return "We are deeply sorry you didn't like your experience with us\nYou will be issued a "+InputChecker.price((Double)param)+ " store credit for your next order.";
+		case ORDER_NOT_ACCEPTED:
+			return "We are deeply sorry to inform you taht your order with order number "+(int)param+"wasn't approved,\nyou will be issued a full refund in a form of a store credit for your next purchase ";
 		default:
-			return "No such notification.";
+			return "Test Notifications.";
 		}
 	}
 

@@ -75,7 +75,7 @@ public class HomeUserTypesController implements HomeInterface, Initializable {
 		userNameLabel.setText(User.getUserInstance().getUsername());
 		getNotifications();
 		//update notifications every 30 seconds
-		notificationThread = new Timeline(new KeyFrame(Duration.seconds(30.0), e -> {
+		notificationThread = new Timeline(new KeyFrame(Duration.seconds(10.0), e -> {
 			getNotifications();
 		}));
 		notificationThread.setCycleCount(Timeline.INDEFINITE);

@@ -24,8 +24,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
+import notifications.NotificationManager;
 import util.Commands;
 import util.ManageScreens;
+import util.NotificationType;
 
 public class ManageCustomerOrdersController implements Initializable{
 	private static ObservableList<ManagerOrderView> ordersToApprove = FXCollections.observableArrayList();
@@ -152,6 +154,7 @@ public class ManageCustomerOrdersController implements Initializable{
 			ordersToApprove.remove(mov);
 			newOrderTable.refresh();
 		}
+		NotificationManager.sendNotification(mov.getIdUser(), NotificationType.ORDER_ACCEPTED, mov.getIdOrder());
     }
 
 
@@ -172,6 +175,8 @@ public class ManageCustomerOrdersController implements Initializable{
 			ordersToApprove.remove(mov);
 			newOrderTable.refresh();
 		}
+		//TODO issue refund for the user
+		NotificationManager.sendNotification(mov.getIdUser(), NotificationType.ORDER_NOT_ACCEPTED, mov.getIdOrder());
     }
 
     //cancels an order that was already in accepted
@@ -191,6 +196,8 @@ public class ManageCustomerOrdersController implements Initializable{
 			ordersToCancel.remove(mov);
 			newOrderTable.refresh();
 		}
+		//TODO calculate refund and refund the user in the system
+		NotificationManager.sendNotification(mov.getIdUser(), NotificationType.CANCEL_REQUEST_APPROVED, 404);
     }
 
     //denies cancel request
@@ -210,6 +217,7 @@ public class ManageCustomerOrdersController implements Initializable{
 			ordersToCancel.remove(mov);
 			newOrderTable.refresh();
 		}
+		NotificationManager.sendNotification(mov.getIdUser(), NotificationType.CANCEL_REQUEST_DENIED, mov.getIdOrder());
     }
 
     //displays error message for n seconds
