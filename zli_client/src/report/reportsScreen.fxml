@@ -15,8 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="938.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane>
         <columnConstraints>
@@ -32,7 +31,7 @@
                <children>
                   <Label text="Reports">
                      <font>
-                        <Font size="30.0" />
+                        <Font name="System Bold" size="48.0" />
                      </font>
                   </Label>
                </children>
@@ -41,7 +40,7 @@
                <children>
                   <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" style="-fx-background-color: transparent;">
                      <graphic>
-                        <ImageView fitHeight="54.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="68.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../resources/catalog/home.png" />
                            </image>
@@ -54,6 +53,11 @@
       </GridPane>
       <VBox alignment="CENTER" prefHeight="131.0" prefWidth="878.0" spacing="11.0">
          <children>
+            <Label alignment="CENTER_RIGHT" text="Please select branch, year and quarter to view reports">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
             <HBox alignment="CENTER" prefHeight="41.0" prefWidth="878.0" spacing="19.0">
                <children>
                   <Label text="Branch:" />
@@ -62,9 +66,9 @@
                   <ComboBox prefWidth="150.0" promptText="2022" />
                   <Label text="Quarter:" />
                   <ComboBox prefWidth="150.0" promptText="Q1" />
+                  <Button mnemonicParsing="false" text="Search Reports" />
                </children>
             </HBox>
-            <Button mnemonicParsing="false" text="Search Reports" />
             <Label text="No report found" textFill="#eb1b1b" />
          </children>
          <VBox.margin>
@@ -74,7 +78,7 @@
             <Insets top="2.0" />
          </padding>
       </VBox>
-      <TableView maxWidth="-Infinity" prefHeight="264.0" prefWidth="659.0" VBox.vgrow="ALWAYS">
+      <TableView maxWidth="-Infinity" prefHeight="459.0" prefWidth="1015.0" VBox.vgrow="ALWAYS">
         <columns>
           <TableColumn minWidth="0.0" prefWidth="154.0" text="Date" />
           <TableColumn prefWidth="132.0" text="Type" />
