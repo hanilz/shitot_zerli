@@ -25,7 +25,7 @@ import entities.SurveyQuestion;
 import entities.UserDetails;
 
 /**
- * AnaylzeCommand - will anaylze the command that given from the server
+ * AnaylzeCommand - will analyze the command that given from the server
  * controller and will execute the sql query.
  */
 public class AnalayzeCommand {

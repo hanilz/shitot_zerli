@@ -37,6 +37,7 @@ public class CartHBox extends HBox {
 	private VBox quantityVBox = new VBox();
 	private Label quantityLabel = new Label("Quantity");
 	private TextField quantityField = new TextField();
+
 	private VBox priceVBox = new VBox();
 	private Label priceLabel = new Label("Price");
 	private Label amountLabel;
@@ -178,5 +179,9 @@ public class CartHBox extends HBox {
 	
 	public double getTotalSumPrice() {
 		return totalSumPrice;
+	}
+	
+	public TextField getQuantityField() {
+		return quantityField;
 	}
 }

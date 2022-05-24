@@ -9,13 +9,16 @@ import entities.ProductsBase;
 import entities.User;
 import home.LoginScreenController;
 import inputs.InputChecker;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import util.ManageScreens;
 import util.Screens;
 
@@ -31,9 +34,12 @@ public class CartController implements Initializable {
 	@FXML
 	private VBox cartItemVBox;
 
+    @FXML
+    private Label fillAllQuantitiesField;
+	
 	@FXML
 	private Label priceLabel;
-
+	
 	@FXML
 	private Pane overviewPane;
 
@@ -58,6 +64,19 @@ public class CartController implements Initializable {
 		refreshTotalPrice();
 	}
 
+	private boolean areFieldsEmpty() {
+		boolean result = false;
+		for(Node node : cartItemVBox.getChildren()) 
+			if(node instanceof CartHBox) {
+				CartHBox currentHBox = (CartHBox) node;
+				if(currentHBox.getQuantityField().getText().isEmpty()) {
+					currentHBox.getQuantityField().setText("1");
+					result = true;
+				}
+		}
+		return result;
+	}
+	
 	@FXML
 	void changeToHomeScreen(MouseEvent event) {
 		ManageScreens.home();
@@ -70,16 +89,27 @@ public class CartController implements Initializable {
 
 	@FXML
 	void buy(MouseEvent event) {
-		if (!User.getUserInstance().isUserLoggedIn())// guest tries to buy
+		if(areFieldsEmpty()) {
+			showFillAllQuantitiesLabel();
+			return;
+		}
+		if (!User.getUserInstance().isUserLoggedIn())  // guest tries to buy
 		{
-			LoginScreenController.enableCartPopup(true);// enable popup
+			LoginScreenController.enableCartPopup(true);  // enable popup
 			ManageScreens.changeScreenTo(Screens.LOGIN);	
 		}
 		if (User.getUserInstance().isUserLoggedIn()) {
-			ManageScreens.changeScreenTo(Screens.GREATING_CARD);
+			ManageScreens.changeScreenTo(Screens.GREETING_CARD);
 		}
 	}
 
+	void showFillAllQuantitiesLabel() {
+		fillAllQuantitiesField.setText("* Please fill all the fields of the quantities!");
+		PauseTransition pause = new PauseTransition(Duration.seconds(3));
+		pause.setOnFinished(e -> fillAllQuantitiesField.setText(""));
+		pause.play();
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		System.out.println(cart);

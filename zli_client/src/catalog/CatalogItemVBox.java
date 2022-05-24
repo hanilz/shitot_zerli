@@ -109,7 +109,10 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 		addToCartButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				int quantity = Integer.valueOf(quantityField.getText());
+				String quantityString = quantityField.getText();
+				if(quantityString.isEmpty())
+					quantityField.setText("0");
+				int quantity = Integer.valueOf(quantityString);
 				if (quantity < 1)
 					return;
 				Cart.getInstance().addToCart(item, quantity, true);

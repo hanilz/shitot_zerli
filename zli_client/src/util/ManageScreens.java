@@ -161,7 +161,7 @@ public class ManageScreens {
 			case CART:
 				ManageScreens.changeScene(CartController.class.getResource("CartScreen.fxml"), "Cart Screen");
 				break;
-			case GREATING_CARD:
+			case GREETING_CARD:
 				ManageScreens.changeScene(GreetingCardController.class.getResource("GreetingCardScreen.fxml"),
 						"Greeting Card Screen");
 				break;
@@ -265,7 +265,7 @@ public class ManageScreens {
 			return "Client";
 		case DELIVERY_DETAILS:
 			return "Delivery Details";
-		case GREATING_CARD:
+		case GREETING_CARD:
 			return "Greating Card";
 		case GUEST_HOME:
 			return "Guest Home";
@@ -317,7 +317,7 @@ public class ManageScreens {
 			return "";
 		case DELIVERY_DETAILS:
 			return "";
-		case GREATING_CARD:
+		case GREETING_CARD:
 			return "";
 		case GUEST_HOME:
 			return "resources/catalog/home.png";

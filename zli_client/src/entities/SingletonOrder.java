@@ -8,7 +8,12 @@ public class SingletonOrder extends Order{
 	private static final long serialVersionUID = 1L;
 	private static SingletonOrder instance = null;
 	private Delivery delivery = null;
-
+	private boolean isGreetingCard = true;
+	private String greetingCardTitle;
+	private String greetingCardFrom;
+	private String greetingCardTo;
+	private String greetingCardContent;
+	
 	public static SingletonOrder getInstance() {
 		return ((instance == null) ? instance = new SingletonOrder(): instance);
 	}
@@ -27,5 +32,44 @@ public class SingletonOrder extends Order{
 	
 	public void emptySingletonOrder() {
 		instance = null;
+	}
+	
+	public void formatGreetingCard() {
+		if(isGreetingCard)
+			greetingCard = String.format("Title: %s, From: %s, To: %s, Greeting Card: %s", greetingCardTitle,
+					greetingCardFrom, greetingCardTo, greetingCardContent);
+		else
+			greetingCard = "";
+	}
+	
+	public void setGreetingCardFields(String title, String from, String to, String content) {
+		greetingCardTitle = title;
+		greetingCardFrom = from;
+		greetingCardTo = to;
+		greetingCardContent = content;
+	}
+
+	public boolean getIsGreetingCard() {
+		return isGreetingCard;
+	}
+
+	public void setIsGreetingCard(boolean isGreetingCard) {
+		this.isGreetingCard = isGreetingCard;
+	}
+
+	public String getGreetingCardTitle() {
+		return greetingCardTitle;
+	}
+	
+	public String getGreetingCardTo() {
+		return greetingCardTo;
+	}
+	
+	public String getGreetingCardFrom() {
+		return greetingCardFrom;
+	}
+
+	public String getGreetingCardContent() {
+		return greetingCardContent;
 	}
 }
