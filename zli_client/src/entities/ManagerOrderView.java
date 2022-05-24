@@ -1,4 +1,4 @@
-package mangeCustomerOrders;
+package entities;
 
 import java.io.Serializable;
 

@@ -4,20 +4,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import customerComplaint.Complaint;
 import entities.AccountPayment;
 import entities.Branch;
+import entities.Complaint;
 import entities.CustomProduct;
 import entities.DeliveriesOrders;
 import entities.Delivery;
 import entities.Item;
 import entities.ManageUsers;
+import entities.ManagerOrderView;
 import entities.Order;
 import entities.OrderItem;
 import entities.OrderProduct;
 import entities.Product;
 import entities.UserDetails;
-import mangeCustomerOrders.ManagerOrderView;
 import notifications.Notification;
 import ocsf.server.ConnectionToClient;
 import server.ServerController;
@@ -174,8 +174,7 @@ public class ServerMessageController {
 			message.put("response", response);
 			break;
 		case SUBMIT_COMPLAINT:
-			boolean compailntSubmited = AnalayzeCommand.submitComplaint((Integer)message.get("HandelingAgent"),(Integer)message.get("OrderNumber"),(String) message.get("ComplaintReason"),
-					(String) message.get("ComplaintText"));
+			boolean compailntSubmited = AnalayzeCommand.submitComplaint((Complaint)message.get("Complaint"));
 			message.put("response", compailntSubmited);
 			break;
 		case UPDATE_PRODUCTS_BASE:

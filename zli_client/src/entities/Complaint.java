@@ -1,8 +1,8 @@
-package customerComplaint;
+package entities;
 
 import java.io.Serializable;
 
-public class Complaint implements Serializable{
+public class Complaint implements Serializable {
 	/**
 	 * 
 	 */
@@ -15,26 +15,31 @@ public class Complaint implements Serializable{
 	private String complaintReason;
 	private String complaintContent;
 	private int remainingMinutes;
-	
 
-	
-	public Complaint(int complaintID,int idUser, int orderID, int date, String status, String complaintReason,
+	public Complaint(int complaintID, int idUser, int orderID, int date, String status, String complaintReason,
 			String complaintContent) {
 		this.complaintID = complaintID;
 		this.orderID = orderID;
 		this.date = getRemainingTime(date);
-		this.remainingMinutes= 24*60 - date;
+		this.remainingMinutes = 24 * 60 - date;
 		this.status = status;
 		this.complaintReason = complaintReason;
 		this.complaintContent = complaintContent;
-		this.idUser=idUser;
+		this.idUser = idUser;
 	}
-	
+
+	public Complaint(int idUser, int orderID, String complaintReason, String complaintContent) {
+		this.orderID = orderID;
+		this.complaintReason = complaintReason;
+		this.complaintContent = complaintContent;
+		this.idUser = idUser;
+	}
+
 	private String getRemainingTime(int date) {
-		int minutes = date%60;
-		int hours = date/60;
-		if(hours<24) {
-			return String.format("%02d:%02d",23-hours,59-minutes);
+		int minutes = date % 60;
+		int hours = date / 60;
+		if (hours < 24) {
+			return String.format("%02d:%02d", 23 - hours, 59 - minutes);
 		}
 		return "DUE";
 	}
@@ -145,7 +150,7 @@ public class Complaint implements Serializable{
 	}
 
 	public void decreaseRemainingTime() {
-		remainingMinutes-=1;
+		remainingMinutes -= 1;
 	}
 
 	/**
@@ -162,11 +167,6 @@ public class Complaint implements Serializable{
 		this.idUser = idUser;
 	}
 
-	
-	
-	
-	
-	
 //	public static void main(String[] args) {
 //		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
 //	    Date firstDate = null;
@@ -179,7 +179,7 @@ public class Complaint implements Serializable{
 //		}
 //		System.out.println(getRemainingTime(firstDate));
 //	}
-	
+
 //	LocalDateTime firstDate = date;
 //	//Date secondDate = new Date(System.currentTimeMillis());
 //	LocalDateTime secondDate = LocalDateTime.now();

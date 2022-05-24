@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import client.ClientFormController;
+import entities.ManagerOrderView;
 import entities.User;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;

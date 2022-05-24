@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import client.ClientController;
-import customerComplaint.Complaint;
 import entities.Branch;
+import entities.Complaint;
 import entities.Item;
 import entities.ManageUsers;
+import entities.ManagerOrderView;
 import entities.Product;
 import javafx.collections.FXCollections;
-import mangeCustomerOrders.ManagerOrderView;
 
 /**
  * This class will help us the control all the messages that the client and the
