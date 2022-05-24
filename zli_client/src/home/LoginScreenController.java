@@ -39,7 +39,7 @@ public class LoginScreenController implements Initializable {
 	@FXML
 	private Button backButton; // TODO - We need to remove the back button
 	
-	private static boolean isPopup,isHome=true;
+	private static boolean isCartPopup,isCatalog;
 
 	@SuppressWarnings("unchecked")
 	@FXML
@@ -77,12 +77,13 @@ public class LoginScreenController implements Initializable {
 		switch ((Status) (response).get("response")) {
 		case NEW_LOG_IN:
 			loginUser(username);
-			if (isCatalogPopUp(event)) {
+			if (isCartPopUp(event)) {
 				if (User.getUserInstance().getType() != UserType.CUSTOMER)
 					setError("Only Customers can buy from catalog");
-				return;
-			} else
-				ManageScreens.home();
+			}else if(isCatalog)
+					catalogFlow(event);
+			 else
+				ManageScreens.previousScreen();
 			break;
 		case ALREADY_LOGGED_IN:
 			setError("User already logged in");
@@ -100,21 +101,19 @@ public class LoginScreenController implements Initializable {
 		errorLabel.setVisible(true);
 	}
 
-	public static void enablePopup(boolean Popup) {
-		isPopup = Popup;
+	public static void enableCartPopup(boolean isCartFlow) {
+		isCartPopup = isCartFlow;
 	}
-	public static void enableHomeFlow(boolean flowToHome) {
-		isHome = flowToHome;
+	public static void enableCatalogFlow(boolean isCatalogFlow) {
+		isCatalog = isCatalogFlow;
 	}
 
 	@FXML
-	void changeToHomeScreen(MouseEvent event) {
-		if (isCatalogPopUp(event)) {
+	void changeToPreviousScreen(MouseEvent event) {
+		if (isCartPopUp(event)) 
 			CloseWindow(event);
-		} else if(isHome)
-			ManageScreens.home();
-		else 
-			ManageScreens.changeScreenTo(Screens.CATALOG);
+		else
+			ManageScreens.previousScreen();//changeToPreviousScreen
 	}
 
 	private void loginUser(String username) {
@@ -125,8 +124,8 @@ public class LoginScreenController implements Initializable {
 		User.getUserInstance().login(idUser, username, idAccount, userType);// creating running user
 	}
 
-	private boolean isCatalogPopUp(MouseEvent event) {
-		if (isPopup) {
+	private boolean isCartPopUp(MouseEvent event) {
+		if (isCartPopup) {
 			if (User.getUserInstance().getType() == UserType.CUSTOMER)
 				CloseWindow(event);
 			else
@@ -136,6 +135,12 @@ public class LoginScreenController implements Initializable {
 		return false;
 	}
 
+	private void catalogFlow(MouseEvent event) {
+			if (User.getUserInstance().getType() == UserType.CUSTOMER)
+				ManageScreens.previousScreen();
+			else
+				ManageScreens.home();
+	}
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		if (User.getUserInstance().isUserLoggedIn()) {// one user is already active in this client

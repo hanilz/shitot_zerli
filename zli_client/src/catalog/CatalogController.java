@@ -24,91 +24,90 @@ import util.Screens;
 
 public class CatalogController implements Initializable {
 
-    @FXML
-    private ImageView cartImage;
+	@FXML
+	private ImageView cartImage;
 
-    @FXML
-    private VBox cartVBox;
+	@FXML
+	private VBox cartVBox;
 
-    @FXML
-    private Label catalogLbl;
+	@FXML
+	private Label catalogLbl;
 
-    @FXML
-    private ScrollPane catalogScrollPane;
+	@FXML
+	private ScrollPane catalogScrollPane;
 
-    @FXML
-    private VBox catalogVBox;
+	@FXML
+	private VBox catalogVBox;
 
-    @FXML
-    private Button filterButton;
+	@FXML
+	private Button filterButton;
 
-    @FXML
-    private ImageView homeImage;
+	@FXML
+	private ImageView homeImage;
 
-    @FXML
-    private VBox homeVBox;
+	@FXML
+	private VBox homeVBox;
 
-    @FXML
-    private HBox loginHBox;
+	@FXML
+	private HBox loginHBox;
 
-    @FXML
-    private TextField searchBar;
+	@FXML
+	private TextField searchBar;
 
-    @FXML
-    private Button searchButton;
-    
-    @FXML
-    private ScrollPane filterScrollPane;
-    
-    @FXML
-    private ImageView loginIcon;
+	@FXML
+	private Button searchButton;
 
-    @FXML
-    private Label loginLabel;
-    
-    @FXML
-    private VBox loginVBox;
-    
-    @FXML
-    private Label totalAmountCartLabel;
-    
-    private static CatalogController instance;
+	@FXML
+	private ScrollPane filterScrollPane;
+
+	@FXML
+	private ImageView loginIcon;
+
+	@FXML
+	private Label loginLabel;
+
+	@FXML
+	private VBox loginVBox;
+
+	@FXML
+	private Label totalAmountCartLabel;
+
+	private static CatalogController instance;
 
 	private GridPane catalogGrid = ManageData.catalogGrid;
 
 	@FXML
 	void changeToCartScreen(MouseEvent event) {
-		LoginScreenController.enableHomeFlow(true);
 		ManageScreens.changeScreenTo(Screens.CART);
 	}
 
 	@FXML
 	void changeToHomeScreen(MouseEvent event) {
-		LoginScreenController.enableHomeFlow(true);
 		ManageScreens.home();
 	}
 
-    @FXML
-    void openLogin(MouseEvent event) {
-    	if(!User.getUserInstance().isUserLoggedIn())
-		ManageScreens.changeScreenTo(Screens.LOGIN);
-    	else {
-    		User.getUserInstance().logout();
-    		ManageScreens.changeScreenTo(Screens.CATALOG);
-    	}
+	@FXML
+	void openLogin(MouseEvent event) {
+		if (!User.getUserInstance().isUserLoggedIn()) {
+			LoginScreenController.enableCatalogFlow(true);
+			ManageScreens.changeScreenTo(Screens.LOGIN);
+		} else {
+			User.getUserInstance().logout();
+			ManageScreens.changeScreenTo(Screens.CATALOG);// to refresh screen
+		}
 	}
 
 	@FXML
 	void search(MouseEvent event) {
 
 	}
-	
+
 	public static void refreshTotalAmountInCart() {
 		instance.setTotalAmountCartLabel();
 	}
-	
+
 	private void setTotalAmountCartLabel() {
-		totalAmountCartLabel.setText(""+Cart.getInstance().getCart().size());
+		totalAmountCartLabel.setText("" + Cart.getInstance().getCart().size());
 	}
 
 	@Override
@@ -117,10 +116,8 @@ public class CatalogController implements Initializable {
 		setTotalAmountCartLabel();
 		catalogGrid = ManageData.catalogGrid;
 		catalogScrollPane.setContent(catalogGrid);
-		LoginScreenController.enableHomeFlow(false);
-		if(User.getUserInstance().isUserLoggedIn())
-		{
-			loginLabel.setText("Welcome,\n"+User.getUserInstance().getUsername());
+		if (User.getUserInstance().isUserLoggedIn()) {
+			loginLabel.setText("Welcome,\n" + User.getUserInstance().getUsername());
 			loginLabel.setWrapText(true);
 			loginLabel.setPrefHeight(50);
 			loginLabel.setPrefWidth(150);

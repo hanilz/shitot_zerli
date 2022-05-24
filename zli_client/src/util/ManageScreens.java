@@ -35,6 +35,7 @@ import survey.SurveyHomeController;
 
 public class ManageScreens {
 	private static Stage stage;
+	private static Screens previousScreen,currentScreen;
 	private static Stage popupStage;
 	private static ArrayList<Stage> openedPopups = new ArrayList<>();
 
@@ -97,6 +98,12 @@ public class ManageScreens {
 				removePopup(popupStage);
 			}
 		});
+
+	}
+
+	public static void setPreviousScreen(Screens lastScreen)// added
+	{
+		previousScreen = lastScreen;
 	}
 
 	private static void setIconApplication() {
@@ -131,7 +138,7 @@ public class ManageScreens {
 	}
 
 	public static void changeScreenTo(Screens screen) {
-
+		setPreviousScreen(currentScreen);//saved one become last one
 		try {
 			switch (screen) {
 			case GUEST_HOME:
@@ -217,8 +224,7 @@ public class ManageScreens {
 						"Manage Customer Orders");
 				break;
 			case VIEW_ORDERS_CUSTOMER:
-				ManageScreens.changeScene(
-						ViewOrdersController.class.getResource("ViewOrdersScreen.fxml"),
+				ManageScreens.changeScene(ViewOrdersController.class.getResource("ViewOrdersScreen.fxml"),
 						"View Orders");
 				break;
 			default:
@@ -227,6 +233,8 @@ public class ManageScreens {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		currentScreen=screen;//save currrent screen to the one showes
+		
 	}
 
 	public static void home() {
@@ -234,6 +242,14 @@ public class ManageScreens {
 			ManageScreens.changeScreenTo(Screens.USER_HOME);
 		else
 			ManageScreens.changeScreenTo(Screens.GUEST_HOME);
+	}
+
+	public static void previousScreen()// added
+	{
+		if(previousScreen==Screens.GUEST_HOME||previousScreen==Screens.USER_HOME)
+			home();
+		else
+		changeScreenTo(previousScreen);
 	}
 
 	// set the name for the button in the home screen
