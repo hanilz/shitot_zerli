@@ -16,13 +16,13 @@ import entities.Delivery;
 import entities.Item;
 import entities.ManageUsers;
 import entities.ManagerOrderView;
+import entities.Notification;
 import entities.Order;
 import entities.OrderItem;
 import entities.OrderProduct;
 import entities.Product;
+import entities.SurveyQuestion;
 import entities.UserDetails;
-import notifications.Notification;
-import survey.SurveyQuestion;
 
 /**
  * AnaylzeCommand - will anaylze the command that given from the server
