@@ -22,6 +22,8 @@ public enum UserType {
 			return MARKETING_WORKER;
 		case "SERVICE_EXPERT":
 			return SERVICE_EXPERT;
+		case "CEO":
+			return CEO;
 		}
 		return UNDEFINED;
 	}

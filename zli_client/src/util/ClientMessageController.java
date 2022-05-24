@@ -10,6 +10,7 @@ import entities.Item;
 import entities.ManageUsers;
 import entities.ManagerOrderView;
 import entities.Product;
+import entities.Report;
 import javafx.collections.FXCollections;
 
 /**
@@ -47,8 +48,14 @@ public class ClientMessageController {
 		case FETCH_BRANCHES:
 			returnServerListRespond(new ArrayList<Branch>());
 			break;
+		case FETCH_BRANCHES_PER_MANAGER:
+			returnServerListRespond(new ArrayList<Branch>());
+			break;
 		case FETCH_ITEMS:
 			returnServerListRespond(new ArrayList<Item>());
+			break;
+		case FETCH_REPORTS:
+			returnServerListRespond(new ArrayList<Report>());
 			break;
 		case FETCH_ORDERS:
 			break;

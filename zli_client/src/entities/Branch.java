@@ -11,6 +11,7 @@ public class Branch implements Serializable{
 	private String city;
 	private String address;
 	private String region;
+	private int idManager;
 	
 	public Branch(int idBranch, String city, String address, String region) {
 		this.idBranch = idBranch;
@@ -19,6 +20,18 @@ public class Branch implements Serializable{
 		this.region = region;
 	}
 	
+	public int getIdManager() {
+		return idManager;
+	}
+
+
+
+	public void setIdManager(int idManager) {
+		this.idManager = idManager;
+	}
+
+
+
 	public int getIdBranch() {
 		return idBranch;
 	}
