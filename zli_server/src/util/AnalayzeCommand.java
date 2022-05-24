@@ -24,10 +24,6 @@ import entities.Product;
 import entities.Report;
 import entities.SurveyQuestion;
 import entities.UserDetails;
-
-import mangeCustomerOrders.ManagerOrderView;
-import notifications.Notification;
-import survey.SurveyQuestion;
 import surveyAnalysis.QuestionAnswer;
 
 
