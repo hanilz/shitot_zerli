@@ -3,6 +3,7 @@ package notifications;
 import java.util.HashMap;
 
 import client.ClientFormController;
+import entities.Notification;
 import inputs.InputChecker;
 import util.Commands;
 import util.NotificationType;

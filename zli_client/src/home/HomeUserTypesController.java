@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import client.ClientFormController;
+import entities.Notification;
 import entities.User;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -19,7 +20,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
-import notifications.Notification;
 import notifications.NotificationController;
 import util.Commands;
 import util.ManageClients;
@@ -88,6 +88,7 @@ public class HomeUserTypesController implements Initializable {
 //				notificationLabel.setText("" + notifications.size());
 	}
 
+	@SuppressWarnings("unchecked")
 	private void getNotifications() {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.FETCH_NOTIFICATIONS);
