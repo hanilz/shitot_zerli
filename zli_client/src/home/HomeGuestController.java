@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -65,7 +66,9 @@ public class HomeGuestController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		TypeLabel.setText(User.getUserInstance().getUsername());		
+		TypeLabel.setText(User.getUserInstance().getUsername());
+		exitButton.setCursor(Cursor.HAND);
+		loginBtn.setCursor(Cursor.HAND);
 	}
 	
     @FXML

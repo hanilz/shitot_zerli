@@ -8,7 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class CatalogVBox extends VBox implements ICatalogVBox {
+public class CatalogVBox extends VBox implements ICatalogVBox{
 	protected Label nameLabel = new Label(); // will show the product name
 	protected VBox nameVBox = new VBox();
 	protected ImageView image;
