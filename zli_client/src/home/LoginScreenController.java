@@ -20,6 +20,7 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import util.Commands;
 import util.ManageScreens;
+import util.Screens;
 import util.Status;
 import util.UserType;
 
@@ -133,8 +134,10 @@ public class LoginScreenController implements Initializable {
 	}
 
 	private void catalogFlow(Event event) {
-		if (User.getUserInstance().getType() == UserType.CUSTOMER)
-			ManageScreens.previousScreen();
+		if (User.getUserInstance().getType() == UserType.CUSTOMER) {
+			ManageScreens.changeScreenTo(Screens.CATALOG);
+			CloseWindow(event);
+		}
 		else
 			ManageScreens.home();
 		CloseWindow(event);
