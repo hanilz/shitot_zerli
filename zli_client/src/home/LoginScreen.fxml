@@ -44,7 +44,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#changeToHomeScreen" text="Back">
+            <Button fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#changeToPreviousScreen" text="Back">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
