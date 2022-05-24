@@ -1,12 +1,9 @@
 package customProduct;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-import cart.CartController;
-import cart.ProductOverviewEditHBox;
 import entities.Cart;
 import entities.CustomProduct;
 import entities.Item;

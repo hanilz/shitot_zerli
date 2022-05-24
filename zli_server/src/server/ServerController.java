@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import client.ClientFormController;
-import customerComplaint.Complaint;
+import entities.Complaint;
 import gui.ServerFormController;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;

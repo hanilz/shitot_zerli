@@ -8,22 +8,28 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import customerComplaint.Complaint;
 import entities.AccountPayment;
 import entities.Branch;
+import entities.Complaint;
 import entities.CustomProduct;
 import entities.Delivery;
 import entities.Item;
 import entities.ManageUsers;
+import entities.ManagerOrderView;
+import entities.Notification;
 import entities.Order;
 import entities.OrderItem;
 import entities.OrderProduct;
 import entities.Product;
+import entities.Report;
+import entities.SurveyQuestion;
 import entities.UserDetails;
+
 import mangeCustomerOrders.ManagerOrderView;
 import notifications.Notification;
 import survey.SurveyQuestion;
 import surveyAnalysis.QuestionAnswer;
+
 
 /**
  * AnaylzeCommand - will anaylze the command that given from the server
@@ -113,6 +119,25 @@ public class AnalayzeCommand {
 				String address = rs.getString(3);
 				String region = rs.getString(4);
 
+				Branch branchResult = new Branch(idBranch, city, address, region);
+				branches.add(branchResult);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return branches;
+	}
+
+	public static ArrayList<Branch> selectBranchesPerManager(int userId) {
+		ArrayList<Branch> branches = new ArrayList<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt.executeQuery("SELECT * FROM branches where idManager=" + userId + ";");
+			while (rs.next()) {
+				int idBranch = rs.getInt(1);
+				String city = rs.getString(2);
+				String address = rs.getString(3);
+				String region = rs.getString(4);
 				Branch branchResult = new Branch(idBranch, city, address, region);
 				branches.add(branchResult);
 			}
@@ -491,16 +516,16 @@ public class AnalayzeCommand {
 		}
 	}
 
-	public static boolean submitComplaint(int idHandler, int orderNumber, String reason, String complaint) {
+	public static boolean submitComplaint(Complaint complaint) {
 		Connection conn = DataBaseController.getConn();
 		String query = "INSERT INTO complaints (idUser, orderId, reason, content) VALUES (?, ?, ?, ?)";
 		PreparedStatement preparedStmt;
 		try {
 			preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setInt(1, idHandler);
-			preparedStmt.setInt(2, orderNumber);
-			preparedStmt.setString(3, reason);
-			preparedStmt.setString(4, complaint);
+			preparedStmt.setInt(1, complaint.getIdUser());
+			preparedStmt.setInt(2, complaint.getOrderID());
+			preparedStmt.setString(3, complaint.getComplaintReason());
+			preparedStmt.setString(4, complaint.getComplaintContent());
 			preparedStmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {
@@ -709,7 +734,7 @@ public class AnalayzeCommand {
 				String date = rs.getString(5);
 				String status = rs.getString(6);
 				int idUser = rs.getInt(7);
-				orders.add(new ManagerOrderView(idOrder, price, firstName, lastName, date, status,idUser));
+				orders.add(new ManagerOrderView(idOrder, price, firstName, lastName, date, status, idUser));
 			}
 		} catch (SQLException e) {
 			System.out.println("failed to fetch orders for manager");
@@ -945,5 +970,21 @@ public class AnalayzeCommand {
 		}
 		return questions;
 	}
+
+	public static ArrayList<Report> selectAllReports() {
+		ArrayList<Report> reports = new ArrayList<>();
+		try {
+			Statement stmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT *, QUARTER(date) FROM reports;");
+			while (rs.next()) {
+				Report reportResult = new Report(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getInt(4), rs.getInt(5));
+				reports.add(reportResult);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return reports;
+	}
+
 
 }

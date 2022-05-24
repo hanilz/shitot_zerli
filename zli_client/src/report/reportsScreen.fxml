@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -15,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.ReportsController">
    <children>
       <GridPane>
         <columnConstraints>
@@ -38,7 +39,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="48.0" prefWidth="107.0" spacing="118.0">
                <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" style="-fx-background-color: transparent;">
+                  <Button fx:id="homeButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#changeToHomeScreen" prefHeight="25.0" prefWidth="57.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fitHeight="68.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -46,6 +47,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </HBox>
@@ -61,15 +65,15 @@
             <HBox alignment="CENTER" prefHeight="41.0" prefWidth="878.0" spacing="19.0">
                <children>
                   <Label text="Branch:" />
-                  <ComboBox prefWidth="150.0" promptText="Tel Aviv" />
+                  <ComboBox fx:id="branchComboBox" prefWidth="150.0" promptText="Select Branch" />
                   <Label text="Year:" />
-                  <ComboBox prefWidth="150.0" promptText="2022" />
+                  <ComboBox fx:id="yearComboBox" prefWidth="150.0" promptText="Select Year" />
                   <Label text="Quarter:" />
-                  <ComboBox prefWidth="150.0" promptText="Q1" />
-                  <Button mnemonicParsing="false" text="Search Reports" />
+                  <ComboBox fx:id="quraterComboBox" prefWidth="150.0" promptText="Select Quarter" />
+                  <Button fx:id="searchButton" mnemonicParsing="false" onMouseClicked="#searchReportsButton" text="Search Reports" />
                </children>
             </HBox>
-            <Label text="No report found" textFill="#eb1b1b" />
+            <Label fx:id="noReportsLabel" text="No report found" textFill="#eb1b1b" visible="false" />
          </children>
          <VBox.margin>
             <Insets />
@@ -78,11 +82,11 @@
             <Insets top="2.0" />
          </padding>
       </VBox>
-      <TableView maxWidth="-Infinity" prefHeight="459.0" prefWidth="1015.0" VBox.vgrow="ALWAYS">
+      <TableView fx:id="reportsTable" maxWidth="-Infinity" prefHeight="459.0" prefWidth="1015.0" VBox.vgrow="ALWAYS">
         <columns>
-          <TableColumn minWidth="0.0" prefWidth="154.0" text="Date" />
-          <TableColumn prefWidth="132.0" text="Type" />
-            <TableColumn prefWidth="113.0" text="View" />
+          <TableColumn fx:id="dateCol" minWidth="0.0" prefWidth="154.0" text="Date" />
+          <TableColumn fx:id="typeCol" prefWidth="132.0" text="Type" />
+            <TableColumn fx:id="viewCol" prefWidth="113.0" text="View" />
         </columns>
          <VBox.margin>
             <Insets />

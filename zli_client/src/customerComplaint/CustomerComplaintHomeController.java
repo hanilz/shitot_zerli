@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import client.ClientFormController;
+import entities.Complaint;
 import entities.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

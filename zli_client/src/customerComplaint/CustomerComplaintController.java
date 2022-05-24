@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import client.ClientFormController;
+import entities.Complaint;
 import entities.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -77,10 +78,12 @@ public class CustomerComplaintController implements Initializable {
 
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.SUBMIT_COMPLAINT);
-		message.put("OrderNumber", orderNumberCombo.getValue());
-		message.put("ComplaintReason", complaintReason.getText());
-		message.put("ComplaintText", complaintText.getText());
-		message.put("HandelingAgent", User.getUserInstance().getIdUser());
+		/*message.put("OrderNumber", );
+		message.put("ComplaintReason", );
+		message.put("ComplaintText", );
+		message.put("HandelingAgent", );*/
+		
+		message.put("Complaint", new Complaint(User.getUserInstance().getIdUser(), orderNumberCombo.getValue(), complaintReason.getText(), complaintText.getText()));
 		Object response = ClientFormController.client.accept(message);
 		if (!(boolean) response) {
 			errorLabel.setVisible(true);

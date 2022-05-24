@@ -2,7 +2,6 @@ package util;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import cart.CartController;
 import catalog.CatalogController;
@@ -16,12 +15,14 @@ import home.HomeGuestController;
 import home.HomeUserTypesController;
 import home.LoginScreenController;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import manageCatalog.ManageCatalogController;
 import mangeCustomerOrders.ManageCustomerOrdersController;
 import mangeUsers.ManageUsersController;
@@ -31,13 +32,14 @@ import order.GreetingCardController;
 import order.PaymentSuccessfulController;
 import ordersView.ViewOrdersController;
 import registerUser.RegistrationController;
+import report.ReportsController;
 import survey.SurveyHomeController;
 import surveyAnalysis.AnalyzeAnswersController;
 import surveyAnalysis.SurveyAnswersHomeController;
 
 public class ManageScreens {
 	private static Stage stage;
-	private static Screens previousScreen,currentScreen;
+	private static Screens previousScreen, currentScreen;
 	private static Stage popupStage;
 	private static ArrayList<Stage> openedPopups = new ArrayList<>();
 
@@ -100,7 +102,6 @@ public class ManageScreens {
 				removePopup(popupStage);
 			}
 		});
-
 	}
 
 	public static void setPreviousScreen(Screens lastScreen)// added
@@ -140,7 +141,7 @@ public class ManageScreens {
 	}
 
 	public static void changeScreenTo(Screens screen) {
-		setPreviousScreen(currentScreen);//saved one become last one
+		setPreviousScreen(currentScreen);// saved one become last one
 		try {
 			switch (screen) {
 			case GUEST_HOME:
@@ -151,7 +152,7 @@ public class ManageScreens {
 						"HomeScreen");
 				break;
 			case LOGIN:
-				ManageScreens.changeScene(LoginScreenController.class.getResource("LoginScreen.fxml"), "Login");
+				ManageScreens.openPopupFXML(LoginScreenController.class.getResource("LoginScreen.fxml"), "Login");// popup
 				break;
 			case CATALOG_SPLASH_SCREEN:
 				ManageScreens.changeScene(SplashScreenController.class.getResource("SplashScreen.fxml"),
@@ -229,6 +230,7 @@ public class ManageScreens {
 				ManageScreens.changeScene(ViewOrdersController.class.getResource("ViewOrdersScreen.fxml"),
 						"View Orders");
 				break;
+
 			case VIEW_ANSWERED_SURVEYS:
 				ManageScreens.changeScene(SurveyAnswersHomeController.class.getResource("SurveyAnswersHomeScreen.fxml"),
 						"Survey Answers");
@@ -236,6 +238,11 @@ public class ManageScreens {
 			case VIEW_ANSWERS_FOR_SURVEY:
 				ManageScreens.changeScene(AnalyzeAnswersController.class.getResource("AnalayzeAnswersScreen.fxml"),
 						"Survey Answers");
+
+			case VIEW_REPORTS:
+				ManageScreens.changeScene(ReportsController.class.getResource("reportsScreen.fxml"),
+						"View Reports");
+
 				break;
 			default:
 				break;
@@ -243,8 +250,8 @@ public class ManageScreens {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		currentScreen=screen;//save currrent screen to the one showes
-		
+		currentScreen = screen;// save currrent screen to the one showes
+
 	}
 
 	public static void home() {
@@ -256,10 +263,10 @@ public class ManageScreens {
 
 	public static void previousScreen()// added
 	{
-		if(previousScreen==Screens.GUEST_HOME||previousScreen==Screens.USER_HOME)
+		if (previousScreen == Screens.GUEST_HOME || previousScreen == Screens.USER_HOME)
 			home();
 		else
-		changeScreenTo(previousScreen);
+			changeScreenTo(previousScreen);
 	}
 
 	// set the name for the button in the home screen
@@ -313,6 +320,8 @@ public class ManageScreens {
 			return "View Orders";
 		case VIEW_ANSWERED_SURVEYS:
 			return "Analyze Surveys";
+		case VIEW_REPORTS:
+			return "View Reports";
 		}
 		return null;
 	}
@@ -367,6 +376,8 @@ public class ManageScreens {
 			return "resources/home/order.png";
 		case VIEW_ANSWERED_SURVEYS:
 			return "resources/home/survey.png";
+		case VIEW_REPORTS:
+			return "resources/home/reports.png";
 		default:
 			return "";// no such user//
 		}

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import client.ClientFormController;
+import entities.Survey;
+import entities.SurveyQuestion;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -19,7 +21,8 @@ import util.Screens;
 public class SurveyHomeRowHBox extends HBox{
 	private int surveyID;
 	private String title;
-	Survey survey;
+	private Survey survey;
+	
 	public SurveyHomeRowHBox(int surveyID, String title) {
 		this.surveyID=surveyID;
 		this.title=title;

@@ -1,4 +1,4 @@
-package notifications;
+package entities;
 
 import java.io.Serializable;
 

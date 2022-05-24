@@ -16,9 +16,11 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import util.Commands;
 import util.ManageScreens;
+import util.Screens;
 import util.Status;
 import util.UserType;
 
@@ -38,12 +40,12 @@ public class LoginScreenController implements Initializable {
 
 	@FXML
 	private Button backButton;
-	
-	private static boolean isCartPopup,isCatalog;
+
+	private static boolean isCart, isCatalog;
 
 	@SuppressWarnings("unchecked")
 	@FXML
-	void loginUserIntoSystem(MouseEvent event) {
+	void loginUserIntoSystem(Event event) {
 		String username = usernameLabel.getText();
 		String password = passwordLabel.getText();
 		if (!isUserInputValid(username, password))
@@ -73,17 +75,19 @@ public class LoginScreenController implements Initializable {
 		return isInputValid;
 	}
 
-	private void responseAction(MouseEvent event, String username, HashMap<String, Object> response) {
+	private void responseAction(Event event, String username, HashMap<String, Object> response) {
 		switch ((Status) (response).get("response")) {
 		case NEW_LOG_IN:
 			loginUser(username);
-			if (isCartPopUp(event)) {
-				if (User.getUserInstance().getType() != UserType.CUSTOMER)
-					setError("Only Customers can buy from catalog");
-			}else if(isCatalog)
-					catalogFlow(event);
-			 else
-				ManageScreens.previousScreen();
+			System.out.println("isCatalog= "+isCatalog+"\nisCart= "+isCart);
+			if (isCart) {
+				cartFlow(event);
+			} else if (isCatalog) 
+				catalogFlow(event);
+			else {
+				ManageScreens.home();
+				CloseWindow(event);
+			}
 			break;
 		case ALREADY_LOGGED_IN:
 			setError("User already logged in");
@@ -93,76 +97,86 @@ public class LoginScreenController implements Initializable {
 			break;
 		case SUSPENDED:
 			setError("User Suspended");
+			break;
 		}
+		
+	}
+
+	private void cartFlow(Event event) {
+		if (User.getUserInstance().getType() != UserType.CUSTOMER) {
+			setError("Only Customers can buy from catalog");
+			System.out.println(errorLabel.getText());
+			User.getUserInstance().logout();
+		} else {
+			CloseWindow(event);
+		}
+		
 	}
 
 	private void setError(String err) {
 		errorLabel.setText(err);
-		errorLabel.setVisible(true);
+		errorLabel.setTextFill(Paint.valueOf("RED"));
 	}
 
 	public static void enableCartPopup(boolean isCartFlow) {
-		isCartPopup = isCartFlow;
+		isCart = isCartFlow;
 	}
+
 	public static void enableCatalogFlow(boolean isCatalogFlow) {
 		isCatalog = isCatalogFlow;
 	}
 
 	@FXML
-	void changeToPreviousScreen(MouseEvent event) {
-		if (isCartPopUp(event)) 
-			CloseWindow(event);
-		else
-			ManageScreens.previousScreen();//changeToPreviousScreen
+	private void back(MouseEvent event) {
+		resetLogin();
+		CloseWindow(event);
+	}
+
+	public static void resetLogin() {
+		isCart=false;
+		isCatalog=false;
 	}
 
 	private void loginUser(String username) {
-		errorLabel.setVisible(false);
 		int idUser = (Integer) response.get("idUser");
 		int idAccount = (Integer) response.get("idAccount");
 		UserType userType = (UserType) response.get("userType");
 		User.getUserInstance().login(idUser, username, idAccount, userType);// creating running user
 	}
 
-	private boolean isCartPopUp(MouseEvent event) {
-		if (isCartPopup) {
-			if (User.getUserInstance().getType() == UserType.CUSTOMER)
-				CloseWindow(event);
-			else
-				User.getUserInstance().logout();
-			return true;
-		}
-		return false;
+	private void catalogFlow(Event event) {
+		if (User.getUserInstance().getType() == UserType.CUSTOMER) {
+			ManageScreens.changeScreenTo(Screens.CATALOG);
+			CloseWindow(event);
+		} else
+			ManageScreens.home();
+		isCatalog=false;
+		CloseWindow(event);
 	}
 
-	private void catalogFlow(MouseEvent event) {
-			if (User.getUserInstance().getType() == UserType.CUSTOMER)
-				ManageScreens.previousScreen();
-			else
-				ManageScreens.home();
-	}
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		enterPressed(usernameLabel);
-		enterPressed(passwordLabel);
+		setTextBehaviour(usernameLabel);
+		setTextBehaviour(passwordLabel);
 		if (User.getUserInstance().isUserLoggedIn()) {// one user is already active in this client
 			loginButton.setDisable(true);// user logged in
 			errorLabel.setText("You already logged in as " + User.getUserInstance().getUsername());
-			errorLabel.setVisible(true);
+			errorLabel.setTextFill(Paint.valueOf("RED"));
 		}
 	}
 
 	private void CloseWindow(Event event) {
+		resetLogin();
 		Node n = ((Node) (event.getSource()));
 		Stage s = ((Stage) n.getScene().getWindow());
 		s.close();
 	}
-	private void enterPressed(TextField txt)
-	{
+
+	private void setTextBehaviour(TextField txt) {
 		txt.setOnKeyReleased(event -> {
-			  if (event.getCode() == KeyCode.ENTER){
-				  loginUserIntoSystem(null);
-			  }
-			});
+			if (event.getCode() == KeyCode.ENTER) {
+				loginUserIntoSystem(event);
+			}
+		});
 	}
 }

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import client.ClientFormController;
+import entities.Complaint;
 import inputs.InputChecker;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
