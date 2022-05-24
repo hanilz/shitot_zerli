@@ -8,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import util.MailService;
 import util.ManageScreens;
 
 public class ClientScreen extends Application {

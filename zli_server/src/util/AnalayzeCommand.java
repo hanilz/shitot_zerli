@@ -8,19 +8,19 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import customerComplaint.Complaint;
 import entities.AccountPayment;
 import entities.Branch;
+import entities.Complaint;
 import entities.CustomProduct;
 import entities.Delivery;
 import entities.Item;
 import entities.ManageUsers;
+import entities.ManagerOrderView;
 import entities.Order;
 import entities.OrderItem;
 import entities.OrderProduct;
 import entities.Product;
 import entities.UserDetails;
-import mangeCustomerOrders.ManagerOrderView;
 import notifications.Notification;
 import survey.SurveyQuestion;
 
@@ -490,16 +490,16 @@ public class AnalayzeCommand {
 		}
 	}
 
-	public static boolean submitComplaint(int idHandler, int orderNumber, String reason, String complaint) {
+	public static boolean submitComplaint(Complaint complaint) {
 		Connection conn = DataBaseController.getConn();
 		String query = "INSERT INTO complaints (idUser, orderId, reason, content) VALUES (?, ?, ?, ?)";
 		PreparedStatement preparedStmt;
 		try {
 			preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setInt(1, idHandler);
-			preparedStmt.setInt(2, orderNumber);
-			preparedStmt.setString(3, reason);
-			preparedStmt.setString(4, complaint);
+			preparedStmt.setInt(1, complaint.getIdUser());
+			preparedStmt.setInt(2, complaint.getOrderID());
+			preparedStmt.setString(3, complaint.getComplaintReason());
+			preparedStmt.setString(4, complaint.getComplaintContent());
 			preparedStmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {
