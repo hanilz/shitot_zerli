@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="survey.SurveyHomeController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-image: &quot;../resources/connectWallpaper.png&quot;;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="surveyAnalysis.SurveyAnswersHomeController">
    <opaqueInsets>
       <Insets />
    </opaqueInsets>
@@ -22,21 +22,21 @@
       <GridPane prefWidth="980.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="100.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1025.0" minWidth="10.0" prefWidth="1021.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.0" minWidth="0.0" prefWidth="99.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1072.0" minWidth="10.0" prefWidth="1059.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.0" minWidth="0.0" prefWidth="101.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="100.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="126.0" prefWidth="773.0" GridPane.columnIndex="1">
+            <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="886.0" GridPane.columnIndex="1">
                <children>
-                  <Label text="Surveys">
+                  <Label text="Survey Analysis">
                      <font>
                         <Font name="System Bold" size="42.0" />
                      </font>
                   </Label>
-                  <Label text="Please select a survey you would like to fill">
+                  <Label text="Please select a survey you would like to see a summary for">
                      <font>
                         <Font size="17.0" />
                      </font>
@@ -50,9 +50,9 @@
             </ImageView>
          </children>
       </GridPane>
-      <ScrollPane prefHeight="573.0" prefWidth="1220.0">
+      <ScrollPane prefHeight="592.0" prefWidth="1260.0">
          <content>
-            <VBox fx:id="surveyList" prefHeight="563.0" prefWidth="1209.0" spacing="5.0">
+            <VBox fx:id="surveyList" alignment="TOP_CENTER" prefHeight="587.0" prefWidth="1210.0" spacing="5.0">
                <padding>
                   <Insets bottom="10.0" left="20.0" right="20.0" top="5.0" />
                </padding></VBox>

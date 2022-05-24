@@ -11,6 +11,7 @@ import entities.ManageUsers;
 import entities.Product;
 import javafx.collections.FXCollections;
 import mangeCustomerOrders.ManagerOrderView;
+import survey.SurveyQuestion;
 
 /**
  * This class will help us the control all the messages that the client and the
@@ -71,8 +72,6 @@ public class ClientMessageController {
 		case FETCH_COMPLAINTS:
 			returnServerListRespond(new ArrayList<Complaint>());
 			break;
-		case FETCH_ORDERS_MANAGER:
-			returnServerListRespond(new ArrayList<ManagerOrderView>());
 		default:
 			returnServerRespond();
 			break;

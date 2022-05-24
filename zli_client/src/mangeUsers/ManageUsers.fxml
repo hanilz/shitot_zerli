@@ -9,20 +9,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" spacing="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mangeUsers.ManageUsersController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mangeUsers.ManageUsersController">
    <children>
       <Label text="Manage Users">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <TableView fx:id="userTable" prefHeight="480.0" prefWidth="980.0">
+      <TableView fx:id="userTable" prefHeight="597.0" prefWidth="1260.0">
         <columns>
-          <TableColumn fx:id="firstName" text="First Name" />
-            <TableColumn fx:id="lastName" text="Last Name" />
-            <TableColumn fx:id="userType" prefWidth="81.0" text="User Type" />
-            <TableColumn fx:id="id" prefWidth="89.0" text="Personal ID" />
-            <TableColumn fx:id="status" prefWidth="118.0" text="Status" />
+          <TableColumn fx:id="firstName" prefWidth="100.0" text="First Name" />
+            <TableColumn fx:id="lastName" prefWidth="98.0" text="Last Name" />
+            <TableColumn fx:id="userType" prefWidth="95.0" text="User Type" />
+            <TableColumn fx:id="id" prefWidth="125.0" text="Personal ID" />
+            <TableColumn fx:id="status" prefWidth="116.0" text="Status" />
         </columns>
       </TableView>
       <HBox prefHeight="27.0" prefWidth="980.0">
