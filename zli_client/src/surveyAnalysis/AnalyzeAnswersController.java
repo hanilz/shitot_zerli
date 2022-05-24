@@ -17,7 +17,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import survey.SurveyQuestion;
 import util.Commands;
 import util.ManageScreens;
 

@@ -23,7 +23,6 @@ import entities.SurveyQuestion;
 import entities.UserDetails;
 import ocsf.server.ConnectionToClient;
 import server.ServerController;
-import survey.SurveyQuestion;
 import surveyAnalysis.QuestionAnswer;
 
 public class ServerMessageController {
