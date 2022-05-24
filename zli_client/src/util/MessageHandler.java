@@ -3,6 +3,7 @@ package util;
 public class MessageHandler {
 	private Messages messageType;
 	private Object parametersQuery;
+	private Object responseQuery;
 	private static MessageHandler handlerInstance = null;
 
 	private MessageHandler() {
@@ -12,6 +13,14 @@ public class MessageHandler {
 		if(handlerInstance == null)
 			handlerInstance = new MessageHandler();
 		return handlerInstance;
+	}
+
+	public Object getResponseQuery() {
+		return responseQuery;
+	}
+
+	public void setResponseQuery(Object responseQuery) {
+		this.responseQuery = responseQuery;
 	}
 
 	public Messages getMessageType() {
