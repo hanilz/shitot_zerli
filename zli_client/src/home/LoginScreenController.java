@@ -83,8 +83,10 @@ public class LoginScreenController implements Initializable {
 				cartFlow(event);
 			} else if (isCatalog)
 				catalogFlow(event);
-			else
+			else {
+				ManageScreens.home();
 				CloseWindow(event);
+			}
 			break;
 		case ALREADY_LOGGED_IN:
 			setError("User already logged in");
@@ -94,18 +96,21 @@ public class LoginScreenController implements Initializable {
 			break;
 		case SUSPENDED:
 			setError("User Suspended");
+			break;
 		}
+		resetLogin();
 	}
 
 	private void cartFlow(Event event) {
 		if (User.getUserInstance().getType() != UserType.CUSTOMER) {
 			setError("Only Customers can buy from catalog");
 			System.out.println(errorLabel.getText());
-			;
 			User.getUserInstance().logout();
 		} else {
 			CloseWindow(event);
+			isCart=false;
 		}
+		
 	}
 
 	private void setError(String err) {
@@ -122,8 +127,14 @@ public class LoginScreenController implements Initializable {
 	}
 
 	@FXML
-	void back(MouseEvent event) {
+	private void back(MouseEvent event) {
+		resetLogin();
 		CloseWindow(event);
+	}
+
+	public static void resetLogin() {
+		isCart=false;
+		isCatalog=false;
 	}
 
 	private void loginUser(String username) {
@@ -137,9 +148,9 @@ public class LoginScreenController implements Initializable {
 		if (User.getUserInstance().getType() == UserType.CUSTOMER) {
 			ManageScreens.changeScreenTo(Screens.CATALOG);
 			CloseWindow(event);
-		}
-		else
+		} else
 			ManageScreens.home();
+		isCatalog=false;
 		CloseWindow(event);
 	}
 
