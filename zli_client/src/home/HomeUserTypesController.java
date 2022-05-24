@@ -88,6 +88,7 @@ public class HomeUserTypesController implements Initializable {
 //				notificationLabel.setText("" + notifications.size());
 	}
 
+	@SuppressWarnings("unchecked")
 	private void getNotifications() {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.FETCH_NOTIFICATIONS);
