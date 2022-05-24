@@ -238,11 +238,10 @@ public class ManageScreens {
 			case VIEW_ANSWERS_FOR_SURVEY:
 				ManageScreens.changeScene(AnalyzeAnswersController.class.getResource("AnalayzeAnswersScreen.fxml"),
 						"Survey Answers");
-
+				break;
 			case VIEW_REPORTS:
 				ManageScreens.changeScene(ReportsController.class.getResource("reportsScreen.fxml"),
 						"View Reports");
-
 				break;
 			default:
 				break;
