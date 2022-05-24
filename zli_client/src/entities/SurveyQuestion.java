@@ -1,4 +1,4 @@
-package survey;
+package entities;
 
 import java.io.Serializable;
 

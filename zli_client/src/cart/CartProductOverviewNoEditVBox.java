@@ -1,19 +1,13 @@
 package cart;
 
-import java.util.HashMap;
-
 import entities.Cart;
-import entities.CustomProduct;
 import entities.Item;
 import entities.Product;
-import entities.ProductsBase;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import util.ManageScreens;
 import util.Screens;
 

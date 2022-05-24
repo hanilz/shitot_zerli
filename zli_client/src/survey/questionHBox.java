@@ -1,5 +1,6 @@
 package survey;
 
+import entities.SurveyQuestion;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
