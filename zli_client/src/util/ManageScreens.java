@@ -2,7 +2,6 @@ package util;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import cart.CartController;
 import catalog.CatalogController;
@@ -16,12 +15,14 @@ import home.HomeGuestController;
 import home.HomeUserTypesController;
 import home.LoginScreenController;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import manageCatalog.ManageCatalogController;
 import mangeCustomerOrders.ManageCustomerOrdersController;
 import mangeUsers.ManageUsersController;
@@ -35,7 +36,7 @@ import survey.SurveyHomeController;
 
 public class ManageScreens {
 	private static Stage stage;
-	private static Screens previousScreen,currentScreen;
+	private static Screens previousScreen, currentScreen;
 	private static Stage popupStage;
 	private static ArrayList<Stage> openedPopups = new ArrayList<>();
 
@@ -98,7 +99,6 @@ public class ManageScreens {
 				removePopup(popupStage);
 			}
 		});
-
 	}
 
 	public static void setPreviousScreen(Screens lastScreen)// added
@@ -138,7 +138,7 @@ public class ManageScreens {
 	}
 
 	public static void changeScreenTo(Screens screen) {
-		setPreviousScreen(currentScreen);//saved one become last one
+		setPreviousScreen(currentScreen);// saved one become last one
 		try {
 			switch (screen) {
 			case GUEST_HOME:
@@ -149,7 +149,7 @@ public class ManageScreens {
 						"HomeScreen");
 				break;
 			case LOGIN:
-				ManageScreens.openPopupFXML(LoginScreenController.class.getResource("LoginScreen.fxml"), "Login");//popup
+				ManageScreens.openPopupFXML(LoginScreenController.class.getResource("LoginScreen.fxml"), "Login");// popup
 				break;
 			case CATALOG_SPLASH_SCREEN:
 				ManageScreens.changeScene(SplashScreenController.class.getResource("SplashScreen.fxml"),
@@ -233,8 +233,8 @@ public class ManageScreens {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		currentScreen=screen;//save currrent screen to the one showes
-		
+		currentScreen = screen;// save currrent screen to the one showes
+
 	}
 
 	public static void home() {
@@ -246,10 +246,10 @@ public class ManageScreens {
 
 	public static void previousScreen()// added
 	{
-		if(previousScreen==Screens.GUEST_HOME||previousScreen==Screens.USER_HOME)
+		if (previousScreen == Screens.GUEST_HOME || previousScreen == Screens.USER_HOME)
 			home();
 		else
-		changeScreenTo(previousScreen);
+			changeScreenTo(previousScreen);
 	}
 
 	// set the name for the button in the home screen
