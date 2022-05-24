@@ -1,24 +1,23 @@
-package survey;
+package surveyAnalysis;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import client.ClientFormController;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Orientation;
-import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import util.Commands;
 import util.ManageScreens;
-import util.Screens;
 
-public class SurveyHomeController implements Initializable {
-	// Map<Integer,String> surveys = new HashMap<>();
-	HashMap<Integer, String> surveys = new HashMap<>();
+public class SurveyAnswersHomeController implements Initializable {
+	private HashMap<Integer, String> surveys = new HashMap<>();
 	@FXML
 	private ImageView homeImage;
 
@@ -27,25 +26,25 @@ public class SurveyHomeController implements Initializable {
 
 	@FXML
 	void returnHome(MouseEvent event) {
-		ManageScreens.changeScreenTo(Screens.USER_HOME);
+		ManageScreens.home();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// create a request to fetch the table data
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.FETCH_SURVEYS);
 		Object response = ClientFormController.client.accept(message);
 		surveys = (HashMap<Integer, String>) response;
-		System.out.println("got surveys");
-
-		for (int surveyID : surveys.keySet()) {
-			SurveyHomeRowHBox shrh = new SurveyHomeRowHBox(surveyID, surveys.get(surveyID));
-			surveyList.getChildren().add(shrh);
-			surveyList.getChildren().add(new Separator(Orientation.HORIZONTAL));
+		try {
+			for (int surveyID : surveys.keySet()) {
+				FXMLLoader loader = new FXMLLoader(AnswerRowController.class.getResource("AnswerRow.fxml"));
+				HBox surveyRow = (HBox) loader.load();
+				((AnswerRowController) loader.getController()).initRow(surveyID, surveys.get(surveyID));
+				surveyList.getChildren().add(surveyRow);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-
 	}
 
 }

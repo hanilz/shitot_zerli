@@ -25,6 +25,12 @@ import entities.Report;
 import entities.SurveyQuestion;
 import entities.UserDetails;
 
+import mangeCustomerOrders.ManagerOrderView;
+import notifications.Notification;
+import survey.SurveyQuestion;
+import surveyAnalysis.QuestionAnswer;
+
+
 /**
  * AnaylzeCommand - will anaylze the command that given from the server
  * controller and will execute the sql query.
@@ -930,6 +936,39 @@ public class AnalayzeCommand {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	
+	public static ArrayList<QuestionAnswer> getSurveyAnswers(int idSurvey) {
+		ArrayList<QuestionAnswer> questions = new ArrayList<>();
+		Connection conn = DataBaseController.getConn();
+		String query = "SELECT sq.idSurveyQuestion,sq.question,sa.answer,COUNT(*) FROM zli.survey_answers sa JOIN zli.survey_questions sq ON sq.idSurveyQuestion = sa.idQuestion WHERE sq.idSurvey=? GROUP BY sa.idQuestion, sa.answer ORDER BY sa.idQuestion;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idSurvey);
+			ResultSet rs = preparedStmt.executeQuery();
+			int currentQuestion;
+			while(rs.next()) {
+				currentQuestion = rs.getInt(1);
+				String question = rs.getString(2);
+				int[] answers= new int[10];
+				do {
+					if(rs.getInt(1)==currentQuestion) {
+						answers[rs.getInt(3)-1]=rs.getInt(4);
+					}
+					else {
+						break;
+					}
+				}while(rs.next());
+				questions.add(new QuestionAnswer(currentQuestion, question, answers));
+				rs.previous();
+			}
+		} catch (SQLException e) {
+			System.out.println("Failed to delete notification");
+			e.printStackTrace();
+		}
+		return questions;
 	}
 
 	public static ArrayList<Report> selectAllReports() {
