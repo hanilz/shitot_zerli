@@ -30,7 +30,7 @@
             <Insets />
          </opaqueInsets>
       </Label>
-      <Label fx:id="errorLabel" alignment="CENTER" text="Username or Password is incorrect" textFill="RED" visible="false">
+      <Label fx:id="errorLabel" alignment="CENTER" text="Please Enter Username And Password" textFill="#495abc" wrapText="true">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -65,7 +65,7 @@
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#changeToPreviousScreen" prefHeight="25.0" prefWidth="77.0" style="-fx-background-radius: 10;" text="Back">
+            <Button fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#back" prefHeight="25.0" prefWidth="77.0" style="-fx-background-radius: 10;" text="Back">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
