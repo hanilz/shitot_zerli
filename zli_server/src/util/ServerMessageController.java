@@ -13,15 +13,15 @@ import entities.Delivery;
 import entities.Item;
 import entities.ManageUsers;
 import entities.ManagerOrderView;
+import entities.Notification;
 import entities.Order;
 import entities.OrderItem;
 import entities.OrderProduct;
 import entities.Product;
+import entities.SurveyQuestion;
 import entities.UserDetails;
-import notifications.Notification;
 import ocsf.server.ConnectionToClient;
 import server.ServerController;
-import survey.SurveyQuestion;
 
 public class ServerMessageController {
 
