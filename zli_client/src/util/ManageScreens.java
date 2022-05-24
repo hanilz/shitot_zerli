@@ -149,7 +149,7 @@ public class ManageScreens {
 						"HomeScreen");
 				break;
 			case LOGIN:
-				ManageScreens.changeScene(LoginScreenController.class.getResource("LoginScreen.fxml"), "Login");
+				ManageScreens.openPopupFXML(LoginScreenController.class.getResource("LoginScreen.fxml"), "Login");//popup
 				break;
 			case CATALOG_SPLASH_SCREEN:
 				ManageScreens.changeScene(SplashScreenController.class.getResource("SplashScreen.fxml"),
