@@ -3,6 +3,7 @@ package home;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -17,6 +18,7 @@ public class HomeVBox extends VBox {
 	public HomeVBox(Screens changeToScreen) {
 		this.changeToScreen = changeToScreen;
 		button = new Button();
+		button.setCursor(Cursor.HAND);
 		button.setText(ManageScreens.getName(changeToScreen));
 		if (!ManageScreens.getIconPath(changeToScreen).equals(""))
 			image = new ImageView(ManageScreens.getIconPath(changeToScreen));

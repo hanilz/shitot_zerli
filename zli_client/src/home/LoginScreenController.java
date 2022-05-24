@@ -14,11 +14,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import util.Commands;
 import util.ManageScreens;
-import util.Screens;
 import util.Status;
 import util.UserType;
 
@@ -37,7 +37,7 @@ public class LoginScreenController implements Initializable {
 	private TextField usernameLabel;
 
 	@FXML
-	private Button backButton; // TODO - We need to remove the back button
+	private Button backButton;
 	
 	private static boolean isCartPopup,isCatalog;
 
@@ -143,6 +143,8 @@ public class LoginScreenController implements Initializable {
 	}
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		enterPressed(usernameLabel);
+		enterPressed(passwordLabel);
 		if (User.getUserInstance().isUserLoggedIn()) {// one user is already active in this client
 			loginButton.setDisable(true);// user logged in
 			errorLabel.setText("You already logged in as " + User.getUserInstance().getUsername());
@@ -154,5 +156,13 @@ public class LoginScreenController implements Initializable {
 		Node n = ((Node) (event.getSource()));
 		Stage s = ((Stage) n.getScene().getWindow());
 		s.close();
+	}
+	private void enterPressed(TextField txt)
+	{
+		txt.setOnKeyReleased(event -> {
+			  if (event.getCode() == KeyCode.ENTER){
+				  loginUserIntoSystem(null);
+			  }
+			});
 	}
 }

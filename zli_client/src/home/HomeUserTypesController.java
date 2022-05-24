@@ -4,8 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import client.ClientFormController;
 import entities.User;
@@ -13,6 +11,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -27,7 +26,7 @@ import util.ManageClients;
 import util.ManageScreens;
 import util.Screens;
 
-public class HomeUserTypesController implements HomeInterface, Initializable {
+public class HomeUserTypesController implements Initializable {
 	private ArrayList<Notification> notifications = new ArrayList<>();
 	Timeline notificationThread;
 	@FXML
@@ -53,7 +52,6 @@ public class HomeUserTypesController implements HomeInterface, Initializable {
 
 	private ArrayList<HomeVBox> buttons = new ArrayList<>();
 
-	@Override
 	public void exitHomeScreen(MouseEvent event) {
 		// release the client from the ocsf server + disconnect from the db
 		ManageClients.exitClient();
@@ -61,20 +59,21 @@ public class HomeUserTypesController implements HomeInterface, Initializable {
 		System.exit(0);
 	}
 
-	@Override
 	public void logoutFromUser(MouseEvent event) {
 		User.getUserInstance().logout();
 		ManageScreens.changeScreenTo(Screens.GUEST_HOME);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		ArrayList<Screens> userScreens = ManageClients.getUserScreens(User.getUserInstance().getType());
 		setScreen(userScreens);//
 		userNameLabel.setText(User.getUserInstance().getUsername());
+		logoutButton.setCursor(Cursor.HAND);
+		exitButton.setCursor(Cursor.HAND);
+		
 		getNotifications();
-		//update notifications every 30 seconds
+		// update notifications every 30 seconds
 		notificationThread = new Timeline(new KeyFrame(Duration.seconds(10.0), e -> {
 			getNotifications();
 		}));
