@@ -70,6 +70,7 @@ public class CartController implements Initializable {
 
 	@FXML
 	void buy(MouseEvent event) {
+		LoginScreenController.resetLogin();
 		if (!User.getUserInstance().isUserLoggedIn())// guest tries to buy
 		{
 			LoginScreenController.enableCartPopup(true);// enable popup

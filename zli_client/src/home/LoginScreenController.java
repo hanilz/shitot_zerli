@@ -79,9 +79,10 @@ public class LoginScreenController implements Initializable {
 		switch ((Status) (response).get("response")) {
 		case NEW_LOG_IN:
 			loginUser(username);
+			System.out.println("isCatalog= "+isCatalog+"\nisCart= "+isCart);
 			if (isCart) {
 				cartFlow(event);
-			} else if (isCatalog)
+			} else if (isCatalog) 
 				catalogFlow(event);
 			else {
 				ManageScreens.home();
@@ -98,7 +99,7 @@ public class LoginScreenController implements Initializable {
 			setError("User Suspended");
 			break;
 		}
-		resetLogin();
+		
 	}
 
 	private void cartFlow(Event event) {
@@ -108,7 +109,6 @@ public class LoginScreenController implements Initializable {
 			User.getUserInstance().logout();
 		} else {
 			CloseWindow(event);
-			isCart=false;
 		}
 		
 	}
@@ -166,6 +166,7 @@ public class LoginScreenController implements Initializable {
 	}
 
 	private void CloseWindow(Event event) {
+		resetLogin();
 		Node n = ((Node) (event.getSource()));
 		Stage s = ((Stage) n.getScene().getWindow());
 		s.close();
