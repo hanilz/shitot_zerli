@@ -9,6 +9,7 @@ import entities.ProductsBase;
 import entities.User;
 import home.LoginScreenController;
 import inputs.InputChecker;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -41,7 +42,7 @@ public class CartController implements Initializable {
 	private Button emptyCartButton;
 
 	private static CartController instance;
-
+	
 	public void initCart() {
 		instance = this;
 		Set<ProductsBase> totalCart = cart.getCart().keySet();
@@ -74,11 +75,22 @@ public class CartController implements Initializable {
 		if (!User.getUserInstance().isUserLoggedIn())// guest tries to buy
 		{
 			LoginScreenController.enableCartPopup(true);// enable popup
-			ManageScreens.changeScreenTo(Screens.LOGIN);	
+			ManageScreens.changeScreenTo(Screens.LOGIN);
 		}
-		if (User.getUserInstance().isUserLoggedIn()) {
-			ManageScreens.changeScreenTo(Screens.GREATING_CARD);
-		}
+		changeToGreatingCard();
+	}
+
+	public static void changeToGreatingCard() {
+		Task<Void> task = new Task<Void>() {
+			@Override
+			public Void call() {
+				if (User.getUserInstance().isUserLoggedIn()) {
+					ManageScreens.changeScreenTo(Screens.GREATING_CARD);
+				}
+				return null;
+			}
+		};
+		new Thread(task).start();
 	}
 
 	@Override
