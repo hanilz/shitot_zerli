@@ -9,6 +9,7 @@ import entities.ProductsBase;
 import entities.User;
 import home.LoginScreenController;
 import inputs.InputChecker;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -74,8 +75,12 @@ public class CartController implements Initializable {
 		if (!User.getUserInstance().isUserLoggedIn())// guest tries to buy
 		{
 			LoginScreenController.enableCartPopup(true);// enable popup
-			ManageScreens.changeScreenTo(Screens.LOGIN);	
+			ManageScreens.changeScreenTo(Screens.LOGIN);
 		}
+		changeToGreatingCard();
+	}
+
+	public static void changeToGreatingCard() {
 		if (User.getUserInstance().isUserLoggedIn()) {
 			ManageScreens.changeScreenTo(Screens.GREATING_CARD);
 		}

@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import cart.CartController;
 import client.ClientFormController;
 import entities.User;
 import javafx.event.Event;
@@ -79,7 +80,6 @@ public class LoginScreenController implements Initializable {
 		switch ((Status) (response).get("response")) {
 		case NEW_LOG_IN:
 			loginUser(username);
-			System.out.println("isCatalog= "+isCatalog+"\nisCart= "+isCart);
 			if (isCart) {
 				cartFlow(event);
 			} else if (isCatalog) 
@@ -108,6 +108,7 @@ public class LoginScreenController implements Initializable {
 			System.out.println(errorLabel.getText());
 			User.getUserInstance().logout();
 		} else {
+			CartController.changeToGreatingCard();
 			CloseWindow(event);
 		}
 		
@@ -128,7 +129,6 @@ public class LoginScreenController implements Initializable {
 
 	@FXML
 	private void back(MouseEvent event) {
-		resetLogin();
 		CloseWindow(event);
 	}
 

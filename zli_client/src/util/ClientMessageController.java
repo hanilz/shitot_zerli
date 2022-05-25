@@ -8,10 +8,10 @@ import entities.Branch;
 import entities.Complaint;
 import entities.Item;
 import entities.ManageUsers;
-import entities.ManagerOrderView;
 import entities.Product;
 import entities.Report;
 import javafx.collections.FXCollections;
+
 
 /**
  * This class will help us the control all the messages that the client and the
@@ -78,8 +78,6 @@ public class ClientMessageController {
 		case FETCH_COMPLAINTS:
 			returnServerListRespond(new ArrayList<Complaint>());
 			break;
-		case FETCH_ORDERS_MANAGER:
-			returnServerListRespond(new ArrayList<ManagerOrderView>());
 		default:
 			returnServerRespond();
 			break;

@@ -23,6 +23,7 @@ import entities.SurveyQuestion;
 import entities.UserDetails;
 import ocsf.server.ConnectionToClient;
 import server.ServerController;
+import surveyAnalysis.QuestionAnswer;
 
 public class ServerMessageController {
 
@@ -249,6 +250,10 @@ public class ServerMessageController {
 		case DELETE_NOTIFICATION:
 			boolean deleted = AnalayzeCommand.deleteNotification((Integer)message.get("idNotification"));
 			message.put("response", deleted);
+			break;
+		case GET_SURVEY_ANSWERS:
+			ArrayList<QuestionAnswer> questions = AnalayzeCommand.getSurveyAnswers((Integer)message.get("surveyID"));
+			message.put("response", questions);
 			break;
 		default:
 			break;
