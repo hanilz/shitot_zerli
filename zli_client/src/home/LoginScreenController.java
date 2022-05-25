@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import cart.CartController;
 import client.ClientFormController;
 import entities.User;
 import javafx.event.Event;
@@ -81,7 +82,7 @@ public class LoginScreenController implements Initializable {
 			loginUser(username);
 			if (isCart) {
 				cartFlow(event);
-			} else if (isCatalog)
+			} else if (isCatalog) 
 				catalogFlow(event);
 			else {
 				ManageScreens.home();
@@ -98,7 +99,7 @@ public class LoginScreenController implements Initializable {
 			setError("User Suspended");
 			break;
 		}
-		resetLogin();
+		
 	}
 
 	private void cartFlow(Event event) {
@@ -107,8 +108,8 @@ public class LoginScreenController implements Initializable {
 			System.out.println(errorLabel.getText());
 			User.getUserInstance().logout();
 		} else {
+			CartController.changeToGreatingCard();
 			CloseWindow(event);
-			isCart=false;
 		}
 		
 	}
@@ -128,7 +129,6 @@ public class LoginScreenController implements Initializable {
 
 	@FXML
 	private void back(MouseEvent event) {
-		resetLogin();
 		CloseWindow(event);
 	}
 
@@ -166,6 +166,7 @@ public class LoginScreenController implements Initializable {
 	}
 
 	private void CloseWindow(Event event) {
+		resetLogin();
 		Node n = ((Node) (event.getSource()));
 		Stage s = ((Stage) n.getScene().getWindow());
 		s.close();

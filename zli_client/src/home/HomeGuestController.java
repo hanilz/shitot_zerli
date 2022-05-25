@@ -56,6 +56,7 @@ public class HomeGuestController implements Initializable {
 
 	@FXML
 	void changeToLoginScreen(MouseEvent event) {
+		LoginScreenController.resetLogin();
 		ManageScreens.changeScreenTo(Screens.LOGIN);
 	}
 	

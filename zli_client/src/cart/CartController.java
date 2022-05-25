@@ -9,7 +9,11 @@ import entities.ProductsBase;
 import entities.User;
 import home.LoginScreenController;
 import inputs.InputChecker;
+<<<<<<< HEAD
 import javafx.animation.PauseTransition;
+=======
+import javafx.concurrent.Task;
+>>>>>>> 8b5225935d5cd7227bdd119af26cb507aec9e616
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -93,11 +97,16 @@ public class CartController implements Initializable {
 			showFillAllQuantitiesLabel();
 			return;
 		}
-		if (!User.getUserInstance().isUserLoggedIn())  // guest tries to buy
+		LoginScreenController.resetLogin();
+		if (!User.getUserInstance().isUserLoggedIn())// guest tries to buy
 		{
-			LoginScreenController.enableCartPopup(true);  // enable popup
-			ManageScreens.changeScreenTo(Screens.LOGIN);	
+			LoginScreenController.enableCartPopup(true);// enable popup
+			ManageScreens.changeScreenTo(Screens.LOGIN);
 		}
+		changeToGreatingCard();
+	}
+
+	public static void changeToGreatingCard() {
 		if (User.getUserInstance().isUserLoggedIn()) {
 			ManageScreens.changeScreenTo(Screens.GREETING_CARD);
 		}

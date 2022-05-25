@@ -37,14 +37,13 @@ public class SurveyHomeRowHBox extends HBox{
 		this.setSpacing(20);
 		Label surveyName = new Label("Survey ID: " + surveyID + "\tSurvey Name: " + title);
 		surveyName.setFont(font);
-		surveyName.setPrefWidth(700);
+		surveyName.setPrefWidth(1000);
 		this.getChildren().add(surveyName);
 		Button btn = new Button("Fill Survey");
 		
 		btn.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 		    	//TODO add SQL call HERE TO fetch question
-		        System.out.println("Clicked "+ surveyID);
 				HashMap<String, Object> message = new HashMap<>();
 				message.put("command",  Commands.GET_SERVEY);
 				message.put("surveyID", surveyID);
@@ -52,7 +51,6 @@ public class SurveyHomeRowHBox extends HBox{
 				
 				@SuppressWarnings("unchecked")
 				ArrayList<SurveyQuestion> questions = (ArrayList<SurveyQuestion>)response;//(ObservableList<Survey>) response;
-				System.out.println("got surveys");
 				survey = new Survey(surveyID,title,questions);
 		        SurveyController.setSurvey(survey);
 		        ManageScreens.changeScreenTo(Screens.SURVEY);

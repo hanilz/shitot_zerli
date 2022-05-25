@@ -18,10 +18,12 @@ import entities.Order;
 import entities.OrderItem;
 import entities.OrderProduct;
 import entities.Product;
+import entities.Report;
 import entities.SurveyQuestion;
 import entities.UserDetails;
 import ocsf.server.ConnectionToClient;
 import server.ServerController;
+import surveyAnalysis.QuestionAnswer;
 
 public class ServerMessageController {
 
@@ -79,8 +81,16 @@ public class ServerMessageController {
 			ArrayList<Branch> branches = AnalayzeCommand.selectAllBranches();
 			message.put("response", branches);
 			break;
+		case FETCH_BRANCHES_PER_MANAGER:
+			ArrayList<Branch> branchesPerManager = AnalayzeCommand.selectBranchesPerManager((Integer) message.get("manager id"));
+			message.put("response", branchesPerManager);
+			break;
 		case FETCH_ORDERS:
 
+			break;
+		case FETCH_REPORTS:
+			ArrayList<Report> reports = AnalayzeCommand.selectAllReports();
+			message.put("response", reports);
 			break;
 		case FETCH_PRODUCTS:
 			ArrayList<Product> products = AnalayzeCommand.selectAllProducts();
@@ -240,6 +250,10 @@ public class ServerMessageController {
 		case DELETE_NOTIFICATION:
 			boolean deleted = AnalayzeCommand.deleteNotification((Integer)message.get("idNotification"));
 			message.put("response", deleted);
+			break;
+		case GET_SURVEY_ANSWERS:
+			ArrayList<QuestionAnswer> questions = AnalayzeCommand.getSurveyAnswers((Integer)message.get("surveyID"));
+			message.put("response", questions);
 			break;
 		default:
 			break;

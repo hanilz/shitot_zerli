@@ -20,8 +20,8 @@ public class questionHBox extends HBox {
 	public questionHBox(SurveyQuestion question) {
 		this.setAlignment(Pos.CENTER_LEFT);
 		this.question = new Label(question.getQuestion());
-		this.question.setPrefWidth(500);
-		this.question.setFont(new Font(16));
+		this.question.setPrefWidth(750);
+		this.question.setFont(new Font(18));
 		this.getChildren().add(this.question);
 		this.getChildren().add(new Separator(Orientation.VERTICAL));
 		this.setSpacing(12);
@@ -35,6 +35,7 @@ public class questionHBox extends HBox {
 		for (int i = 1; i <= 10; i++) {
 			RadioButton rb = new RadioButton();
 			rb.setText("" + i);
+			rb.setFont(new Font(14));
 			rb.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent actionEvent) {

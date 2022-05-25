@@ -32,7 +32,10 @@ import order.GreetingCardController;
 import order.PaymentSuccessfulController;
 import ordersView.ViewOrdersController;
 import registerUser.RegistrationController;
+import report.ReportsController;
 import survey.SurveyHomeController;
+import surveyAnalysis.AnalyzeAnswersController;
+import surveyAnalysis.SurveyAnswersHomeController;
 
 public class ManageScreens {
 	private static Stage stage;
@@ -227,6 +230,19 @@ public class ManageScreens {
 				ManageScreens.changeScene(ViewOrdersController.class.getResource("ViewOrdersScreen.fxml"),
 						"View Orders");
 				break;
+
+			case VIEW_ANSWERED_SURVEYS:
+				ManageScreens.changeScene(SurveyAnswersHomeController.class.getResource("SurveyAnswersHomeScreen.fxml"),
+						"Survey Answers");
+				break;
+			case VIEW_ANSWERS_FOR_SURVEY:
+				ManageScreens.changeScene(AnalyzeAnswersController.class.getResource("AnalayzeAnswersScreen.fxml"),
+						"Survey Answers");
+				break;
+			case VIEW_REPORTS:
+				ManageScreens.changeScene(ReportsController.class.getResource("reportsScreen.fxml"),
+						"View Reports");
+				break;
 			default:
 				break;
 			}
@@ -301,6 +317,10 @@ public class ManageScreens {
 			return "Manage Orders";
 		case VIEW_ORDERS_CUSTOMER:
 			return "View Orders";
+		case VIEW_ANSWERED_SURVEYS:
+			return "Analyze Surveys";
+		case VIEW_REPORTS:
+			return "View Reports";
 		}
 		return null;
 	}
@@ -353,6 +373,10 @@ public class ManageScreens {
 			return "resources/home/order.png";
 		case VIEW_ORDERS_CUSTOMER:
 			return "resources/home/order.png";
+		case VIEW_ANSWERED_SURVEYS:
+			return "resources/home/survey.png";
+		case VIEW_REPORTS:
+			return "resources/home/reports.png";
 		default:
 			return "";// no such user//
 		}
