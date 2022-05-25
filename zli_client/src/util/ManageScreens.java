@@ -19,9 +19,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import manageCatalog.ManageCatalogController;
 import mangeCustomerOrders.ManageCustomerOrdersController;
@@ -78,6 +82,18 @@ public class ManageScreens {
 		style = style.substring(0, style.length() - 4);
 		style += "css";
 		scene.getStylesheets().add("resources/css/" + style);
+	}
+	
+	
+	/**add a title for the alert and the text do display it
+	 * @param title
+	 * @param text
+	 */
+	public static void displayAlert(String title, String text) {
+		Alert a = new Alert(AlertType.NONE,title,ButtonType.CLOSE);
+		a.setTitle(title);
+		a.setContentText(text);
+		a.show();
 	}
 
 	public static void openPopupFXML(URL url, String title) throws Exception {

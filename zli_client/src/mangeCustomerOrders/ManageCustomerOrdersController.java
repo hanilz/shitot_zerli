@@ -151,7 +151,7 @@ public class ManageCustomerOrdersController implements Initializable{
 		message.put("order id", mov.getIdOrder());
 		Object response = ClientFormController.client.accept(message);
 		if((boolean)response) {
-			displayAlert("Order Approved","Order "+ mov.getIdOrder()+" Approved!");
+			ManageScreens.displayAlert("Order Approved","Order "+ mov.getIdOrder()+" Approved!");
 			ordersToApprove.remove(mov);
 			newOrderTable.refresh();
 		}
@@ -172,7 +172,7 @@ public class ManageCustomerOrdersController implements Initializable{
 		message.put("order id", mov.getIdOrder());
 		Object response = ClientFormController.client.accept(message);
 		if((boolean)response) {
-			displayAlert("Order Canceled","Order "+ mov.getIdOrder()+" Canceled!");
+			ManageScreens.displayAlert("Order Canceled","Order "+ mov.getIdOrder()+" Canceled!");
 			ordersToApprove.remove(mov);
 			newOrderTable.refresh();
 		}
@@ -193,12 +193,12 @@ public class ManageCustomerOrdersController implements Initializable{
 		message.put("order id", mov.getIdOrder());
 		Object response = ClientFormController.client.accept(message);
 		if((boolean)response) {
-			displayAlert("Order Canceled","Cancel request accepted!\nOrder "+ mov.getIdOrder()+" Canceled!");
+			ManageScreens.displayAlert("Order Canceled","Cancel request accepted!\nOrder "+ mov.getIdOrder()+" Canceled!");
 			ordersToCancel.remove(mov);
 			newOrderTable.refresh();
 		}
 		//TODO calculate refund and refund the user in the system
-		NotificationManager.sendNotification(mov.getIdUser(), NotificationType.CANCEL_REQUEST_APPROVED, 404);
+		NotificationManager.sendNotification(mov.getIdUser(), NotificationType.CANCEL_REQUEST_APPROVED, 404.0);
     }
 
     //denies cancel request
@@ -214,7 +214,7 @@ public class ManageCustomerOrdersController implements Initializable{
 		message.put("order id", mov.getIdOrder());
 		Object response = ClientFormController.client.accept(message);
 		if((boolean)response) {
-			displayAlert("Cancel Request Not Approved","Cancel Request Not Approved!\nOrder "+ mov.getIdOrder()+" returned to status Approved");
+			ManageScreens.displayAlert("Cancel Request Not Approved","Cancel Request Not Approved!\nOrder "+ mov.getIdOrder()+" returned to status Approved");
 			ordersToCancel.remove(mov);
 			newOrderTable.refresh();
 		}
@@ -229,10 +229,4 @@ public class ManageCustomerOrdersController implements Initializable{
     	pause.play();
     }
 
-	private void displayAlert(String title, String text) {
-		Alert a = new Alert(AlertType.NONE,title,ButtonType.CLOSE);
-		a.setTitle(title);
-		a.setContentText(text);
-		a.show();
-	}
 }

@@ -31,20 +31,29 @@
       </HBox>
       <ScrollPane prefHeight="542.0" prefWidth="1220.0">
          <content>
-            <VBox fx:id="answerVbox" prefHeight="520.0" prefWidth="1210.0" spacing="5.0" />
+            <VBox fx:id="answerVbox" prefHeight="520.0" prefWidth="1200.0" spacing="5.0" />
          </content>
       </ScrollPane>
-      <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="580.0" spacing="300.0">
+      <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="580.0" spacing="200.0">
          <children>
             <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeSurvey" style="-fx-background-radius: 20;" text="Close">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Button>
-            <Button fx:id="uploadButton" mnemonicParsing="false" onAction="#uploadAnalysis" style="-fx-background-radius: 20;" text="Upload Analysis">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
+            <HBox prefHeight="40.0" prefWidth="269.0" spacing="20.0">
+               <children>
+                  <Button fx:id="uploadButton" mnemonicParsing="false" onAction="#uploadAnalysis" style="-fx-background-radius: 20;" text="Upload Analysis">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="submitButton" disable="true" mnemonicParsing="false" onAction="#submitAnalysis" style="-fx-background-radius: 20;" text="Submit Analysis">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
          </children>
          <VBox.margin>
             <Insets />

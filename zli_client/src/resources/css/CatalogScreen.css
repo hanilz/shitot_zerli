@@ -12,6 +12,28 @@
 	-fx-padding: 5 10 5 10;
 }
 
+#catalogBtn:hover{
+		-fx-background-color: #FFE0F0;
+}
+
+#catalogBtn:pressed{
+		-fx-background-color: #FFD0FF;
+}
+#filterBtn:hover{
+		-fx-background-color: #FFE0F0;
+}
+
+#filterBtn:pressed{
+		-fx-background-color: #FFD0FF;
+}
+#searchBtn:hover{
+		-fx-background-color: #FFE0F0;
+}
+
+#searchBtn:pressed{
+		-fx-background-color: #FFD0FF;
+}
+
 #catalogScrollPane {
 	-fx-background-insets: 2;
 }
