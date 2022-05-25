@@ -42,7 +42,7 @@ public class CartController implements Initializable {
 	private Button emptyCartButton;
 
 	private static CartController instance;
-	
+
 	public void initCart() {
 		instance = this;
 		Set<ProductsBase> totalCart = cart.getCart().keySet();
@@ -81,16 +81,9 @@ public class CartController implements Initializable {
 	}
 
 	public static void changeToGreatingCard() {
-		Task<Void> task = new Task<Void>() {
-			@Override
-			public Void call() {
-				if (User.getUserInstance().isUserLoggedIn()) {
-					ManageScreens.changeScreenTo(Screens.GREATING_CARD);
-				}
-				return null;
-			}
-		};
-		new Thread(task).start();
+		if (User.getUserInstance().isUserLoggedIn()) {
+			ManageScreens.changeScreenTo(Screens.GREATING_CARD);
+		}
 	}
 
 	@Override
