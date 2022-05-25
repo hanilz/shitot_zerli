@@ -65,7 +65,7 @@
             <HBox alignment="CENTER" prefHeight="41.0" prefWidth="878.0" spacing="19.0">
                <children>
                   <Label text="Branch:" />
-                  <ComboBox fx:id="branchComboBox" prefWidth="150.0" promptText="Select Branch" />
+                  <ComboBox fx:id="branchComboBox" prefHeight="25.0" prefWidth="222.0" promptText="Select Branch" />
                   <Label text="Year:" />
                   <ComboBox fx:id="yearComboBox" prefWidth="150.0" promptText="Select Year" />
                   <Label text="Quarter:" />
@@ -86,7 +86,6 @@
         <columns>
           <TableColumn fx:id="dateCol" minWidth="0.0" prefWidth="154.0" text="Date" />
           <TableColumn fx:id="typeCol" prefWidth="132.0" text="Type" />
-            <TableColumn fx:id="viewCol" prefWidth="113.0" text="View" />
         </columns>
          <VBox.margin>
             <Insets />
