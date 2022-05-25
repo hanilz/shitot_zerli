@@ -7,14 +7,12 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="hbox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.HomeUserTypesController">
+<HBox fx:id="hbox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: fefdff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.HomeUserTypesController">
    <children>
       <VBox alignment="CENTER" prefHeight="500.0" prefWidth="294.0" spacing="30.0">
          <children>
@@ -57,19 +55,11 @@
          </HBox.margin>
       </VBox>
       <Separator orientation="VERTICAL" prefHeight="200.0" />
-      <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="979.0">
+      <VBox alignment="CENTER" prefHeight="720.0" prefWidth="979.0">
          <children>
-            <GridPane fx:id="gridOptions" hgap="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="741.0" vgap="10.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0" prefWidth="500.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0" prefWidth="500.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0" prefWidth="500.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+            <TilePane fx:id="gridOptions" alignment="CENTER" hgap="40.0" prefColumns="3" prefHeight="567.0" prefRows="2" prefTileHeight="230.0" prefTileWidth="200.0" prefWidth="979.0" vgap="40.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" style="-fx-background-color: LAVENDER; -fx-background-radius: 20;">
                      <children>
                         <Button fx:id="exitButton" mnemonicParsing="false" onMouseClicked="#exitHomeScreen" onMousePressed="#exitHomeScreen" text="Exit" textFill="#7c0000" />
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
@@ -79,7 +69,7 @@
                         </ImageView>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="1">
+                  <VBox alignment="CENTER" prefHeight="294.0" prefWidth="234.0" spacing="10.0" style="-fx-background-color: LAVENDER; -fx-background-radius: 20;">
                      <children>
                         <Button fx:id="logoutButton" mnemonicParsing="false" onMouseClicked="#logoutFromUser" text="Logout" />
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
@@ -90,7 +80,10 @@
                      </children>
                   </VBox>
                </children>
-            </GridPane>
+               <padding>
+                  <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+               </padding>
+            </TilePane>
          </children>
       </VBox>
    </children>

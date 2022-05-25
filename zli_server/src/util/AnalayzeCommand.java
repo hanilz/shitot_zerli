@@ -750,7 +750,7 @@ public class AnalayzeCommand {
 			int row = preparedStmt.executeUpdate();
 			if (row == 0)
 				return false;
-			query = "UPDATE deliveries INNER JOIN deliveries_orders do ON do.idDelivery = deliveries.idDelivery SET deliveries.status = 'Awaiting Delivery' WHERE idOrder = ?;";
+			query = "UPDATE deliveries SET deliveries.status = 'Awaiting Delivery' WHERE idOrder = ?;";
 			preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
 			preparedStmt.executeUpdate();
@@ -770,7 +770,7 @@ public class AnalayzeCommand {
 			int row = preparedStmt.executeUpdate();
 			if (row == 0)
 				return false;
-			query = "UPDATE deliveries INNER JOIN deliveries_orders do ON do.idDelivery = deliveries.idDelivery SET deliveries.status = 'Canceled' WHERE idOrder = ?;";
+			query = "UPDATE deliveries SET deliveries.status = 'Canceled' WHERE idOrder = ?;";
 			preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
 			preparedStmt.executeUpdate();

@@ -17,8 +17,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 import notifications.NotificationController;
 import util.Commands;
@@ -27,8 +27,9 @@ import util.ManageScreens;
 import util.Screens;
 
 public class HomeUserTypesController implements Initializable {
-	private ArrayList<Notification> notifications = new ArrayList<>();
-	Timeline notificationThread;
+	private ArrayList<Notification> newNotifications = new ArrayList<>();
+	private ArrayList<Notification> readNotifications = new ArrayList<>();
+	private Timeline notificationThread;
 	@FXML
 	private ImageView notificationIcon;
 
@@ -39,7 +40,7 @@ public class HomeUserTypesController implements Initializable {
 	private Button exitButton;
 
 	@FXML
-	private GridPane gridOptions;
+	private TilePane gridOptions;
 
 	@FXML
 	private HBox hbox;
@@ -71,21 +72,14 @@ public class HomeUserTypesController implements Initializable {
 		userNameLabel.setText(User.getUserInstance().getUsername());
 		logoutButton.setCursor(Cursor.HAND);
 		exitButton.setCursor(Cursor.HAND);
-		
+
 		getNotifications();
-		// update notifications every 30 seconds
+		// update notifications every 10 seconds
 		notificationThread = new Timeline(new KeyFrame(Duration.seconds(10.0), e -> {
 			getNotifications();
 		}));
 		notificationThread.setCycleCount(Timeline.INDEFINITE);
 		notificationThread.play();
-
-//				HashMap<String, Object> message = new HashMap<>();
-//				message.put("command", Commands.FETCH_NOTIFICATIONS);
-//				message.put("idUser", User.getUserInstance().getIdUser());
-//				Object response = ClientFormController.client.accept(message);
-//				notifications = (ArrayList<Notification>) response;
-//				notificationLabel.setText("" + notifications.size());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -94,24 +88,26 @@ public class HomeUserTypesController implements Initializable {
 		message.put("command", Commands.FETCH_NOTIFICATIONS);
 		message.put("idUser", User.getUserInstance().getIdUser());
 		Object response = ClientFormController.client.accept(message);
-		notifications = (ArrayList<Notification>) response;
-		notificationLabel.setText("" + notifications.size());
+		newNotifications = (ArrayList<Notification>) response;
+		for(Notification notif:newNotifications)
+			if(notif.isRead())
+				readNotifications.add(notif);
+		newNotifications.removeAll(readNotifications);
+		notificationLabel.setText("" + newNotifications.size());
 	}
 
 	private void setScreen(ArrayList<Screens> userScreens) {//
 		if (userScreens != null)
-			for (int i = 0; i < userScreens.size(); i++) {
-				if (i / 3 > 0 && i % 3 == 0)
-					gridOptions.addRow(i / 3);
-				buttons.add(new HomeVBox(userScreens.get(i)));
-				this.gridOptions.add(buttons.get(i), (i + 2) % 3, (i + 2) / 3);
+			for (Screens screen : userScreens) {
+				gridOptions.getChildren().add(new HomeVBox(screen));
 			}
 	}
 
 	@FXML
 	void showNotifications(MouseEvent event) {
 		try {
-			NotificationController.notifications = notifications;
+			NotificationController.newNotifications = newNotifications;
+			NotificationController.readNotifications = readNotifications;
 			ManageScreens.openPopupFXML(NotificationController.class.getResource("NotificationMainScreen.fxml"),
 					"Notification Center");
 		} catch (Exception e) {

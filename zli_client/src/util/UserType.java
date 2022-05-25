@@ -2,7 +2,7 @@ package util;
 
 public enum UserType {
 	CUSTOMER, STORE_WORKER, STORE_MANGER, DELIVERY_COORDINATOR, CUSTOMER_SERVICE, UNDEFINED, CEO, MARKETING_WORKER,
-	SERVICE_EXPERT;
+	SERVICE_EXPERT, NEW_CUSTOMER;
 
 	public static UserType get(String type) {
 		String upperCaseType = type.toUpperCase();
