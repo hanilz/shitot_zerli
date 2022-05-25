@@ -2,13 +2,18 @@ package catalog;
 
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
-public class CatalogVBox extends VBox implements ICatalogVBox{
+public class CatalogVBox extends VBox implements ICatalogVBox {
 	protected Label nameLabel = new Label(); // will show the product name
 	protected VBox nameVBox = new VBox();
 	protected ImageView image;
@@ -35,7 +40,7 @@ public class CatalogVBox extends VBox implements ICatalogVBox{
 		nameLabel.setWrapText(true);
 		nameLabel.setAlignment(Pos.BOTTOM_CENTER);
 //		nameVBox.getChildren().add(nameLabel);
-		
+
 		addToCartButton.setId("catalogBtn");
 		nameLabel.setId("productsLabel");
 		priceLabel.setId("priceLabel");
@@ -45,14 +50,14 @@ public class CatalogVBox extends VBox implements ICatalogVBox{
 		this.getChildren().add(priceHBox);
 		this.setAlignment(Pos.CENTER);
 	}
-	
-	protected void initPriceHBox() { //same
+
+	protected void initPriceHBox() { // same
 		priceHBox.getChildren().add(priceLabel);
 		priceHBox.getChildren().add(amountLabel);
 		priceHBox.setAlignment(Pos.CENTER);
 		priceHBox.setSpacing(25);
 	}
-	
+
 	protected void setImageProp() {
 		image.setFitHeight(140);
 		image.setFitWidth(200);

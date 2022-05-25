@@ -97,3 +97,8 @@
 #upperGrid {
 	-fx-Hgap: 10;
 }
+
+#searchBar {
+	-fx-background-radius: 20;
+		-fx-font-size: 14px;
+}
