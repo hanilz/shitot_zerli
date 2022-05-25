@@ -40,6 +40,9 @@ public class DeliveryController implements Initializable {
 	private Button backButton;
 
 	@FXML
+	private ComboBox<Branch> branchComboBox;
+
+	@FXML
 	private Button checkoutButton;
 
 	@FXML
@@ -61,10 +64,10 @@ public class DeliveryController implements Initializable {
 	private ImageView homeButton;
 
 	@FXML
-	private ComboBox<String> deliveryHourComboBox;
+	private ComboBox<String> hourComboBox;
 
 	@FXML
-	private ComboBox<String> deliveryMinuteComboBox;
+	private ComboBox<String> minuteComboBox;
 
 	@FXML
 	private HBox pickupHBox;
@@ -81,23 +84,9 @@ public class DeliveryController implements Initializable {
 	@FXML
 	private TextField recieverPhoneField;
 
+
 	@FXML
 	private Label required;
-
-    @FXML
-    private ComboBox<Branch> deliveryBranchComboBox;
-
-    @FXML
-    private DatePicker pickupDatePicker;
-
-    @FXML
-    private ComboBox<Branch> pickupBranchComboBox;
-
-    @FXML
-    private ComboBox<String> pickupHourComboBox;
-
-    @FXML
-    private ComboBox<String> pickupMinuteComboBox;
 
 	int deliveryButton = 0, pickupButton = 0;
 
@@ -194,7 +183,7 @@ public class DeliveryController implements Initializable {
 
 	@FXML
 	void changeToGreetingCardScreen(MouseEvent event) {
-		ManageScreens.changeScreenTo(Screens.GREETING_CARD);
+		ManageScreens.changeScreenTo(Screens.GREATING_CARD);
 	}
 
 	@FXML
@@ -220,6 +209,7 @@ public class DeliveryController implements Initializable {
 			deliveryVBox.setVisible(false);
 
 			deliveryButton = 0;
+
 		}
 		pickupButton++;
 	}
