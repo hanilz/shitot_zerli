@@ -20,7 +20,10 @@ public class questionHBox extends HBox {
 	public questionHBox(SurveyQuestion question) {
 		this.setAlignment(Pos.CENTER_LEFT);
 		this.question = new Label(question.getQuestion());
-		this.question.setPrefWidth(750);
+		this.question.setWrapText(true);
+		this.question.setPrefWidth(720);
+		this.question.setMaxWidth(720);
+		this.question.setMaxHeight(80);
 		this.question.setFont(new Font(18));
 		this.getChildren().add(this.question);
 		this.getChildren().add(new Separator(Orientation.VERTICAL));

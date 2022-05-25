@@ -31,7 +31,7 @@
       </HBox>
       <ScrollPane prefHeight="529.0" prefWidth="1220.0">
          <content>
-            <VBox fx:id="questionVbox" prefHeight="502.0" prefWidth="1209.0" />
+            <VBox fx:id="questionVbox" prefHeight="500.0" prefWidth="1200.0" />
          </content>
       </ScrollPane>
       <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="580.0" spacing="70.0">
