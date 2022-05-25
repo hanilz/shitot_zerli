@@ -10,15 +10,18 @@ import entities.Report;
 import entities.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
 import util.Commands;
 import util.ManageScreens;
 import util.UserType;
@@ -39,9 +42,6 @@ public class ReportsController implements Initializable {
 
 	@FXML
 	private TableColumn<Report, String> typeCol;
-
-	@FXML
-	private TableColumn<Report, ?> viewCol;
 
 	@FXML
 	private TableColumn<Report, String> dateCol;
@@ -69,6 +69,7 @@ public class ReportsController implements Initializable {
 		getReportsFromDB();
 		setYearComboBox();
 		setQuraterComboBox();
+		addButtonToTableAndEvent();
 
 		typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
 		dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -128,6 +129,81 @@ public class ReportsController implements Initializable {
 			reportsTable.getItems().clear();
 			noReportsLabel.setVisible(true);
 		}
+	}
+
+	private void getIncomeReport() {
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.GET_INCOME_REPORT);
+		reports = (ObservableList<Report>) ClientFormController.client.accept(message);
+		/*
+		 * SELECT itemType, SUM(quantity*itemPrice) as totalSum FROM items JOIN
+		 * order_items ON items.itemId=order_items.idItem JOIN orders ON orders.idOrder
+		 * = order_items.idOrder AND orders.idBranch = 1 GROUP BY itemType;
+		 */
+		/*
+		 * SELECT productType, SUM(quantity*productPrice) as totalSum FROM products JOIN
+		 * order_products ON products.productId=order_products.idProduct JOIN orders ON
+		 * orders.idOrder = order_products.idOrder AND orders.idBranch = 1 GROUP BY
+		 * productType;
+		 */
+	}
+
+	private void getOrdersReport() {
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.GET_ORDERS_REPORT);
+		reports = (ObservableList<Report>) ClientFormController.client.accept(message);
+		/*
+		 * SELECT itemType, SUM(quantity) as totalQuantity FROM items JOIN order_items
+		 * ON items.itemId=order_items.idItem JOIN orders ON orders.idOrder =
+		 * order_items.idOrder AND orders.idBranch = 1 GROUP BY itemType;
+		 */
+		/*
+		 * SELECT productType, SUM(quantity) as totalSum FROM products JOIN
+		 * order_products ON products.productId=order_products.idProduct JOIN orders ON
+		 * orders.idOrder = order_products.idOrder AND orders.idBranch = 1 GROUP BY
+		 * productType;
+		 */
+
+	}
+
+	private void openSelectedReport() {
+
+	}
+
+	private void addButtonToTableAndEvent() {
+		TableColumn<Report, Void> viewCol = new TableColumn<>("View");
+		Callback<TableColumn<Report, Void>, TableCell<Report, Void>> cellFactory = new Callback<TableColumn<Report, Void>, TableCell<Report, Void>>() {
+			@Override
+			public TableCell<Report, Void> call(final TableColumn<Report, Void> param) {
+				final TableCell<Report, Void> cell = new TableCell<Report, Void>() {
+					private final Button btn = new Button("View Report");
+					{
+						btn.setOnAction((ActionEvent event) -> {
+							int index = getTableRow().getIndex();
+							Report selectedReport = getTableView().getItems().get(index);
+						});
+					}
+
+					@Override
+					public void updateItem(Void item, boolean empty) {
+						super.updateItem(item, empty);
+						if (empty) {
+							setGraphic(null);
+						} else {
+							setGraphic(btn);
+						}
+					}
+				};
+				return cell;
+			}
+		};
+		viewCol.setCellFactory(cellFactory);
+		reportsTable.getColumns().add(viewCol);
+
+	}
+	
+	private enum ReportType {
+		INCOME_REPORT,ORDERS_REPORT;
 	}
 
 }

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="938.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="938.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane>
         <columnConstraints>
@@ -45,9 +45,9 @@
             </Button>
          </children>
       </GridPane>
-      <VBox alignment="TOP_CENTER" prefHeight="88.0" prefWidth="878.0" spacing="5.0">
+      <VBox alignment="TOP_CENTER" prefHeight="88.0" prefWidth="878.0" spacing="10.0">
          <children>
-            <Label text="Zli Company">
+            <Label text="Zer-Li Company">
                <font>
                   <Font size="24.0" />
                </font>
@@ -60,13 +60,13 @@
                      </font>
                   </Label>
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <Label text="Branch Name">
+                  <Label fx:id="branchLabel" text="Branch Name">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <Label text="Q1">
+                  <Label fx:id="quraterLabel" text="Q1">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -76,132 +76,38 @@
             <Separator prefWidth="200.0" />
          </children>
       </VBox>
-      <ScrollPane prefHeight="364.0" prefWidth="878.0">
+      <ScrollPane prefHeight="362.0" prefWidth="878.0">
          <content>
-            <VBox prefHeight="200.0" prefWidth="862.0" spacing="6.0">
+            <VBox prefHeight="358.0" prefWidth="862.0" spacing="6.0">
                <children>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                  <HBox fx:id="itemsHBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                      <children>
-                        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="Revenue" />
-                           </children>
-                        </VBox>
-                        <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="250.0">
-                           <children>
-                              <Label text="Product Sales" />
-                           </children>
-                        </VBox>
-                        <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <VBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="35,000" />
-                           </children>
-                        </VBox>
+                        <VBox fx:id="itemType" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="100.0" />
+                        <VBox fx:id="totaItemSum" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="250.0" />
                      </children>
                   </HBox>
-                  <Separator prefWidth="200.0" />
-                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="862.0" spacing="50.0">
+                  <HBox fx:id="productsHBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="862.0" spacing="50.0">
                      <children>
-                        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="Expenses" />
-                           </children>
-                        </VBox>
-                        <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="250.0">
-                           <children>
-                              <Label text="Procurement Costs" />
-                              <Label text="Wages" />
-                              <Label text="Rent" />
-                              <Label text="Interest Paid" />
-                              <Label text="Transportation" />
-                              <Label text="Utilities" />
-                              <Label text="Delivery Service" />
-                              <Label text="Total Expenses" />
-                           </children>
-                        </VBox>
-                        <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <VBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="8,000" />
-                              <Label text="700" />
-                              <Label text="1,000" />
-                              <Label text="500" />
-                              <Label text="300" />
-                              <Label text="150" />
-                              <Label text="12,000" />
-                              <Separator prefWidth="200.0" />
-                              <Label text="22,650" />
-                           </children>
-                        </VBox>
+                        <VBox fx:id="productType" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="100.0" />
+                        <VBox fx:id="totalProductSum" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="250.0" />
                      </children>
                   </HBox>
-                  <Separator prefWidth="200.0" />
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                  <Separator prefHeight="0.0" prefWidth="862.0" />
+                  <HBox alignment="CENTER" prefHeight="22.0" prefWidth="862.0" spacing="50.0">
                      <children>
-                        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="22.0" prefWidth="100.0">
+                        <HBox>
                            <children>
-                              <Label text="Gains" />
+                              <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="173.0" text="total income of products:" />
+                              <Label fx:id="totalIncomeProductsLbl" alignment="CENTER" prefHeight="17.0" prefWidth="72.0" text="0" />
                            </children>
-                        </VBox>
-                        <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="250.0">
-                           <children>
-                              <Label text="-" />
-                           </children>
-                        </VBox>
-                        <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <VBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="0" />
-                           </children>
-                        </VBox>
+                        </HBox>
                      </children>
                   </HBox>
-                  <Separator prefWidth="200.0" />
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                  <Separator prefHeight="0.0" prefWidth="862.0" />
+                  <HBox alignment="CENTER" prefHeight="26.0" prefWidth="862.0" spacing="50.0">
                      <children>
-                        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="Losses" />
-                           </children>
-                        </VBox>
-                        <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="250.0">
-                           <children>
-                              <Label text="-" />
-                           </children>
-                        </VBox>
-                        <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <VBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="0" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <Separator prefWidth="200.0" />
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
-                     <children>
-                        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="Net Income" />
-                           </children>
-                        </VBox>
-                        <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="17.0" prefWidth="250.0">
-                           <children>
-                              <Label prefHeight="17.0" prefWidth="262.0" text="(Revenue + Gains) - (Expenses + Losses)" />
-                           </children>
-                        </VBox>
-                        <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <VBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="12,350" />
-                           </children>
-                        </VBox>
+                        <Label prefHeight="17.0" prefWidth="123.0" text="total income of items:" />
+                        <Label fx:id="totalIncomeItemsLbl" alignment="CENTER" prefHeight="17.0" prefWidth="53.0" text="0" />
                      </children>
                   </HBox>
                </children>
