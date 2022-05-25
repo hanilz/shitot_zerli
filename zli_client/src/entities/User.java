@@ -18,6 +18,7 @@ public class User implements Serializable {
 	private int idAccount = -1;
 	private UserType userType = UserType.UNDEFINED;
 	private boolean isLogged = false;
+	private double storeCredit = 0;
 	private static User userInstance = null;
 
 	private User() {
@@ -27,12 +28,13 @@ public class User implements Serializable {
 		return userInstance == null ? userInstance = new User() : userInstance;
 	}
 
-	public void login(int idUser, String username, int idAccount, UserType userType) {
+	public void login(int idUser, String username, int idAccount, UserType userType, double storeCredit) {
 		if (!isLogged) {
 			this.idUser = idUser;
 			this.username = username;
 			this.idAccount = idAccount;
 			this.userType = userType;
+			this.storeCredit = storeCredit;
 			isLogged = true;
 		}
 	}
@@ -79,4 +81,11 @@ public class User implements Serializable {
 		return userType;
 	}
 
+	public double getStoreCredit() {
+		return storeCredit;
+	}
+
+	public void setStoreCredit(double storeCredit) {
+		this.storeCredit = storeCredit;
+	}
 }

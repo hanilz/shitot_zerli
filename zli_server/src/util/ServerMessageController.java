@@ -259,7 +259,6 @@ public class ServerMessageController {
 			break;
 		}
 		sendToClient(client);
-
 	}
 
 	private void sendToClient(ConnectionToClient client) {

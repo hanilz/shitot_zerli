@@ -1,8 +1,7 @@
 package order;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -16,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -40,55 +40,74 @@ public class DeliveryController implements Initializable {
 	private Button backButton;
 
 	@FXML
-	private ComboBox<Branch> branchComboBox;
-
-	@FXML
 	private Button checkoutButton;
 
 	@FXML
 	private ToggleGroup delivery;
 
 	@FXML
+	private ComboBox<Branch> deliveryBranchComboBox;
+
+	@FXML
 	private DatePicker deliveryDatePicker;
+
+	@FXML
+	private Label deliveryFeeLabel;
+
+	@FXML
+	private ComboBox<String> deliveryHourComboBox;
+
+	@FXML
+	private ComboBox<String> deliveryMinuteComboBox;
 
 	@FXML
 	private RadioButton deliveryRadioButton;
 
 	@FXML
-	private Label fillAllFieldsLabel;
+	private VBox deliveryVBox;
 
 	@FXML
-	private VBox deliveryVBox;
+	private Label fillAllFieldsLabel;
 
 	@FXML
 	private ImageView homeButton;
 
 	@FXML
-	private ComboBox<String> hourComboBox;
+	private RadioButton pickUpRadioButton;
 
 	@FXML
-	private ComboBox<String> minuteComboBox;
+	private ComboBox<Branch> pickupBranchComboBox;
+
+	@FXML
+	private DatePicker pickupDatePicker;
 
 	@FXML
 	private HBox pickupHBox;
 
 	@FXML
-	private RadioButton pickUpRadioButton;
+	private ComboBox<String> pickupHourComboBox;
 
-    @FXML
-    private Label selectABranchLabel;
-	
+	@FXML
+	private ComboBox<String> pickupMinuteComboBox;
+
 	@FXML
 	private TextField recieverNameField;
 
 	@FXML
 	private TextField recieverPhoneField;
 
-
 	@FXML
 	private Label required;
 
+	@FXML
+	private Label selectABranchLabel;
+
+	@FXML
+	private CheckBox expressDeliveryCheckBox;
+
 	int deliveryButton = 0, pickupButton = 0;
+
+	double deliveryFee = 15;
 
 	ObservableList<Branch> branches;
 
@@ -110,38 +129,32 @@ public class DeliveryController implements Initializable {
 		// the same thing for pickUp option, if the comboBox has not changed -> the
 		// label will appear for selecting the branch.
 		else if (pickUpRadioButton.isSelected()) {
-			if (!InputChecker.isPickUpComboBoxChanged(branchComboBox.getValue())) {
+			if (!InputChecker.isPickUpComboBoxChanged(pickupBranchComboBox.getValue())) {
 				switchFillAllFields(selectABranchLabel, "* Please select a branch!");
 				canProceed = false;
 			}
 		}
 		// if everything is filled and selected, the user will proceed to checkout and
 		// we will set the delivery if selected and the branch for the order
-		if(canProceed) {
-			if (deliveryRadioButton.isSelected())
-				insertDelivery();
-			else if (pickUpRadioButton.isSelected())
-				SingletonOrder.getInstance().setBranch(branchComboBox.getValue());
+		if (canProceed) {
+			storeState();
 			ManageScreens.changeScreenTo(Screens.CHECKOUT);
 		}
 	}
 
 	private boolean checkInputDelivery(boolean canProceed) {
-		if (!InputChecker.isDeliveryComboBoxChanged(hourComboBox.getValue(), minuteComboBox.getValue(),
+		if (!InputChecker.isDeliveryComboBoxChanged(deliveryHourComboBox.getValue(), deliveryMinuteComboBox.getValue(),
 				regionComboBox.getValue())) {
 			switchFillAllFields(fillAllFieldsLabel, "* Please fill all the fields!");
 			canProceed = false;
-		}
-		else if (InputChecker.isFieldsAreEmptyChecker(true, addressField.getText(), recieverNameField.getText(),
+		} else if (InputChecker.isFieldsAreEmptyChecker(true, addressField.getText(), recieverNameField.getText(),
 				deliveryDatePicker.getValue().toString(), recieverPhoneField.getText())) {
 			switchFillAllFields(fillAllFieldsLabel, "* Please fill all the fields!");
 			canProceed = false;
-		}
-		else if(!InputChecker.isDeliveryInputValid(recieverPhoneField.getText(), recieverNameField.getText())) {
+		} else if (!InputChecker.isDeliveryInputValid(recieverPhoneField.getText(), recieverNameField.getText())) {
 			switchFillAllFields(fillAllFieldsLabel, "* Please check the phone number or reciever name!");
 			canProceed = false;
-		}
-		else if(!InputChecker.isPhoneNumberVaild(recieverPhoneField.getText())) {
+		} else if (!InputChecker.isPhoneNumberVaild(recieverPhoneField.getText())) {
 			switchFillAllFields(fillAllFieldsLabel, "* Please check the phone number!");
 			canProceed = false;
 		}
@@ -150,28 +163,27 @@ public class DeliveryController implements Initializable {
 
 	private void insertDelivery() {
 		String address = addressField.getText();
-		System.out.println(deliveryDatePicker.getValue().toString());
-		String deliveryDate = String.format("%s %s:%s:00",deliveryDatePicker.getValue().toString(),hourComboBox.getValue(),minuteComboBox.getValue());
+		String deliveryDate = String.format("%s %s:%s:00", deliveryDatePicker.getValue().toString(),
+				deliveryHourComboBox.getValue(), deliveryMinuteComboBox.getValue());
 		String phoneNumber = recieverPhoneField.getText();
 		String receiverName = recieverNameField.getText();
-		String status = "Pending";  // TODO: const class or enum for delivery options
+		String status = "pending"; // TODO: const class or enum for delivery options
+		String type = (expressDeliveryCheckBox.isSelected() ? "express delivery" : "delivery");
 
-		SingletonOrder.getInstance().setDelivery(new Delivery(address, receiverName, phoneNumber, deliveryDate, status));
-		initBranchForOrder(regionComboBox.getValue());		
+		SingletonOrder.getInstance()
+				.setDelivery(new Delivery(address, receiverName, phoneNumber, deliveryDate, status, type));
+		SingletonOrder.getInstance().setBranch(deliveryBranchComboBox.getValue());
+		SingletonOrder.getInstance().setIsExpress(expressDeliveryCheckBox.isSelected());
 	}
 
-	private void initBranchForOrder(String checkString) {
-		Branch selectedBranch = selectBranch(checkString);
-		SingletonOrder.getInstance().setBranch(selectedBranch);
-	}
+	private void insertPickup() {
+		String deliveryDate = String.format("%s %s:%s:00", pickupDatePicker.getValue().toString(),
+				pickupHourComboBox.getValue(), pickupMinuteComboBox.getValue());
+		String status = "pending"; // TODO: const class or enum for delivery options
+		String type = "pickup";
 
-	private Branch selectBranch(String checkString) {
-		ArrayList<Branch> randomBranch = new ArrayList<>();
-		for (Branch currentBranch : branches)
-			if (currentBranch.getRegion().contains(checkString))
-				randomBranch.add(currentBranch);
-		Collections.shuffle(randomBranch); //shuffle the list to select a random branch
-		return randomBranch.get(0);
+		SingletonOrder.getInstance().setPickup(new Delivery(deliveryDate, status, type));
+		SingletonOrder.getInstance().setPickupBranch(deliveryBranchComboBox.getValue());
 	}
 
 	private void switchFillAllFields(Label label, String textToShow) {
@@ -183,7 +195,14 @@ public class DeliveryController implements Initializable {
 
 	@FXML
 	void changeToGreetingCardScreen(MouseEvent event) {
-		ManageScreens.changeScreenTo(Screens.GREATING_CARD);
+		storeState();
+		ManageScreens.changeScreenTo(Screens.GREETING_CARD);
+	}
+
+	private void storeState() {
+		insertDelivery();
+		insertPickup();
+		SingletonOrder.getInstance().setIsPickup(pickUpRadioButton.isSelected());
 	}
 
 	@FXML
@@ -192,47 +211,140 @@ public class DeliveryController implements Initializable {
 	}
 
 	@FXML
-	void selectDelivery(MouseEvent event) {
+	void selectDeliveryEvent(MouseEvent event) {
+		selectDelivery();
+	}
+
+	private void selectDelivery() {
 		if (deliveryRadioButton.isSelected() && deliveryButton == 0) {
 			pickupHBox.setVisible(false);
 			deliveryVBox.setVisible(true);
 
 			pickupButton = 0;
+			updateDeliveryFeeLabel();
 		}
 		deliveryButton++;
 	}
 
 	@FXML
-	void selectPickup(MouseEvent event) {
+	void selectPickupEvent(MouseEvent event) {
+		selectPickup();
+	}
+
+	private void selectPickup() {
 		if (pickUpRadioButton.isSelected() && pickupButton == 0) {
 			pickupHBox.setVisible(true);
 			deliveryVBox.setVisible(false);
 
 			deliveryButton = 0;
-
+			updateDeliveryFeeLabel();
 		}
 		pickupButton++;
+	}
+
+	private void updateDeliveryFeeLabel() {
+		deliveryFee = (deliveryRadioButton.isSelected() ? (expressDeliveryCheckBox.isSelected() ? 30 : 15) : 0);
+
+		deliveryFeeLabel.setText(InputChecker.price(deliveryFee));
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		SingletonOrder.getInstance().setBranch(null);
-		SingletonOrder.getInstance().setDelivery(null);
-		
-		hourComboBox.getItems().addAll("08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20");
-		minuteComboBox.getItems().addAll("00", "15", "30", "45");
+		initTimeComboBoxes();
 
+		initBranchComboBoxes();
+		
+		initScreenState();
+		
+		updateDeliveryFeeLabel();
+	}
+
+	private void initScreenState() {
+		Delivery pickup = SingletonOrder.getInstance().getPickup();
+		Delivery delivery = SingletonOrder.getInstance().getDelivery();
+		Branch pickupBranch = SingletonOrder.getInstance().getPickupBranch();
+		Branch DeliveryBranch = SingletonOrder.getInstance().getBranch();
+		boolean isExpress = SingletonOrder.getInstance().getIsExpress();
+		boolean isPickup = SingletonOrder.getInstance().getIsPickup();
+		if(pickup != null)
+			initPickupState(pickup, pickupBranch);
+		if(delivery != null)
+			initDeliveryState(delivery, DeliveryBranch, isExpress);
+		initRadioButtonsState(isPickup);
+	}
+
+	private void initPickupState(Delivery pickup, Branch pickupBranch) {
+		pickupBranchComboBox.setValue(pickupBranch);
+		String[] dateTime = pickup.getDeliveryDate().split(" ");  // [0] is date [1] is time
+		String[] time = dateTime[1].split(":");  // [0] is hours [1] is minutes [2] is seconds
+		pickupDatePicker.setValue(LocalDate.parse(dateTime[0]));
+		pickupHourComboBox.setValue(time[0]);
+		pickupMinuteComboBox.setValue(time[1]);
+	}
+
+	private void initDeliveryState(Delivery delivery, Branch deliveryBranch, boolean isExpress) {
+		addressField.setText(delivery.getAddress());
+		recieverNameField.setText(delivery.getReceiverName());
+		recieverPhoneField.setText(delivery.getPhoneNumber());
+		
+		deliveryBranchComboBox.setValue(deliveryBranch);
+		
+		String[] dateTime = delivery.getDeliveryDate().split(" ");  // [0] is date [1] is time
+		String[] time = dateTime[1].split(":");  // [0] is hours [1] is minutes [2] is seconds
+		deliveryDatePicker.setValue(LocalDate.parse(dateTime[0]));
+		deliveryHourComboBox.setValue(time[0]);
+		deliveryMinuteComboBox.setValue(time[1]);
+		
+		expressDeliveryCheckBox.setSelected(isExpress);
+		switchExpress();
+	}
+	
+	private void initRadioButtonsState(boolean isPickup) {
+		if(isPickup) {
+			delivery.selectToggle(pickUpRadioButton);
+			selectPickup();
+		}
+		else
+			selectDelivery();
+	}
+
+	private void initTimeComboBoxes() {
+		deliveryHourComboBox.getItems().addAll("08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",
+				"20");
+		pickupHourComboBox.getItems().addAll("08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",
+				"20");
+		deliveryMinuteComboBox.getItems().addAll("00", "15", "30", "45");
+		pickupMinuteComboBox.getItems().addAll("00", "15", "30", "45");
+	}
+
+	private void initBranchComboBoxes() {
+		fetchBranches();
+
+		for (Branch branch : branches) {
+			deliveryBranchComboBox.getItems().add(branch);
+			pickupBranchComboBox.getItems().add(branch);
+		}
+	}
+
+	private void fetchBranches() {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.FETCH_BRANCHES);
 		Object response = ClientFormController.client.accept(message);
 		branches = (ObservableList<Branch>) response;
+	}
 
-		for (Branch branch : branches) {
-			regionComboBox.getItems().add(branch.getRegion());
-			branchComboBox.getItems().add(branch);
-		}
+	@FXML
+	void selectExpressEvent(MouseEvent event) {
+		switchExpress();
 
+		updateDeliveryFeeLabel();
+	}
+
+	private void switchExpress() {
+		deliveryDatePicker.setDisable(expressDeliveryCheckBox.isSelected());
+		deliveryHourComboBox.setDisable(expressDeliveryCheckBox.isSelected());
+		deliveryMinuteComboBox.setDisable(expressDeliveryCheckBox.isSelected());
 	}
 
 }

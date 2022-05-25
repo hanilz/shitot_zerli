@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -59,11 +60,11 @@
          </children>
       </GridPane>
       <HBox prefHeight="44.0" prefWidth="940.0" />
-      <VBox alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="510.0" prefWidth="1052.0">
+      <VBox alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="552.0" prefWidth="1052.0">
          <children>
             <VBox prefHeight="51.0" prefWidth="775.0" spacing="10.0">
                <children>
-                  <RadioButton fx:id="pickUpRadioButton" mnemonicParsing="false" onMouseClicked="#selectPickup" selected="true" text="In-Store Pickup">
+                  <RadioButton fx:id="pickUpRadioButton" mnemonicParsing="false" onMouseClicked="#selectPickupEvent" selected="true" text="In-Store Pickup">
                      <toggleGroup>
                         <ToggleGroup fx:id="delivery" />
                      </toggleGroup>
@@ -74,7 +75,7 @@
                         <Font size="18.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton fx:id="deliveryRadioButton" mnemonicParsing="false" onMouseClicked="#selectDelivery" selected="true" text="Delivery" toggleGroup="$delivery">
+                  <RadioButton fx:id="deliveryRadioButton" mnemonicParsing="false" onMouseClicked="#selectDeliveryEvent" selected="true" text="Delivery" toggleGroup="$delivery">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -83,14 +84,14 @@
                      </font></RadioButton>
                </children>
             </VBox>
-            <VBox alignment="TOP_CENTER" prefHeight="97.0" prefWidth="775.0" visible="false">
+            <VBox alignment="TOP_CENTER" prefHeight="97.0" prefWidth="775.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="22.0" prefWidth="775.0">
                      <children>
                         <Label fx:id="selectABranchLabel" textFill="#ff1b1b" />
                      </children>
                   </HBox>
-                  <HBox fx:id="pickupHBox" alignment="CENTER" prefHeight="72.0" prefWidth="775.0" spacing="34.0">
+                  <HBox fx:id="pickupHBox" alignment="CENTER" prefHeight="72.0" prefWidth="775.0" spacing="34.0" visible="false">
                      <children>
                         <GridPane prefHeight="62.0" prefWidth="1053.0">
                           <columnConstraints>
@@ -186,7 +187,7 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox fx:id="deliveryVBox" alignment="BOTTOM_CENTER" prefHeight="252.0" prefWidth="852.0" spacing="6.0">
+            <VBox fx:id="deliveryVBox" alignment="BOTTOM_CENTER" prefHeight="284.0" prefWidth="1052.0" spacing="6.0">
                <children>
                   <HBox prefHeight="22.0" prefWidth="775.0">
                      <children>
@@ -288,19 +289,35 @@
                         <TextField fx:id="recieverPhoneField" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                            <children>
-                              <Label text="Region:">
+                              <Label text="Branch:">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </Label>
                            </children>
                         </HBox>
-                        <ComboBox fx:id="deliveryBranchComboBox" prefHeight="25.0" prefWidth="245.0" promptText="select branch" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="deliveryBranchComboBox" prefHeight="25.0" prefWidth="245.0" promptText="select branch" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></ComboBox>
                      </children>
                   </GridPane>
+                  <VBox>
+                     <children>
+                        <CheckBox fx:id="expressDeliveryCheckBox" mnemonicParsing="false" onMouseClicked="#selectExpressEvent" text="Express Delivery">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </CheckBox>
+                        <Label text="* An express delivery will be prepared and sent to the reciever 3 hours after the order has been approved - it's lightning fast!" textFill="#2e3add" />
+                     </children>
+                  </VBox>
                </children>
             </VBox>
-            <HBox alignment="CENTER" prefHeight="103.0" prefWidth="775.0" spacing="59.0">
+            <HBox alignment="CENTER" prefHeight="76.0" prefWidth="1052.0" spacing="59.0">
                <children>
                   <Button fx:id="backButton" mnemonicParsing="false" onMousePressed="#changeToGreetingCardScreen" text="Back To Greeting Card">
                      <cursor>
@@ -309,6 +326,20 @@
                      <font>
                         <Font size="18.0" />
                      </font></Button>
+                  <VBox alignment="CENTER" prefHeight="65.0" prefWidth="117.0">
+                     <children>
+                        <Label text="Delivery Fee:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="deliveryFeeLabel" text="15.0 $">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                   <Button fx:id="checkoutButton" mnemonicParsing="false" onMousePressed="#changeToCheckoutScreen" text="Proceed To Checkout">
                      <cursor>
                         <Cursor fx:constant="HAND" />

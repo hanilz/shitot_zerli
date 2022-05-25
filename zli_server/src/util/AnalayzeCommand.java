@@ -185,6 +185,7 @@ public class AnalayzeCommand {
 					login.put("idUser", Integer.parseInt(rs.getString(1)));
 					login.put("idAccount", Integer.parseInt(rs.getString(4)));
 					login.put("userType", UserType.get(rs.getString(5)));
+					login.put("storeCredit", Double.parseDouble(rs.getString(8)));
 					query = "UPDATE users SET isLogin = ? WHERE username = ? AND password = ?";
 					preparedStmt = conn.prepareStatement(query);
 					preparedStmt.setInt(1, 1);

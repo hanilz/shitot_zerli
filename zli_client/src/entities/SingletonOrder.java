@@ -8,11 +8,15 @@ public class SingletonOrder extends Order{
 	private static final long serialVersionUID = 1L;
 	private static SingletonOrder instance = null;
 	private Delivery delivery = null;
+	private Delivery pickup = null;
+	private Branch pickupBranch = null;
 	private boolean isGreetingCard = true;
-	private String greetingCardTitle;
-	private String greetingCardFrom;
-	private String greetingCardTo;
-	private String greetingCardContent;
+	private String greetingCardTitle = "";
+	private String greetingCardFrom = "";
+	private String greetingCardTo = "";
+	private String greetingCardContent = "";
+	private boolean isPickup = false;
+	private boolean isExpress = false;
 	
 	public static SingletonOrder getInstance() {
 		return ((instance == null) ? instance = new SingletonOrder(): instance);
@@ -71,5 +75,37 @@ public class SingletonOrder extends Order{
 
 	public String getGreetingCardContent() {
 		return greetingCardContent;
+	}
+
+	public boolean getIsPickup() {
+		return isPickup;
+	}
+
+	public void setIsPickup(boolean isPickup) {
+		this.isPickup = isPickup;
+	}
+
+	public Delivery getPickup() {
+		return pickup;
+	}
+
+	public void setPickup(Delivery pickup) {
+		this.pickup = pickup;
+	}
+
+	public boolean getIsExpress() {
+		return isExpress;
+	}
+
+	public void setIsExpress(boolean isExpress) {
+		this.isExpress = isExpress;
+	}
+
+	public Branch getPickupBranch() {
+		return pickupBranch;
+	}
+
+	public void setPickupBranch(Branch pickupBranch) {
+		this.pickupBranch = pickupBranch;
 	}
 }
