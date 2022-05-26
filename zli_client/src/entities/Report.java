@@ -15,6 +15,14 @@ public class Report implements Serializable {
 	private int idBranch;
 	private int quarter;
 	private String year;
+	private String dateRange;
+	private Branch branch;
+	
+	public Report(String dateRange, String type, int idBranch) {
+		this.dateRange = dateRange;
+		this.type = type;
+		this.idBranch = idBranch;
+	}
 
 	public Report(int idReport, String type, Date date, int idBranch, int quarter) {
 		this.idReport = idReport;
@@ -88,6 +96,22 @@ public class Report implements Serializable {
 
 	public void setIdBranch(int idBranch) {
 		this.idBranch = idBranch;
+	}
+
+	public String getDateRange() {
+		return dateRange;
+	}
+
+	public void setDateRange(String dateRange) {
+		this.dateRange = dateRange;
+	}
+
+	public Branch getBranch() {
+		return branch;
+	}
+
+	public void setBranch(Branch branch) {
+		this.branch = branch;
 	}
 
 	@Override

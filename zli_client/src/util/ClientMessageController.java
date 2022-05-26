@@ -2,6 +2,7 @@ package util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import client.ClientController;
 import entities.Branch;
@@ -78,6 +79,15 @@ public class ClientMessageController {
 		case FETCH_COMPLAINTS:
 			returnServerListRespond(new ArrayList<Complaint>());
 			break;
+		case GET_ITEMS_INCOME_REPORT:
+			returnServerMapRespond(new HashMap<String,Integer>());
+			break;
+		case GET_PRODUCTS_INCOME_REPORT:
+			returnServerMapRespond(new HashMap<String,Integer>());
+			break;
+		case GET_ORDERS_REPORT:
+			returnServerMapRespond(new HashMap<String,Integer>());
+			break;
 		default:
 			returnServerRespond();
 			break;
@@ -91,6 +101,12 @@ public class ClientMessageController {
 	private void returnServerListRespond(ArrayList<?> listResponse) {
 		ArrayList<?> respondAsList = ((listResponse.isEmpty()) ? (ArrayList<?>) message.get("response") : listResponse);
 		response = FXCollections.observableArrayList(respondAsList);
+		ClientController.setResponse(response);
+	}
+	
+	private void returnServerMapRespond(Map<?,?> mapResponse) {
+		Map<?,?> respondAsMap = ((mapResponse.isEmpty()) ? (Map<?,?>) message.get("response") : mapResponse);
+		response = respondAsMap;
 		ClientController.setResponse(response);
 	}
 

@@ -2,6 +2,7 @@ package report;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import client.ClientFormController;
@@ -22,6 +23,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
+import notifications.NotificationController;
 import util.Commands;
 import util.ManageScreens;
 import util.UserType;
@@ -131,34 +133,30 @@ public class ReportsController implements Initializable {
 		}
 	}
 
-	private void getIncomeReport() {
+	private void getIncomeReport(Report selectedReport) {
 		HashMap<String, Object> message = new HashMap<>();
-		message.put("command", Commands.GET_INCOME_REPORT);
-		reports = (ObservableList<Report>) ClientFormController.client.accept(message);
-		/*
-		 * SELECT itemType, SUM(quantity*itemPrice) as totalSum FROM items JOIN
-		 * order_items ON items.itemId=order_items.idItem JOIN orders ON orders.idOrder
-		 * = order_items.idOrder AND orders.idBranch = 1 GROUP BY itemType;
-		 */
-		/*
-		 * SELECT productType, SUM(quantity*productPrice) as totalSum FROM products JOIN
-		 * order_products ON products.productId=order_products.idProduct JOIN orders ON
-		 * orders.idOrder = order_products.idOrder AND orders.idBranch = 1 GROUP BY
-		 * productType;
-		 */
+		message.put("command", Commands.GET_ITEMS_INCOME_REPORT);
+		message.put("selected report",
+				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
+		Map<String, Integer> response = (Map<String, Integer>) ClientFormController.client.accept(message);
+		IncomeReportController.setItemsLabels(response);
+
+		message.put("command", Commands.GET_PRODUCTS_INCOME_REPORT);
+		message.put("selected report",
+				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
+		response = (Map<String, Integer>) ClientFormController.client.accept(message);
+		IncomeReportController.setProductsLabels(response);
+		
+		IncomeReportController.setSelectedReport(selectedReport);
 	}
 
-	private void getOrdersReport() {
+	private void getOrdersReport(String dateRange) {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.GET_ORDERS_REPORT);
 		reports = (ObservableList<Report>) ClientFormController.client.accept(message);
+//		"SELECT itemType, SUM(quantity) as totalQuantity FROM items JOIN order_items ON items.itemId=order_items.idItem JOIN orders ON orders.idOrder = order_items.idOrder AND orders.idBranch = "+report.getIdBranch()+" GROUP BY itemType;"
 		/*
-		 * SELECT itemType, SUM(quantity) as totalQuantity FROM items JOIN order_items
-		 * ON items.itemId=order_items.idItem JOIN orders ON orders.idOrder =
-		 * order_items.idOrder AND orders.idBranch = 1 GROUP BY itemType;
-		 */
-		/*
-		 * SELECT productType, SUM(quantity) as totalSum FROM products JOIN
+		 * SELECT productType, SUM(quantity) as totalQuantity FROM products JOIN
 		 * order_products ON products.productId=order_products.idProduct JOIN orders ON
 		 * orders.idOrder = order_products.idOrder AND orders.idBranch = 1 GROUP BY
 		 * productType;
@@ -166,8 +164,19 @@ public class ReportsController implements Initializable {
 
 	}
 
-	private void openSelectedReport() {
-
+	private void openSelectedReport(Report selectedReport) {
+		switch (selectedReport.getType()) {
+		case "income":
+			getIncomeReport(selectedReport);
+			try {
+				ManageScreens.openPopupFXML(IncomeReportController.class.getResource("IncomeReport.fxml"),
+						"Income Report");
+			} catch (Exception e) {
+			}
+			break;
+		case "orders":
+			break;
+		}
 	}
 
 	private void addButtonToTableAndEvent() {
@@ -181,6 +190,9 @@ public class ReportsController implements Initializable {
 						btn.setOnAction((ActionEvent event) -> {
 							int index = getTableRow().getIndex();
 							Report selectedReport = getTableView().getItems().get(index);
+							selectedReport.setBranch(branchComboBox.getValue());
+							selectedReport.setDateRange(setDateRangeForQuery(selectedReport));
+							openSelectedReport(selectedReport);
 						});
 					}
 
@@ -201,9 +213,32 @@ public class ReportsController implements Initializable {
 		reportsTable.getColumns().add(viewCol);
 
 	}
-	
-	private enum ReportType {
-		INCOME_REPORT,ORDERS_REPORT;
+
+	private String setDateRangeForQuery(Report selectedReport) {
+		StringBuilder sb = new StringBuilder(selectedReport.getDateToString());
+		String dateRange = selectedReport.getDateToString().charAt(5) + ""
+				+ selectedReport.getDateToString().charAt(6);
+		//int monthToInt = Integer.parseInt(selectedMonth) - 1;
+		//String dateRange = monthToInt + "";
+		switch (selectedReport.getQuarter()) {
+		case 1:
+			sb.setCharAt(6, dateRange.charAt(1));
+			sb.append(" 00:00:00");
+			return "'2022-01-01 00:00:00' and '" + sb.toString()+"'";
+		case 2:
+			sb.setCharAt(6, dateRange.charAt(1));
+			sb.append(" 00:00:00");
+			return "'2022-04-01 00:00:00' and '" + sb.toString()+"'";
+		case 3:
+			sb.setCharAt(6, dateRange.charAt(1));
+			sb.append(" 00:00:00");
+			return "'2022-07-01 00:00:00' and '" + sb.toString()+"'";
+		case 4:
+			sb.setCharAt(5, dateRange.charAt(0));
+			sb.setCharAt(6, dateRange.charAt(1));
+			return "'2022-10-01 00:00:00' and '" + sb.toString()+"'";
+		}
+		return "";
 	}
 
 }
