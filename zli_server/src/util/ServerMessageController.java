@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import entities.AccountPayment;
 import entities.Branch;
@@ -263,6 +264,18 @@ public class ServerMessageController {
 		case FETCH_FILES:
 			File file = AnalayzeCommand.retriveFileFromDB();//(File)message.get("FILE")
 			message.put("response", file);
+			break;
+		case GET_ITEMS_INCOME_REPORT:
+			Map<String,Integer> itemsIncomeLabels = AnalayzeCommand.getItemsIncomeReport((Report)message.get("selected report"));
+			message.put("response", itemsIncomeLabels);
+			break;
+		case GET_PRODUCTS_INCOME_REPORT:
+			Map<String,Integer> productsIncomeLabels = AnalayzeCommand.getProductsIncomeReport((Report)message.get("selected report"));
+			message.put("response", productsIncomeLabels);
+			break;
+		/*case GET_ORDERS_REPORT:
+			Map<String,Integer> ordersReportLabels = AnalayzeCommand.getOrderReport((Report)message.get("selected report"));
+			message.put("response", ordersReportLabels);*/
 		default:
 			break;
 		}

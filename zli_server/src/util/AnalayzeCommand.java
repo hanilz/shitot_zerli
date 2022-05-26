@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import entities.AccountPayment;
 import entities.Branch;
@@ -986,8 +987,8 @@ public class AnalayzeCommand {
 		}
 		return reports;
 	}
-	
-	//might not work correctly - probably doesn't
+
+	// might not work correctly - probably doesn't
 	public static boolean uploadFileToDB(File file) {
 		Connection conn = DataBaseController.getConn();
 		byte[] fileBytes = new byte[(int) file.length()];
@@ -998,8 +999,8 @@ public class AnalayzeCommand {
 			fileBlob.setBytes(1, fileBytes);
 			psmnt = conn.prepareStatement("INSERT INTO blob_file_table (idblobFile, blobFile) VALUES  (?,?)");
 			psmnt.setString(1, file.getName());
-			//psmnt.setBlob(2, fileBlob);
-			psmnt.setBinaryStream(2,  (InputStream)io,(int)file.length());
+			// psmnt.setBlob(2, fileBlob);
+			psmnt.setBinaryStream(2, (InputStream) io, (int) file.length());
 			if (psmnt.executeUpdate() == 0)
 				return false;
 		} catch (SQLException e) {
@@ -1011,10 +1012,11 @@ public class AnalayzeCommand {
 		return true;
 	}
 
-	//public static ArrayList<File> retriveFileFromDB() {
-	//as of right now this is just a big mess, the file downloads but its only 1 kb and it wont open because it was corrupted and im not sure if 
-	//it happened in the encoding or decoding process
-		public static File retriveFileFromDB() {
+	// public static ArrayList<File> retriveFileFromDB() {
+	// as of right now this is just a big mess, the file downloads but its only 1 kb
+	// and it wont open because it was corrupted and im not sure if
+	// it happened in the encoding or decoding process
+	public static File retriveFileFromDB() {
 //		ArrayList<File> files = new ArrayList<>();
 //		try {
 //			Statement stmt = DataBaseController.getConn().createStatement();
@@ -1034,7 +1036,7 @@ public class AnalayzeCommand {
 		FileOutputStream output = null;
 		ResultSet rs = null;
 		String fileName = "";
-		File ret =null;
+		File ret = null;
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver");
@@ -1048,7 +1050,7 @@ public class AnalayzeCommand {
 
 			if (rs.next()) {
 				fileName = rs.getString(1);
-				ret = new File("D:\\" +fileName);
+				ret = new File("D:\\" + fileName);
 				output = new FileOutputStream(ret);
 				System.out.println("Getting file please be patient..");
 
@@ -1093,8 +1095,44 @@ public class AnalayzeCommand {
 			}
 
 		}
-		//return new File("D:\\" + fileName);
+		// return new File("D:\\" + fileName);
 		return ret;
 	}
 
+	public static Map<String, Integer> getItemsIncomeReport(Report report) {
+			Map<String, Integer> incomeLabels = new HashMap<>();
+				try {
+					Statement selectStmt = DataBaseController.getConn().createStatement();
+					ResultSet rs = selectStmt.executeQuery("SELECT itemType, SUM(quantity*itemPrice) as totalSum FROM items JOIN "
+							+ " order_items ON items.itemId=order_items.idItem JOIN orders ON orders.idOrder"
+							+ " = order_items.idOrder AND orders.idBranch = "+report.getIdBranch()+" and orders.date between "+report.getDateRange()+" GROUP BY itemType;");
+					while (rs.next()) {
+						String itemType = rs.getString(1);
+						int totalSum = rs.getInt(2);
+						incomeLabels.put(itemType, totalSum);
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				return incomeLabels;
+	}
+
+	public static Map<String, Integer> getProductsIncomeReport(Report report) {
+		Map<String, Integer> incomeLabels = new HashMap<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt.executeQuery("SELECT productType, SUM(quantity*productPrice) as totalSum FROM products JOIN"
+					+ " order_products ON products.productId=order_products.idProduct JOIN orders ON"
+					+ " orders.idOrder = order_products.idOrder AND orders.idBranch = "+report.getIdBranch()+" and orders.date between "+report.getDateRange()+" GROUP BY "
+					+ " productType;");
+			while (rs.next()) {
+				String productType = rs.getString(1);
+				int totalSum = rs.getInt(2);
+				incomeLabels.put(productType, totalSum);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return incomeLabels;
+	}
 }
