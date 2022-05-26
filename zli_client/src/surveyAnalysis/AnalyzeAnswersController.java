@@ -1,9 +1,6 @@
 package surveyAnalysis;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -29,12 +26,12 @@ import util.ManageScreens;
 
 public class AnalyzeAnswersController implements Initializable {
 	public static int surveyID;
-	
+
 	private File savedFile;
 
-    @FXML
-    private Button submitButton;
-    
+	@FXML
+	private Button submitButton;
+
 	@FXML
 	private VBox answerVbox;
 
@@ -51,33 +48,42 @@ public class AnalyzeAnswersController implements Initializable {
 	void closeSurvey(ActionEvent event) {
 		ManageScreens.previousScreen();
 	}
-	
 
-    @FXML
-    void submitAnalysis(ActionEvent event) {
-    	System.out.println("TODO save file to db "+savedFile.getName());
-    	submitButton.setDisable(true);
-    	submitButton.setText("submitted");
-    	PauseTransition pause = new PauseTransition(Duration.seconds(5));
-    	pause.setOnFinished(event2 ->{
-	    	submitButton.setText("Submit Analysis");
-    		}
-    	);
-    	pause.play();
-    	//TODO upload to db
-		ManageScreens.displayAlert("File Uploaded","Your file has been uploaded");
-    }
+	@FXML
+	void submitAnalysis(ActionEvent event) {
+		if(!convertAndUploadToDb(savedFile)) {
+			ManageScreens.displayAlert("Failed to Upload", "Your file failed to upload, Please try again");
+			return;
+		}
+		System.out.println("TODO save file to db " + savedFile.getName());
+		submitButton.setDisable(true);
+		submitButton.setText("submitted");
+		PauseTransition pause = new PauseTransition(Duration.seconds(5));
+		pause.setOnFinished(event2 -> {
+			submitButton.setText("Submit Analysis");
+		});
+		pause.play();
+		ManageScreens.displayAlert("File Uploaded", "Your file has been uploaded");
+	}
+
+	private boolean convertAndUploadToDb(File savedFile2) {
+		// TODO UPLOAD TO DB
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.UPLOAD_FILE);
+		message.put("FILE", savedFile2);
+		Object response = ClientFormController.client.accept(message);
+		return (boolean)response;
+	}
 
 	@FXML
 	void uploadAnalysis(ActionEvent event) {
 		final FileChooser fileChooser = new FileChooser();
 		File file = fileChooser.showOpenDialog(ManageScreens.getStage());
-        if (file != null) {
-            savedFile=file;
-            submitButton.setDisable(false);
-        }
-        else
-        	submitButton.setDisable(true);
+		if (file != null) {
+			savedFile = file;
+			submitButton.setDisable(false);
+		} else
+			submitButton.setDisable(true);
 	}
 
 	@Override
@@ -106,5 +112,6 @@ public class AnalyzeAnswersController implements Initializable {
 
 	public static void setSurvey(int surveyID2) {
 		surveyID = surveyID2;
-	}	
+	}
+	
 }

@@ -1,5 +1,6 @@
 package util;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -255,6 +256,13 @@ public class ServerMessageController {
 			ArrayList<QuestionAnswer> questions = AnalayzeCommand.getSurveyAnswers((Integer)message.get("surveyID"));
 			message.put("response", questions);
 			break;
+		case UPLOAD_FILE:
+			boolean uploaded = AnalayzeCommand.uploadFileToDB((File)message.get("FILE"));
+			message.put("response", uploaded);
+			break;
+		case FETCH_FILES:
+			File file = AnalayzeCommand.retriveFileFromDB();//(File)message.get("FILE")
+			message.put("response", file);
 		default:
 			break;
 		}

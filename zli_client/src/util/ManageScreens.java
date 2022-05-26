@@ -40,6 +40,7 @@ import report.ReportsController;
 import survey.SurveyHomeController;
 import surveyAnalysis.AnalyzeAnswersController;
 import surveyAnalysis.SurveyAnswersHomeController;
+import surveyAnalysisView.SurveyAnalysisViewHomeController;
 
 public class ManageScreens {
 	private static Stage stage;
@@ -259,6 +260,10 @@ public class ManageScreens {
 				ManageScreens.changeScene(ReportsController.class.getResource("reportsScreen.fxml"),
 						"View Reports");
 				break;
+			case VIEW_SURVEY_ANALYSIS_RESULTS:
+				ManageScreens.changeScene(SurveyAnalysisViewHomeController.class.getResource("SurveyReportsHomeScreen.fxml"),
+						"View Reports");
+				break;
 			default:
 				break;
 			}
@@ -337,6 +342,8 @@ public class ManageScreens {
 			return "Analyze Surveys";
 		case VIEW_REPORTS:
 			return "View Reports";
+		case VIEW_SURVEY_ANALYSIS_RESULTS:
+			return "Survey Results";
 		}
 		return null;
 	}
@@ -393,6 +400,8 @@ public class ManageScreens {
 			return "resources/home/survey.png";
 		case VIEW_REPORTS:
 			return "resources/home/reports.png";
+		case VIEW_SURVEY_ANALYSIS_RESULTS:
+			return "resources/home/survey_results.png";
 		default:
 			return "";// no such user//
 		}
