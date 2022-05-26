@@ -265,6 +265,7 @@ public class CheckoutController implements Initializable {
 			System.out.println("of pufff, insert failed!");
 	}
 
+	@SuppressWarnings("unchecked")
 	private void insertCustomProductsToDB() {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.INSERT_CUSTOM_PRODUCTS);
