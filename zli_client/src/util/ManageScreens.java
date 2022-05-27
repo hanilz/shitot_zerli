@@ -10,6 +10,7 @@ import client.ClientScreen;
 import customProduct.CustomProductBuilderController;
 import customerComplaint.ComplaintViewController;
 import customerComplaint.CustomerComplaintHomeController;
+import deliveryCoordination.DeliveryCoordinatorController;
 import entities.User;
 import home.HomeGuestController;
 import home.HomeUserTypesController;
@@ -264,6 +265,10 @@ public class ManageScreens {
 				ManageScreens.changeScene(SurveyAnalysisViewHomeController.class.getResource("SurveyReportsHomeScreen.fxml"),
 						"View Reports");
 				break;
+			case DELIVER_ORDERS:
+				ManageScreens.changeScene(DeliveryCoordinatorController.class.getResource("DeliveryCoordinatorScreen.fxml"),
+						"Delivery Coordinator");
+				break;
 			default:
 				break;
 			}
@@ -344,6 +349,8 @@ public class ManageScreens {
 			return "View Reports";
 		case VIEW_SURVEY_ANALYSIS_RESULTS:
 			return "Survey Results";
+		case DELIVER_ORDERS:
+			return "Deliver Orders";
 		}
 		return null;
 	}
@@ -402,6 +409,8 @@ public class ManageScreens {
 			return "resources/home/reports.png";
 		case VIEW_SURVEY_ANALYSIS_RESULTS:
 			return "resources/home/survey_results.png";
+		case DELIVER_ORDERS:
+			return "resources/home/delivery.png";
 		default:
 			return "";// no such user//
 		}
