@@ -1100,31 +1100,72 @@ public class AnalayzeCommand {
 	}
 
 	public static Map<String, Integer> getItemsIncomeReport(Report report) {
-			Map<String, Integer> incomeLabels = new HashMap<>();
-				try {
-					Statement selectStmt = DataBaseController.getConn().createStatement();
-					ResultSet rs = selectStmt.executeQuery("SELECT itemType, SUM(quantity*itemPrice) as totalSum FROM items JOIN "
+		Map<String, Integer> incomeLabels = new HashMap<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt
+					.executeQuery("SELECT itemType, SUM(quantity*itemPrice) as totalSum FROM items JOIN "
 							+ " order_items ON items.itemId=order_items.idItem JOIN orders ON orders.idOrder"
-							+ " = order_items.idOrder AND orders.idBranch = "+report.getIdBranch()+" and orders.date between "+report.getDateRange()+" GROUP BY itemType;");
-					while (rs.next()) {
-						String itemType = rs.getString(1);
-						int totalSum = rs.getInt(2);
-						incomeLabels.put(itemType, totalSum);
-					}
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-				return incomeLabels;
+							+ " = order_items.idOrder AND orders.idBranch = " + report.getIdBranch()
+							+ " and orders.date between " + report.getDateRange() + " GROUP BY itemType;");
+			while (rs.next()) {
+				String itemType = rs.getString(1);
+				int totalSum = rs.getInt(2);
+				incomeLabels.put(itemType, totalSum);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return incomeLabels;
 	}
 
 	public static Map<String, Integer> getProductsIncomeReport(Report report) {
 		Map<String, Integer> incomeLabels = new HashMap<>();
 		try {
 			Statement selectStmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = selectStmt.executeQuery("SELECT productType, SUM(quantity*productPrice) as totalSum FROM products JOIN"
-					+ " order_products ON products.productId=order_products.idProduct JOIN orders ON"
-					+ " orders.idOrder = order_products.idOrder AND orders.idBranch = "+report.getIdBranch()+" and orders.date between "+report.getDateRange()+" GROUP BY "
-					+ " productType;");
+			ResultSet rs = selectStmt
+					.executeQuery("SELECT productType, SUM(quantity*productPrice) as totalSum FROM products JOIN"
+							+ " order_products ON products.productId=order_products.idProduct JOIN orders ON"
+							+ " orders.idOrder = order_products.idOrder AND orders.idBranch = " + report.getIdBranch()
+							+ " and orders.date between " + report.getDateRange() + " GROUP BY " + " productType;");
+			while (rs.next()) {
+				String productType = rs.getString(1);
+				int totalSum = rs.getInt(2);
+				incomeLabels.put(productType, totalSum);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return incomeLabels;
+	}
+
+	public static Map<String, Integer> getItemsOrdersReport(Report report) {
+		Map<String, Integer> incomeLabels = new HashMap<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt.executeQuery(
+					"SELECT itemType, SUM(quantity) as totalQuantity FROM items JOIN order_items ON items.itemId=order_items.idItem JOIN orders ON orders.idOrder = order_items.idOrder AND orders.idBranch = "
+							+ report.getIdBranch() + " and orders.date between " + report.getDateRange()
+							+ " GROUP BY itemType;");
+			while (rs.next()) {
+				String productType = rs.getString(1);
+				int totalSum = rs.getInt(2);
+				incomeLabels.put(productType, totalSum);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return incomeLabels;
+	}
+
+	public static Map<String, Integer> getProductsOrdersReport(Report report) {
+		Map<String, Integer> incomeLabels = new HashMap<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt.executeQuery(
+					"SELECT productType, SUM(quantity) as totalQuantity FROM products JOIN order_products ON products.productId=order_products.idProduct JOIN orders ON orders.idOrder = order_products.idOrder AND orders.idBranch = "
+							+ report.getIdBranch() + " and orders.date between " + report.getDateRange()
+							+ " GROUP BY productType;");
 			while (rs.next()) {
 				String productType = rs.getString(1);
 				int totalSum = rs.getInt(2);

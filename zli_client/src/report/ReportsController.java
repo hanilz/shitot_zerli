@@ -23,7 +23,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
-import notifications.NotificationController;
 import util.Commands;
 import util.ManageScreens;
 import util.UserType;
@@ -133,35 +132,40 @@ public class ReportsController implements Initializable {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private void getIncomeReport(Report selectedReport) {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.GET_ITEMS_INCOME_REPORT);
 		message.put("selected report",
 				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
 		Map<String, Integer> response = (Map<String, Integer>) ClientFormController.client.accept(message);
-		IncomeReportController.setItemsLabels(response);
+		PopupReportController.setItemsLabels(response);
 
 		message.put("command", Commands.GET_PRODUCTS_INCOME_REPORT);
 		message.put("selected report",
 				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
 		response = (Map<String, Integer>) ClientFormController.client.accept(message);
-		IncomeReportController.setProductsLabels(response);
+		PopupReportController.setProductsLabels(response);
 		
-		IncomeReportController.setSelectedReport(selectedReport);
+		PopupReportController.setSelectedReport(selectedReport);
 	}
 
-	private void getOrdersReport(String dateRange) {
+	@SuppressWarnings("unchecked")
+	private void getOrdersReport(Report selectedReport) {
 		HashMap<String, Object> message = new HashMap<>();
-		message.put("command", Commands.GET_ORDERS_REPORT);
-		reports = (ObservableList<Report>) ClientFormController.client.accept(message);
-//		"SELECT itemType, SUM(quantity) as totalQuantity FROM items JOIN order_items ON items.itemId=order_items.idItem JOIN orders ON orders.idOrder = order_items.idOrder AND orders.idBranch = "+report.getIdBranch()+" GROUP BY itemType;"
-		/*
-		 * SELECT productType, SUM(quantity) as totalQuantity FROM products JOIN
-		 * order_products ON products.productId=order_products.idProduct JOIN orders ON
-		 * orders.idOrder = order_products.idOrder AND orders.idBranch = 1 GROUP BY
-		 * productType;
-		 */
-
+		message.put("command", Commands.GET_ITEMS_ORDERS_REPORT);
+		message.put("selected report",
+				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
+		Map<String, Integer> response = (Map<String, Integer>) ClientFormController.client.accept(message);
+		PopupReportController.setItemsLabels(response);
+		
+		message.put("command", Commands.GET_PRODUCTS_ORDERS_REPORT);
+		message.put("selected report",
+				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
+		response = (Map<String, Integer>) ClientFormController.client.accept(message);
+		PopupReportController.setProductsLabels(response);
+		
+		PopupReportController.setSelectedReport(selectedReport);
 	}
 
 	private void openSelectedReport(Report selectedReport) {
@@ -169,12 +173,16 @@ public class ReportsController implements Initializable {
 		case "income":
 			getIncomeReport(selectedReport);
 			try {
-				ManageScreens.openPopupFXML(IncomeReportController.class.getResource("IncomeReport.fxml"),
+				ManageScreens.openPopupFXML(PopupReportController.class.getResource("PopupReport.fxml"),
 						"Income Report");
-			} catch (Exception e) {
-			}
+			} catch (Exception e) {}
 			break;
 		case "orders":
+			getOrdersReport(selectedReport);
+			try {
+				ManageScreens.openPopupFXML(PopupReportController.class.getResource("PopupReport.fxml"),
+						"Orders Report");
+			} catch (Exception e) {}
 			break;
 		}
 	}
