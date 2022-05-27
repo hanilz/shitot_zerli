@@ -273,9 +273,14 @@ public class ServerMessageController {
 			Map<String,Integer> productsIncomeLabels = AnalayzeCommand.getProductsIncomeReport((Report)message.get("selected report"));
 			message.put("response", productsIncomeLabels);
 			break;
-		/*case GET_ORDERS_REPORT:
-			Map<String,Integer> ordersReportLabels = AnalayzeCommand.getOrderReport((Report)message.get("selected report"));
-			message.put("response", ordersReportLabels);*/
+		case GET_ITEMS_ORDERS_REPORT:
+			Map<String,Integer> itemsOrdersLabels = AnalayzeCommand.getItemsOrdersReport((Report)message.get("selected report"));
+			message.put("response", itemsOrdersLabels);
+			break;
+		case GET_PRODUCTS_ORDERS_REPORT:
+			Map<String,Integer> productsOrdersLabels = AnalayzeCommand.getProductsOrdersReport((Report)message.get("selected report"));
+			message.put("response", productsOrdersLabels);
+			break;
 		default:
 			break;
 		}
