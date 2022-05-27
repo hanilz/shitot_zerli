@@ -21,6 +21,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import util.Commands;
@@ -47,8 +48,8 @@ public class ReportsController implements Initializable {
 	@FXML
 	private TableColumn<Report, String> dateCol;
 
-	@FXML
-	private Button searchButton;
+    @FXML
+    private ImageView homeImage;
 
 	@FXML
 	private ComboBox<String> yearComboBox;
@@ -109,10 +110,10 @@ public class ReportsController implements Initializable {
 		quraterComboBox.getItems().addAll(1, 2, 3, 4);
 	}
 
-	@FXML
-	void changeToHomeScreen(MouseEvent event) {
-		ManageScreens.home();
-	}
+    @FXML
+    void returnHome(MouseEvent event) {
+    	ManageScreens.home();
+    }
 
 	@FXML
 	void searchReportsButton(MouseEvent event) {

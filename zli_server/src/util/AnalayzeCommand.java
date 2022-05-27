@@ -330,7 +330,7 @@ public class AnalayzeCommand {
 				idAccount = rs.getInt(1);
 			return idAccount;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			return -1;
 		}
 	}
