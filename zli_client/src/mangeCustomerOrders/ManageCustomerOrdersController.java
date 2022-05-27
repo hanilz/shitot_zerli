@@ -48,9 +48,6 @@ public class ManageCustomerOrdersController implements Initializable{
     private TableView<ManagerOrderView> cancelOrdersTable;
 
     @FXML
-    private Button closeButton;
-
-    @FXML
     private Label errorLabel;
 
     @FXML
@@ -128,12 +125,6 @@ public class ManageCustomerOrdersController implements Initializable{
     void returnHome(MouseEvent event) {
     	ManageScreens.home();
     }
-
-    @FXML
-    void returnHomeBtn(ActionEvent event) {
-    	ManageScreens.home();
-    }
-	
 
     //approves a new order - changes status to Approved
     @FXML

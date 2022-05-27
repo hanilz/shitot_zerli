@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="survey.SurveyController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="5.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="survey.SurveyController">
    <children>
       <Label text="Survey">
          <font>
@@ -17,7 +17,7 @@
       </Label>
       <HBox alignment="TOP_CENTER" prefHeight="24.0" prefWidth="600.0" spacing="20.0">
          <children>
-            <Label text="Title:">
+            <Label text="Survey Title:">
                <font>
                   <Font size="24.0" />
                </font>
@@ -29,12 +29,13 @@
             </Label>
          </children>
       </HBox>
-      <ScrollPane prefHeight="529.0" prefWidth="1220.0">
+      <Label text="Please fill the entire survey before submitting, notice that 10 is the highest score and 1 is the lowest" textFill="BLUE" />
+      <ScrollPane prefHeight="553.0" prefWidth="1220.0">
          <content>
             <VBox fx:id="questionVbox" prefHeight="500.0" prefWidth="1200.0" />
          </content>
       </ScrollPane>
-      <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="580.0" spacing="70.0">
+      <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="580.0" spacing="150.0">
          <children>
             <Button fx:id="discardButton" mnemonicParsing="false" onAction="#discardSurveyAnswer" text="Discard And Close" />
             <Button fx:id="submitButton" mnemonicParsing="false" onAction="#saveSurveyAnswer" text="Submit Answer" />

@@ -19,13 +19,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import util.Commands;
 import util.ManageScreens;
 
 public class AnalyzeAnswersController implements Initializable {
-	public static int surveyID;
+	private static int surveyID;
+	private static String surveyName;
 
 	private File savedFile;
 
@@ -88,6 +90,7 @@ public class AnalyzeAnswersController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		surveyTitleLabel.setText(surveyName);
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.GET_SURVEY_ANSWERS);
 		message.put("surveyID", surveyID);
@@ -95,6 +98,12 @@ public class AnalyzeAnswersController implements Initializable {
 
 		@SuppressWarnings("unchecked")
 		ArrayList<QuestionAnswer> questions = (ArrayList<QuestionAnswer>) response;// (ObservableList<Survey>) response;
+		if(questions.isEmpty()) {
+			Label noSurveys = new Label("Sorry, No one answered this survey yet, noting to display.");
+			noSurveys.setFont(new Font(24));
+			answerVbox.getChildren().add(noSurveys);
+			uploadButton.setDisable(true);
+		}
 		for (QuestionAnswer qa : questions) {
 			FXMLLoader loader = new FXMLLoader(QuestionAnswerRowController.class.getResource("QusetionAnswerRow.fxml"));
 			HBox surveyRow;
@@ -110,8 +119,9 @@ public class AnalyzeAnswersController implements Initializable {
 		}
 	}
 
-	public static void setSurvey(int surveyID2) {
+	public static void setSurvey(int surveyID2, String surveyName2) {
 		surveyID = surveyID2;
+		surveyName = surveyName2;
 	}
 	
 }

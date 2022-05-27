@@ -13,8 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ordersView.ViewOrdersController">
    <children>
       <GridPane prefHeight="99.0" prefWidth="980.0">
          <columnConstraints>
@@ -52,14 +51,14 @@
             <VBox alignment="TOP_CENTER">
                <children>
                   <Label text="Order List" />
-                  <ScrollPane prefHeight="476.0" prefWidth="905.0" />
+                  <ScrollPane fx:id="orderListsScrollPane" prefHeight="476.0" prefWidth="905.0" />
                </children>
             </VBox>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
             <VBox alignment="TOP_CENTER">
                <children>
                   <Label text="Order Overview" />
-                  <ScrollPane prefHeight="489.0" prefWidth="556.0" />
+                  <ScrollPane fx:id="orderOverViewScrollPane" prefHeight="489.0" prefWidth="556.0" />
                </children>
             </VBox>
          </children>

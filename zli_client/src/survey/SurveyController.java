@@ -66,6 +66,7 @@ public class SurveyController implements Initializable{
 		Object response = ClientFormController.client.accept(message);
 		System.out.println((String)response);
     	ManageScreens.changeScreenTo(Screens.SURVEY_HOME);
+    	ManageScreens.displayAlert("Survey Saved", "Thank you for filling our survey!\nyour opinion really matters to us!");
     }
 
     
