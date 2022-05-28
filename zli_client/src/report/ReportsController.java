@@ -121,7 +121,9 @@ public class ReportsController implements Initializable {
 		for (Report currentReport : reports) {
 			Report checkReport = new Report(branchComboBox.getValue().getIdBranch(), yearComboBox.getValue(),
 					quraterComboBox.getValue());
-			if (currentReport.equals(checkReport))
+			if (currentReport.equals(checkReport) && !currentReport.getType().equals("income histogram"))
+				reportsFound.add(currentReport);
+			else if(currentReport.equals(checkReport) && currentReport.getType().equals("income histogram") && User.getUserInstance().getType() == UserType.CEO) //if the user is ceo, we will add the income histogram report
 				reportsFound.add(currentReport);
 		}
 		if (reportsFound.size() != 0) {
@@ -187,11 +189,29 @@ public class ReportsController implements Initializable {
 		case "complaints":
 			getComplaintsReportPerBranch(selectedReport);
 			try {
-				ManageScreens.openPopupFXML(ComplaintReportController.class.getResource("ComplainsReport.fxml"),
+				ManageScreens.openPopupFXML(HistogramReportController.class.getResource("HistogramReport.fxml"),
 						"Complaints Report");
 			} catch (Exception e) {}
 			break;
+		case "income histogram":
+			getIncomeHistogramReportPerBranch(selectedReport);
+			try {
+				ManageScreens.openPopupFXML(HistogramReportController.class.getResource("HistogramReport.fxml"),
+						"Income Histogram Report");
+			} catch (Exception e) {}
+			break;
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private void getIncomeHistogramReportPerBranch(Report selectedReport) {
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.GET_INCOME_HISTOGRAM_REPORT);
+		message.put("selected report",
+				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
+		Map<String, Integer> response = (Map<String, Integer>) ClientFormController.client.accept(message);
+		HistogramReportController.setTotalDataPerBranch(response);
+		HistogramReportController.setSelectedReport(selectedReport);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -201,8 +221,8 @@ public class ReportsController implements Initializable {
 		message.put("selected report",
 				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
 		Map<String, Integer> response = (Map<String, Integer>) ClientFormController.client.accept(message);
-		ComplaintReportController.setTotalComplaintsPerBranch(response);
-		ComplaintReportController.setSelectedReport(selectedReport);
+		HistogramReportController.setTotalDataPerBranch(response);
+		HistogramReportController.setSelectedReport(selectedReport);
 	}
 
 	private void addButtonToTableAndEvent() {
