@@ -51,10 +51,8 @@ public class HomeUserTypesController implements Initializable {
 	@FXML
 	private Label userNameLabel;
 
-	private ArrayList<HomeVBox> buttons = new ArrayList<>();
-
 	public void exitHomeScreen(MouseEvent event) {
-		// release the client from the ocsf server + disconnect from the db
+		// release the client from the OCSF server + disconnect from the DB
 		ManageClients.exitClient();
 		// exit window
 		System.exit(0);

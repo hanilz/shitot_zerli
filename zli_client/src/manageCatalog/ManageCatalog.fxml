@@ -17,30 +17,36 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="manageCatalog.ManageCatalogController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="manageCatalog.ManageCatalogController">
    <children>
-      <GridPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="927.0">
+      <GridPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="1261.0">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="189.0" minWidth="9.0" prefWidth="189.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="696.0" minWidth="10.0" prefWidth="614.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="319.0" minWidth="0.0" prefWidth="114.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="189.0" minWidth="9.0" prefWidth="116.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1074.0" minWidth="10.0" prefWidth="1038.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="319.0" minWidth="0.0" prefWidth="98.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="catalogLbl" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="134.0" prefWidth="608.0" text="Manage Catalog" textAlignment="CENTER" GridPane.columnIndex="1">
-               <padding>
-                  <Insets bottom="40.0" left="40.0" />
-               </padding>
-               <font>
-                  <Font size="65.0" />
-               </font>
+            <VBox alignment="CENTER" GridPane.columnIndex="1">
                <GridPane.margin>
-                  <Insets left="55.0" top="35.0" />
+                  <Insets />
                </GridPane.margin>
-            </Label>
-            <ImageView fx:id="homeImage" fitHeight="80.0" fitWidth="124.0" onMousePressed="#goToHomeScreen" pickOnBounds="true" preserveRatio="true">
+               <children>
+                  <Label fx:id="catalogLbl" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="82.0" prefWidth="1041.0" text="Manage Catalog" textAlignment="CENTER">
+                     <font>
+                        <Font size="55.0" />
+                     </font>
+                  </Label>
+                  <Label text="Manage the Zer-Li catalog, press on a product to edit its fields.">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <ImageView fx:id="homeImage" fitHeight="91.0" fitWidth="94.0" onMousePressed="#goToHomeScreen" pickOnBounds="true" preserveRatio="true">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
@@ -53,7 +59,7 @@
             </ImageView>
          </children>
       </GridPane>
-      <HBox prefHeight="457.0" prefWidth="940.0">
+      <HBox prefHeight="541.0" prefWidth="1220.0">
          <children>
             <GridPane prefHeight="377.0" prefWidth="211.0">
               <columnConstraints>
@@ -128,12 +134,12 @@
                   </VBox>
                </children>
             </GridPane>
-            <ScrollPane fx:id="scrollCatalogPane" maxWidth="-Infinity" pannable="true" prefHeight="453.0" prefWidth="746.0" style="-fx-border-color: transparent;">
+            <ScrollPane fx:id="scrollCatalogPane" maxWidth="-Infinity" pannable="true" prefHeight="457.0" prefWidth="996.0" style="-fx-border-color: transparent;">
                <padding>
                   <Insets bottom="15.0" />
                </padding>
                <content>
-                  <GridPane fx:id="catalogGrid" alignment="CENTER" prefHeight="438.0" prefWidth="726.0">
+                  <GridPane fx:id="catalogGrid" alignment="CENTER" prefHeight="532.0" prefWidth="982.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

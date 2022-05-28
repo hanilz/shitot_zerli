@@ -18,7 +18,7 @@ public class AnswerRowController {
 
 	@FXML
 	void viewAnswers(ActionEvent event) {
-		AnalyzeAnswersController.setSurvey(surveyID);
+		AnalyzeAnswersController.setSurvey(surveyID,surveyName);
 		ManageScreens.changeScreenTo(Screens.VIEW_ANSWERS_FOR_SURVEY);
 	}
 

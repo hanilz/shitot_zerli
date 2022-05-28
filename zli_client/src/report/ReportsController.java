@@ -2,6 +2,7 @@ package report;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import client.ClientFormController;
@@ -20,6 +21,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import util.Commands;
@@ -46,8 +48,8 @@ public class ReportsController implements Initializable {
 	@FXML
 	private TableColumn<Report, String> dateCol;
 
-	@FXML
-	private Button searchButton;
+    @FXML
+    private ImageView homeImage;
 
 	@FXML
 	private ComboBox<String> yearComboBox;
@@ -108,10 +110,10 @@ public class ReportsController implements Initializable {
 		quraterComboBox.getItems().addAll(1, 2, 3, 4);
 	}
 
-	@FXML
-	void changeToHomeScreen(MouseEvent event) {
-		ManageScreens.home();
-	}
+    @FXML
+    void returnHome(MouseEvent event) {
+    	ManageScreens.home();
+    }
 
 	@FXML
 	void searchReportsButton(MouseEvent event) {
@@ -119,7 +121,9 @@ public class ReportsController implements Initializable {
 		for (Report currentReport : reports) {
 			Report checkReport = new Report(branchComboBox.getValue().getIdBranch(), yearComboBox.getValue(),
 					quraterComboBox.getValue());
-			if (currentReport.equals(checkReport))
+			if (currentReport.equals(checkReport) && !currentReport.getType().equals("income histogram"))
+				reportsFound.add(currentReport);
+			else if(currentReport.equals(checkReport) && currentReport.getType().equals("income histogram") && User.getUserInstance().getType() == UserType.CEO) //if the user is ceo, we will add the income histogram report
 				reportsFound.add(currentReport);
 		}
 		if (reportsFound.size() != 0) {
@@ -131,43 +135,94 @@ public class ReportsController implements Initializable {
 		}
 	}
 
-	private void getIncomeReport() {
+	@SuppressWarnings("unchecked")
+	private void getIncomeReport(Report selectedReport) {
 		HashMap<String, Object> message = new HashMap<>();
-		message.put("command", Commands.GET_INCOME_REPORT);
-		reports = (ObservableList<Report>) ClientFormController.client.accept(message);
-		/*
-		 * SELECT itemType, SUM(quantity*itemPrice) as totalSum FROM items JOIN
-		 * order_items ON items.itemId=order_items.idItem JOIN orders ON orders.idOrder
-		 * = order_items.idOrder AND orders.idBranch = 1 GROUP BY itemType;
-		 */
-		/*
-		 * SELECT productType, SUM(quantity*productPrice) as totalSum FROM products JOIN
-		 * order_products ON products.productId=order_products.idProduct JOIN orders ON
-		 * orders.idOrder = order_products.idOrder AND orders.idBranch = 1 GROUP BY
-		 * productType;
-		 */
+		message.put("command", Commands.GET_ITEMS_INCOME_REPORT);
+		message.put("selected report",
+				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
+		Map<String, Integer> response = (Map<String, Integer>) ClientFormController.client.accept(message);
+		PopupReportController.setItemsLabels(response);
+
+		message.put("command", Commands.GET_PRODUCTS_INCOME_REPORT);
+		message.put("selected report",
+				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
+		response = (Map<String, Integer>) ClientFormController.client.accept(message);
+		PopupReportController.setProductsLabels(response);
+		
+		PopupReportController.setSelectedReport(selectedReport);
 	}
 
-	private void getOrdersReport() {
+	@SuppressWarnings("unchecked")
+	private void getOrdersReport(Report selectedReport) {
 		HashMap<String, Object> message = new HashMap<>();
-		message.put("command", Commands.GET_ORDERS_REPORT);
-		reports = (ObservableList<Report>) ClientFormController.client.accept(message);
-		/*
-		 * SELECT itemType, SUM(quantity) as totalQuantity FROM items JOIN order_items
-		 * ON items.itemId=order_items.idItem JOIN orders ON orders.idOrder =
-		 * order_items.idOrder AND orders.idBranch = 1 GROUP BY itemType;
-		 */
-		/*
-		 * SELECT productType, SUM(quantity) as totalSum FROM products JOIN
-		 * order_products ON products.productId=order_products.idProduct JOIN orders ON
-		 * orders.idOrder = order_products.idOrder AND orders.idBranch = 1 GROUP BY
-		 * productType;
-		 */
-
+		message.put("command", Commands.GET_ITEMS_ORDERS_REPORT);
+		message.put("selected report",
+				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
+		Map<String, Integer> response = (Map<String, Integer>) ClientFormController.client.accept(message);
+		PopupReportController.setItemsLabels(response);
+		
+		message.put("command", Commands.GET_PRODUCTS_ORDERS_REPORT);
+		message.put("selected report",
+				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
+		response = (Map<String, Integer>) ClientFormController.client.accept(message);
+		PopupReportController.setProductsLabels(response);
+		
+		PopupReportController.setSelectedReport(selectedReport);
 	}
 
-	private void openSelectedReport() {
+	private void openSelectedReport(Report selectedReport) {
+		switch (selectedReport.getType()) {
+		case "income":
+			getIncomeReport(selectedReport);
+			try {
+				ManageScreens.openPopupFXML(PopupReportController.class.getResource("PopupReport.fxml"),
+						"Income Report");
+			} catch (Exception e) {}
+			break;
+		case "orders":
+			getOrdersReport(selectedReport);
+			try {
+				ManageScreens.openPopupFXML(PopupReportController.class.getResource("PopupReport.fxml"),
+						"Orders Report");
+			} catch (Exception e) {}
+		case "complaints":
+			getComplaintsReportPerBranch(selectedReport);
+			try {
+				ManageScreens.openPopupFXML(HistogramReportController.class.getResource("HistogramReport.fxml"),
+						"Complaints Report");
+			} catch (Exception e) {}
+			break;
+		case "income histogram":
+			getIncomeHistogramReportPerBranch(selectedReport);
+			try {
+				ManageScreens.openPopupFXML(HistogramReportController.class.getResource("HistogramReport.fxml"),
+						"Income Histogram Report");
+			} catch (Exception e) {}
+			break;
+		}
+	}
 
+	@SuppressWarnings("unchecked")
+	private void getIncomeHistogramReportPerBranch(Report selectedReport) {
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.GET_INCOME_HISTOGRAM_REPORT);
+		message.put("selected report",
+				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
+		Map<String, Integer> response = (Map<String, Integer>) ClientFormController.client.accept(message);
+		HistogramReportController.setTotalDataPerBranch(response);
+		HistogramReportController.setSelectedReport(selectedReport);
+	}
+
+	@SuppressWarnings("unchecked")
+	private void getComplaintsReportPerBranch(Report selectedReport) {
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.GET_COMPLAINT_REPORT);
+		message.put("selected report",
+				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
+		Map<String, Integer> response = (Map<String, Integer>) ClientFormController.client.accept(message);
+		HistogramReportController.setTotalDataPerBranch(response);
+		HistogramReportController.setSelectedReport(selectedReport);
 	}
 
 	private void addButtonToTableAndEvent() {
@@ -181,6 +236,9 @@ public class ReportsController implements Initializable {
 						btn.setOnAction((ActionEvent event) -> {
 							int index = getTableRow().getIndex();
 							Report selectedReport = getTableView().getItems().get(index);
+							selectedReport.setBranch(branchComboBox.getValue());
+							selectedReport.setDateRange(setDateRangeForQuery(selectedReport));
+							openSelectedReport(selectedReport);
 						});
 					}
 
@@ -201,9 +259,32 @@ public class ReportsController implements Initializable {
 		reportsTable.getColumns().add(viewCol);
 
 	}
-	
-	private enum ReportType {
-		INCOME_REPORT,ORDERS_REPORT;
+
+	private String setDateRangeForQuery(Report selectedReport) {
+		StringBuilder sb = new StringBuilder(selectedReport.getDateToString());
+		String dateRange = selectedReport.getDateToString().charAt(5) + ""
+				+ selectedReport.getDateToString().charAt(6);
+		//int monthToInt = Integer.parseInt(selectedMonth) - 1;
+		//String dateRange = monthToInt + "";
+		switch (selectedReport.getQuarter()) {
+		case 1:
+			sb.setCharAt(6, dateRange.charAt(1));
+			sb.append(" 00:00:00");
+			return "'2022-01-01 00:00:00' and '" + sb.toString()+"'";
+		case 2:
+			sb.setCharAt(6, dateRange.charAt(1));
+			sb.append(" 00:00:00");
+			return "'2022-04-01 00:00:00' and '" + sb.toString()+"'";
+		case 3:
+			sb.setCharAt(6, dateRange.charAt(1));
+			sb.append(" 00:00:00");
+			return "'2022-07-01 00:00:00' and '" + sb.toString()+"'";
+		case 4:
+			sb.setCharAt(5, dateRange.charAt(0));
+			sb.setCharAt(6, dateRange.charAt(1));
+			return "'2022-10-01 00:00:00' and '" + sb.toString()+"'";
+		}
+		return "";
 	}
 
 }

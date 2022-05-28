@@ -1,5 +1,12 @@
 package util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import entities.AccountPayment;
 import entities.Branch;
@@ -25,7 +33,6 @@ import entities.Report;
 import entities.SurveyQuestion;
 import entities.UserDetails;
 import surveyAnalysis.QuestionAnswer;
-
 
 /**
  * AnaylzeCommand - will analyze the command that given from the server
@@ -324,7 +331,7 @@ public class AnalayzeCommand {
 				idAccount = rs.getInt(1);
 			return idAccount;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			return -1;
 		}
 	}
@@ -934,8 +941,7 @@ public class AnalayzeCommand {
 			return false;
 		}
 	}
-	
-	
+
 	public static ArrayList<QuestionAnswer> getSurveyAnswers(int idSurvey) {
 		ArrayList<QuestionAnswer> questions = new ArrayList<>();
 		Connection conn = DataBaseController.getConn();
@@ -946,18 +952,17 @@ public class AnalayzeCommand {
 			preparedStmt.setInt(1, idSurvey);
 			ResultSet rs = preparedStmt.executeQuery();
 			int currentQuestion;
-			while(rs.next()) {
+			while (rs.next()) {
 				currentQuestion = rs.getInt(1);
 				String question = rs.getString(2);
-				int[] answers= new int[10];
+				int[] answers = new int[10];
 				do {
-					if(rs.getInt(1)==currentQuestion) {
-						answers[rs.getInt(3)-1]=rs.getInt(4);
-					}
-					else {
+					if (rs.getInt(1) == currentQuestion) {
+						answers[rs.getInt(3) - 1] = rs.getInt(4);
+					} else {
 						break;
 					}
-				}while(rs.next());
+				} while (rs.next());
 				questions.add(new QuestionAnswer(currentQuestion, question, answers));
 				rs.previous();
 			}
@@ -974,7 +979,8 @@ public class AnalayzeCommand {
 			Statement stmt = DataBaseController.getConn().createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT *, QUARTER(date) FROM reports;");
 			while (rs.next()) {
-				Report reportResult = new Report(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getInt(4), rs.getInt(5));
+				Report reportResult = new Report(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getInt(4),
+						rs.getInt(5));
 				reports.add(reportResult);
 			}
 		} catch (SQLException e) {
@@ -983,5 +989,235 @@ public class AnalayzeCommand {
 		return reports;
 	}
 
+	// might not work correctly - probably doesn't
+	public static boolean uploadFileToDB(File file) {
+		Connection conn = DataBaseController.getConn();
+		byte[] fileBytes = new byte[(int) file.length()];
+		PreparedStatement psmnt;
+		try {
+			FileInputStream io = new FileInputStream(file);
+			Blob fileBlob = conn.createBlob();
+			fileBlob.setBytes(1, fileBytes);
+			psmnt = conn.prepareStatement("INSERT INTO blob_file_table (idblobFile, blobFile) VALUES  (?,?)");
+			psmnt.setString(1, file.getName());
+			// psmnt.setBlob(2, fileBlob);
+			psmnt.setBinaryStream(2, (InputStream) io, (int) file.length());
+			if (psmnt.executeUpdate() == 0)
+				return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
+	}
 
+	// public static ArrayList<File> retriveFileFromDB() {
+	// as of right now this is just a big mess, the file downloads but its only 1 kb
+	// and it wont open because it was corrupted and im not sure if
+	// it happened in the encoding or decoding process
+	public static File retriveFileFromDB() {
+//		ArrayList<File> files = new ArrayList<>();
+//		try {
+//			Statement stmt = DataBaseController.getConn().createStatement();
+//			ResultSet rs = stmt.executeQuery("SELECT * FROM blob_file_table;");
+//			while (rs.next()) {
+//				Blob blobFile = rs.getBlob(2);
+//				byte[] byteFile = blobFile.getBytes(blobFile.length(),1);
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return files;
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		InputStream input = null;
+		FileOutputStream output = null;
+		ResultSet rs = null;
+		String fileName = "";
+		File ret = null;
+		try {
+
+			Class.forName("com.mysql.jdbc.Driver");
+			System.out.println("Connecting...");
+
+			conn = DataBaseController.getConn();
+			System.out.println("Connection successful..\nNow creating query...");
+
+			stmt = conn.prepareStatement("SELECT * FROM blob_file_table;");
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				fileName = rs.getString(1);
+				ret = new File("D:\\" + fileName);
+				output = new FileOutputStream(ret);
+				System.out.println("Getting file please be patient..");
+
+				input = rs.getBinaryStream("idblobFile"); // get it from col name
+				int r = 0;
+
+				/*
+				 * there I've tried with array but nothing changed..Like this : byte[] buffer =
+				 * new byte[2048]; int r = 0; while((r = input.read(buffer)) != -1){
+				 * out.write(buffer,0,r);}
+				 */
+
+				while ((r = input.read()) != -1) {
+					output.write(r);
+				}
+			}
+			System.out.println("File writing complete !");
+
+		} catch (ClassNotFoundException e) {
+			System.err.println("Class not found!");
+			e.printStackTrace();
+		} catch (SQLException e) {
+			System.err.println("Connection failed!");
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			System.err.println("File not found!");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.err.println("File writing error..!");
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					input.close();
+					output.flush();
+					output.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+
+		}
+		// return new File("D:\\" + fileName);
+		return ret;
+	}
+
+	public static Map<String, Integer> getItemsIncomeReport(Report report) {
+		Map<String, Integer> incomeLabels = new HashMap<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt
+					.executeQuery("SELECT itemType, SUM(quantity*itemPrice) as totalSum FROM items JOIN "
+							+ " order_items ON items.itemId=order_items.idItem JOIN orders ON orders.idOrder"
+							+ " = order_items.idOrder AND orders.idBranch = " + report.getIdBranch()
+							+ " and orders.date between " + report.getDateRange() + " GROUP BY itemType;");
+			while (rs.next()) {
+				String itemType = rs.getString(1);
+				int totalSum = rs.getInt(2);
+				incomeLabels.put(itemType, totalSum);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return incomeLabels;
+	}
+
+	public static Map<String, Integer> getProductsIncomeReport(Report report) {
+		Map<String, Integer> incomeLabels = new HashMap<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt
+					.executeQuery("SELECT productType, SUM(quantity*productPrice) as totalSum FROM products JOIN"
+							+ " order_products ON products.productId=order_products.idProduct JOIN orders ON"
+							+ " orders.idOrder = order_products.idOrder AND orders.idBranch = " + report.getIdBranch()
+							+ " and orders.date between " + report.getDateRange() + " GROUP BY " + " productType;");
+			while (rs.next()) {
+				String productType = rs.getString(1);
+				int totalSum = rs.getInt(2);
+				incomeLabels.put(productType, totalSum);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return incomeLabels;
+	}
+
+	public static Map<String, Integer> getItemsOrdersReport(Report report) {
+		Map<String, Integer> incomeLabels = new HashMap<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt.executeQuery(
+					"SELECT itemType, SUM(quantity) as totalQuantity FROM items JOIN order_items ON items.itemId=order_items.idItem JOIN orders ON orders.idOrder = order_items.idOrder AND orders.idBranch = "
+							+ report.getIdBranch() + " and orders.date between " + report.getDateRange()
+							+ " GROUP BY itemType;");
+			while (rs.next()) {
+				String productType = rs.getString(1);
+				int totalSum = rs.getInt(2);
+				incomeLabels.put(productType, totalSum);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return incomeLabels;
+	}
+
+	public static Map<String, Integer> getProductsOrdersReport(Report report) {
+		Map<String, Integer> incomeLabels = new HashMap<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt.executeQuery(
+					"SELECT productType, SUM(quantity) as totalQuantity FROM products JOIN order_products ON products.productId=order_products.idProduct JOIN orders ON orders.idOrder = order_products.idOrder AND orders.idBranch = "
+							+ report.getIdBranch() + " and orders.date between " + report.getDateRange()
+							+ " GROUP BY productType;");
+			while (rs.next()) {
+				String productType = rs.getString(1);
+				int totalSum = rs.getInt(2);
+				incomeLabels.put(productType, totalSum);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return incomeLabels;
+	}
+
+	public static Map<String, Integer> getComplaintsReport(Report report) {
+		Map<String, Integer> complaintsData = new HashMap<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt.executeQuery(
+					"SELECT MONTHNAME(complaints.date) as complaint_month, count(complaints.idComplaint) as number_of_complaints\r\n"
+					+ "FROM complaints\r\n"
+					+ "JOIN orders ON complaints.orderId = orders.idOrder and orders.idBranch = "+report.getIdBranch()+"\r\n"
+					+ "WHERE complaints.date between "+report.getDateRange()+"\r\n"
+					+ "GROUP BY complaint_month ORDER BY complaints.date;");
+			while (rs.next()) {
+				String month = rs.getString(1);
+				int totalComplaintCountPerMonth = rs.getInt(2);
+				complaintsData.put(month, totalComplaintCountPerMonth);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return complaintsData;
+	}
+
+	public static Map<String, Integer> getIncomeHistogramReport(Report report) {
+		Map<String, Integer> incomeData = new HashMap<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+
+			ResultSet rs = selectStmt.executeQuery(
+					"SELECT MONTHNAME(orders.date) as orders_month, SUM(orders.price) as totalInMonth\r\n"
+					+ "FROM orders\r\n"
+					+ "WHERE orders.date between "+report.getDateRange()+" and orders.idBranch = "+report.getIdBranch()+"\r\n"
+					+ "GROUP BY orders_month\r\n"
+					+ "ORDER BY orders.date;");
+			while (rs.next()) {
+				String month = rs.getString(1);
+				int totalIncomePerMonth = rs.getInt(2);
+				incomeData.put(month, totalIncomePerMonth);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return incomeData;
+	}
 }

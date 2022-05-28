@@ -16,6 +16,8 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import util.Commands;
 import util.ManageScreens;
@@ -25,9 +27,9 @@ public class ManageUsersController implements Initializable {
 
     @FXML
     private Button backBtn;
-
-//	@FXML
-//	private TableColumn<ManageUsers, Integer> idUser;
+    
+    @FXML
+    private ImageView homeImage;
 
 	@FXML
 	private TableColumn<ManageUsers, String> firstName;
@@ -51,6 +53,11 @@ public class ManageUsersController implements Initializable {
 
     @FXML
     void changeScreenToMain(ActionEvent event) {
+    	ManageScreens.home();
+    }
+	
+    @FXML
+    void returnHome(MouseEvent event) {
     	ManageScreens.home();
     }
 
@@ -121,4 +128,5 @@ public class ManageUsersController implements Initializable {
 		colBtn.setCellFactory(cellFactory);
 		userTable.getColumns().add(colBtn);
 	}
+
 }

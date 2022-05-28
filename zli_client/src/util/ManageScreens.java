@@ -10,6 +10,7 @@ import client.ClientScreen;
 import customProduct.CustomProductBuilderController;
 import customerComplaint.ComplaintViewController;
 import customerComplaint.CustomerComplaintHomeController;
+import deliveryCoordination.DeliveryCoordinatorController;
 import entities.User;
 import home.HomeGuestController;
 import home.HomeUserTypesController;
@@ -40,6 +41,7 @@ import report.ReportsController;
 import survey.SurveyHomeController;
 import surveyAnalysis.AnalyzeAnswersController;
 import surveyAnalysis.SurveyAnswersHomeController;
+import surveyAnalysisView.SurveyAnalysisViewHomeController;
 
 public class ManageScreens {
 	private static Stage stage;
@@ -93,6 +95,7 @@ public class ManageScreens {
 		Alert a = new Alert(AlertType.NONE,title,ButtonType.CLOSE);
 		a.setTitle(title);
 		a.setContentText(text);
+		setIconApplication((Stage)a.getDialogPane().getScene().getWindow());
 		a.show();
 	}
 
@@ -108,6 +111,7 @@ public class ManageScreens {
 		Scene scene = new Scene(root);
 		popupStage = new Stage();
 		addPopup(popupStage);
+		setIconApplication(popupStage);
 		Platform.runLater(new Runnable() { // this thread will help us change between scenes and avoid exceptions
 			@Override
 			public void run() {
@@ -125,7 +129,7 @@ public class ManageScreens {
 		previousScreen = lastScreen;
 	}
 
-	private static void setIconApplication() {
+	private static void setIconApplication(Stage stage) {
 		stage.getIcons().add(new Image("/resources/icon.png"));
 	}
 
@@ -145,7 +149,7 @@ public class ManageScreens {
 
 	public static void setStage(Stage stage) {
 		ManageScreens.stage = stage;
-		setIconApplication();
+		setIconApplication(stage);
 	}
 
 	public static Stage getStage() {
@@ -259,6 +263,14 @@ public class ManageScreens {
 				ManageScreens.changeScene(ReportsController.class.getResource("reportsScreen.fxml"),
 						"View Reports");
 				break;
+			case VIEW_SURVEY_ANALYSIS_RESULTS:
+				ManageScreens.changeScene(SurveyAnalysisViewHomeController.class.getResource("SurveyReportsHomeScreen.fxml"),
+						"View Reports");
+				break;
+			case DELIVER_ORDERS:
+				ManageScreens.changeScene(DeliveryCoordinatorController.class.getResource("DeliveryCoordinatorScreen.fxml"),
+						"Delivery Coordinator");
+				break;
 			default:
 				break;
 			}
@@ -337,6 +349,10 @@ public class ManageScreens {
 			return "Analyze Surveys";
 		case VIEW_REPORTS:
 			return "View Reports";
+		case VIEW_SURVEY_ANALYSIS_RESULTS:
+			return "Survey Results";
+		case DELIVER_ORDERS:
+			return "Deliver Orders";
 		}
 		return null;
 	}
@@ -393,6 +409,10 @@ public class ManageScreens {
 			return "resources/home/survey.png";
 		case VIEW_REPORTS:
 			return "resources/home/reports.png";
+		case VIEW_SURVEY_ANALYSIS_RESULTS:
+			return "resources/home/survey_results.png";
+		case DELIVER_ORDERS:
+			return "resources/home/delivery.png";
 		default:
 			return "";// no such user//
 		}

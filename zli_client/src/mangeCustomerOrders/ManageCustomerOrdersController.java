@@ -14,10 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -49,9 +46,6 @@ public class ManageCustomerOrdersController implements Initializable{
 	
     @FXML
     private TableView<ManagerOrderView> cancelOrdersTable;
-
-    @FXML
-    private Button closeButton;
 
     @FXML
     private Label errorLabel;
@@ -131,12 +125,6 @@ public class ManageCustomerOrdersController implements Initializable{
     void returnHome(MouseEvent event) {
     	ManageScreens.home();
     }
-
-    @FXML
-    void returnHomeBtn(ActionEvent event) {
-    	ManageScreens.home();
-    }
-	
 
     //approves a new order - changes status to Approved
     @FXML

@@ -1,8 +1,10 @@
 package util;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import entities.AccountPayment;
 import entities.Branch;
@@ -254,6 +256,38 @@ public class ServerMessageController {
 		case GET_SURVEY_ANSWERS:
 			ArrayList<QuestionAnswer> questions = AnalayzeCommand.getSurveyAnswers((Integer)message.get("surveyID"));
 			message.put("response", questions);
+			break;
+		case UPLOAD_FILE:
+			boolean uploaded = AnalayzeCommand.uploadFileToDB((File)message.get("FILE"));
+			message.put("response", uploaded);
+			break;
+		case FETCH_FILES:
+			File file = AnalayzeCommand.retriveFileFromDB();//(File)message.get("FILE")
+			message.put("response", file);
+			break;
+		case GET_ITEMS_INCOME_REPORT:
+			Map<String,Integer> itemsIncomeLabels = AnalayzeCommand.getItemsIncomeReport((Report)message.get("selected report"));
+			message.put("response", itemsIncomeLabels);
+			break;
+		case GET_PRODUCTS_INCOME_REPORT:
+			Map<String,Integer> productsIncomeLabels = AnalayzeCommand.getProductsIncomeReport((Report)message.get("selected report"));
+			message.put("response", productsIncomeLabels);
+			break;
+		case GET_ITEMS_ORDERS_REPORT:
+			Map<String,Integer> itemsOrdersLabels = AnalayzeCommand.getItemsOrdersReport((Report)message.get("selected report"));
+			message.put("response", itemsOrdersLabels);
+			break;
+		case GET_PRODUCTS_ORDERS_REPORT:
+			Map<String,Integer> productsOrdersLabels = AnalayzeCommand.getProductsOrdersReport((Report)message.get("selected report"));
+			message.put("response", productsOrdersLabels);
+			break;
+		case GET_COMPLAINT_REPORT:
+			Map<String,Integer> complaintsReportAxis = AnalayzeCommand.getComplaintsReport((Report)message.get("selected report"));
+			message.put("response", complaintsReportAxis);
+			break;
+		case GET_INCOME_HISTOGRAM_REPORT:
+			Map<String,Integer> incomeHistogramReportAxis = AnalayzeCommand.getIncomeHistogramReport((Report)message.get("selected report"));
+			message.put("response", incomeHistogramReportAxis);
 			break;
 		default:
 			break;
