@@ -184,8 +184,25 @@ public class ReportsController implements Initializable {
 				ManageScreens.openPopupFXML(PopupReportController.class.getResource("PopupReport.fxml"),
 						"Orders Report");
 			} catch (Exception e) {}
+		case "complaints":
+			getComplaintsReportPerBranch(selectedReport);
+			try {
+				ManageScreens.openPopupFXML(ComplaintReportController.class.getResource("ComplainsReport.fxml"),
+						"Complaints Report");
+			} catch (Exception e) {}
 			break;
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private void getComplaintsReportPerBranch(Report selectedReport) {
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.GET_COMPLAINT_REPORT);
+		message.put("selected report",
+				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
+		Map<String, Integer> response = (Map<String, Integer>) ClientFormController.client.accept(message);
+		ComplaintReportController.setTotalComplaintsPerBranch(response);
+		ComplaintReportController.setSelectedReport(selectedReport);
 	}
 
 	private void addButtonToTableAndEvent() {

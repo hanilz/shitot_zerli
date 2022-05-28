@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.AreaChart?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -16,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="938.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="938.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.ComplaintReportController">
    <children>
       <GridPane>
         <columnConstraints>
@@ -64,13 +63,13 @@
                      </font>
                   </Label>
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <Label text="Branch Name">
+                  <Label fx:id="branchLabel" text="Branch Name">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <Label text="Q1">
+                  <Label fx:id="quraterLabel" text="Q1">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -85,33 +84,18 @@
             <Insets />
          </VBox.margin>
          <content>
-            <GridPane prefHeight="349.0" prefWidth="862.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+            <VBox prefHeight="349.0" prefWidth="871.0">
                <children>
-                  <AreaChart prefHeight="348.0" prefWidth="870.0" title="Number of Complaints by Time">
+                  <BarChart fx:id="complaintsChart">
                     <xAxis>
-                      <CategoryAxis label="Time" side="BOTTOM" />
+                      <CategoryAxis fx:id="numberOfComplaintsAxis" label="Months" side="BOTTOM" />
                     </xAxis>
                     <yAxis>
-                      <NumberAxis label="Complaints" side="LEFT" />
-                    </yAxis>
-                  </AreaChart>
-                  <BarChart prefWidth="424.0" title="Average Survey Answers by Time" GridPane.columnIndex="1">
-                    <xAxis>
-                      <CategoryAxis label="Time" side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis label="Answers" side="LEFT" upperBound="10.0" />
+                      <NumberAxis fx:id="monthsAxis" label="Number of complaints" side="LEFT" />
                     </yAxis>
                   </BarChart>
                </children>
-            </GridPane>
+            </VBox>
          </content>
       </ScrollPane>
       <VBox prefHeight="348.0" prefWidth="858.0" />

@@ -1176,4 +1176,25 @@ public class AnalayzeCommand {
 		}
 		return incomeLabels;
 	}
+
+	public static Map<String, Integer> getComplaintsReport(Report report) {
+		Map<String, Integer> complaintsData = new HashMap<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt.executeQuery(
+					"SELECT MONTHNAME(complaints.date) as complaint_month, count(complaints.idComplaint) as number_of_complaints\r\n"
+					+ "FROM complaints\r\n"
+					+ "JOIN orders ON complaints.orderId = orders.idOrder and orders.idBranch = "+report.getIdBranch()+"\r\n"
+					+ "WHERE complaints.date between "+report.getDateRange()+"\r\n"
+					+ "GROUP BY complaint_month ORDER BY complaints.date;");
+			while (rs.next()) {
+				String month = rs.getString(1);
+				int totalComplaintCountPerMonth = rs.getInt(2);
+				complaintsData.put(month, totalComplaintCountPerMonth);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return complaintsData;
+	}
 }

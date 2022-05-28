@@ -110,6 +110,7 @@ public class ManageScreens {
 		Scene scene = new Scene(root);
 		popupStage = new Stage();
 		addPopup(popupStage);
+		setIconApplication(popupStage);
 		Platform.runLater(new Runnable() { // this thread will help us change between scenes and avoid exceptions
 			@Override
 			public void run() {
@@ -127,7 +128,7 @@ public class ManageScreens {
 		previousScreen = lastScreen;
 	}
 
-	private static void setIconApplication() {
+	private static void setIconApplication(Stage stage) {
 		stage.getIcons().add(new Image("/resources/icon.png"));
 	}
 
@@ -147,7 +148,7 @@ public class ManageScreens {
 
 	public static void setStage(Stage stage) {
 		ManageScreens.stage = stage;
-		setIconApplication();
+		setIconApplication(stage);
 	}
 
 	public static Stage getStage() {
