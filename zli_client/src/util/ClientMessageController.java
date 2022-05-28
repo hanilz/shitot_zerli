@@ -91,6 +91,9 @@ public class ClientMessageController {
 		case GET_PRODUCTS_ORDERS_REPORT:
 			returnServerMapRespond(new HashMap<String,Integer>());
 			break;
+		case GET_COMPLAINT_REPORT:
+			returnServerMapRespond(new HashMap<String,Integer>());
+			break;
 		default:
 			returnServerRespond();
 			break;

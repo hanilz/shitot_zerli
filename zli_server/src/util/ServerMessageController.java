@@ -281,6 +281,10 @@ public class ServerMessageController {
 			Map<String,Integer> productsOrdersLabels = AnalayzeCommand.getProductsOrdersReport((Report)message.get("selected report"));
 			message.put("response", productsOrdersLabels);
 			break;
+		case GET_COMPLAINT_REPORT:
+			Map<String,Integer> complaintsReportAxis = AnalayzeCommand.getComplaintsReport((Report)message.get("selected report"));
+			message.put("response", complaintsReportAxis);
+			break;
 		default:
 			break;
 		}
