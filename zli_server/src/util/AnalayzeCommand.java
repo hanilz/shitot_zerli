@@ -1219,4 +1219,40 @@ public class AnalayzeCommand {
 		}
 		return incomeData;
 	}
+
+	public static int getCustomIncomeReport(Report report) {
+		int totalSum = 0;
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt
+					.executeQuery("SELECT SUM(order_custom_products.quantity*custom_products.price) as totalSum\r\n"
+							+ "FROM custom_products\r\n"
+							+ "JOIN order_custom_products ON custom_products.id=order_custom_products.idCustomProduct\r\n"
+							+ "JOIN orders ON orders.idOrder = order_custom_products.idOrder and orders.idBranch = "+report.getIdBranch()+" and orders.date between "+report.getDateRange()+" GROUP BY orders.idBranch;");
+			while (rs.next()) {
+				totalSum = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalSum;
+	}
+	
+	public static int getCustomOrdersReport(Report report) {
+		int totalQuantity = 0;
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt
+					.executeQuery("SELECT SUM(order_custom_products.quantity) as totalQuantity\r\n"
+							+ "FROM custom_products\r\n"
+							+ "JOIN order_custom_products ON custom_products.id=order_custom_products.idCustomProduct\r\n"
+							+ "JOIN orders ON orders.idOrder = order_custom_products.idOrder and orders.idBranch = "+report.getIdBranch()+" and orders.date between "+report.getDateRange()+" GROUP BY orders.idBranch;");
+			while (rs.next()) {
+				totalQuantity = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalQuantity;
+	}
 }

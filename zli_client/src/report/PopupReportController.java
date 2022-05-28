@@ -15,55 +15,66 @@ import javafx.scene.layout.VBox;
 public class PopupReportController implements Initializable {
 
 	@FXML
-	private Label branchLabel;
+    private Label branchLabel;
 
-	@FXML
-	private VBox itemTypeVBox;
+    @FXML
+    private VBox itemTypeVBox;
 
-	@FXML
-	private HBox itemsHBox;
+    @FXML
+    private HBox itemsHBox;
 
-	@FXML
-	private VBox productTypeVBox;
+    @FXML
+    private VBox productTypeVBox;
 
-	@FXML
-	private HBox productsHBox;
+    @FXML
+    private HBox productsHBox;
 
-	@FXML
-	private Label quraterLabel;
+    @FXML
+    private Label quraterLabel;
 
-	@FXML
-	private Label reportTypeItemsLabel;
+    @FXML
+    private Label reportTypeItemsLabel;
 
-	@FXML
-	private Label reportTypeLabel;
+    @FXML
+    private Label reportTypeLabel;
 
-	@FXML
-	private Label reportTypeProductsLabel;
+    @FXML
+    private Label reportTypeProductsLabel;
 
-	@FXML
-	private Label totalItemsLabel;
+    @FXML
+    private Label totalCustomLabel;
 
-	@FXML
-	private VBox totalItemsVBox;
+    @FXML
+    private Label totalItemsLabel;
 
-	@FXML
-	private Label totalProductsLabel;
+    @FXML
+    private VBox totalItemsVBox;
 
-	@FXML
-	private VBox totalProductsVBox;
+    @FXML
+    private Label totalProductsLabel;
 
-	@FXML
-	private Label totalReportTypeItemsLabel;
+    @FXML
+    private VBox totalProductsVBox;
 
-	@FXML
-	private Label totalReportTypeProducts;
+    @FXML
+    private Label totalReportTpeCustomLabel;
+
+    @FXML
+    private HBox totalReportTypeCustom;
+
+    @FXML
+    private Label totalReportTypeItemsLabel;
+
+    @FXML
+    private Label totalReportTypeProductsLabel;
 
 	private static Map<String, Integer> itemsLabels = new HashMap<>();
 
 	private static Map<String, Integer> productsLabels = new HashMap<>();
 
 	private static Report selectedReport;
+	
+	private static Integer totalCustom;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -72,15 +83,17 @@ public class PopupReportController implements Initializable {
 			reportTypeLabel.setText("Income Report");
 			reportTypeItemsLabel.setText("Income of items per item type:");
 			reportTypeProductsLabel.setText("Income of products per product type:");
-			totalReportTypeProducts.setText("Total income of products:");
+			totalReportTypeProductsLabel.setText("Total income of products:");
 			totalReportTypeItemsLabel.setText("Total income of items:");
+			totalReportTpeCustomLabel.setText("Total income of custom products:");
 			break;
 		case "orders":
 			reportTypeLabel.setText("Orders Report");
 			reportTypeItemsLabel.setText("Quantity of items per item type in orders:");
 			reportTypeProductsLabel.setText("Quantity of products per product type in orders:");
-			totalReportTypeProducts.setText("Total quantity of products per order:");
+			totalReportTypeProductsLabel.setText("Total quantity of products per order:");
 			totalReportTypeItemsLabel.setText("Total quantity of items per order:");
+			totalReportTpeCustomLabel.setText("Total quantity. of custom products:");
 			break;
 		}
 		
@@ -122,6 +135,8 @@ public class PopupReportController implements Initializable {
 		totalItemsLabel.setText(totalProducts + "");
 		branchLabel.setText(selectedReport.getBranch().toString());
 		quraterLabel.setText("Q" + selectedReport.getQuarter() + "");
+		totalCustomLabel.setText(totalCustom+"");
+		
 	}
 
 	public static void setItemsLabels(Map<String, Integer> itemsLabels) {
@@ -136,4 +151,7 @@ public class PopupReportController implements Initializable {
 		PopupReportController.selectedReport = selectedReport;
 	}
 
+	public static void setTotalCustom(Integer totalCustom) {
+		PopupReportController.totalCustom = totalCustom;
+	}
 }

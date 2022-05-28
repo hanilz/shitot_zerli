@@ -86,9 +86,9 @@
          <content>
             <VBox prefHeight="349.0" prefWidth="871.0">
                <children>
-                  <BarChart fx:id="histogramChart">
+                  <BarChart fx:id="histogramChart" categoryGap="5.0">
                     <xAxis>
-                      <CategoryAxis fx:id="monthAxis" label="Months" side="BOTTOM" />
+                      <CategoryAxis fx:id="monthAxis" endMargin="10.0" label="Months" side="RIGHT" startMargin="10.0" />
                     </xAxis>
                     <yAxis>
                       <NumberAxis fx:id="countValuesAxis" label="Number of complaints" side="LEFT" />
