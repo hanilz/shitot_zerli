@@ -289,6 +289,14 @@ public class ServerMessageController {
 			Map<String,Integer> incomeHistogramReportAxis = AnalayzeCommand.getIncomeHistogramReport((Report)message.get("selected report"));
 			message.put("response", incomeHistogramReportAxis);
 			break;
+		case GET_CUSTOM_INCOME_REPORT:
+			Integer customIncome = AnalayzeCommand.getCustomIncomeReport((Report)message.get("selected report"));
+			message.put("response", customIncome);
+			break;
+		case GET_CUSTOM_ORDERS_REPORT:
+			Integer customOrders = AnalayzeCommand.getCustomOrdersReport((Report)message.get("selected report"));
+			message.put("response", customOrders);
+			break;
 		default:
 			break;
 		}

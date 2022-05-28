@@ -129,6 +129,7 @@ public class ReportsController implements Initializable {
 		if (reportsFound.size() != 0) {
 			reportsTable.setItems(reportsFound);
 			noReportsLabel.setVisible(false);
+			reportsTable.refresh();
 		} else {
 			reportsTable.getItems().clear();
 			noReportsLabel.setVisible(true);
@@ -150,11 +151,19 @@ public class ReportsController implements Initializable {
 		response = (Map<String, Integer>) ClientFormController.client.accept(message);
 		PopupReportController.setProductsLabels(response);
 		
+		message.put("command", Commands.GET_CUSTOM_INCOME_REPORT);
+		message.put("selected report",
+				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
+		Integer responseCustom = (Integer) ClientFormController.client.accept(message);
+		PopupReportController.setTotalCustom(responseCustom);
+		
 		PopupReportController.setSelectedReport(selectedReport);
 	}
 
 	@SuppressWarnings("unchecked")
 	private void getOrdersReport(Report selectedReport) {
+		//TODO: bug, openning the complaint report instead orders reports (guess: problem with the stage of the popup).
+		//TODO: fix the alignment of barChart
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.GET_ITEMS_ORDERS_REPORT);
 		message.put("selected report",
@@ -167,6 +176,12 @@ public class ReportsController implements Initializable {
 				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
 		response = (Map<String, Integer>) ClientFormController.client.accept(message);
 		PopupReportController.setProductsLabels(response);
+		
+		message.put("command", Commands.GET_CUSTOM_ORDERS_REPORT);
+		message.put("selected report",
+				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
+		Integer responseCustom = (Integer) ClientFormController.client.accept(message);
+		PopupReportController.setTotalCustom(responseCustom);
 		
 		PopupReportController.setSelectedReport(selectedReport);
 	}

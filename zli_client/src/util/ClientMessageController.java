@@ -97,6 +97,12 @@ public class ClientMessageController {
 		case GET_INCOME_HISTOGRAM_REPORT:
 			returnServerMapRespond(new HashMap<String,Integer>());
 			break;
+		case GET_CUSTOM_INCOME_REPORT:
+			returnServerRespond();
+			break;
+		case GET_CUSTOM_ORDERS_REPORT:
+			returnServerRespond();
+			break;
 		default:
 			returnServerRespond();
 			break;

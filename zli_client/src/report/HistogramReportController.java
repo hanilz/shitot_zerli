@@ -59,13 +59,13 @@ public class HistogramReportController implements Initializable {
 	}
 
 	private void initBarChart() {
+		XYChart.Series<String, Integer> monthSeries = new XYChart.Series<>();
 		for (String currentMonth : totalDataPerBranch.keySet()) {
-			XYChart.Series<String, Integer> monthSeries = new XYChart.Series<>();
 			monthSeries.setName(currentMonth);
 			monthSeries.getData().add(
 					new XYChart.Data<String, Integer>(currentMonth, totalDataPerBranch.get(currentMonth)));
-			histogramChart.getData().add(monthSeries);
 		}
+		histogramChart.getData().add(monthSeries);
 	}
 
 	public static void setSelectedReport(Report selectedReport) {

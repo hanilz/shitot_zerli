@@ -117,8 +117,10 @@ public class ManageScreens {
 			public void run() {
 				popupStage.setTitle(title);
 				popupStage.setScene(scene);
-				popupStage.initModality(Modality.APPLICATION_MODAL);
-				popupStage.showAndWait();
+				if (popupStage.getModality() == Modality.NONE)
+					popupStage.initModality(Modality.APPLICATION_MODAL);
+				if(!popupStage.isShowing())
+					popupStage.showAndWait();
 				removePopup(popupStage);
 			}
 		});
