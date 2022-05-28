@@ -129,7 +129,7 @@ public class DeliveryController implements Initializable {
 		// the same thing for pickUp option, if the comboBox has not changed -> the
 		// label will appear for selecting the branch.
 		else if (pickUpRadioButton.isSelected()) {
-			if (!InputChecker.isPickUpComboBoxChanged(pickupBranchComboBox.getValue())) {
+			if (!InputChecker.isBranchNotNull(pickupBranchComboBox.getValue())) {
 				switchFillAllFields(selectABranchLabel, "* Please select a branch!");
 				canProceed = false;
 			}
@@ -163,8 +163,8 @@ public class DeliveryController implements Initializable {
 
 	private void insertDelivery() {
 		String address = addressField.getText();
-		String deliveryDate = String.format("%s %s:%s:00", deliveryDatePicker.getValue().toString(),
-				deliveryHourComboBox.getValue(), deliveryMinuteComboBox.getValue());
+		
+		String deliveryDate = buildDeliveryDate(deliveryDatePicker.getValue(), deliveryHourComboBox.getValue(), deliveryMinuteComboBox.getValue());
 		String phoneNumber = recieverPhoneField.getText();
 		String receiverName = recieverNameField.getText();
 		String status = "pending"; // TODO: const class or enum for delivery options
@@ -176,14 +176,33 @@ public class DeliveryController implements Initializable {
 		SingletonOrder.getInstance().setIsExpress(expressDeliveryCheckBox.isSelected());
 	}
 
+	private String buildDeliveryDate(LocalDate date, String hour, String minutes) {
+		String deliveryDate = "";
+		if(date != null)
+			deliveryDate += date.toString() + " ";
+		else
+			deliveryDate += "None ";
+		if(hour != null)
+			deliveryDate += hour + ":";
+		else
+			deliveryDate += "None:";
+		if(minutes != null)
+			deliveryDate += minutes + ":";
+		else
+			deliveryDate += "None:";
+		
+		deliveryDate += "00";
+
+		return deliveryDate;
+	}
+
 	private void insertPickup() {
-		String deliveryDate = String.format("%s %s:%s:00", pickupDatePicker.getValue().toString(),
-				pickupHourComboBox.getValue(), pickupMinuteComboBox.getValue());
+		String deliveryDate = buildDeliveryDate(pickupDatePicker.getValue(), pickupHourComboBox.getValue(), pickupMinuteComboBox.getValue());
 		String status = "pending"; // TODO: const class or enum for delivery options
 		String type = "pickup";
 
 		SingletonOrder.getInstance().setPickup(new Delivery(deliveryDate, status, type));
-		SingletonOrder.getInstance().setPickupBranch(deliveryBranchComboBox.getValue());
+		SingletonOrder.getInstance().setPickupBranch(pickupBranchComboBox.getValue());
 	}
 
 	private void switchFillAllFields(Label label, String textToShow) {
@@ -260,6 +279,7 @@ public class DeliveryController implements Initializable {
 		updateDeliveryFeeLabel();
 	}
 
+	// retains the input the user has put before moving to another screen
 	private void initScreenState() {
 		Delivery pickup = SingletonOrder.getInstance().getPickup();
 		Delivery delivery = SingletonOrder.getInstance().getDelivery();
@@ -275,26 +295,34 @@ public class DeliveryController implements Initializable {
 	}
 
 	private void initPickupState(Delivery pickup, Branch pickupBranch) {
-		pickupBranchComboBox.setValue(pickupBranch);
-		String[] dateTime = pickup.getDeliveryDate().split(" ");  // [0] is date [1] is time
+		if(InputChecker.isBranchNotNull(pickupBranch))
+			pickupBranchComboBox.setValue(pickupBranch);
+		initDateTimeBoxes(pickup, pickupDatePicker, pickupHourComboBox, pickupMinuteComboBox);
+	}
+
+	private void initDateTimeBoxes(Delivery delivery, DatePicker datePicker, ComboBox<String> hourComboBox, ComboBox<String> minuteComboBox) {
+		String[] dateTime = delivery.getDeliveryDate().split(" ");  // [0] is date [1] is time
 		String[] time = dateTime[1].split(":");  // [0] is hours [1] is minutes [2] is seconds
-		pickupDatePicker.setValue(LocalDate.parse(dateTime[0]));
-		pickupHourComboBox.setValue(time[0]);
-		pickupMinuteComboBox.setValue(time[1]);
+		
+		if(!InputChecker.isStringNone(dateTime[0]))  // not empty
+			datePicker.setValue(LocalDate.parse(dateTime[0]));
+		
+		if(!InputChecker.isStringNone(time[0]))  // hours
+		hourComboBox.setValue(time[0]);
+		
+		if(!InputChecker.isStringNone(time[1]))  // minutes
+			minuteComboBox.setValue(time[1]);
 	}
 
 	private void initDeliveryState(Delivery delivery, Branch deliveryBranch, boolean isExpress) {
 		addressField.setText(delivery.getAddress());
 		recieverNameField.setText(delivery.getReceiverName());
 		recieverPhoneField.setText(delivery.getPhoneNumber());
+
+		if(InputChecker.isBranchNotNull(deliveryBranch))
+			deliveryBranchComboBox.setValue(deliveryBranch);
 		
-		deliveryBranchComboBox.setValue(deliveryBranch);
-		
-		String[] dateTime = delivery.getDeliveryDate().split(" ");  // [0] is date [1] is time
-		String[] time = dateTime[1].split(":");  // [0] is hours [1] is minutes [2] is seconds
-		deliveryDatePicker.setValue(LocalDate.parse(dateTime[0]));
-		deliveryHourComboBox.setValue(time[0]);
-		deliveryMinuteComboBox.setValue(time[1]);
+		initDateTimeBoxes(delivery, deliveryDatePicker, deliveryHourComboBox, deliveryMinuteComboBox);
 		
 		expressDeliveryCheckBox.setSelected(isExpress);
 		switchExpress();
@@ -327,6 +355,7 @@ public class DeliveryController implements Initializable {
 		}
 	}
 
+	// for getting all branches for the branches ComboBoxes
 	private void fetchBranches() {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.FETCH_BRANCHES);

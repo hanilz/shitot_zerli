@@ -53,10 +53,16 @@ public class InputChecker {
 		return true;
 	}
 
-	public static boolean isPickUpComboBoxChanged(Branch branch) {
+	// for delivery screen
+	public static boolean isBranchNotNull(Branch branch) {
 		if (branch == null)
 			return false;
 		return true;
+	}
+	
+	// for delivery screen
+	public static boolean isStringNone(String str) {
+		return str.contains("None");
 	}
 
 	public static boolean isPaymentFieldsEmpty(String firstName, String lastName, String cardNumber, String month,
