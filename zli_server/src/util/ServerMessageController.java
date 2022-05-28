@@ -285,6 +285,10 @@ public class ServerMessageController {
 			Map<String,Integer> complaintsReportAxis = AnalayzeCommand.getComplaintsReport((Report)message.get("selected report"));
 			message.put("response", complaintsReportAxis);
 			break;
+		case GET_INCOME_HISTOGRAM_REPORT:
+			Map<String,Integer> incomeHistogramReportAxis = AnalayzeCommand.getIncomeHistogramReport((Report)message.get("selected report"));
+			message.put("response", incomeHistogramReportAxis);
+			break;
 		default:
 			break;
 		}

@@ -94,6 +94,9 @@ public class ClientMessageController {
 		case GET_COMPLAINT_REPORT:
 			returnServerMapRespond(new HashMap<String,Integer>());
 			break;
+		case GET_INCOME_HISTOGRAM_REPORT:
+			returnServerMapRespond(new HashMap<String,Integer>());
+			break;
 		default:
 			returnServerRespond();
 			break;

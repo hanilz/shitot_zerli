@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="938.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.ComplaintReportController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="938.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.HistogramReportController">
    <children>
       <GridPane>
         <columnConstraints>
@@ -57,7 +57,7 @@
             </Label>
             <HBox alignment="TOP_CENTER" prefHeight="32.0" prefWidth="878.0" spacing="35.0">
                <children>
-                  <Label text="Complaints Report">
+                  <Label fx:id="reportTypeLabel" text="Complaints Report">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -86,12 +86,12 @@
          <content>
             <VBox prefHeight="349.0" prefWidth="871.0">
                <children>
-                  <BarChart fx:id="complaintsChart">
+                  <BarChart fx:id="histogramChart">
                     <xAxis>
-                      <CategoryAxis fx:id="numberOfComplaintsAxis" label="Months" side="BOTTOM" />
+                      <CategoryAxis fx:id="monthAxis" label="Months" side="BOTTOM" />
                     </xAxis>
                     <yAxis>
-                      <NumberAxis fx:id="monthsAxis" label="Number of complaints" side="LEFT" />
+                      <NumberAxis fx:id="countValuesAxis" label="Number of complaints" side="LEFT" />
                     </yAxis>
                   </BarChart>
                </children>

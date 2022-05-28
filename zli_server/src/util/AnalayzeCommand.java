@@ -1197,4 +1197,26 @@ public class AnalayzeCommand {
 		}
 		return complaintsData;
 	}
+
+	public static Map<String, Integer> getIncomeHistogramReport(Report report) {
+		Map<String, Integer> incomeData = new HashMap<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+
+			ResultSet rs = selectStmt.executeQuery(
+					"SELECT MONTHNAME(orders.date) as orders_month, SUM(orders.price) as totalInMonth\r\n"
+					+ "FROM orders\r\n"
+					+ "WHERE orders.date between "+report.getDateRange()+" and orders.idBranch = "+report.getIdBranch()+"\r\n"
+					+ "GROUP BY orders_month\r\n"
+					+ "ORDER BY orders.date;");
+			while (rs.next()) {
+				String month = rs.getString(1);
+				int totalIncomePerMonth = rs.getInt(2);
+				incomeData.put(month, totalIncomePerMonth);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return incomeData;
+	}
 }

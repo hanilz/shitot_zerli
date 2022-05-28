@@ -95,6 +95,7 @@ public class ManageScreens {
 		Alert a = new Alert(AlertType.NONE,title,ButtonType.CLOSE);
 		a.setTitle(title);
 		a.setContentText(text);
+		setIconApplication((Stage)a.getDialogPane().getScene().getWindow());
 		a.show();
 	}
 
