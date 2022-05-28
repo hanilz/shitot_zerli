@@ -91,6 +91,9 @@ public class ClientMessageController {
 		case GET_PRODUCTS_ORDERS_REPORT:
 			returnServerMapRespond(new HashMap<String,Integer>());
 			break;
+		case GET_USER_SCREENS:
+			returnServerListRespond(new ArrayList<Screens>());
+			break;
 		default:
 			returnServerRespond();
 			break;

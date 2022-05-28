@@ -169,13 +169,14 @@ public class AnalayzeCommand {
 		}
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	public static HashMap<String, Object> loginUser(String username, String password) {
 		Connection conn;
 		Status status = Status.NOT_REGISTERED;
 		HashMap<String, Object> login = new HashMap<>();
 		conn = DataBaseController.getConn();
 		ResultSet rs;
-		String query = "SELECT * FROM users WHERE username=? AND password=?";
+		String query = "SELECT * FROM users,user_screen WHERE username=? AND password=?";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setString(1, username);
@@ -197,14 +198,18 @@ public class AnalayzeCommand {
 					preparedStmt.setInt(1, 1);
 					preparedStmt.setString(2, username);
 					preparedStmt.setString(3, password);
+					login.put("userScreen",
+							getUserHomeScreens((Integer) login.get("idUser"), (UserType) login.get("userType")));
 					if (preparedStmt.executeUpdate() == 1)
 						status = Status.NEW_LOG_IN;
+
 				}
 			}
 		} catch (SQLException e) {
 			System.out.println("failed to fetch user");
 			e.printStackTrace();
 		}
+
 		login.put("response", status);// status of login
 		return login;// default for any throw would be unregistered
 	}
@@ -330,7 +335,7 @@ public class AnalayzeCommand {
 				idAccount = rs.getInt(1);
 			return idAccount;
 		} catch (SQLException e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 			return -1;
 		}
 	}
@@ -1175,5 +1180,29 @@ public class AnalayzeCommand {
 			e.printStackTrace();
 		}
 		return incomeLabels;
+	}
+
+	public static ArrayList<Screens> getUserHomeScreens(int userId, UserType userType) {
+		ArrayList<Screens> userHomeScreens = new ArrayList<Screens>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt.executeQuery("SELECT screen FROM user_screen WHERE idUser=" + userId + ";");
+			if (!rs.next())
+				userHomeScreens.addAll(ManageClients.getUserScreens(userType));
+			else {
+				rs.previous();
+				while (rs.next()) {
+					System.out.println(rs.getString(1));
+					if (rs.getString(1).equals("default")) {
+						userHomeScreens.addAll(ManageClients.getUserScreens(userType));
+					} else
+						userHomeScreens.add(Screens.valueOf((rs.getString(1))));
+					System.out.println(userHomeScreens);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return userHomeScreens;
 	}
 }

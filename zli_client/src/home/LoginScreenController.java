@@ -1,6 +1,7 @@
 package home;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -137,11 +138,13 @@ public class LoginScreenController implements Initializable {
 		isCatalog=false;
 	}
 
+	@SuppressWarnings("unchecked")
 	private void loginUser(String username) {
 		int idUser = (Integer) response.get("idUser");
 		int idAccount = (Integer) response.get("idAccount");
 		UserType userType = (UserType) response.get("userType");
-		User.getUserInstance().login(idUser, username, idAccount, userType);// creating running user
+		ArrayList<Screens> UserHomeScreens=(ArrayList<Screens>) response.get("userScreen");
+		User.getUserInstance().login(idUser, username, idAccount, userType,UserHomeScreens);// creating running user
 	}
 
 	private void catalogFlow(Event event) {

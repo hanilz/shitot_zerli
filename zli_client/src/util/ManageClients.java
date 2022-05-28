@@ -52,7 +52,7 @@ public class ManageClients {
 		case STORE_WORKER:
 			break;
 		default:
-			return null;
+			return new ArrayList<>();
 		}
 		return null;
 	}
