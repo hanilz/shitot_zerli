@@ -60,9 +60,10 @@ public class GreetingCardController implements Initializable {
 		// selected.
 		// if true -> the controller will appear a label for filling all the fields
 		// else -> the user can proceed.
-		if (InputChecker.isFieldsAreEmptyChecker(isIncludedCheckBox.isSelected(), titleTextField.getText(),
+		if (InputChecker.areGreetingCardFieldsEmptyChecker(isIncludedCheckBox.isSelected(), titleTextField.getText(),
 				fromTextField.getText(), toTextField.getText(), greetingCardTextArea.getText())) {
-			switchFillAllFieldsLabel("* Please fill all the fields for the greeting card for proceeding the order!");
+			switchFillAllFieldsLabel(
+					"* Please fill all the fields for the greeting card in order to proceed with the order!");
 		} else if (isIncludedCheckBox.isSelected()
 				&& !InputChecker.isGreetingCardInputVaild(fromTextField.getText(), toTextField.getText())) {
 			switchFillAllFieldsLabel("* Please check the input of the greeting card!");
@@ -83,9 +84,9 @@ public class GreetingCardController implements Initializable {
 	private void insertGreetingCardIntoOrder() {
 		SingletonOrder.getInstance().setGreetingCardFields(titleTextField.getText(), fromTextField.getText(),
 				toTextField.getText(), greetingCardTextArea.getText());
-		if (isIncludedCheckBox.isSelected())  // insert only if the user included greeting card.
+		if (isIncludedCheckBox.isSelected()) // insert only if the user included greeting card.
 			SingletonOrder.getInstance().setIsGreetingCard(true);
-		else 
+		else
 			SingletonOrder.getInstance().setIsGreetingCard(false);
 	}
 

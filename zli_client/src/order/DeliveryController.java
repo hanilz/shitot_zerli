@@ -123,33 +123,57 @@ public class DeliveryController implements Initializable {
 		// if the method returned false for the comboBox -> the user didn't select any
 		// option.
 		// else -> the user filled all the fields
-		if (deliveryRadioButton.isSelected()) {
+		if (deliveryRadioButton.isSelected())
 			canProceed = checkInputDelivery(canProceed);
-		}
 		// the same thing for pickUp option, if the comboBox has not changed -> the
 		// label will appear for selecting the branch.
-		else if (pickUpRadioButton.isSelected()) {
-			if (!InputChecker.isBranchNotNull(pickupBranchComboBox.getValue())) {
-				switchFillAllFields(selectABranchLabel, "* Please select a branch!");
-				canProceed = false;
-			}
-		}
+		else
+			canProceed = checkInputPickup(canProceed);
 		// if everything is filled and selected, the user will proceed to checkout and
 		// we will set the delivery if selected and the branch for the order
 		if (canProceed) {
 			storeState();
+
 			ManageScreens.changeScreenTo(Screens.CHECKOUT);
 		}
 	}
 
+	private boolean checkInputPickup(boolean canProceed) {
+		if (!InputChecker.isBranchNotNull(pickupBranchComboBox.getValue())) {
+			switchFillAllFields(selectABranchLabel, "* Please select a branch!");
+			canProceed = false;
+		} else if (InputChecker.isNull(pickupDatePicker.getValue())) {
+			switchFillAllFields(selectABranchLabel, "* Please select a date!");
+			canProceed = false;
+		} else if (InputChecker.isNull(pickupHourComboBox.getValue())) {
+			switchFillAllFields(selectABranchLabel, "* Please select an hour!");
+			canProceed = false;
+		} else if (InputChecker.isNull(pickupMinuteComboBox.getValue())) {
+			switchFillAllFields(selectABranchLabel, "* Please select the minutes!");
+			canProceed = false;
+		}
+		if (canProceed) {
+			if (checkDateNotPassed(pickupDatePicker.getValue(), pickupHourComboBox.getValue(),
+					pickupMinuteComboBox.getValue())) {
+				switchFillAllFields(selectABranchLabel, "* Please select a date that hasn't passed!");
+				canProceed = false;
+			}
+		}
+		return canProceed;
+	}
+
+	private boolean checkDateNotPassed(LocalDate value, String value2, String value3) {
+		String dateTime = String.format("%s %s:%s:00", value.toString(), value2, value3);
+		return InputChecker.isDateBeforeNow(dateTime);
+	}
+
 	private boolean checkInputDelivery(boolean canProceed) {
-		if (!InputChecker.isDeliveryComboBoxChanged(deliveryHourComboBox.getValue(), deliveryMinuteComboBox.getValue(),
-				regionComboBox.getValue())) {
+		if (InputChecker.isFieldsAreEmptyChecker(addressField.getText(), recieverNameField.getText(),
+				recieverPhoneField.getText())) {
 			switchFillAllFields(fillAllFieldsLabel, "* Please fill all the fields!");
 			canProceed = false;
-		} else if (InputChecker.isFieldsAreEmptyChecker(true, addressField.getText(), recieverNameField.getText(),
-				deliveryDatePicker.getValue().toString(), recieverPhoneField.getText())) {
-			switchFillAllFields(fillAllFieldsLabel, "* Please fill all the fields!");
+		} else if (InputChecker.isNull(deliveryBranchComboBox.getValue())) {
+			switchFillAllFields(fillAllFieldsLabel, "* Please select a branch!");
 			canProceed = false;
 		} else if (!InputChecker.isDeliveryInputValid(recieverPhoneField.getText(), recieverNameField.getText())) {
 			switchFillAllFields(fillAllFieldsLabel, "* Please check the phone number or reciever name!");
@@ -157,14 +181,25 @@ public class DeliveryController implements Initializable {
 		} else if (!InputChecker.isPhoneNumberVaild(recieverPhoneField.getText())) {
 			switchFillAllFields(fillAllFieldsLabel, "* Please check the phone number!");
 			canProceed = false;
+		} else if (!expressDeliveryCheckBox.isSelected()) {
+			if (InputChecker.areDateTimeFieldsNotSelected(deliveryDatePicker.getValue(),
+					deliveryHourComboBox.getValue(), deliveryMinuteComboBox.getValue())) {
+				switchFillAllFields(fillAllFieldsLabel, "* Please select delivery date and time!");
+				canProceed = false;
+			} else if (checkDateNotPassed(deliveryDatePicker.getValue(), deliveryHourComboBox.getValue(),
+					deliveryMinuteComboBox.getValue())) {
+				switchFillAllFields(fillAllFieldsLabel, "* Please select a date that hasn't passed!");
+				canProceed = false;
+			}
 		}
 		return canProceed;
 	}
 
 	private void insertDelivery() {
 		String address = addressField.getText();
-		
-		String deliveryDate = buildDeliveryDate(deliveryDatePicker.getValue(), deliveryHourComboBox.getValue(), deliveryMinuteComboBox.getValue());
+
+		String deliveryDate = buildDeliveryDate(deliveryDatePicker.getValue(), deliveryHourComboBox.getValue(),
+				deliveryMinuteComboBox.getValue());
 		String phoneNumber = recieverPhoneField.getText();
 		String receiverName = recieverNameField.getText();
 		String status = "pending"; // TODO: const class or enum for delivery options
@@ -178,26 +213,27 @@ public class DeliveryController implements Initializable {
 
 	private String buildDeliveryDate(LocalDate date, String hour, String minutes) {
 		String deliveryDate = "";
-		if(date != null)
+		if (date != null)
 			deliveryDate += date.toString() + " ";
 		else
 			deliveryDate += "None ";
-		if(hour != null)
+		if (hour != null)
 			deliveryDate += hour + ":";
 		else
 			deliveryDate += "None:";
-		if(minutes != null)
+		if (minutes != null)
 			deliveryDate += minutes + ":";
 		else
 			deliveryDate += "None:";
-		
+
 		deliveryDate += "00";
 
 		return deliveryDate;
 	}
 
 	private void insertPickup() {
-		String deliveryDate = buildDeliveryDate(pickupDatePicker.getValue(), pickupHourComboBox.getValue(), pickupMinuteComboBox.getValue());
+		String deliveryDate = buildDeliveryDate(pickupDatePicker.getValue(), pickupHourComboBox.getValue(),
+				pickupMinuteComboBox.getValue());
 		String status = "pending"; // TODO: const class or enum for delivery options
 		String type = "pickup";
 
@@ -226,6 +262,7 @@ public class DeliveryController implements Initializable {
 
 	@FXML
 	void changeToHomeScreen(MouseEvent event) {
+		storeState();
 		ManageScreens.home();
 	}
 
@@ -273,9 +310,9 @@ public class DeliveryController implements Initializable {
 		initTimeComboBoxes();
 
 		initBranchComboBoxes();
-		
+
 		initScreenState();
-		
+
 		updateDeliveryFeeLabel();
 	}
 
@@ -287,30 +324,31 @@ public class DeliveryController implements Initializable {
 		Branch DeliveryBranch = SingletonOrder.getInstance().getBranch();
 		boolean isExpress = SingletonOrder.getInstance().getIsExpress();
 		boolean isPickup = SingletonOrder.getInstance().getIsPickup();
-		if(pickup != null)
+		if (pickup != null)
 			initPickupState(pickup, pickupBranch);
-		if(delivery != null)
+		if (delivery != null)
 			initDeliveryState(delivery, DeliveryBranch, isExpress);
 		initRadioButtonsState(isPickup);
 	}
 
 	private void initPickupState(Delivery pickup, Branch pickupBranch) {
-		if(InputChecker.isBranchNotNull(pickupBranch))
+		if (InputChecker.isBranchNotNull(pickupBranch))
 			pickupBranchComboBox.setValue(pickupBranch);
 		initDateTimeBoxes(pickup, pickupDatePicker, pickupHourComboBox, pickupMinuteComboBox);
 	}
 
-	private void initDateTimeBoxes(Delivery delivery, DatePicker datePicker, ComboBox<String> hourComboBox, ComboBox<String> minuteComboBox) {
-		String[] dateTime = delivery.getDeliveryDate().split(" ");  // [0] is date [1] is time
-		String[] time = dateTime[1].split(":");  // [0] is hours [1] is minutes [2] is seconds
-		
-		if(!InputChecker.isStringNone(dateTime[0]))  // not empty
+	private void initDateTimeBoxes(Delivery delivery, DatePicker datePicker, ComboBox<String> hourComboBox,
+			ComboBox<String> minuteComboBox) {
+		String[] dateTime = delivery.getDeliveryDate().split(" "); // [0] is date [1] is time
+		String[] time = dateTime[1].split(":"); // [0] is hours [1] is minutes [2] is seconds
+
+		if (!InputChecker.isStringNone(dateTime[0])) // not empty
 			datePicker.setValue(LocalDate.parse(dateTime[0]));
-		
-		if(!InputChecker.isStringNone(time[0]))  // hours
-		hourComboBox.setValue(time[0]);
-		
-		if(!InputChecker.isStringNone(time[1]))  // minutes
+
+		if (!InputChecker.isStringNone(time[0])) // hours
+			hourComboBox.setValue(time[0]);
+
+		if (!InputChecker.isStringNone(time[1])) // minutes
 			minuteComboBox.setValue(time[1]);
 	}
 
@@ -319,21 +357,20 @@ public class DeliveryController implements Initializable {
 		recieverNameField.setText(delivery.getReceiverName());
 		recieverPhoneField.setText(delivery.getPhoneNumber());
 
-		if(InputChecker.isBranchNotNull(deliveryBranch))
+		if (InputChecker.isBranchNotNull(deliveryBranch))
 			deliveryBranchComboBox.setValue(deliveryBranch);
-		
+
 		initDateTimeBoxes(delivery, deliveryDatePicker, deliveryHourComboBox, deliveryMinuteComboBox);
-		
+
 		expressDeliveryCheckBox.setSelected(isExpress);
 		switchExpress();
 	}
-	
+
 	private void initRadioButtonsState(boolean isPickup) {
-		if(isPickup) {
+		if (isPickup) {
 			delivery.selectToggle(pickUpRadioButton);
 			selectPickup();
-		}
-		else
+		} else
 			selectDelivery();
 	}
 
@@ -375,5 +412,4 @@ public class DeliveryController implements Initializable {
 		deliveryHourComboBox.setDisable(expressDeliveryCheckBox.isSelected());
 		deliveryMinuteComboBox.setDisable(expressDeliveryCheckBox.isSelected());
 	}
-
 }

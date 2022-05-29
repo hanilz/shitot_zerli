@@ -24,10 +24,14 @@ import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import util.Commands;
@@ -36,44 +40,63 @@ import util.Screens;
 
 public class CheckoutController implements Initializable {
 
-	@FXML
-	private Button backButton;
 
-	@FXML
-	private TextField cardNumberField;
+    @FXML
+    private TextField StoreCreditField;
 
-	@FXML
-	private TextField firstNameField;
+    @FXML
+    private Label TotalLabel;
 
-	@FXML
-	private ImageView homeButton;
+    @FXML
+    private Button backButton;
 
-	@FXML
-	private TextField idField;
+    @FXML
+    private Label cartSummaryTotalLabel;
 
-	@FXML
-	private TextField lastNameField;
+    @FXML
+    private VBox cartSummaryVBox;
 
-	@FXML
-	private Label messageLabel;
+    @FXML
+    private Label cartTotalLabel;
 
-	@FXML
-	private TextField monthField;
+    @FXML
+    private Pane deliveryDetailsPane;
 
-	@FXML
-	private VBox orderSummaryVBox;
+    @FXML
+    private Label deliveryFeeLabel;
 
-	@FXML
-	private Button placeOrderButton;
+    @FXML
+    private Pane greetingCardPane;
 
-	@FXML
-	private Label totalPriceLabel;
+    @FXML
+    private ImageView homeButton;
 
-	@FXML
-	private TextField vccField;
+    @FXML
+    private Label maxLabel;
 
-	@FXML
-	private TextField yearField;
+    @FXML
+    private Label messageLabel;
+
+    @FXML
+    private Label minLabel;
+
+    @FXML
+    private ComboBox<?> paymentMethodComboBox;
+
+    @FXML
+    private Button placeOrderButton;
+
+    @FXML
+    private Label specialDiscountsLabel;
+
+    @FXML
+    private Label storeCreditAmountLabel;
+
+    @FXML
+    private Slider storeCreditSlider;
+
+    @FXML
+    private Label storeCreditUsedLabel;
 
 	private ArrayList<CustomProduct> customProducts = new ArrayList<>();
 
@@ -91,11 +114,11 @@ public class CheckoutController implements Initializable {
 
 			OrderSummaryHBox productSummaryHBox = new OrderSummaryHBox(product, quantity);
 			productSummaryHBox.initHBox();
-			orderSummaryVBox.getChildren().add(productSummaryHBox);
+			cartSummaryVBox.getChildren().add(productSummaryHBox);
 			
 			addToLists(product);
 		}
-		totalPriceLabel.setText(InputChecker.price(Cart.getInstance().getTotalPrice()));
+		cartSummaryTotalLabel.setText(InputChecker.price(Cart.getInstance().getTotalPrice()));
 	}
 
 	private void addToLists(ProductsBase product) {
@@ -316,6 +339,16 @@ public class CheckoutController implements Initializable {
 		pause.play();
 	}
 
+    @FXML
+    void setStoreCredit(MouseEvent event) {
+
+    }
+
+    @FXML
+    void setStoreCreditBox(KeyEvent event) {
+
+    }
+	
 	@FXML
 	void changeToHome(MouseEvent event) {
 		ManageScreens.home();
