@@ -53,7 +53,7 @@ public class LoginScreenController implements Initializable {
 		if (!isUserInputValid(username, password))
 			return;
 		HashMap<String, Object> message = setRespondToServer(username, password);
-		response = (HashMap<String, Object>) ClientFormController.client.accept(message);
+		response = (HashMap<String, Object>) ClientFormController.client.accept(message);// DB
 		responseAction(event, username, response);
 	}
 
@@ -81,14 +81,14 @@ public class LoginScreenController implements Initializable {
 		switch ((Status) (response).get("response")) {
 		case NEW_LOG_IN:
 			loginUser(username);
-			if (isCart) {
+			if (isCart) {// login flow
 				cartFlow(event);
-			} else if (isCatalog) 
+			} else if (isCatalog)
 				catalogFlow(event);
-			else {
+			else {// home flow
 				ManageScreens.home();
 				CloseWindow(event);
-			}
+			} // end of flow
 			break;
 		case ALREADY_LOGGED_IN:
 			setError("User already logged in");
@@ -100,7 +100,7 @@ public class LoginScreenController implements Initializable {
 			setError("User Suspended");
 			break;
 		}
-		
+
 	}
 
 	private void cartFlow(Event event) {
@@ -133,8 +133,8 @@ public class LoginScreenController implements Initializable {
 	}
 
 	public static void resetLogin() {
-		isCart=false;
-		isCatalog=false;
+		isCart = false;
+		isCatalog = false;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -142,8 +142,8 @@ public class LoginScreenController implements Initializable {
 		int idUser = (Integer) response.get("idUser");
 		int idAccount = (Integer) response.get("idAccount");
 		UserType userType = (UserType) response.get("userType");
-		ArrayList<Screens> UserHomeScreens=(ArrayList<Screens>) response.get("userScreen");
-		User.getUserInstance().login(idUser, username, idAccount, userType,UserHomeScreens);// creating running user
+		ArrayList<Screens> UserHomeScreens = (ArrayList<Screens>) response.get("userScreen");
+		User.getUserInstance().login(idUser, username, idAccount, userType, UserHomeScreens);// creating running user
 	}
 
 	private void catalogFlow(Event event) {
@@ -152,7 +152,7 @@ public class LoginScreenController implements Initializable {
 			CloseWindow(event);
 		} else
 			ManageScreens.home();
-		isCatalog=false;
+		isCatalog = false;
 		CloseWindow(event);
 	}
 
@@ -160,11 +160,16 @@ public class LoginScreenController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		setTextBehaviour(usernameLabel);
 		setTextBehaviour(passwordLabel);
-		if (User.getUserInstance().isUserLoggedIn()) {// one user is already active in this client
+		if (isLoggedIn()) {
 			loginButton.setDisable(true);// user logged in
 			errorLabel.setText("You already logged in as " + User.getUserInstance().getUsername());
 			errorLabel.setTextFill(Paint.valueOf("RED"));
 		}
+
+	}
+
+	public boolean isLoggedIn() {
+		return (User.getUserInstance().isUserLoggedIn()); // one user is already active in this client
 	}
 
 	private void CloseWindow(Event event) {
