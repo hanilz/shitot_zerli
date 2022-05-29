@@ -8,8 +8,6 @@ import java.util.ResourceBundle;
 
 import client.ClientFormController;
 import entities.ManageUsers;
-import entities.User;
-import home.HomeVBox;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,10 +16,8 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
@@ -32,8 +28,6 @@ import util.UserType;
 
 public class ManageUsersPermissionController implements Initializable {
 
-	@FXML
-	private Button selectUser;
 
 	@FXML
 	private TilePane userHomeScreens;
@@ -51,7 +45,7 @@ public class ManageUsersPermissionController implements Initializable {
 	private Label errorLable;
 	private int userId;
 	private UserType userType;
-	private static ObservableList<Screens> userScreens;
+	private static ArrayList<Screens> userScreens;
 	private static ManageUsersPermissionController instace;
 
 	@FXML
@@ -84,11 +78,11 @@ public class ManageUsersPermissionController implements Initializable {
 				usernameLable.setText(user.getFirstName() + " " + user.getLastName());
 			}
 		}
+		getUserHomeScreen();
 	}
 
 	@SuppressWarnings("unchecked")
-	@FXML
-	void getUserHomeScreen(Event selectEvent) {
+	void getUserHomeScreen() {
 		if (usersOption.getValue() == null) {
 			errorLable.setVisible(true);
 			PauseTransition visiblePause = new PauseTransition(Duration.seconds(2));
@@ -100,15 +94,15 @@ public class ManageUsersPermissionController implements Initializable {
 			message.put("id", userId);
 			message.put("userType", userType);
 			Object response = ClientFormController.client.accept(message);
-			userScreens = (ObservableList<Screens>) response;
+			userScreens = (ArrayList<Screens>) response;
 			setScreen(userScreens);
 		}
 	}
 
-	private void setScreen(ObservableList<Screens> userScreen) {
+	private void setScreen(ArrayList<Screens> userScreens2) {
 		userHomeScreens.getChildren().clear();
-		if (userScreen != null)
-			for (Screens screen : userScreen) {
+		if (userScreens2 != null)
+			for (Screens screen : userScreens2) {
 			FXMLLoader fxmlLoader=new FXMLLoader();
 			fxmlLoader.setLocation(getClass().getResource("ManageHomeVBox.fxml"));
 			VBox vbox = null;
