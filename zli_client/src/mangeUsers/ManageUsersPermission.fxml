@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -60,14 +59,6 @@
                <children>
                   <HBox alignment="CENTER" spacing="10.0">
                      <children>
-                        <Button fx:id="selectUser" mnemonicParsing="false" onMouseClicked="#getUserHomeScreen" style="-fx-background-radius: 25; -fx-background-color: #8AC275;" text="Select">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Button>
                         <ComboBox fx:id="usersOption" onAction="#getUser" prefHeight="27.0" prefWidth="197.0" promptText="Click here to select user id" style="-fx-border-color: #D9B8C4; -fx-background-radius: 5; -fx-background-color: E1D1DA;" />
                      </children>
                   </HBox>
