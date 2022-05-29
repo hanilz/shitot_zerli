@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import entities.Report;
+import inputs.InputChecker;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -93,7 +94,7 @@ public class PopupReportController implements Initializable {
 			reportTypeProductsLabel.setText("Quantity of products per product type in orders:");
 			totalReportTypeProductsLabel.setText("Total quantity of products per order:");
 			totalReportTypeItemsLabel.setText("Total quantity of items per order:");
-			totalReportTpeCustomLabel.setText("Total quantity. of custom products:");
+			totalReportTpeCustomLabel.setText("Total quantity of custom products:");
 			break;
 		}
 		
@@ -101,6 +102,7 @@ public class PopupReportController implements Initializable {
 	}
 
 	private void initProductsAndItemsTypesVBox() {
+		boolean isIncome = selectedReport.getType().equals("income");
 		int totalItems = 0;
 		int totalProducts = 0;
 		// init items type
@@ -112,7 +114,10 @@ public class PopupReportController implements Initializable {
 		// init total sum of items
 		for (Integer currentItemSum : itemsLabels.values()) {
 			HBox itemSumHBox = new HBox();
-			itemSumHBox.getChildren().add(new Label(currentItemSum + ""));
+			if(isIncome)
+				itemSumHBox.getChildren().add(new Label(InputChecker.price(currentItemSum)));
+			else
+				itemSumHBox.getChildren().add(new Label(currentItemSum + ""));
 			totalItemsVBox.getChildren().add(itemSumHBox);
 			totalItems += currentItemSum;
 		}
@@ -126,16 +131,26 @@ public class PopupReportController implements Initializable {
 		// init total sum of products
 		for (Integer currentProductSum : productsLabels.values()) {
 			HBox productSumHBox = new HBox();
-			productSumHBox.getChildren().add(new Label(currentProductSum + ""));
+			if(isIncome)
+				productSumHBox.getChildren().add(new Label(InputChecker.price(currentProductSum)));
+			else
+				productSumHBox.getChildren().add(new Label(currentProductSum + ""));
 			totalProductsVBox.getChildren().add(productSumHBox);
 			totalProducts += currentProductSum;
 		}
 
-		totalProductsLabel.setText(totalItems + "");
-		totalItemsLabel.setText(totalProducts + "");
+		if(isIncome) {
+			totalProductsLabel.setText(InputChecker.price(totalItems));
+			totalItemsLabel.setText(InputChecker.price(totalProducts));
+			totalCustomLabel.setText(InputChecker.price(totalCustom));
+		}
+		else {
+			totalProductsLabel.setText(totalItems + "");
+			totalItemsLabel.setText(totalProducts + "");
+			totalCustomLabel.setText(totalCustom+"");
+		}
 		branchLabel.setText(selectedReport.getBranch().toString());
 		quraterLabel.setText("Q" + selectedReport.getQuarter() + "");
-		totalCustomLabel.setText(totalCustom+"");
 		
 	}
 

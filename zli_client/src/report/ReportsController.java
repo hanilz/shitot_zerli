@@ -117,6 +117,8 @@ public class ReportsController implements Initializable {
 
 	@FXML
 	void searchReportsButton(MouseEvent event) {
+		if(!isInputValid())
+			return;
 		ObservableList<Report> reportsFound = FXCollections.observableArrayList();
 		for (Report currentReport : reports) {
 			Report checkReport = new Report(branchComboBox.getValue().getIdBranch(), yearComboBox.getValue(),
@@ -132,7 +134,20 @@ public class ReportsController implements Initializable {
 			reportsTable.refresh();
 		} else {
 			reportsTable.getItems().clear();
+			noReportsLabel.setText("No report found");
 			noReportsLabel.setVisible(true);
+		}
+	}
+	
+	private boolean isInputValid() {
+		if(branchComboBox.getValue() == null || yearComboBox.getValue() == null || quraterComboBox.getValue() == null) {
+			noReportsLabel.setText("Please check your selection.");
+			noReportsLabel.setVisible(true);
+			return false;
+		}
+		else {
+			noReportsLabel.setVisible(false);
+			return true;
 		}
 	}
 
@@ -162,8 +177,6 @@ public class ReportsController implements Initializable {
 
 	@SuppressWarnings("unchecked")
 	private void getOrdersReport(Report selectedReport) {
-		//TODO: bug, openning the complaint report instead orders reports (guess: problem with the stage of the popup).
-		//TODO: fix the alignment of barChart
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.GET_ITEMS_ORDERS_REPORT);
 		message.put("selected report",
@@ -201,6 +214,7 @@ public class ReportsController implements Initializable {
 				ManageScreens.openPopupFXML(PopupReportController.class.getResource("PopupReport.fxml"),
 						"Orders Report");
 			} catch (Exception e) {}
+			break;
 		case "complaints":
 			getComplaintsReportPerBranch(selectedReport);
 			try {
