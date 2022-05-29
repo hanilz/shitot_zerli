@@ -336,8 +336,6 @@ public class ManageScreens {
 			return "Income Report";
 		case VIEW_ORDERS:
 			return "Orders";
-		case VIEW_ORDERS_REPORT:
-			break;
 		case MANAGE_USERS:
 			return "Manage Users";
 		case SURVEY_HOME:
@@ -362,8 +360,9 @@ public class ManageScreens {
 			return "Deliver Orders";
 		case USER_PREMISSION:
 			return "Users Premission";
+		default:
+			return "";
 		}
-		return null;
 	}
 
 	public static String getIconPath(Screens user) {

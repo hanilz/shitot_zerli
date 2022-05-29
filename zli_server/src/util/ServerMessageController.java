@@ -297,6 +297,10 @@ public class ServerMessageController {
 			Integer customOrders = AnalayzeCommand.getCustomOrdersReport((Report)message.get("selected report"));
 			message.put("response", customOrders);
 			break;
+		case GET_USER_SCREENS:
+			ArrayList<Screens> userScreens = AnalayzeCommand.getUserHomeScreens((Integer)message.get("id"),(UserType)message.get("userType"));
+			message.put("response", userScreens);
+			break;
 		default:
 			break;
 		}

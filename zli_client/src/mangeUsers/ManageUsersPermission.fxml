@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="25.0" style="-fx-background-color: F1EDF0;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mangeUsers.ManageUsersPermissionController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" style="-fx-background-color: F1EDF0;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mangeUsers.ManageUsersPermissionController">
    <children>
       <GridPane alignment="CENTER">
          <columnConstraints>
@@ -30,7 +30,7 @@
          <children>
             <HBox>
                <children>
-                  <ImageView fitHeight="65.0" fitWidth="73.0" onMouseClicked="#changeToHome" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="93.0" fitWidth="82.0" onMouseClicked="#changeToHome" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/catalog/home.png" />
                      </image>
@@ -47,52 +47,84 @@
                <children>
                   <Label text="Manage User Screens" textAlignment="JUSTIFY" wrapText="true">
                      <font>
-                        <Font name="Arial" size="31.0" />
+                        <Font name="Arial" size="45.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
          </children>
       </GridPane>
-      <HBox alignment="CENTER" spacing="20.0">
+      <VBox spacing="10.0">
          <children>
-            <HBox alignment="CENTER" spacing="10.0">
+            <HBox alignment="CENTER" spacing="20.0">
                <children>
-                  <Button fx:id="selectUser" mnemonicParsing="false" style="-fx-background-radius: 25; -fx-background-color: #8AC275;" text="Select">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <ComboBox fx:id="usersOption" onAction="#getUser" prefWidth="150.0" style="-fx-border-color: #D9B8C4; -fx-background-radius: 5; -fx-background-color: E1D1DA;" />
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <Button fx:id="selectUser" mnemonicParsing="false" onMouseClicked="#getUserHomeScreen" style="-fx-background-radius: 25; -fx-background-color: #8AC275;" text="Select">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <ComboBox fx:id="usersOption" onAction="#getUser" prefHeight="27.0" prefWidth="197.0" promptText="Click here to select user id" style="-fx-border-color: #D9B8C4; -fx-background-radius: 5; -fx-background-color: E1D1DA;" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <Label text="name:">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="usernameLable" text="please select user" textFill="#2600ff">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <Label text="use type:">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="userTypeLable" text="premission" textFill="#2600ff">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER" spacing="25.0" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" spacing="10.0">
+            <HBox alignment="CENTER" prefHeight="32.0" prefWidth="1280.0">
                <children>
-                  <Label text="name:" />
-                  <Label fx:id="usernameLable" text="please select user" textFill="#2600ff" />
+                  <Label fx:id="errorLable" text="ERROR! PLEASE SELECT A USER FIRST!" textFill="#dd0f0f" visible="false">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
                </children>
-               <padding>
-                  <Insets right="20.0" />
-               </padding>
             </HBox>
-            <HBox alignment="CENTER" spacing="10.0">
-               <children>
-                  <Label text="use type:" />
-                  <Label fx:id="userTypeLable" text="premission" textFill="#2600ff" />
-               </children>
-               <padding>
-                  <Insets right="20.0" />
-               </padding>
-            </HBox>
-            <HBox alignment="CENTER" spacing="25.0" />
          </children>
-      </HBox>
+      </VBox>
       <ScrollPane>
          <VBox.margin>
-            <Insets top="10.0" />
+            <Insets />
          </VBox.margin>
          <content>
-            <TilePane fx:id="userScreens" prefHeight="557.0" prefWidth="1277.0" />
+            <TilePane fx:id="userHomeScreens" alignment="CENTER" prefColumns="4" prefHeight="557.0" prefRows="2" prefWidth="1277.0" />
          </content>
       </ScrollPane>
    </children>
