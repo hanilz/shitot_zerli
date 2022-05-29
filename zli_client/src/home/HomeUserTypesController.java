@@ -12,6 +12,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -94,11 +95,15 @@ public class HomeUserTypesController implements Initializable {
 		notificationLabel.setText("" + newNotifications.size());
 	}
 
-	private void setScreen(ArrayList<Screens> userScreens) {//
-		if (userScreens != null)
+	private void setScreen(ArrayList<Screens> userScreens) {
+		if (userScreens != null) {
+			if(userScreens.size()>4) {
+				gridOptions.setPadding(new Insets(0, 0, 0, 0));
+			}
 			for (Screens screen : userScreens) {
 				gridOptions.getChildren().add(new HomeVBox(screen));
 			}
+		}
 	}
 
 	@FXML
