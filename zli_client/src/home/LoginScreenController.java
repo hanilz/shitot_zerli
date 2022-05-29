@@ -112,7 +112,6 @@ public class LoginScreenController implements Initializable {
 			CartController.changeToGreatingCard();
 			CloseWindow(event);
 		}
-		
 	}
 
 	private void setError(String err) {
