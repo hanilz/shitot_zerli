@@ -1207,32 +1207,6 @@ public class AnalayzeCommand {
 		return incomeLabels;
 	}
 
-public static ArrayList<Screens> getUserHomeScreens(int userId, UserType userType) {
-		Connection conn;
-		ArrayList<Screens> userHomeScreens = new ArrayList<Screens>();
-		conn = DataBaseController.getConn();
-		ResultSet rs;
-		String query = "SELECT screen FROM user_screen WHERE idUser=?;";
-		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setInt(1, userId);
-			rs = preparedStmt.executeQuery();
-			if (!rs.next())
-				userHomeScreens.addAll(ManageClients.getUserScreens(userType));
-			else {
-				rs.previous();
-				while (rs.next()) {
-					userHomeScreens.add(Screens.valueOf((rs.getString(1))));
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return userHomeScreens;
-	}
-
-
-
 	public static Map<String, Integer> getComplaintsReport(Report report) {
 		Map<String, Integer> complaintsData = new HashMap<>();
 		try {
