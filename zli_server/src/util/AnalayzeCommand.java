@@ -1193,12 +1193,7 @@ public class AnalayzeCommand {
 			else {
 				rs.previous();
 				while (rs.next()) {
-					System.out.println(rs.getString(1));
-					if (rs.getString(1).equals("default")) {
-						userHomeScreens.addAll(ManageClients.getUserScreens(userType));
-					} else
-						userHomeScreens.add(Screens.valueOf((rs.getString(1))));
-					System.out.println(userHomeScreens);
+					userHomeScreens.add(Screens.valueOf((rs.getString(1))));
 				}
 			}
 		} catch (SQLException e) {
@@ -1206,7 +1201,7 @@ public class AnalayzeCommand {
 		}
 		return userHomeScreens;
 	}
-}
+
 
 	public static Map<String, Integer> getComplaintsReport(Report report) {
 		Map<String, Integer> complaintsData = new HashMap<>();
