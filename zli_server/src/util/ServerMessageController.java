@@ -281,6 +281,22 @@ public class ServerMessageController {
 			Map<String,Integer> productsOrdersLabels = AnalayzeCommand.getProductsOrdersReport((Report)message.get("selected report"));
 			message.put("response", productsOrdersLabels);
 			break;
+		case GET_COMPLAINT_REPORT:
+			Map<String,Integer> complaintsReportAxis = AnalayzeCommand.getComplaintsReport((Report)message.get("selected report"));
+			message.put("response", complaintsReportAxis);
+			break;
+		case GET_INCOME_HISTOGRAM_REPORT:
+			Map<String,Integer> incomeHistogramReportAxis = AnalayzeCommand.getIncomeHistogramReport((Report)message.get("selected report"));
+			message.put("response", incomeHistogramReportAxis);
+			break;
+		case GET_CUSTOM_INCOME_REPORT:
+			Integer customIncome = AnalayzeCommand.getCustomIncomeReport((Report)message.get("selected report"));
+			message.put("response", customIncome);
+			break;
+		case GET_CUSTOM_ORDERS_REPORT:
+			Integer customOrders = AnalayzeCommand.getCustomOrdersReport((Report)message.get("selected report"));
+			message.put("response", customOrders);
+			break;
 		default:
 			break;
 		}

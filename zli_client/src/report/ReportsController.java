@@ -121,12 +121,15 @@ public class ReportsController implements Initializable {
 		for (Report currentReport : reports) {
 			Report checkReport = new Report(branchComboBox.getValue().getIdBranch(), yearComboBox.getValue(),
 					quraterComboBox.getValue());
-			if (currentReport.equals(checkReport))
+			if (currentReport.equals(checkReport) && !currentReport.getType().equals("income histogram"))
+				reportsFound.add(currentReport);
+			else if(currentReport.equals(checkReport) && currentReport.getType().equals("income histogram") && User.getUserInstance().getType() == UserType.CEO) //if the user is ceo, we will add the income histogram report
 				reportsFound.add(currentReport);
 		}
 		if (reportsFound.size() != 0) {
 			reportsTable.setItems(reportsFound);
 			noReportsLabel.setVisible(false);
+			reportsTable.refresh();
 		} else {
 			reportsTable.getItems().clear();
 			noReportsLabel.setVisible(true);
@@ -148,11 +151,19 @@ public class ReportsController implements Initializable {
 		response = (Map<String, Integer>) ClientFormController.client.accept(message);
 		PopupReportController.setProductsLabels(response);
 		
+		message.put("command", Commands.GET_CUSTOM_INCOME_REPORT);
+		message.put("selected report",
+				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
+		Integer responseCustom = (Integer) ClientFormController.client.accept(message);
+		PopupReportController.setTotalCustom(responseCustom);
+		
 		PopupReportController.setSelectedReport(selectedReport);
 	}
 
 	@SuppressWarnings("unchecked")
 	private void getOrdersReport(Report selectedReport) {
+		//TODO: bug, openning the complaint report instead orders reports (guess: problem with the stage of the popup).
+		//TODO: fix the alignment of barChart
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.GET_ITEMS_ORDERS_REPORT);
 		message.put("selected report",
@@ -165,6 +176,12 @@ public class ReportsController implements Initializable {
 				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
 		response = (Map<String, Integer>) ClientFormController.client.accept(message);
 		PopupReportController.setProductsLabels(response);
+		
+		message.put("command", Commands.GET_CUSTOM_ORDERS_REPORT);
+		message.put("selected report",
+				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
+		Integer responseCustom = (Integer) ClientFormController.client.accept(message);
+		PopupReportController.setTotalCustom(responseCustom);
 		
 		PopupReportController.setSelectedReport(selectedReport);
 	}
@@ -184,8 +201,43 @@ public class ReportsController implements Initializable {
 				ManageScreens.openPopupFXML(PopupReportController.class.getResource("PopupReport.fxml"),
 						"Orders Report");
 			} catch (Exception e) {}
+		case "complaints":
+			getComplaintsReportPerBranch(selectedReport);
+			try {
+				ManageScreens.openPopupFXML(HistogramReportController.class.getResource("HistogramReport.fxml"),
+						"Complaints Report");
+			} catch (Exception e) {}
+			break;
+		case "income histogram":
+			getIncomeHistogramReportPerBranch(selectedReport);
+			try {
+				ManageScreens.openPopupFXML(HistogramReportController.class.getResource("HistogramReport.fxml"),
+						"Income Histogram Report");
+			} catch (Exception e) {}
 			break;
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private void getIncomeHistogramReportPerBranch(Report selectedReport) {
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.GET_INCOME_HISTOGRAM_REPORT);
+		message.put("selected report",
+				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
+		Map<String, Integer> response = (Map<String, Integer>) ClientFormController.client.accept(message);
+		HistogramReportController.setTotalDataPerBranch(response);
+		HistogramReportController.setSelectedReport(selectedReport);
+	}
+
+	@SuppressWarnings("unchecked")
+	private void getComplaintsReportPerBranch(Report selectedReport) {
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.GET_COMPLAINT_REPORT);
+		message.put("selected report",
+				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
+		Map<String, Integer> response = (Map<String, Integer>) ClientFormController.client.accept(message);
+		HistogramReportController.setTotalDataPerBranch(response);
+		HistogramReportController.setSelectedReport(selectedReport);
 	}
 
 	private void addButtonToTableAndEvent() {

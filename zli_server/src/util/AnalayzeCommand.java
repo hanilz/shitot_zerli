@@ -1182,6 +1182,7 @@ public class AnalayzeCommand {
 		return incomeLabels;
 	}
 
+
 	public static ArrayList<Screens> getUserHomeScreens(int userId, UserType userType) {
 		ArrayList<Screens> userHomeScreens = new ArrayList<Screens>();
 		try {
@@ -1204,5 +1205,85 @@ public class AnalayzeCommand {
 			e.printStackTrace();
 		}
 		return userHomeScreens;
+	}
+}
+
+	public static Map<String, Integer> getComplaintsReport(Report report) {
+		Map<String, Integer> complaintsData = new HashMap<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt.executeQuery(
+					"SELECT MONTHNAME(complaints.date) as complaint_month, count(complaints.idComplaint) as number_of_complaints\r\n"
+					+ "FROM complaints\r\n"
+					+ "JOIN orders ON complaints.orderId = orders.idOrder and orders.idBranch = "+report.getIdBranch()+"\r\n"
+					+ "WHERE complaints.date between "+report.getDateRange()+"\r\n"
+					+ "GROUP BY complaint_month ORDER BY complaints.date;");
+			while (rs.next()) {
+				String month = rs.getString(1);
+				int totalComplaintCountPerMonth = rs.getInt(2);
+				complaintsData.put(month, totalComplaintCountPerMonth);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return complaintsData;
+	}
+
+	public static Map<String, Integer> getIncomeHistogramReport(Report report) {
+		Map<String, Integer> incomeData = new HashMap<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+
+			ResultSet rs = selectStmt.executeQuery(
+					"SELECT MONTHNAME(orders.date) as orders_month, SUM(orders.price) as totalInMonth\r\n"
+					+ "FROM orders\r\n"
+					+ "WHERE orders.date between "+report.getDateRange()+" and orders.idBranch = "+report.getIdBranch()+"\r\n"
+					+ "GROUP BY orders_month\r\n"
+					+ "ORDER BY orders.date;");
+			while (rs.next()) {
+				String month = rs.getString(1);
+				int totalIncomePerMonth = rs.getInt(2);
+				incomeData.put(month, totalIncomePerMonth);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return incomeData;
+	}
+
+	public static int getCustomIncomeReport(Report report) {
+		int totalSum = 0;
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt
+					.executeQuery("SELECT SUM(order_custom_products.quantity*custom_products.price) as totalSum\r\n"
+							+ "FROM custom_products\r\n"
+							+ "JOIN order_custom_products ON custom_products.id=order_custom_products.idCustomProduct\r\n"
+							+ "JOIN orders ON orders.idOrder = order_custom_products.idOrder and orders.idBranch = "+report.getIdBranch()+" and orders.date between "+report.getDateRange()+" GROUP BY orders.idBranch;");
+			while (rs.next()) {
+				totalSum = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalSum;
+	}
+	
+	public static int getCustomOrdersReport(Report report) {
+		int totalQuantity = 0;
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt
+					.executeQuery("SELECT SUM(order_custom_products.quantity) as totalQuantity\r\n"
+							+ "FROM custom_products\r\n"
+							+ "JOIN order_custom_products ON custom_products.id=order_custom_products.idCustomProduct\r\n"
+							+ "JOIN orders ON orders.idOrder = order_custom_products.idOrder and orders.idBranch = "+report.getIdBranch()+" and orders.date between "+report.getDateRange()+" GROUP BY orders.idBranch;");
+			while (rs.next()) {
+				totalQuantity = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalQuantity;
 	}
 }
