@@ -31,6 +31,7 @@ import javafx.stage.WindowEvent;
 import manageCatalog.ManageCatalogController;
 import mangeCustomerOrders.ManageCustomerOrdersController;
 import mangeUsers.ManageUsersController;
+import mangeUsers.ManageUsersPermissionController;
 import order.CheckoutController;
 import order.DeliveryController;
 import order.GreetingCardController;
@@ -273,6 +274,10 @@ public class ManageScreens {
 				ManageScreens.changeScene(DeliveryCoordinatorController.class.getResource("DeliveryCoordinatorScreen.fxml"),
 						"Delivery Coordinator");
 				break;
+			case USER_PREMISSION:
+				ManageScreens.changeScene(ManageUsersPermissionController.class.getResource("ManageUsersPermission.fxml"),
+						"Users Premission");
+				break;
 			default:
 				break;
 			}
@@ -355,6 +360,8 @@ public class ManageScreens {
 			return "Survey Results";
 		case DELIVER_ORDERS:
 			return "Deliver Orders";
+		case USER_PREMISSION:
+			return "Users Premission";
 		}
 		return null;
 	}
@@ -415,6 +422,8 @@ public class ManageScreens {
 			return "resources/home/survey_results.png";
 		case DELIVER_ORDERS:
 			return "resources/home/delivery.png";
+		case USER_PREMISSION:
+			return "resources/home/homeSetting.png";
 		default:
 			return "";// no such user//
 		}
