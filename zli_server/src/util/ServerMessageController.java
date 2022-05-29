@@ -20,10 +20,12 @@ import entities.Order;
 import entities.OrderItem;
 import entities.OrderProduct;
 import entities.Product;
+import entities.ProductsBase;
 import entities.Report;
 import entities.SurveyQuestion;
 import entities.UserDetails;
 import ocsf.server.ConnectionToClient;
+import ordersView.CustomerOrderView;
 import server.ServerController;
 import surveyAnalysis.QuestionAnswer;
 
@@ -296,6 +298,16 @@ public class ServerMessageController {
 		case GET_CUSTOM_ORDERS_REPORT:
 			Integer customOrders = AnalayzeCommand.getCustomOrdersReport((Report)message.get("selected report"));
 			message.put("response", customOrders);
+			break;
+		case FETCH_ORDERS_FOR_CLIENT:
+			ArrayList<CustomerOrderView> clientOrders = AnalayzeCommand.getCustomerOrders((Integer)message.get("idUser"));
+			message.put("response", clientOrders);
+			break;
+		case FETCH_ORDER_CONTENT:
+			HashMap<ProductsBase,Integer> productsInOrder = AnalayzeCommand.getOrderProducts((Integer)message.get("orderID"));
+			productsInOrder.putAll(AnalayzeCommand.getOrderItems((Integer)message.get("orderID")));
+			productsInOrder.putAll(AnalayzeCommand.getOrderCustomProducts((Integer)message.get("orderID")));
+			message.put("response", productsInOrder);
 			break;
 		default:
 			break;

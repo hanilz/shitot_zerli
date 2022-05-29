@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox alignment="CENTER_LEFT" maxWidth="425.0" prefHeight="70.0" prefWidth="425.0" spacing="3.0" style="-fx-background-color: ECE4DB; -fx-background-radius: 30;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ordersView.OrderProductRowController">
+   <children>
+      <VBox alignment="CENTER" maxHeight="65.0" maxWidth="65.0" prefHeight="65.0" prefWidth="65.0">
+         <children>
+            <ImageView fx:id="productImage" fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </VBox>
+      <VBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="121.0">
+         <children>
+            <Label fx:id="productID" text="Poduct ID:XXX">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="productPrice" text="Price: XXXX">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="productQty" text="QTY:XXX">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Separator orientation="VERTICAL" prefHeight="200.0" />
+      <Label fx:id="productName" alignment="TOP_LEFT" maxHeight="70.0" maxWidth="193.0" prefHeight="70.0" prefWidth="193.0" text="Product Name:" wrapText="true">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+   </children>
+   <padding>
+      <Insets left="25.0" />
+   </padding>
+</HBox>
