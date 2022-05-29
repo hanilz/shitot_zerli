@@ -41,11 +41,6 @@
                   <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" style="-fx-background-color: transparent;" />
                </children>
             </HBox>
-            <Button alignment="TOP_CENTER" mnemonicParsing="false" text="X" GridPane.columnIndex="2">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
          </children>
       </GridPane>
       <VBox alignment="TOP_CENTER" prefHeight="88.0" prefWidth="878.0" spacing="5.0">
@@ -86,9 +81,9 @@
          <content>
             <VBox prefHeight="349.0" prefWidth="871.0">
                <children>
-                  <BarChart fx:id="histogramChart">
+                  <BarChart fx:id="histogramChart" categoryGap="5.0">
                     <xAxis>
-                      <CategoryAxis fx:id="monthAxis" label="Months" side="BOTTOM" />
+                      <CategoryAxis fx:id="monthAxis" endMargin="10.0" label="Months" side="RIGHT" startMargin="10.0" />
                     </xAxis>
                     <yAxis>
                       <NumberAxis fx:id="countValuesAxis" label="Number of complaints" side="LEFT" />

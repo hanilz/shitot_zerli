@@ -1,10 +1,13 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import client.ClientFormController;
 import util.Commands;
+import util.ManageClients;
+import util.Screens;
 import util.UserType;
 
 public class User implements Serializable {
@@ -17,24 +20,44 @@ public class User implements Serializable {
 	private String username = "guest";
 	private int idAccount = -1;
 	private UserType userType = UserType.UNDEFINED;
+	private ArrayList<Screens> userHomeScreens=new ArrayList<>();
 	private boolean isLogged = false;
 	private double storeCredit = 0;
 	private static User userInstance = null;
 
 	private User() {
 	}
+	
+	public ArrayList<Screens> getUserHomeScreens()
+	{
+		return userHomeScreens;
+	}
+	public void clearUserHomeScreens()
+	{
+		userHomeScreens.clear();
+	}
+	
+	public ArrayList<Screens> getDefaultScreens()
+	{
+		return ManageClients.getUserScreens(userType);
+	}
+	public void setUserScreens(ArrayList<Screens> userHomeScreens)
+	{
+		this.userHomeScreens=userHomeScreens;
+	}
 
 	public static User getUserInstance() {
 		return userInstance == null ? userInstance = new User() : userInstance;
 	}
 
-	public void login(int idUser, String username, int idAccount, UserType userType, double storeCredit) {
+	public void login(int idUser, String username, int idAccount, UserType userType, double storeCredit, ArrayList<Screens> userHomeScreens) {
 		if (!isLogged) {
 			this.idUser = idUser;
 			this.username = username;
 			this.idAccount = idAccount;
 			this.userType = userType;
 			this.storeCredit = storeCredit;
+			this.userHomeScreens=userHomeScreens;
 			isLogged = true;
 		}
 	}
@@ -55,6 +78,7 @@ public class User implements Serializable {
 			this.username = "guest";
 			this.idAccount = -1;
 			this.userType = UserType.UNDEFINED;
+			clearUserHomeScreens();
 			isLogged = false;
 		}
 	}

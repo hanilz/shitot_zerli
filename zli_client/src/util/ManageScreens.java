@@ -31,6 +31,7 @@ import javafx.stage.WindowEvent;
 import manageCatalog.ManageCatalogController;
 import mangeCustomerOrders.ManageCustomerOrdersController;
 import mangeUsers.ManageUsersController;
+import mangeUsers.ManageUsersPermissionController;
 import order.CheckoutController;
 import order.DeliveryController;
 import order.GreetingCardController;
@@ -117,8 +118,10 @@ public class ManageScreens {
 			public void run() {
 				popupStage.setTitle(title);
 				popupStage.setScene(scene);
-				popupStage.initModality(Modality.APPLICATION_MODAL);
-				popupStage.showAndWait();
+				if (popupStage.getModality() == Modality.NONE)
+					popupStage.initModality(Modality.APPLICATION_MODAL);
+				if(!popupStage.isShowing())
+					popupStage.showAndWait();
 				removePopup(popupStage);
 			}
 		});
@@ -271,6 +274,10 @@ public class ManageScreens {
 				ManageScreens.changeScene(DeliveryCoordinatorController.class.getResource("DeliveryCoordinatorScreen.fxml"),
 						"Delivery Coordinator");
 				break;
+			case USER_PREMISSION:
+				ManageScreens.changeScene(ManageUsersPermissionController.class.getResource("ManageUsersPermission.fxml"),
+						"Users Premission");
+				break;
 			default:
 				break;
 			}
@@ -329,8 +336,6 @@ public class ManageScreens {
 			return "Income Report";
 		case VIEW_ORDERS:
 			return "Orders";
-		case VIEW_ORDERS_REPORT:
-			break;
 		case MANAGE_USERS:
 			return "Manage Users";
 		case SURVEY_HOME:
@@ -353,8 +358,11 @@ public class ManageScreens {
 			return "Survey Results";
 		case DELIVER_ORDERS:
 			return "Deliver Orders";
+		case USER_PREMISSION:
+			return "Users Premission";
+		default:
+			return "";
 		}
-		return null;
 	}
 
 	public static String getIconPath(Screens user) {
@@ -413,6 +421,8 @@ public class ManageScreens {
 			return "resources/home/survey_results.png";
 		case DELIVER_ORDERS:
 			return "resources/home/delivery.png";
+		case USER_PREMISSION:
+			return "resources/home/homeSetting.png";
 		default:
 			return "";// no such user//
 		}

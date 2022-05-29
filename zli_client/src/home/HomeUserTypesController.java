@@ -65,7 +65,7 @@ public class HomeUserTypesController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		ArrayList<Screens> userScreens = ManageClients.getUserScreens(User.getUserInstance().getType());
+		ArrayList<Screens> userScreens = User.getUserInstance().getUserHomeScreens();
 		setScreen(userScreens);//
 		userNameLabel.setText(User.getUserInstance().getUsername());
 		logoutButton.setCursor(Cursor.HAND);

@@ -1,6 +1,7 @@
 package report;
 
 import java.net.URL;
+import java.time.Year;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -117,6 +118,8 @@ public class ReportsController implements Initializable {
 
 	@FXML
 	void searchReportsButton(MouseEvent event) {
+		if(!isInputValid())
+			return;
 		ObservableList<Report> reportsFound = FXCollections.observableArrayList();
 		for (Report currentReport : reports) {
 			Report checkReport = new Report(branchComboBox.getValue().getIdBranch(), yearComboBox.getValue(),
@@ -129,9 +132,23 @@ public class ReportsController implements Initializable {
 		if (reportsFound.size() != 0) {
 			reportsTable.setItems(reportsFound);
 			noReportsLabel.setVisible(false);
+			reportsTable.refresh();
 		} else {
 			reportsTable.getItems().clear();
+			noReportsLabel.setText("No report found");
 			noReportsLabel.setVisible(true);
+		}
+	}
+	
+	private boolean isInputValid() {
+		if(branchComboBox.getValue() == null || yearComboBox.getValue() == null || quraterComboBox.getValue() == null) {
+			noReportsLabel.setText("Please check your selection.");
+			noReportsLabel.setVisible(true);
+			return false;
+		}
+		else {
+			noReportsLabel.setVisible(false);
+			return true;
 		}
 	}
 
@@ -149,6 +166,12 @@ public class ReportsController implements Initializable {
 				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
 		response = (Map<String, Integer>) ClientFormController.client.accept(message);
 		PopupReportController.setProductsLabels(response);
+		
+		message.put("command", Commands.GET_CUSTOM_INCOME_REPORT);
+		message.put("selected report",
+				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
+		Integer responseCustom = (Integer) ClientFormController.client.accept(message);
+		PopupReportController.setTotalCustom(responseCustom);
 		
 		PopupReportController.setSelectedReport(selectedReport);
 	}
@@ -168,6 +191,12 @@ public class ReportsController implements Initializable {
 		response = (Map<String, Integer>) ClientFormController.client.accept(message);
 		PopupReportController.setProductsLabels(response);
 		
+		message.put("command", Commands.GET_CUSTOM_ORDERS_REPORT);
+		message.put("selected report",
+				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
+		Integer responseCustom = (Integer) ClientFormController.client.accept(message);
+		PopupReportController.setTotalCustom(responseCustom);
+		
 		PopupReportController.setSelectedReport(selectedReport);
 	}
 
@@ -186,6 +215,7 @@ public class ReportsController implements Initializable {
 				ManageScreens.openPopupFXML(PopupReportController.class.getResource("PopupReport.fxml"),
 						"Orders Report");
 			} catch (Exception e) {}
+			break;
 		case "complaints":
 			getComplaintsReportPerBranch(selectedReport);
 			try {
@@ -264,25 +294,23 @@ public class ReportsController implements Initializable {
 		StringBuilder sb = new StringBuilder(selectedReport.getDateToString());
 		String dateRange = selectedReport.getDateToString().charAt(5) + ""
 				+ selectedReport.getDateToString().charAt(6);
-		//int monthToInt = Integer.parseInt(selectedMonth) - 1;
-		//String dateRange = monthToInt + "";
 		switch (selectedReport.getQuarter()) {
 		case 1:
 			sb.setCharAt(6, dateRange.charAt(1));
 			sb.append(" 00:00:00");
-			return "'2022-01-01 00:00:00' and '" + sb.toString()+"'";
+			return "'"+Year.now().getValue()+"-01-01 00:00:00' and '" + sb.toString()+"'";
 		case 2:
 			sb.setCharAt(6, dateRange.charAt(1));
 			sb.append(" 00:00:00");
-			return "'2022-04-01 00:00:00' and '" + sb.toString()+"'";
+			return "'"+Year.now().getValue()+"-04-01 00:00:00' and '" + sb.toString()+"'";
 		case 3:
 			sb.setCharAt(6, dateRange.charAt(1));
 			sb.append(" 00:00:00");
-			return "'2022-07-01 00:00:00' and '" + sb.toString()+"'";
+			return "'"+Year.now().getValue()+"-07-01 00:00:00' and '" + sb.toString()+"'";
 		case 4:
 			sb.setCharAt(5, dateRange.charAt(0));
 			sb.setCharAt(6, dateRange.charAt(1));
-			return "'2022-10-01 00:00:00' and '" + sb.toString()+"'";
+			return "'"+Year.now().getValue()+"-10-01 00:00:00' and '" + sb.toString()+"'";
 		}
 		return "";
 	}
