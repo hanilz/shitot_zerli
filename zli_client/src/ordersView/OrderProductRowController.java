@@ -35,9 +35,8 @@ public class OrderProductRowController {
     public void initRow() {
     	productID.setText("Poduct ID: "+pb.getId());
     	productName.setText("Product Name:\n"+pb.getName());
-    	productPrice.setText(InputChecker.price(pb.getPrice()));
+    	productPrice.setText("Price: "+InputChecker.price(pb.getPrice()));
     	productQty.setText("QTY: "+qty);
     	productImage.setImage(new Image(pb.getImagePath()));
-    	//.setFitWidth(65);
     }
 }

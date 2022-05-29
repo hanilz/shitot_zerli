@@ -1290,7 +1290,7 @@ public class AnalayzeCommand {
 		ArrayList<CustomerOrderView> cov = new ArrayList<>();
 		try {
 			Statement selectStmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = selectStmt.executeQuery("SELECT o.idOrder,o.status,d.status,o.date,d.deliveryDate,d.type,o.price FROM zli.orders o INNER JOIN deliveries d ON o.idOrder = d.idOrder WHERE o.idUser ="+idUser+";");
+			ResultSet rs = selectStmt.executeQuery("SELECT o.idOrder,o.status,d.status,o.date,d.deliveryDate,d.type,o.price FROM zli.orders o INNER JOIN deliveries d ON o.idOrder = d.idOrder WHERE o.idUser ="+idUser+" ORDER BY o.date DESC;");
 			while (rs.next()) {
 				cov.add(new CustomerOrderView(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getDouble(7)));
 			}
