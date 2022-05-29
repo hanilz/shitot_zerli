@@ -29,9 +29,11 @@ import entities.Order;
 import entities.OrderItem;
 import entities.OrderProduct;
 import entities.Product;
+import entities.ProductsBase;
 import entities.Report;
 import entities.SurveyQuestion;
 import entities.UserDetails;
+import ordersView.CustomerOrderView;
 import surveyAnalysis.QuestionAnswer;
 
 /**
@@ -1205,8 +1207,30 @@ public class AnalayzeCommand {
 		return incomeLabels;
 	}
 
+public static ArrayList<Screens> getUserHomeScreens(int userId, UserType userType) {
+		Connection conn;
+		ArrayList<Screens> userHomeScreens = new ArrayList<Screens>();
+		conn = DataBaseController.getConn();
+		ResultSet rs;
+		String query = "SELECT screen FROM user_screen WHERE idUser=?;";
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, userId);
+			rs = preparedStmt.executeQuery();
+			if (!rs.next())
+				userHomeScreens.addAll(ManageClients.getUserScreens(userType));
+			else {
+				rs.previous();
+				while (rs.next()) {
+					userHomeScreens.add(Screens.valueOf((rs.getString(1))));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return userHomeScreens;
+	}
 
-	
 
 
 	public static Map<String, Integer> getComplaintsReport(Report report) {
@@ -1286,5 +1310,101 @@ public class AnalayzeCommand {
 			e.printStackTrace();
 		}
 		return totalQuantity;
+	}
+	
+	public static ArrayList<CustomerOrderView> getCustomerOrders(int idUser){
+		ArrayList<CustomerOrderView> cov = new ArrayList<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt.executeQuery("SELECT o.idOrder,o.status,d.status,o.date,d.deliveryDate,d.type,o.price FROM zli.orders o INNER JOIN deliveries d ON o.idOrder = d.idOrder WHERE o.idUser ="+idUser+";");
+			while (rs.next()) {
+				cov.add(new CustomerOrderView(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getDouble(7)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cov;
+	}
+
+	
+	/**returns the products in a given order
+	 * @param idOrder
+	 * @return
+	 */
+	public static HashMap<ProductsBase,Integer> getOrderProducts(int idOrder) {
+		HashMap<ProductsBase,Integer> products = new HashMap<>();
+		Connection conn = DataBaseController.getConn();
+		PreparedStatement preparedStmt;
+		/*
+		 * SELECT * FROM zli.order_products op INNER JOIN zli.products p ON op.idProduct=p.productID WHERE op.idOrder=4;
+			SELECT * FROM zli.order_items oi INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=4;
+			SELECT * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON ocp.idCustomProduct=cp.id WHERE ocp.idOrder=4;
+		 */
+			String query = "SELECT * FROM zli.order_products op INNER JOIN zli.products p ON op.idProduct=p.productID WHERE op.idOrder=?;";
+			try {
+				preparedStmt = conn.prepareStatement(query);
+				preparedStmt.setInt(1, idOrder);
+				ResultSet rs = preparedStmt.executeQuery();
+				while (rs.next()) {
+					products.put(new ProductsBase(rs.getInt(4), rs.getString(5), rs.getString(7),rs.getDouble(8),rs.getString(9), rs.getString(11)),rs.getInt(3));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		return products;
+	}
+	
+	/**returns the items in a given order
+	 * @param idOrder
+	 * @return
+	 */
+	public static HashMap<ProductsBase,Integer> getOrderItems(int idOrder) {
+		HashMap<ProductsBase,Integer> items = new HashMap<>();
+		Connection conn = DataBaseController.getConn();
+		PreparedStatement preparedStmt;
+		/*
+		 * SELECT * FROM zli.order_products op INNER JOIN zli.products p ON op.idProduct=p.productID WHERE op.idOrder=4;
+			SELECT * FROM zli.order_items oi INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=4;
+			SELECT * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON ocp.idCustomProduct=cp.id WHERE ocp.idOrder=4;
+		 */
+			String query = "SELECT * FROM zli.order_items oi INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=?;";
+			try {
+				preparedStmt = conn.prepareStatement(query);
+				preparedStmt.setInt(1, idOrder);
+				ResultSet rs = preparedStmt.executeQuery();
+				while (rs.next()) {
+					items.put(new ProductsBase(rs.getInt(4), rs.getString(5), rs.getString(6),rs.getDouble(7),rs.getString(8), rs.getString(9)),rs.getInt(3));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		return items;
+	}
+	
+	/**returns the Custom Products in a given order
+	 * @param idOrder
+	 * @return
+	 */
+	public static HashMap<ProductsBase,Integer> getOrderCustomProducts(int idOrder) {
+		HashMap<ProductsBase,Integer> customProducts = new HashMap<>();
+		Connection conn = DataBaseController.getConn();
+		PreparedStatement preparedStmt;
+		/*
+		 * SELECT * FROM zli.order_products op INNER JOIN zli.products p ON op.idProduct=p.productID WHERE op.idOrder=4;
+			SELECT * FROM zli.order_items oi INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=4;
+			SELECT * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON ocp.idCustomProduct=cp.id WHERE ocp.idOrder=4;
+		 */
+			String query = "SELECT * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON ocp.idCustomProduct=cp.id WHERE ocp.idOrder=?;";
+			try {
+				preparedStmt = conn.prepareStatement(query);
+				preparedStmt.setInt(1, idOrder);
+				ResultSet rs = preparedStmt.executeQuery();
+				while (rs.next()) {
+					customProducts.put(new ProductsBase(rs.getInt(4), rs.getString(5), "not specified",rs.getDouble(6),"not specified", "/resources/catalog/customProductImage.png"),rs.getInt(3));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		return customProducts;
 	}
 }
