@@ -308,6 +308,10 @@ public class ServerMessageController {
 			productsInOrder.putAll(AnalayzeCommand.getOrderItems((Integer)message.get("orderID")));
 			productsInOrder.putAll(AnalayzeCommand.getOrderCustomProducts((Integer)message.get("orderID")));
 			message.put("response", productsInOrder);
+      break;
+		case GET_USER_SCREENS:
+			ArrayList<Screens> userScreens = AnalayzeCommand.getUserHomeScreens((Integer)message.get("id"),(UserType)message.get("userType"));
+			message.put("response", userScreens);
 			break;
 		default:
 			break;

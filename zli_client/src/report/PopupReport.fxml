@@ -38,11 +38,6 @@
                   <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" style="-fx-background-color: transparent;" />
                </children>
             </HBox>
-            <Button alignment="TOP_CENTER" mnemonicParsing="false" text="X" GridPane.columnIndex="2">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
          </children>
       </GridPane>
       <VBox alignment="TOP_CENTER" prefHeight="88.0" prefWidth="878.0" spacing="10.0">
@@ -76,13 +71,13 @@
             <Separator prefWidth="200.0" />
          </children>
       </VBox>
-      <ScrollPane prefHeight="365.0" prefWidth="878.0">
+      <ScrollPane prefHeight="395.0" prefWidth="878.0">
          <content>
-            <VBox prefHeight="358.0" prefWidth="862.0" spacing="6.0">
+            <VBox prefHeight="387.0" prefWidth="862.0" spacing="6.0">
                <children>
                   <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="853.0">
                      <children>
-                        <Label fx:id="reportTypeItemsLabel" prefHeight="20.0" prefWidth="233.0" text="Income of items per item type" textAlignment="CENTER">
+                        <Label fx:id="reportTypeItemsLabel" alignment="CENTER" prefHeight="20.0" prefWidth="326.0" text="Income of items per item type" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font></Label>
@@ -95,10 +90,10 @@
                      </padding>
                   </HBox>
                   <Separator prefHeight="0.0" prefWidth="862.0" />
-                  <HBox fx:id="itemsHBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                  <HBox fx:id="itemsHBox" alignment="TOP_CENTER" prefHeight="82.0" prefWidth="862.0" spacing="15.0">
                      <children>
-                        <VBox fx:id="itemTypeVBox" alignment="CENTER" prefHeight="70.0" prefWidth="110.0" />
-                        <VBox fx:id="totalItemsVBox" alignment="CENTER_LEFT" prefHeight="15.0" prefWidth="88.0" />
+                        <VBox fx:id="itemTypeVBox" alignment="CENTER" prefHeight="70.0" prefWidth="104.0" />
+                        <VBox fx:id="totalItemsVBox" alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="59.0" />
                      </children>
                   </HBox>
                   <Separator prefHeight="0.0" prefWidth="862.0" />
@@ -112,23 +107,23 @@
                      </children>
                   </HBox>
                   <Separator prefHeight="0.0" prefWidth="862.0" />
-                  <HBox fx:id="productsHBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="85.0" prefWidth="862.0" spacing="15.0">
+                  <HBox fx:id="productsHBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="88.0" prefWidth="862.0" spacing="15.0">
                      <children>
-                        <VBox fx:id="productTypeVBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="140.0" prefWidth="179.0" />
-                        <VBox fx:id="totalProductsVBox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="140.0" prefWidth="42.0" />
+                        <VBox fx:id="productTypeVBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="101.0" prefWidth="179.0" />
+                        <VBox fx:id="totalProductsVBox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="88.0" prefWidth="92.0" />
                      </children>
                   </HBox>
                   <Separator prefHeight="0.0" prefWidth="862.0" />
-                  <HBox alignment="CENTER" prefHeight="22.0" prefWidth="862.0" spacing="50.0">
+                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="862.0">
                      <children>
                         <HBox fx:id="totalReportTypeCustom">
                            <children>
-                              <Label fx:id="totalReportTpeCustomLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="282.0" text="total income of custom products:">
+                              <Label fx:id="totalReportTpeCustomLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="686.0" text="total income of custom products:">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="totalCustomLabel" alignment="CENTER" prefHeight="17.0" prefWidth="72.0" text="0">
+                              <Label fx:id="totalCustomLabel" prefHeight="20.0" prefWidth="98.0" text="0">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -138,15 +133,15 @@
                      </children>
                   </HBox>
                   <Separator prefHeight="0.0" prefWidth="862.0" />
-                  <HBox alignment="CENTER" prefHeight="22.0" prefWidth="862.0" spacing="50.0">
+                  <HBox alignment="CENTER" prefHeight="33.0" prefWidth="862.0">
                      <children>
                         <HBox>
                            <children>
-                              <Label fx:id="totalReportTypeProductsLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="278.0" text="total income of products:">
+                              <Label fx:id="totalReportTypeProductsLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="671.0" text="total income of products:">
                                  <font>
                                     <Font size="14.0" />
                                  </font></Label>
-                              <Label fx:id="totalProductsLabel" alignment="CENTER" prefHeight="20.0" prefWidth="77.0" text="0">
+                              <Label fx:id="totalProductsLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="87.0" text="0">
                                  <font>
                                     <Font size="14.0" />
                                  </font></Label>
@@ -155,30 +150,23 @@
                      </children>
                   </HBox>
                   <Separator prefHeight="0.0" prefWidth="862.0" />
-                  <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="800.0" spacing="35.0">
+                  <HBox alignment="CENTER" cacheShape="false" prefHeight="37.0" prefWidth="862.0">
                      <children>
-                        <Label fx:id="totalReportTypeItemsLabel" prefHeight="20.0" prefWidth="246.0" text="total income of items:">
+                        <Label fx:id="totalReportTypeItemsLabel" prefHeight="26.0" prefWidth="682.0" text="total income of items:">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                        <VBox alignment="TOP_CENTER" prefHeight="26.0" prefWidth="12.0">
-                           <children>
-                              <Label fx:id="totalItemsLabel" alignment="CENTER" prefHeight="20.0" prefWidth="43.0" text="0">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                           </children>
+                        <Label fx:id="totalItemsLabel" prefHeight="20.0" prefWidth="100.0" text="0">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
-                           <padding>
-                              <Insets right="-52.0" />
-                           </padding>
-                        </VBox>
+                        </Label>
                      </children>
                      <VBox.margin>
-                        <Insets right="31.0" />
+                        <Insets />
                      </VBox.margin>
                   </HBox>
                </children>

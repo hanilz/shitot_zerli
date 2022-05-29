@@ -170,8 +170,31 @@ public class AnalayzeCommand {
 			return;
 		}
 	}
-
-	@SuppressWarnings("unlikely-arg-type")
+	
+	public static ArrayList<Screens> getUserHomeScreens(int userId, UserType userType) {
+		Connection conn;
+		ArrayList<Screens> userHomeScreens = new ArrayList<Screens>();
+		conn = DataBaseController.getConn();
+		ResultSet rs;
+		String query = "SELECT screen FROM user_screen WHERE idUser=?;";
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, userId);
+			rs = preparedStmt.executeQuery();
+			if (!rs.next())
+				userHomeScreens.addAll(ManageClients.getUserScreens(userType));
+			else {
+				rs.previous();
+				while (rs.next()) {
+					userHomeScreens.add(Screens.valueOf((rs.getString(1))));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return userHomeScreens;
+	}
+	
 	public static HashMap<String, Object> loginUser(String username, String password) {
 		Connection conn;
 		Status status = Status.NOT_REGISTERED;
@@ -1184,23 +1207,22 @@ public class AnalayzeCommand {
 		return incomeLabels;
 	}
 
-
-	public static ArrayList<Screens> getUserHomeScreens(int userId, UserType userType) {
+public static ArrayList<Screens> getUserHomeScreens(int userId, UserType userType) {
+		Connection conn;
 		ArrayList<Screens> userHomeScreens = new ArrayList<Screens>();
+		conn = DataBaseController.getConn();
+		ResultSet rs;
+		String query = "SELECT screen FROM user_screen WHERE idUser=?;";
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = selectStmt.executeQuery("SELECT screen FROM user_screen WHERE idUser=" + userId + ";");
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, userId);
+			rs = preparedStmt.executeQuery();
 			if (!rs.next())
 				userHomeScreens.addAll(ManageClients.getUserScreens(userType));
 			else {
 				rs.previous();
 				while (rs.next()) {
-					System.out.println(rs.getString(1));
-					if (rs.getString(1).equals("default")) {
-						userHomeScreens.addAll(ManageClients.getUserScreens(userType));
-					} else
-						userHomeScreens.add(Screens.valueOf((rs.getString(1))));
-					System.out.println(userHomeScreens);
+					userHomeScreens.add(Screens.valueOf((rs.getString(1))));
 				}
 			}
 		} catch (SQLException e) {
@@ -1208,6 +1230,7 @@ public class AnalayzeCommand {
 		}
 		return userHomeScreens;
 	}
+
 
 
 	public static Map<String, Integer> getComplaintsReport(Report report) {
