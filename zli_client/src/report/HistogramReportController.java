@@ -56,7 +56,7 @@ public class HistogramReportController implements Initializable {
 			break;
 			case "income histogram":
 				reportTypeLabel.setText("Income Histogram Report");
-				countValuesAxis.setLabel("Number of incomes");
+				countValuesAxis.setLabel("Total Income");
 				break;
 		}
 	}

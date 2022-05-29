@@ -1,6 +1,7 @@
 package report;
 
 import java.net.URL;
+import java.time.Year;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -293,25 +294,23 @@ public class ReportsController implements Initializable {
 		StringBuilder sb = new StringBuilder(selectedReport.getDateToString());
 		String dateRange = selectedReport.getDateToString().charAt(5) + ""
 				+ selectedReport.getDateToString().charAt(6);
-		//int monthToInt = Integer.parseInt(selectedMonth) - 1;
-		//String dateRange = monthToInt + "";
 		switch (selectedReport.getQuarter()) {
 		case 1:
 			sb.setCharAt(6, dateRange.charAt(1));
 			sb.append(" 00:00:00");
-			return "'2022-01-01 00:00:00' and '" + sb.toString()+"'";
+			return "'"+Year.now().getValue()+"-01-01 00:00:00' and '" + sb.toString()+"'";
 		case 2:
 			sb.setCharAt(6, dateRange.charAt(1));
 			sb.append(" 00:00:00");
-			return "'2022-04-01 00:00:00' and '" + sb.toString()+"'";
+			return "'"+Year.now().getValue()+"-04-01 00:00:00' and '" + sb.toString()+"'";
 		case 3:
 			sb.setCharAt(6, dateRange.charAt(1));
 			sb.append(" 00:00:00");
-			return "'2022-07-01 00:00:00' and '" + sb.toString()+"'";
+			return "'"+Year.now().getValue()+"-07-01 00:00:00' and '" + sb.toString()+"'";
 		case 4:
 			sb.setCharAt(5, dateRange.charAt(0));
 			sb.setCharAt(6, dateRange.charAt(1));
-			return "'2022-10-01 00:00:00' and '" + sb.toString()+"'";
+			return "'"+Year.now().getValue()+"-10-01 00:00:00' and '" + sb.toString()+"'";
 		}
 		return "";
 	}
