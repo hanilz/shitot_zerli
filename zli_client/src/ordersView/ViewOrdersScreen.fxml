@@ -46,7 +46,7 @@
             </ImageView>
          </children>
       </GridPane>
-      <HBox prefHeight="578.0" prefWidth="1240.0" spacing="5.0">
+      <HBox prefHeight="603.0" prefWidth="1240.0" spacing="5.0">
          <children>
             <VBox alignment="TOP_CENTER">
                <children>
@@ -54,7 +54,7 @@
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font></Label>
-                  <ScrollPane fx:id="orderListsScrollPane" prefHeight="551.0" prefWidth="765.0">
+                  <ScrollPane fx:id="orderListsScrollPane" prefHeight="574.0" prefWidth="765.0">
                      <content>
                         <VBox fx:id="orderList" prefHeight="547.0" prefWidth="748.0" spacing="10.0">
                            <padding>
@@ -72,7 +72,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font></Label>
                   <Separator prefWidth="200.0" />
-                  <VBox alignment="TOP_CENTER" prefHeight="557.0" prefWidth="450.0">
+                  <VBox alignment="TOP_CENTER" prefHeight="572.0" prefWidth="450.0">
                      <children>
                         <HBox alignment="CENTER">
                            <children>
@@ -175,9 +175,9 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <ScrollPane fx:id="orderOverViewScrollPane" prefHeight="326.0" prefWidth="450.0">
+                        <ScrollPane fx:id="orderOverViewScrollPane" prefHeight="349.0" prefWidth="450.0">
                            <content>
-                              <VBox fx:id="orderContentsVbox" prefHeight="317.0" prefWidth="432.0" spacing="5.0">
+                              <VBox fx:id="orderContentsVbox" prefHeight="346.0" prefWidth="432.0" spacing="5.0">
                                  <padding>
                                     <Insets left="5.0" top="5.0" />
                                  </padding></VBox>
@@ -191,6 +191,6 @@
       </HBox>
    </children>
    <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+      <Insets bottom="10.0" left="20.0" right="20.0" top="5.0" />
    </padding>
 </VBox>
