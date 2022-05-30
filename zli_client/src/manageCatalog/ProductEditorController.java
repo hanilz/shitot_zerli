@@ -70,7 +70,7 @@ public class ProductEditorController implements Initializable {
 		flowerTypeLabel.setText("");
 		basePriceField.setText(product.getPrice() + "");
 		priceDiscountLabel.setText(InputChecker.price(0));
-		discountField.setText(product.getRatio() + "");
+		discountField.setText(product.getDiscount() + "");
 		if (product instanceof Product) {
 			flowerTypeLabel.setText(((Product) product).getFlowerType());
 			editDesTextArea.setText(((Product) product).getProductDescription());
@@ -161,8 +161,8 @@ public class ProductEditorController implements Initializable {
 			product = responseItem;
 		}
 		setLabelOnPopup();
-		if (product.getRatio() != 0) {
-			double priceAfterDiscount = product.getPrice() - (product.getPrice() * (product.getRatio() / 100));
+		if (product.getDiscount() != 0) {
+			double priceAfterDiscount = product.getPrice() - (product.getPrice() * (product.getDiscount() / 100));
 			priceDiscountLabel.setText(InputChecker.price(priceAfterDiscount));
 		}
 	}

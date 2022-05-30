@@ -30,8 +30,8 @@ public class ManageCatalogVBox extends VBox {
 		initImageProduct();
 		this.getChildren().add(image);
 		amountLabel.setText("" + InputChecker.price(((double) product.getPrice())));//int->double
-		if(product.getRatio() != 0) {
-			double discount = product.getPrice() - (product.getPrice()*(product.getRatio()/100));
+		if(product.getDiscount() != 0) {
+			double discount = product.getPrice() - (product.getPrice()*(product.getDiscount()/100));
 			amountLabel.setId("discount");
 			amountLabel.setStyle("-fx-text-fill: #F70000;");
 			amountLabel.setText(InputChecker.price(discount));
@@ -55,7 +55,7 @@ public class ManageCatalogVBox extends VBox {
 		image.setCursor(Cursor.HAND);
 	}
 
-	private void initImageProduct() { // same function but not with the event so we will call super.
+	private void initImageProduct() { 
 		image = new ImageView(product.getImagePath());
 		setImageProp();
 		image.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -66,19 +66,6 @@ public class ManageCatalogVBox extends VBox {
 					ManageScreens.openPopupFXML(ProductEditorController.class.getResource("ProductEditorPopup.fxml"),
 							"Product Editor");
 				} catch (Exception e) {}
-//				PVBox popup = new PVBox(product);
-//
-//				popup.initProductVBox();
-//				Scene scene = new Scene(popup);
-//				Stage stage = new Stage();
-//				popup.sceneProperty().addListener((obs, oldVal, newVal) -> {
-//		            Platform.runLater(() -> {
-//		            	stage.sizeToScene();    
-//		            });
-//		        });
-//				stage.setTitle("Product Details - " + product.getName());
-//				stage.setScene(scene);
-//				stage.showAndWait();
 			}
 		});
 	}
