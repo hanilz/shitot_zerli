@@ -41,7 +41,7 @@
                         <Font name="System Bold" size="42.0" />
                      </font>
                   </Label>
-                  <Label text="Review orders that are waiting for approval or cancelation">
+                  <Label text="Review Orders that are Waiting for Approval or Cancellation">
                      <font>
                         <Font size="17.0" />
                      </font>
@@ -57,7 +57,7 @@
       </GridPane>
       <TabPane prefHeight="591.0" prefWidth="1260.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="New orders waiting for approval">
+          <Tab text="New Orders Waiting for Approval">
                <content>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
@@ -67,7 +67,10 @@
                             <TableColumn fx:id="priceCol" prefWidth="89.0" text="Price" />
                               <TableColumn fx:id="firstNameCol" prefWidth="78.0" text="First Name" />
                               <TableColumn fx:id="lastNameCol" prefWidth="82.0" text="Last Name" />
-                              <TableColumn fx:id="orderDateCol" prefWidth="117.0" text="Order Date" />
+                              <TableColumn fx:id="orderStatusCol" prefWidth="149.0" text="Order Status" />
+                              <TableColumn fx:id="orderDateCol" prefWidth="139.0" text="Order Date" />
+                              <TableColumn fx:id="deliveryDateCol" prefWidth="118.0" text="Delivery Date" />
+                              <TableColumn fx:id="deliveryTypeCol" prefWidth="134.0" text="Delivery Type" />
                           </columns>
                         </TableView>
                         <HBox alignment="CENTER" prefHeight="47.0" prefWidth="980.0" spacing="200.0">
@@ -80,7 +83,7 @@
                   </VBox>
                </content>
           </Tab>
-          <Tab text="Waiting for cancelation">
+          <Tab text="Waiting for Cancellation">
                <content>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
@@ -90,7 +93,12 @@
                               <TableColumn fx:id="priceCol1" prefWidth="89.0" text="Price" />
                               <TableColumn fx:id="firstNameCol1" prefWidth="78.0" text="First Name" />
                               <TableColumn fx:id="lastNameCol1" prefWidth="82.0" text="Last Name" />
-                              <TableColumn fx:id="orderDateCol1" prefWidth="117.0" text="Order Date" />
+                              <TableColumn fx:id="orderStatusCol1" prefWidth="149.0" text="Order Status" />
+                              <TableColumn fx:id="orderDateCol1" prefWidth="140.0" text="Order Date" />
+                              <TableColumn fx:id="deliveryDateCol1" prefWidth="126.0" text="Delivery Date" />
+                              <TableColumn fx:id="deliveryTypeCol1" prefWidth="116.0" text="Delivery Type" />
+                              <TableColumn fx:id="requestDateCol1" prefWidth="129.0" text="Request Time" />
+                              <TableColumn fx:id="timeTillDeliveryCol" prefWidth="133.0" text="Remaining Time" />
                            </columns>
                         </TableView>
                         <HBox alignment="CENTER" prefHeight="42.0" prefWidth="980.0" spacing="100.0">

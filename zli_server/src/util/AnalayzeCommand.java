@@ -753,8 +753,8 @@ public class AnalayzeCommand {
 	public static ArrayList<ManagerOrderView> selectOrdersForManager(int mangerID) {
 		ArrayList<ManagerOrderView> orders = new ArrayList<>();
 		Connection conn = DataBaseController.getConn();
-		String query = "SELECT O.idOrder, O.price, UD.firstName,UD.lastName,O.date,O.status,O.idUser FROM zli.orders o, zli.branches b,zli.user_details UD,zli.users U WHERE o.idBranch=b.idBranch AND b.idManager =? AND (O.status = 'Waiting for Approval' OR O.status = 'Waiting for Cancelation' ) AND U.idUser = O.idUser AND UD.idAccount=U.idAccount;";
-
+		//String query = "SELECT O.idOrder, O.price, UD.firstName,UD.lastName,O.date,O.status,O.idUser FROM zli.orders o, zli.branches b,zli.user_details UD,zli.users U WHERE o.idBranch=b.idBranch AND b.idManager =? AND (O.status = 'Waiting for Approval' OR O.status = 'Waiting for Cancellation' ) AND U.idUser = O.idUser AND UD.idAccount=U.idAccount;";
+		String query = "SELECT distinct o.idOrder, o.price, UD.firstName,UD.lastName,o.status,o.idUser,o.date AS orderDate, d.deliveryDate,d.type,o.lastModified,TIMESTAMPDIFF(minute,o.lastModified,d.deliveryDate) AS timeTillDelivery FROM zli.orders o, zli.branches b,zli.user_details UD,zli.users U,zli.orders, zli.deliveries d WHERE o.idBranch=b.idBranch AND b.idManager =? AND (o.status = 'Waiting for Approval' OR o.status = 'Waiting for Cancellation' ) AND U.idUser = o.idUser AND UD.idAccount=U.idAccount AND d.idOrder=o.idOrder;";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, mangerID);
@@ -763,11 +763,15 @@ public class AnalayzeCommand {
 				int idOrder = rs.getInt(1);
 				Double price = rs.getDouble(2);
 				String firstName = rs.getString(3);
-				String lastName = rs.getString(4);
-				String date = rs.getString(5);
-				String status = rs.getString(6);
-				int idUser = rs.getInt(7);
-				orders.add(new ManagerOrderView(idOrder, price, firstName, lastName, date, status, idUser));
+				String lastName= rs.getString(4);
+				String status= rs.getString(5);
+				int idUser= rs.getInt(6);
+				String orderDate= rs.getString(7);
+				String deliveryTime= rs.getString(8);
+				String deliveryType= rs.getString(9);
+				String lastModified= rs.getString(10);
+				int timeTillDelivery= rs.getInt(11);
+				orders.add(new ManagerOrderView(idOrder, price, firstName, lastName, status, idUser,orderDate,deliveryTime,deliveryType,lastModified,timeTillDelivery));
 			}
 		} catch (SQLException e) {
 			System.out.println("failed to fetch orders for manager");
@@ -797,12 +801,13 @@ public class AnalayzeCommand {
 		return true;
 	}
 
-	public static boolean cancelOrder(int idOrder) {
+	public static boolean cancelOrder(int idOrder, Double refund) {
 		Connection conn = DataBaseController.getConn();
-		String query = "UPDATE orders SET status = 'Canceled' WHERE idOrder = ? ;";
+		String query = "UPDATE orders SET status = 'Canceled', refund =? WHERE idOrder = ? ;";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setInt(1, idOrder);
+			preparedStmt.setDouble(1, refund);
+			preparedStmt.setInt(2, idOrder);
 			int row = preparedStmt.executeUpdate();
 			if (row == 0)
 				return false;
@@ -1426,5 +1431,25 @@ public class AnalayzeCommand {
 			}
 		}
 		return true;
+	}
+
+	public static boolean cancelOrderRequest(int idOrder) {
+		Connection conn = DataBaseController.getConn();
+		String query = "UPDATE orders SET status = 'Waiting for Cancellation',lastModified = CURRENT_TIMESTAMP WHERE idOrder = ? ;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idOrder);
+			preparedStmt.executeUpdate();
+			query = "UPDATE deliveries SET status = 'Waiting for Cancellation' WHERE idOrder = ? ;";
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idOrder);
+			preparedStmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Failed to update status");
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

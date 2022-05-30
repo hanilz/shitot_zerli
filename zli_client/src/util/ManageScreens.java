@@ -2,6 +2,7 @@ package util;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import cart.CartController;
 import catalog.CatalogController;
@@ -16,18 +17,15 @@ import home.HomeGuestController;
 import home.HomeUserTypesController;
 import home.LoginScreenController;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 import manageCatalog.ManageCatalogController;
 import mangeCustomerOrders.ManageCustomerOrdersController;
 import mangeUsers.AddScreensController;
@@ -99,6 +97,23 @@ public class ManageScreens {
 		a.setContentText(text);
 		setIconApplication((Stage)a.getDialogPane().getScene().getWindow());
 		a.show();
+	}
+	
+	/**display Alert with a yes no question
+	 * @param title
+	 * @param header
+	 * @param content
+	 * @return true if yes button was pressed, false otherwise
+	 */
+	public static boolean getYesNoDecisionAlert(String title, String header, String content) {
+		Alert alert = new Alert(AlertType.NONE, header, ButtonType.YES, ButtonType.NO);
+		alert.initOwner(ManageScreens.getStage());
+		alert.setTitle(title);
+		alert.setHeaderText(content);
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.YES)
+			return true;
+		return false;
 	}
 
 	public static void openPopupFXML(URL url, String title) throws Exception {
