@@ -30,6 +30,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import manageCatalog.ManageCatalogController;
 import mangeCustomerOrders.ManageCustomerOrdersController;
+import mangeUsers.AddScreensController;
 import mangeUsers.ManageUsersController;
 import mangeUsers.ManageUsersPermissionController;
 import order.CheckoutController;
@@ -278,6 +279,9 @@ public class ManageScreens {
 				ManageScreens.changeScene(ManageUsersPermissionController.class.getResource("ManageUsersPermission.fxml"),
 						"Users Premission");
 				break;
+			case ADD_SCREENS:
+				ManageScreens.changeScene(AddScreensController.class.getResource("AddScreens.fxml"),
+						"Add Screens");
 			default:
 				break;
 			}
@@ -360,6 +364,8 @@ public class ManageScreens {
 			return "Deliver Orders";
 		case USER_PREMISSION:
 			return "Users Premission";
+		case ADD_SCREENS:
+			return "Add Screens";
 		default:
 			return "";
 		}

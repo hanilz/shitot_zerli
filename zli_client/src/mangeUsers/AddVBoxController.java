@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 import util.ManageScreens;
 import util.Screens;
 
-public class ManageHomeVBoxController {
+public class AddVBoxController {
 
 	@FXML
 	private VBox screenBox;
@@ -25,13 +25,12 @@ public class ManageHomeVBoxController {
 		this.screen=screen;
 		screenName.setText(ManageScreens.getName(screen));
 		screenImage.setImage(new Image(ManageScreens.getIconPath(screen)));
-		
 	}
 
     @FXML
-    void removeScreen(MouseEvent event) {
-		ManageUsersPermissionController.removeScreen(screen);
-//		ManageUsersPermissionController.connect().enableSave();
+    void addScreen(MouseEvent event) {
+		ManageUsersPermissionController.addScreen(screen);
+		AddScreensController.removeScreens(screen);
+	//	ManageUsersPermissionController.connect().enableSave();
 	}
-
 }

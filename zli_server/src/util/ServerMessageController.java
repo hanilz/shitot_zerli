@@ -312,6 +312,13 @@ public class ServerMessageController {
 		case GET_USER_SCREENS:
 			ArrayList<Screens> userScreens = AnalayzeCommand.getUserHomeScreens((Integer)message.get("id"),(UserType)message.get("userType"));
 			message.put("response", userScreens);
+			System.out.println(userScreens);
+			break;
+		case SAVE_SCREENS:
+			System.out.println((Integer)message.get("id"));
+			System.out.println((ArrayList<Screens>)message.get("screens"));
+			boolean isSaved=AnalayzeCommand.insertScreens((Integer)message.get("id"),(ArrayList<Screens>)message.get("screens"));
+			message.put("response", isSaved);
 			break;
 		default:
 			break;
