@@ -89,22 +89,24 @@ public class ProductEditorController implements Initializable {
 
 	@FXML
 	void removeProduct(MouseEvent event) {
-		// TODO: are you suer that you want to remove?
-		HashMap<String, Object> message = new HashMap<>();
-		message.put("command", Commands.REMOVE_PRODUCT_BASE);
-		if (product instanceof Product) {
-			message.put("type", "product");
-			message.put("product", product.getId());
-		} else if (product instanceof Item) {
-			message.put("type", "item");
-			message.put("item", product.getId());
+		if (ManageScreens.getYesNoDecisionAlert("Product Editor", "",
+				"Are you sure you want to remove this product?")) {
+			HashMap<String, Object> message = new HashMap<>();
+			message.put("command", Commands.REMOVE_PRODUCT_BASE);
+			if (product instanceof Product) {
+				message.put("type", "product");
+				message.put("product", product.getId());
+			} else if (product instanceof Item) {
+				message.put("type", "item");
+				message.put("item", product.getId());
+			}
+			boolean response = (boolean) ClientFormController.client.accept(message);
+			if (response) {
+				ManageScreens.displayAlert("Product Editor", "Product removed successfully!");
+				((Stage) removeButton.getScene().getWindow()).close();
+			} else
+				ManageScreens.displayAlert("Product Editor", "Can't remove product");
 		}
-		boolean response = (boolean) ClientFormController.client.accept(message);
-		if (response) {
-			ManageScreens.displayAlert("Product Editor", "Product removed successfully!");
-			((Stage) removeButton.getScene().getWindow()).close();
-		} else
-			ManageScreens.displayAlert("Product Editor", "Can't remove product");
 	}
 
 	@FXML
@@ -115,7 +117,8 @@ public class ProductEditorController implements Initializable {
 				ManageScreens.displayAlert("Product Editor", "Please fill the fields before saving!");
 			setToDefult();
 			return;
-		} else if (InputChecker.isContainsLetters(basePriceField.getText()) || InputChecker.isContainsLetters(discountField.getText())) {
+		} else if (InputChecker.isContainsLetters(basePriceField.getText())
+				|| InputChecker.isContainsLetters(discountField.getText())) {
 			ManageScreens.displayAlert("Product Editor", "Please check the price or the discout that inserted!");
 			setToDefult();
 			return;
@@ -173,8 +176,7 @@ public class ProductEditorController implements Initializable {
 			double discount = Double.parseDouble(discountField.getText());
 			double priceAfterDiscount = price - (price * (discount / 100));
 			priceDiscountLabel.setText(InputChecker.price(priceAfterDiscount));
-		}
-		else
+		} else
 			priceDiscountLabel.setText(InputChecker.price(0));
 	}
 
