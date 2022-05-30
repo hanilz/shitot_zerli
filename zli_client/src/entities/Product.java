@@ -10,15 +10,15 @@ public class Product extends ProductsBase implements Serializable {
 	private String productDescription;
 	private HashMap<Item, Integer> items;
 	
-	public Product(int id, double price, double ratio, String productDescription) {
-		super(id, price, ratio);
+	public Product(int id, double price, double discount, String productDescription) {
+		super(id, price, discount);
 		this.productDescription = productDescription;
 	}
 
 	// constructor with items
-	public Product(int id, String name, String color, double price, String type, String imagePath, double ratio, String flowerType,
+	public Product(int id, String name, String color, double price, String type, String imagePath, double discount, String flowerType,
 			String productDescription, HashMap<Item, Integer> items) {
-		super(id, name, color, price, type, imagePath,ratio);
+		super(id, name, color, price, type, imagePath,discount);
 		this.flowerType = flowerType;
 		this.productDescription = productDescription;
 		this.items = items;
@@ -34,9 +34,9 @@ public class Product extends ProductsBase implements Serializable {
 	}
 
 	// constructor without items
-	public Product(int id, String name, String color, double price, String type, String imagePath, double ratio, String flowerType,
+	public Product(int id, String name, String color, double price, String type, String imagePath, double discount, String flowerType,
 			String productDescription) {
-		super(id, name, color, price, type, imagePath, ratio);
+		super(id, name, color, price, type, imagePath, discount);
 		this.flowerType = flowerType;
 		this.productDescription = productDescription;
 	}

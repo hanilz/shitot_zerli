@@ -13,12 +13,12 @@ public class ProductsBase implements Serializable {
 	private double price;
 	private String type;
 	private String imagePath;
-	private double ratio;
+	private double discount;
 	
-	public ProductsBase(int id, double price, double ratio) {
+	public ProductsBase(int id, double price, double discount) {
 		this.id = id;
 		this.price = price;
-		this.ratio = ratio;
+		this.discount = discount;
 	}
 	
 	public ProductsBase(int id, String name, String color, double price, String type, String imagePath) {
@@ -30,14 +30,14 @@ public class ProductsBase implements Serializable {
 		this.imagePath = imagePath;
 	}
 	
-	public ProductsBase(int id, String name, String color, double price, String type, String imagePath, double ratio) {
+	public ProductsBase(int id, String name, String color, double price, String type, String imagePath, double discount) {
 		this.id = id;
 		this.name = name;
 		this.color = color;
 		this.price = price;
 		this.type = type;
 		this.imagePath = imagePath;
-		this.ratio = ratio;
+		this.discount = discount;
 	}
 	
 	/**
@@ -124,11 +124,11 @@ public class ProductsBase implements Serializable {
 		this.imagePath = imagePath;
 	}
 
-	public double getRatio() {
-		return ratio;
+	public double getDiscount() {
+		return discount;
 	}
 
-	public void setRatio(int ratio) {
-		this.ratio = ratio;
+	public void setDiscount(double discount) {
+		this.discount = discount;
 	}
 }

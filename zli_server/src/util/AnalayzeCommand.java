@@ -62,9 +62,9 @@ public class AnalayzeCommand {
 					String productType = rs.getString(6);
 					String productDesc = rs.getString(7);
 					String imagePath = rs.getString(8);
-					int ratio = rs.getInt(9);
+					int discount = rs.getInt(9);
 					Product productResult = new Product(productId, productName, productColor, productPrice, productType,
-							imagePath, ratio, flowerType, productDesc);
+							imagePath, discount, flowerType, productDesc);
 					products.add(productResult);
 					HashMap<Item, Integer> items = new HashMap<>();
 					items.put(currentItem, rs.getInt(10));
@@ -88,8 +88,8 @@ public class AnalayzeCommand {
 		double itemPrice = rs.getDouble(14);
 		String itemType = rs.getString(15);
 		String imagePath = rs.getString(16);
-		int ratio = rs.getInt(17);
-		Item itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath, ratio);
+		int discount = rs.getInt(17);
+		Item itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath, discount);
 
 		return itemResult;
 	}
@@ -643,11 +643,11 @@ public class AnalayzeCommand {
 	public static boolean updateItem(Item item) {
 		Connection conn;
 		conn = DataBaseController.getConn();
-		String query = "UPDATE items SET itemPrice=? , ratio = ? WHERE itemID = ?";
+		String query = "UPDATE items SET itemPrice=? , discount = ? WHERE itemID = ?";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setDouble(1, item.getPrice());
-			preparedStmt.setDouble(2, item.getRatio());
+			preparedStmt.setDouble(2, item.getDiscount());
 			preparedStmt.setInt(3, item.getId());
 			preparedStmt.executeUpdate();
 			return true;
@@ -660,12 +660,12 @@ public class AnalayzeCommand {
 	public static boolean updateProduct(Product product) {
 		Connection conn;
 		conn = DataBaseController.getConn();
-		String query = "UPDATE products SET productPrice=?, productDescription=?, ratio = ? WHERE productID = ?;";
+		String query = "UPDATE products SET productPrice=?, productDescription=?, discount = ? WHERE productID = ?;";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setDouble(1, product.getPrice());
 			preparedStmt.setString(2, product.getProductDescription());
-			preparedStmt.setDouble(3, product.getRatio());
+			preparedStmt.setDouble(3, product.getDiscount());
 			preparedStmt.setInt(4, product.getId());
 			preparedStmt.executeUpdate();
 			return true;
@@ -1323,13 +1323,6 @@ public class AnalayzeCommand {
 		HashMap<ProductsBase, Integer> products = new HashMap<>();
 		Connection conn = DataBaseController.getConn();
 		PreparedStatement preparedStmt;
-		/*
-		 * SELECT * FROM zli.order_products op INNER JOIN zli.products p ON
-		 * op.idProduct=p.productID WHERE op.idOrder=4; SELECT * FROM zli.order_items oi
-		 * INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=4; SELECT *
-		 * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON
-		 * ocp.idCustomProduct=cp.id WHERE ocp.idOrder=4;
-		 */
 		String query = "SELECT * FROM zli.order_products op INNER JOIN zli.products p ON op.idProduct=p.productID WHERE op.idOrder=?;";
 		try {
 			preparedStmt = conn.prepareStatement(query);
@@ -1355,13 +1348,6 @@ public class AnalayzeCommand {
 		HashMap<ProductsBase, Integer> items = new HashMap<>();
 		Connection conn = DataBaseController.getConn();
 		PreparedStatement preparedStmt;
-		/*
-		 * SELECT * FROM zli.order_products op INNER JOIN zli.products p ON
-		 * op.idProduct=p.productID WHERE op.idOrder=4; SELECT * FROM zli.order_items oi
-		 * INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=4; SELECT *
-		 * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON
-		 * ocp.idCustomProduct=cp.id WHERE ocp.idOrder=4;
-		 */
 		String query = "SELECT * FROM zli.order_items oi INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=?;";
 		try {
 			preparedStmt = conn.prepareStatement(query);
@@ -1387,13 +1373,6 @@ public class AnalayzeCommand {
 		HashMap<ProductsBase, Integer> customProducts = new HashMap<>();
 		Connection conn = DataBaseController.getConn();
 		PreparedStatement preparedStmt;
-		/*
-		 * SELECT * FROM zli.order_products op INNER JOIN zli.products p ON
-		 * op.idProduct=p.productID WHERE op.idOrder=4; SELECT * FROM zli.order_items oi
-		 * INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=4; SELECT *
-		 * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON
-		 * ocp.idCustomProduct=cp.id WHERE ocp.idOrder=4;
-		 */
 		String query = "SELECT * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON ocp.idCustomProduct=cp.id WHERE ocp.idOrder=?;";
 		try {
 			preparedStmt = conn.prepareStatement(query);
@@ -1506,9 +1485,9 @@ public class AnalayzeCommand {
 				String productType = rs.getString(6);
 				String productDesc = rs.getString(7);
 				String imagePath = rs.getString(8);
-				int ratio = rs.getInt(9);
+				int discount = rs.getInt(9);
 				productResult = new Product(productId, productName, productColor, productPrice, productType, imagePath,
-						ratio, flowerType, productDesc);
+						discount, flowerType, productDesc);
 			}
 			return productResult;
 		} catch (SQLException e) {
@@ -1534,8 +1513,8 @@ public class AnalayzeCommand {
 				double itemPrice = rs.getDouble(4);
 				String itemType = rs.getString(5);
 				String imagePath = rs.getString(6);
-				int ratio = rs.getInt(7);
-				itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath, ratio);
+				int discount = rs.getInt(7);
+				itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath, discount);
 			}
 			return itemResult;
 		} catch (SQLException e) {

@@ -27,8 +27,8 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 		initImageProduct();
 
 		amountLabel.setText(InputChecker.price(product.getPrice()));
-		if(product.getRatio() != 0) {
-			double discount = product.getPrice() - (product.getPrice()*(product.getRatio()/100));
+		if(product.getDiscount() != 0) {
+			double discount = product.getPrice() - (product.getPrice()*(product.getDiscount()/100));
 			amountLabel.setId("discount");
 			amountLabel.setStyle("-fx-text-fill: #F70000;");
 			amountLabel.setText(InputChecker.price(discount));
