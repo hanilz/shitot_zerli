@@ -112,6 +112,9 @@ public class ClientMessageController {
 		case GET_ITEM:
 			returnServerRespond();
 			break;
+		case GET_TOTAL_REFUNDS:
+			returnServerRespond();
+			break;
 		default:
 			returnServerRespond();
 			break;

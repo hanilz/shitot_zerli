@@ -173,6 +173,12 @@ public class ReportsController implements Initializable {
 		Integer responseCustom = (Integer) ClientFormController.client.accept(message);
 		PopupReportController.setTotalCustom(responseCustom);
 		
+		message.put("command", Commands.GET_TOTAL_REFUNDS);
+		message.put("selected report",
+				new Report(selectedReport.getDateRange(), selectedReport.getType(), selectedReport.getIdBranch()));
+		Integer responseRefunds = (Integer) ClientFormController.client.accept(message);
+		PopupReportController.setTotalRefunds(responseRefunds);
+		
 		PopupReportController.setSelectedReport(selectedReport);
 	}
 
