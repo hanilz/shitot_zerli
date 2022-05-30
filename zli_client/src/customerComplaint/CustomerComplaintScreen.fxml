@@ -46,7 +46,10 @@
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="complaintReason" prefHeight="26.0" prefWidth="960.0" />
+                  <TextField fx:id="complaintReason" prefHeight="26.0" prefWidth="960.0" promptText="*Limited to 128 characters!">
+                     <font>
+                        <Font size="14.0" />
+                     </font></TextField>
                </children>
             </HBox>
             <HBox prefHeight="220.0" prefWidth="1200.0" spacing="11.0">
@@ -56,7 +59,7 @@
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="complaintText" prefHeight="315.0" prefWidth="959.0" wrapText="true">
+                  <TextArea fx:id="complaintText" prefHeight="315.0" prefWidth="959.0" promptText="*Limited to 1024 characters!" wrapText="true">
                      <font>
                         <Font size="14.0" />
                      </font>

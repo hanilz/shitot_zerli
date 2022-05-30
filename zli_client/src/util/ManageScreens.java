@@ -2,6 +2,7 @@ package util;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import cart.CartController;
 import catalog.CatalogController;
@@ -27,6 +28,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import manageCatalog.ManageCatalogController;
 import mangeCustomerOrders.ManageCustomerOrdersController;
+import mangeUsers.AddScreensController;
 import mangeUsers.ManageUsersController;
 import mangeUsers.ManageUsersPermissionController;
 import order.CheckoutController;
@@ -95,6 +97,23 @@ public class ManageScreens {
 		a.setContentText(text);
 		setIconApplication((Stage)a.getDialogPane().getScene().getWindow());
 		a.show();
+	}
+	
+	/**display Alert with a yes no question
+	 * @param title
+	 * @param header
+	 * @param content
+	 * @return true if yes button was pressed, false otherwise
+	 */
+	public static boolean getYesNoDecisionAlert(String title, String header, String content) {
+		Alert alert = new Alert(AlertType.NONE, header, ButtonType.YES, ButtonType.NO);
+		alert.initOwner(ManageScreens.getStage());
+		alert.setTitle(title);
+		alert.setHeaderText(content);
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.YES)
+			return true;
+		return false;
 	}
 
 	public static void openPopupFXML(URL url, String title) throws Exception {
@@ -275,6 +294,9 @@ public class ManageScreens {
 				ManageScreens.changeScene(ManageUsersPermissionController.class.getResource("ManageUsersPermission.fxml"),
 						"Users Premission");
 				break;
+			case ADD_SCREENS:
+				ManageScreens.changeScene(AddScreensController.class.getResource("AddScreens.fxml"),
+						"Add Screens");
 			default:
 				break;
 			}
@@ -357,6 +379,8 @@ public class ManageScreens {
 			return "Deliver Orders";
 		case USER_PREMISSION:
 			return "Users Premission";
+		case ADD_SCREENS:
+			return "Add Screens";
 		default:
 			return "";
 		}

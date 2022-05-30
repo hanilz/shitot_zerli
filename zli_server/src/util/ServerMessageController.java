@@ -235,7 +235,7 @@ public class ServerMessageController {
 			message.put("response", approve);
 			break;
 		case CANCEL_ORDER:
-			boolean cancel = AnalayzeCommand.cancelOrder((Integer)message.get("order id"));
+			boolean cancel = AnalayzeCommand.cancelOrder((Integer)message.get("order id"),(Double)message.get("refund"),(Integer)message.get("idUser"));
 			message.put("response", cancel);
 			break;
 		case FETCH_NOTIFICATIONS:
@@ -311,6 +311,17 @@ public class ServerMessageController {
 		case GET_USER_SCREENS:
 			ArrayList<Screens> userScreens = AnalayzeCommand.getUserHomeScreens((Integer)message.get("id"),(UserType)message.get("userType"));
 			message.put("response", userScreens);
+			System.out.println(userScreens);
+			break;
+		case SAVE_SCREENS:
+			System.out.println((Integer)message.get("id"));
+			System.out.println((ArrayList<Screens>)message.get("screens"));
+			boolean isSaved=AnalayzeCommand.insertScreens((Integer)message.get("id"),(ArrayList<Screens>)message.get("screens"));
+			message.put("response", isSaved);
+			break;
+		case CANCEL_ORDER_REQUEST:
+			boolean requested = AnalayzeCommand.cancelOrderRequest((int)message.get("order id"));
+			message.put("response", requested);
 			break;
 		case REMOVE_PRODUCT_BASE:
 			boolean isProductRemoved = message.get("type").equals("item") ? AnalayzeCommand.removeItemFromDB((Integer) message.get("item"))
