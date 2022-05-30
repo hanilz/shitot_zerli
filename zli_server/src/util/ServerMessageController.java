@@ -236,7 +236,7 @@ public class ServerMessageController {
 			message.put("response", approve);
 			break;
 		case CANCEL_ORDER:
-			boolean cancel = AnalayzeCommand.cancelOrder((Integer)message.get("order id"),(Double)message.get("refund"));
+			boolean cancel = AnalayzeCommand.cancelOrder((Integer)message.get("order id"),(Double)message.get("refund"),(Integer)message.get("idUser"));
 			message.put("response", cancel);
 			break;
 		case FETCH_NOTIFICATIONS:
