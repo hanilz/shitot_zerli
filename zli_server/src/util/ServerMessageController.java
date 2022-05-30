@@ -236,7 +236,7 @@ public class ServerMessageController {
 			message.put("response", approve);
 			break;
 		case CANCEL_ORDER:
-			boolean cancel = AnalayzeCommand.cancelOrder((Integer)message.get("order id"));
+			boolean cancel = AnalayzeCommand.cancelOrder((Integer)message.get("order id"),(Double)message.get("refund"));
 			message.put("response", cancel);
 			break;
 		case FETCH_NOTIFICATIONS:
@@ -308,10 +308,14 @@ public class ServerMessageController {
 			productsInOrder.putAll(AnalayzeCommand.getOrderItems((Integer)message.get("orderID")));
 			productsInOrder.putAll(AnalayzeCommand.getOrderCustomProducts((Integer)message.get("orderID")));
 			message.put("response", productsInOrder);
-      break;
+			break;
 		case GET_USER_SCREENS:
 			ArrayList<Screens> userScreens = AnalayzeCommand.getUserHomeScreens((Integer)message.get("id"),(UserType)message.get("userType"));
 			message.put("response", userScreens);
+			break;
+		case CANCEL_ORDER_REQUEST:
+			boolean requested = AnalayzeCommand.cancelOrderRequest((int)message.get("order id"));
+			message.put("response", requested);
 			break;
 		default:
 			break;

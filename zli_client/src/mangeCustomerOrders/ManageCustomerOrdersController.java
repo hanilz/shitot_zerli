@@ -40,12 +40,24 @@ public class ManageCustomerOrdersController implements Initializable{
 
     @FXML
     private Button cancelOrderButton;
-    
-    @FXML
-    private Button denyCancelButton;
-	
+
     @FXML
     private TableView<ManagerOrderView> cancelOrdersTable;
+
+    @FXML
+    private TableColumn<ManagerOrderView, String> deliveryDateCol;
+
+    @FXML
+    private TableColumn<ManagerOrderView, String> deliveryDateCol1;
+
+    @FXML
+    private TableColumn<ManagerOrderView, String> deliveryTypeCol;
+
+    @FXML
+    private TableColumn<ManagerOrderView, String> deliveryTypeCol1;
+
+    @FXML
+    private Button denyCancelButton;
 
     @FXML
     private Label errorLabel;
@@ -81,10 +93,22 @@ public class ManageCustomerOrdersController implements Initializable{
     private TableColumn<ManagerOrderView, String> orderDateCol1;
 
     @FXML
+    private TableColumn<ManagerOrderView, String> orderStatusCol;
+
+    @FXML
+    private TableColumn<ManagerOrderView, String> orderStatusCol1;
+
+    @FXML
     private TableColumn<ManagerOrderView, Double> priceCol;
 
     @FXML
     private TableColumn<ManagerOrderView, Double> priceCol1;
+
+    @FXML
+    private TableColumn<ManagerOrderView, String> requestDateCol1;
+
+    @FXML
+    private TableColumn<ManagerOrderView, String> timeTillDeliveryCol;
 
 	
 	@SuppressWarnings("unchecked")
@@ -99,7 +123,7 @@ public class ManageCustomerOrdersController implements Initializable{
 		for(ManagerOrderView mov : (ArrayList<ManagerOrderView>)response) {
 			if(mov.getStatus().equals("Waiting for Approval"))
 				ordersToApprove.add(mov);
-			else if(mov.getStatus().equals("Waiting for Cancelation"))
+			else if(mov.getStatus().equals("Waiting for Cancellation"))
 				ordersToCancel.add(mov);
 		}
 		//table1
@@ -107,7 +131,10 @@ public class ManageCustomerOrdersController implements Initializable{
 		priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 		firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 		lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-		orderDateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+		orderStatusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
+		orderDateCol.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
+		deliveryDateCol.setCellValueFactory(new PropertyValueFactory<>("deliveryTime"));
+		deliveryTypeCol.setCellValueFactory(new PropertyValueFactory<>("deliveryType"));
 		newOrderTable.setItems(ordersToApprove);//set the information in the table
 		
 		
@@ -116,7 +143,12 @@ public class ManageCustomerOrdersController implements Initializable{
 		priceCol1.setCellValueFactory(new PropertyValueFactory<>("price"));
 		firstNameCol1.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 		lastNameCol1.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-		orderDateCol1.setCellValueFactory(new PropertyValueFactory<>("date"));
+		orderStatusCol1.setCellValueFactory(new PropertyValueFactory<>("status"));
+		orderDateCol1.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
+		deliveryDateCol1.setCellValueFactory(new PropertyValueFactory<>("deliveryTime"));
+		deliveryTypeCol1.setCellValueFactory(new PropertyValueFactory<>("deliveryType"));
+		requestDateCol1.setCellValueFactory(new PropertyValueFactory<>("lastModified"));
+		timeTillDeliveryCol.setCellValueFactory(new PropertyValueFactory<>("timeTillDeliveryString"));
 		cancelOrdersTable.setItems(ordersToCancel);//set the information in the table	
 	}
 
@@ -158,6 +190,7 @@ public class ManageCustomerOrdersController implements Initializable{
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.CANCEL_ORDER);
 		message.put("order id", mov.getIdOrder());
+		message.put("refund", mov.getPrice());
 		Object response = ClientFormController.client.accept(message);
 		if((boolean)response) {
 			ManageScreens.displayAlert("Order Canceled","Order "+ mov.getIdOrder()+" Canceled!");
@@ -166,9 +199,20 @@ public class ManageCustomerOrdersController implements Initializable{
 		}
 		//TODO issue refund for the user
 		NotificationManager.sendNotification(mov.getIdUser(), NotificationType.ORDER_NOT_ACCEPTED, mov.getIdOrder());
+		
     }
 
-    //cancels an order that was already in accepted
+	private Double calculateRefund(ManagerOrderView mov) {
+		Double refund = 0.0;
+		if(mov.getTimeTillDelivery()>180)
+			return mov.getPrice();
+		if(mov.getTimeTillDelivery()<180 && mov.getTimeTillDelivery() > 60  )
+			return mov.getPrice()*0.5;
+		else
+			return refund;
+	}
+
+	//cancels an order that was already in accepted
     @FXML
     void approveCancelRequest(ActionEvent event) {
     	ManagerOrderView mov = cancelOrdersTable.getSelectionModel().getSelectedItem();
@@ -176,9 +220,11 @@ public class ManageCustomerOrdersController implements Initializable{
     		displayError(messageDelay);
     		return;
     	}
+    	double refund = calculateRefund(mov);
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.CANCEL_ORDER);
 		message.put("order id", mov.getIdOrder());
+		message.put("refund", refund);
 		Object response = ClientFormController.client.accept(message);
 		if((boolean)response) {
 			ManageScreens.displayAlert("Order Canceled","Cancel request accepted!\nOrder "+ mov.getIdOrder()+" Canceled!");
@@ -186,7 +232,7 @@ public class ManageCustomerOrdersController implements Initializable{
 			newOrderTable.refresh();
 		}
 		//TODO calculate refund and refund the user in the system
-		NotificationManager.sendNotification(mov.getIdUser(), NotificationType.CANCEL_REQUEST_APPROVED, 404.0);
+		NotificationManager.sendNotification(mov.getIdUser(), NotificationType.CANCEL_REQUEST_APPROVED, refund);
     }
 
     //denies cancel request
