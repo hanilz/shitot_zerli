@@ -336,6 +336,10 @@ public class ServerMessageController {
 			Item updatedItem = AnalayzeCommand.getSelectedItem((Integer) message.get("item"));
 			message.put("response", updatedItem);
 			break;
+		case GET_TOTAL_REFUNDS:
+			Integer totalRefunds = AnalayzeCommand.getTotalRefunds((Report)message.get("selected report"));
+			message.put("response", totalRefunds);
+			break;
 		default:
 			break;
 		}

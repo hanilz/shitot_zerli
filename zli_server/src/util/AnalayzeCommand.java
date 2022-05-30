@@ -1523,4 +1523,22 @@ public class AnalayzeCommand {
 			return null;
 		}
 	}
+
+	public static int getTotalRefunds(Report report) {
+		int totalRefund = 0;
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt
+					.executeQuery("SELECT SUM(refund) as totalRefund\r\n"
+							+ "FROM zli.orders\r\n"
+							+ "WHERE idBranch = "+report.getIdBranch()+" and orders.date between "+report.getDateRange()+" \r\n"
+							+ "GROUP BY idBRanch;");
+			while (rs.next()) {
+				totalRefund = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalRefund;
+	}
 }

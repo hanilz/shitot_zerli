@@ -15,7 +15,7 @@ import javafx.scene.layout.VBox;
 
 public class PopupReportController implements Initializable {
 
-	@FXML
+    @FXML
     private Label branchLabel;
 
     @FXML
@@ -32,6 +32,9 @@ public class PopupReportController implements Initializable {
 
     @FXML
     private Label quraterLabel;
+
+    @FXML
+    private Label refundsLabel;
 
     @FXML
     private Label reportTypeItemsLabel;
@@ -58,6 +61,9 @@ public class PopupReportController implements Initializable {
     private VBox totalProductsVBox;
 
     @FXML
+    private Label totalRefundsLabel;
+
+    @FXML
     private Label totalReportTpeCustomLabel;
 
     @FXML
@@ -76,6 +82,8 @@ public class PopupReportController implements Initializable {
 	private static Report selectedReport;
 	
 	private static Integer totalCustom;
+	
+	private static Integer totalRefunds;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -87,6 +95,7 @@ public class PopupReportController implements Initializable {
 			totalReportTypeProductsLabel.setText("Total income of products:");
 			totalReportTypeItemsLabel.setText("Total income of items:");
 			totalReportTpeCustomLabel.setText("Total income of custom products:");
+			refundsLabel.setText(InputChecker.price(totalRefunds));
 			break;
 		case "orders":
 			reportTypeLabel.setText("Orders Report");
@@ -95,6 +104,8 @@ public class PopupReportController implements Initializable {
 			totalReportTypeProductsLabel.setText("Total quantity of products per order:");
 			totalReportTypeItemsLabel.setText("Total quantity of items per order:");
 			totalReportTpeCustomLabel.setText("Total quantity of custom products:");
+			totalRefundsLabel.setVisible(false);
+			refundsLabel.setVisible(false);
 			break;
 		}
 		
@@ -168,5 +179,13 @@ public class PopupReportController implements Initializable {
 
 	public static void setTotalCustom(Integer totalCustom) {
 		PopupReportController.totalCustom = totalCustom;
+	}
+
+	public static Integer getTotalRefunds() {
+		return totalRefunds;
+	}
+
+	public static void setTotalRefunds(Integer totalRefunds) {
+		PopupReportController.totalRefunds = totalRefunds;
 	}
 }

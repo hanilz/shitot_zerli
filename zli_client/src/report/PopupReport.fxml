@@ -71,7 +71,7 @@
             <Separator prefWidth="200.0" />
          </children>
       </VBox>
-      <ScrollPane prefHeight="395.0" prefWidth="878.0">
+      <ScrollPane prefHeight="408.0" prefWidth="878.0">
          <content>
             <VBox prefHeight="387.0" prefWidth="862.0" spacing="6.0">
                <children>
@@ -155,8 +155,26 @@
                         <Label fx:id="totalReportTypeItemsLabel" prefHeight="26.0" prefWidth="682.0" text="total income of items:">
                            <font>
                               <Font size="14.0" />
-                           </font></Label>
+                           </font>
+                        </Label>
                         <Label fx:id="totalItemsLabel" prefHeight="20.0" prefWidth="100.0" text="0">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Separator prefHeight="0.0" prefWidth="862.0" />
+                  <HBox alignment="CENTER" cacheShape="false" prefHeight="37.0" prefWidth="862.0">
+                     <children>
+                        <Label fx:id="totalRefundsLabel" prefHeight="26.0" prefWidth="682.0" text="total refunds:">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                        <Label fx:id="refundsLabel" prefHeight="20.0" prefWidth="100.0" text="0">
                            <font>
                               <Font size="14.0" />
                            </font>
