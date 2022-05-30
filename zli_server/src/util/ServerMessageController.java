@@ -192,8 +192,7 @@ public class ServerMessageController {
 			message.put("response", compailntSubmited);
 			break;
 		case UPDATE_PRODUCTS_BASE:
-			boolean isUpdated;
-			isUpdated = message.get("type").equals("item") ? AnalayzeCommand.updateItem((Item) message.get("unit"))
+			boolean isUpdated = message.get("type").equals("item") ? AnalayzeCommand.updateItem((Item) message.get("unit"))
 					: AnalayzeCommand.updateProduct((Product) message.get("unit"));
 			message.put("response", isUpdated);
 			break;
@@ -323,6 +322,19 @@ public class ServerMessageController {
 		case CANCEL_ORDER_REQUEST:
 			boolean requested = AnalayzeCommand.cancelOrderRequest((int)message.get("order id"));
 			message.put("response", requested);
+			break;
+		case REMOVE_PRODUCT_BASE:
+			boolean isProductRemoved = message.get("type").equals("item") ? AnalayzeCommand.removeItemFromDB((Integer) message.get("item"))
+					: AnalayzeCommand.removeProductFromDB((Integer) message.get("product"));
+			message.put("response", isProductRemoved);
+			break;
+		case GET_PRODUCT:
+			Product updatedProduct = AnalayzeCommand.getSelectedProduct((Integer) message.get("product"));
+			message.put("response", updatedProduct);
+			break;
+		case GET_ITEM:
+			Item updatedItem = AnalayzeCommand.getSelectedItem((Integer) message.get("item"));
+			message.put("response", updatedItem);
 			break;
 		default:
 			break;

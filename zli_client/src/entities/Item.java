@@ -15,8 +15,12 @@ public class Item extends ProductsBase implements Serializable{
 	//private String itemType; //
 	//private String imagePath; //
 	
-	public Item(int id, String name, String color, double price, String type, String imagePath) {
-		super(id, name, color, price, type, imagePath);
+	public Item(int id, String name, String color, double price, String type, String imagePath, double ratio) {
+		super(id, name, color, price, type, imagePath, ratio);
+	}
+	
+	public Item(int id, double price, double ratio) {
+		super(id,price, ratio);
 	}
 	
 

@@ -12,26 +12,28 @@
 	-fx-padding: 5 10 5 10;
 }
 
-#catalogBtn:hover{
-		-fx-background-color: #FFE0F0;
+#catalogBtn:hover {
+	-fx-background-color: #FFE0F0;
 }
 
-#catalogBtn:pressed{
-		-fx-background-color: #FFD0FF;
-}
-#filterBtn:hover{
-		-fx-background-color: #FFE0F0;
+#catalogBtn:pressed {
+	-fx-background-color: #FFD0FF;
 }
 
-#filterBtn:pressed{
-		-fx-background-color: #FFD0FF;
-}
-#searchBtn:hover{
-		-fx-background-color: #FFE0F0;
+#filterBtn:hover {
+	-fx-background-color: #FFE0F0;
 }
 
-#searchBtn:pressed{
-		-fx-background-color: #FFD0FF;
+#filterBtn:pressed {
+	-fx-background-color: #FFD0FF;
+}
+
+#searchBtn:hover {
+	-fx-background-color: #FFE0F0;
+}
+
+#searchBtn:pressed {
+	-fx-background-color: #FFD0FF;
 }
 
 #catalogScrollPane {
@@ -53,7 +55,7 @@
 	-fx-text-alignment: center;
 }
 
-#priceLabel {
+#priceLabel, #discount {
 	-fx-font-weight: bold;
 	-fx-font-size: 16px;
 }
@@ -85,8 +87,8 @@
 #cartHBox, #homeVBox, #loginHBox {
 	-fx-background-color: #FEE1DC;
 	-fx-background-radius: 15;
-		-fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 5.0, 0.0,
-		0.0, 5.0);
+	-fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 5.0, 0.0, 0.0,
+		5.0);
 }
 
 #loginVBox {
@@ -100,5 +102,5 @@
 
 #searchBar {
 	-fx-background-radius: 20;
-		-fx-font-size: 14px;
+	-fx-font-size: 14px;
 }

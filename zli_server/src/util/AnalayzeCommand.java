@@ -62,11 +62,12 @@ public class AnalayzeCommand {
 					String productType = rs.getString(6);
 					String productDesc = rs.getString(7);
 					String imagePath = rs.getString(8);
+					int ratio = rs.getInt(9);
 					Product productResult = new Product(productId, productName, productColor, productPrice, productType,
-							imagePath, flowerType, productDesc);
+							imagePath, ratio, flowerType, productDesc);
 					products.add(productResult);
 					HashMap<Item, Integer> items = new HashMap<>();
-					items.put(currentItem, rs.getInt(9));
+					items.put(currentItem, rs.getInt(10));
 					products_items.put(productId, items);
 				} else
 					products_items.get(productId).put(currentItem, rs.getInt(9));
@@ -81,13 +82,14 @@ public class AnalayzeCommand {
 	}
 
 	private static Item getItemFromResultSet(ResultSet rs) throws SQLException {
-		int itemID = rs.getInt(10);
-		String itemName = rs.getString(11);
-		String itemColor = rs.getString(12);
-		double itemPrice = rs.getDouble(13);
-		String itemType = rs.getString(14);
-		String imagePath = rs.getString(15);
-		Item itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath);
+		int itemID = rs.getInt(11);
+		String itemName = rs.getString(12);
+		String itemColor = rs.getString(13);
+		double itemPrice = rs.getDouble(14);
+		String itemType = rs.getString(15);
+		String imagePath = rs.getString(16);
+		int ratio = rs.getInt(17);
+		Item itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath, ratio);
 
 		return itemResult;
 	}
@@ -104,7 +106,8 @@ public class AnalayzeCommand {
 				double itemPrice = rs.getDouble(4);
 				String itemType = rs.getString(5);
 				String imagePath = rs.getString(6);
-				Item itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath);
+				int ratio = rs.getInt(7);
+				Item itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath, ratio);
 				items.add(itemResult);
 			}
 		} catch (SQLException e) {
@@ -640,15 +643,13 @@ public class AnalayzeCommand {
 	public static boolean updateItem(Item item) {
 		Connection conn;
 		conn = DataBaseController.getConn();
-		String query = "UPDATE items SET itemName = ? , itemColor=? , itemPrice=? WHERE itemID = ?";
+		String query = "UPDATE items SET itemPrice=? , ratio = ? WHERE itemID = ?";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setString(1, item.getName());
-			preparedStmt.setString(2, item.getColor());
-			preparedStmt.setDouble(3, item.getPrice());
-			System.out.println(item.getPrice());
-			preparedStmt.setInt(4, item.getId());
-			System.out.println(preparedStmt.executeUpdate());
+			preparedStmt.setDouble(1, item.getPrice());
+			preparedStmt.setDouble(2, item.getRatio());
+			preparedStmt.setInt(3, item.getId());
+			preparedStmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -659,16 +660,13 @@ public class AnalayzeCommand {
 	public static boolean updateProduct(Product product) {
 		Connection conn;
 		conn = DataBaseController.getConn();
-		String query = "UPDATE products SET productName = ? , flowerType=? , productColor=? , productPrice=? , productType=? , productDescription=?  WHERE productID = ?;";
+		String query = "UPDATE products SET productPrice=?, productDescription=?, ratio = ? WHERE productID = ?;";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setString(1, product.getName());
-			preparedStmt.setString(2, product.getFlowerType());
-			preparedStmt.setString(3, product.getColor());
-			preparedStmt.setDouble(4, product.getPrice());
-			preparedStmt.setString(5, product.getType());
-			preparedStmt.setString(6, product.getProductDescription());
-			preparedStmt.setInt(7, product.getId());
+			preparedStmt.setDouble(1, product.getPrice());
+			preparedStmt.setString(2, product.getProductDescription());
+			preparedStmt.setDouble(3, product.getRatio());
+			preparedStmt.setInt(4, product.getId());
 			preparedStmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {
@@ -1455,6 +1453,95 @@ public class AnalayzeCommand {
 			System.out.println("Failed to update status");
 			e.printStackTrace();
 			return false;
+		}
+	}
+
+	public static boolean removeProductFromDB(int productId) {
+		Connection conn = DataBaseController.getConn();
+		String query = "DELETE FROM products WHERE productID = ?;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, productId);
+			preparedStmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Failed to delete notification");
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static boolean removeItemFromDB(int itemId) {
+		Connection conn = DataBaseController.getConn();
+		String query = "DELETE FROM items WHERE itemID = ?;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, itemId);
+			preparedStmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Failed to delete notification");
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static Product getSelectedProduct(Integer id) {
+		Product productResult = null;
+		Connection conn = DataBaseController.getConn();
+		String query = "SELECT * FROM PRODUCTS WHERE ProductID = ?;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, id);
+			ResultSet rs = preparedStmt.executeQuery();
+			while (rs.next()) {
+				int productId = rs.getInt(1);
+				String productName = rs.getString(2);
+				String flowerType = rs.getString(3);
+				String productColor = rs.getString(4);
+				double productPrice = rs.getDouble(5);// double
+				String productType = rs.getString(6);
+				String productDesc = rs.getString(7);
+				String imagePath = rs.getString(8);
+				int ratio = rs.getInt(9);
+				productResult = new Product(productId, productName, productColor, productPrice, productType, imagePath,
+						ratio, flowerType, productDesc);
+			}
+			return productResult;
+		} catch (SQLException e) {
+			System.out.println("Failed to delete notification");
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static Item getSelectedItem(Integer id) {
+		Item itemResult = null;
+		Connection conn = DataBaseController.getConn();
+		String query = "SELECT * FROM Items WHERE itemID = ?;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, id);
+			ResultSet rs = preparedStmt.executeQuery();
+			while (rs.next()) {
+				int itemID = rs.getInt(1);
+				String itemName = rs.getString(2);
+				String itemColor = rs.getString(3);
+				double itemPrice = rs.getDouble(4);
+				String itemType = rs.getString(5);
+				String imagePath = rs.getString(6);
+				int ratio = rs.getInt(7);
+				itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath, ratio);
+			}
+			return itemResult;
+		} catch (SQLException e) {
+			System.out.println("Failed to delete notification");
+			e.printStackTrace();
+			return null;
 		}
 	}
 }

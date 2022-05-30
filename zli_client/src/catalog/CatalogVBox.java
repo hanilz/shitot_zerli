@@ -2,16 +2,11 @@ package catalog;
 
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 public class CatalogVBox extends VBox implements ICatalogVBox {
 	protected Label nameLabel = new Label(); // will show the product name
@@ -19,6 +14,7 @@ public class CatalogVBox extends VBox implements ICatalogVBox {
 	protected ImageView image;
 	protected Label priceLabel = new Label("Price:");
 	protected Label amountLabel = new Label();; // will show the price
+	protected Label discountLabel = new Label("");
 	protected HBox priceHBox = new HBox();
 	protected Button addToCartButton = new Button("Add To Cart");
 
@@ -54,6 +50,7 @@ public class CatalogVBox extends VBox implements ICatalogVBox {
 	protected void initPriceHBox() { // same
 		priceHBox.getChildren().add(priceLabel);
 		priceHBox.getChildren().add(amountLabel);
+		priceHBox.getChildren().add(discountLabel);
 		priceHBox.setAlignment(Pos.CENTER);
 		priceHBox.setSpacing(25);
 	}
