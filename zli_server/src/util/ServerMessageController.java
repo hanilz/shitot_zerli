@@ -192,8 +192,7 @@ public class ServerMessageController {
 			message.put("response", compailntSubmited);
 			break;
 		case UPDATE_PRODUCTS_BASE:
-			boolean isUpdated;
-			isUpdated = message.get("type").equals("item") ? AnalayzeCommand.updateItem((Item) message.get("unit"))
+			boolean isUpdated = message.get("type").equals("item") ? AnalayzeCommand.updateItem((Item) message.get("unit"))
 					: AnalayzeCommand.updateProduct((Product) message.get("unit"));
 			message.put("response", isUpdated);
 			break;
@@ -308,10 +307,23 @@ public class ServerMessageController {
 			productsInOrder.putAll(AnalayzeCommand.getOrderItems((Integer)message.get("orderID")));
 			productsInOrder.putAll(AnalayzeCommand.getOrderCustomProducts((Integer)message.get("orderID")));
 			message.put("response", productsInOrder);
-      break;
+			break;
 		case GET_USER_SCREENS:
 			ArrayList<Screens> userScreens = AnalayzeCommand.getUserHomeScreens((Integer)message.get("id"),(UserType)message.get("userType"));
 			message.put("response", userScreens);
+			break;
+		case REMOVE_PRODUCT_BASE:
+			boolean isProductRemoved = message.get("type").equals("item") ? AnalayzeCommand.removeItemFromDB((Integer) message.get("item"))
+					: AnalayzeCommand.removeProductFromDB((Integer) message.get("product"));
+			message.put("response", isProductRemoved);
+			break;
+		case GET_PRODUCT:
+			Product updatedProduct = AnalayzeCommand.getSelectedProduct((Integer) message.get("product"));
+			message.put("response", updatedProduct);
+			break;
+		case GET_ITEM:
+			Item updatedItem = AnalayzeCommand.getSelectedItem((Integer) message.get("item"));
+			message.put("response", updatedItem);
 			break;
 		default:
 			break;

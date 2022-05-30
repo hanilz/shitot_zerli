@@ -9,7 +9,21 @@ public class Product extends ProductsBase implements Serializable {
 	private String flowerType;
 	private String productDescription;
 	private HashMap<Item, Integer> items;
+	
+	public Product(int id, double price, double ratio, String productDescription) {
+		super(id, price, ratio);
+		this.productDescription = productDescription;
+	}
 
+	// constructor with items
+	public Product(int id, String name, String color, double price, String type, String imagePath, double ratio, String flowerType,
+			String productDescription, HashMap<Item, Integer> items) {
+		super(id, name, color, price, type, imagePath,ratio);
+		this.flowerType = flowerType;
+		this.productDescription = productDescription;
+		this.items = items;
+	}
+	
 	// constructor with items
 	public Product(int id, String name, String color, double price, String type, String imagePath, String flowerType,
 			String productDescription, HashMap<Item, Integer> items) {
@@ -20,9 +34,9 @@ public class Product extends ProductsBase implements Serializable {
 	}
 
 	// constructor without items
-	public Product(int id, String name, String color, double price, String type, String imagePath, String flowerType,
+	public Product(int id, String name, String color, double price, String type, String imagePath, double ratio, String flowerType,
 			String productDescription) {
-		super(id, name, color, price, type, imagePath);
+		super(id, name, color, price, type, imagePath, ratio);
 		this.flowerType = flowerType;
 		this.productDescription = productDescription;
 	}

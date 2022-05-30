@@ -47,6 +47,12 @@ public class InputChecker {
 		return false;
 	}
 
+	public static boolean isFieldsEmpty(String field) {
+		if (field.isEmpty())
+			return true;
+		return false;
+	}
+
 	public static boolean isDeliveryComboBoxChanged(String hour, String minutes, String region) {
 		if (hour == null || minutes == null || region == null)
 			return false;
@@ -77,7 +83,7 @@ public class InputChecker {
 			return false;
 		else if (!firstName.matches("^[ A-Za-z]+$") || !lastName.matches("^[ A-Za-z]+$"))
 			return false;
-		if(Integer.parseInt(month)<=0 || Integer.parseInt(month)>12)
+		if (Integer.parseInt(month) <= 0 || Integer.parseInt(month) > 12)
 			return false;
 		return true;
 	}
@@ -115,5 +121,29 @@ public class InputChecker {
 			return true;
 		return false;
 
+	}
+
+	public static boolean isInteger(String check) {
+		try {
+			Integer.parseInt(check);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+	
+	public static boolean isDouble(String check) {
+		try {
+			Double.parseDouble(check);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+	public static boolean isContainsLetters(String check) {
+		if (check.matches("^[ A-Za-z]+$"))
+			return true;
+		return false;
 	}
 }
