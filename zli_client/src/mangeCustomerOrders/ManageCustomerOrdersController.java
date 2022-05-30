@@ -191,6 +191,7 @@ public class ManageCustomerOrdersController implements Initializable{
 		message.put("command", Commands.CANCEL_ORDER);
 		message.put("order id", mov.getIdOrder());
 		message.put("refund", mov.getPrice());
+		message.put("idUser", mov.getIdUser());
 		Object response = ClientFormController.client.accept(message);
 		if((boolean)response) {
 			ManageScreens.displayAlert("Order Canceled","Order "+ mov.getIdOrder()+" Canceled!");
@@ -225,6 +226,7 @@ public class ManageCustomerOrdersController implements Initializable{
 		message.put("command", Commands.CANCEL_ORDER);
 		message.put("order id", mov.getIdOrder());
 		message.put("refund", refund);
+		message.put("idUser", mov.getIdUser());
 		Object response = ClientFormController.client.accept(message);
 		if((boolean)response) {
 			ManageScreens.displayAlert("Order Canceled","Cancel request accepted!\nOrder "+ mov.getIdOrder()+" Canceled!");

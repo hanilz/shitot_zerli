@@ -74,14 +74,9 @@ public class CustomerComplaintController implements Initializable {
 	void saveComplaint(ActionEvent event) {
 		if (!checkInput())
 			return;
-		// System.out.println(orderNumberCombo.getValue());
 
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.SUBMIT_COMPLAINT);
-		/*message.put("OrderNumber", );
-		message.put("ComplaintReason", );
-		message.put("ComplaintText", );
-		message.put("HandelingAgent", );*/
 		
 		message.put("Complaint", new Complaint(User.getUserInstance().getIdUser(), orderNumberCombo.getValue(), complaintReason.getText(), complaintText.getText()));
 		Object response = ClientFormController.client.accept(message);
@@ -105,6 +100,7 @@ public class CustomerComplaintController implements Initializable {
 
 	// used to make sure that all the fields have been filled
 	private boolean checkInput() {
+		
 		if (orderNumberCombo.getValue() == null) {
 			// idLabel.setText("*ID does not exist in DB");
 			orderLabel.setTextFill(Color.RED);
@@ -114,8 +110,9 @@ public class CustomerComplaintController implements Initializable {
 			orderLabel.setText("OK");
 			orderLabel.setTextFill(Color.GREEN);
 		}
-		if (complaintReason.getText().length() == 0 || complaintText.getText().length() == 0) {
+		if (complaintReason.getText().length() == 0 || complaintText.getText().length() == 0 || complaintReason.getText().length() >1024 || complaintText.getText().length() > 128 ) {
 			complaintError.setTextFill(Color.RED);
+			errorLabel.setText("*Reason length or Content is empty or to long (Reason: "+complaintReason.getText().length()+"/128, Complaint: "+complaintText.getText().length()+"/1024 )");
 			errorLabel.setVisible(true);
 			return false;
 		}

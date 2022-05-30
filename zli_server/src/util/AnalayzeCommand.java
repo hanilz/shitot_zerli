@@ -801,7 +801,7 @@ public class AnalayzeCommand {
 		return true;
 	}
 
-	public static boolean cancelOrder(int idOrder, Double refund) {
+	public static boolean cancelOrder(int idOrder, Double refund,int idUser) {
 		Connection conn = DataBaseController.getConn();
 		String query = "UPDATE orders SET status = 'Canceled', refund =? WHERE idOrder = ? ;";
 		try {
@@ -814,6 +814,11 @@ public class AnalayzeCommand {
 			query = "UPDATE deliveries SET deliveries.status = 'Canceled' WHERE idOrder = ?;";
 			preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
+			preparedStmt.executeUpdate();
+			query = "UPDATE users SET storeCredit = storeCredit+? WHERE idUser = ?;";
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setDouble(1, refund);
+			preparedStmt.setInt(2, idUser);
 			preparedStmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("failed to cancel order");
