@@ -170,7 +170,7 @@ public class AnalayzeCommand {
 			return;
 		}
 	}
-	
+
 	public static ArrayList<Screens> getUserHomeScreens(int userId, UserType userType) {
 		Connection conn;
 		ArrayList<Screens> userHomeScreens = new ArrayList<Screens>();
@@ -194,14 +194,14 @@ public class AnalayzeCommand {
 		}
 		return userHomeScreens;
 	}
-	
+
 	public static HashMap<String, Object> loginUser(String username, String password) {
 		Connection conn;
 		Status status = Status.NOT_REGISTERED;
 		HashMap<String, Object> login = new HashMap<>();
 		conn = DataBaseController.getConn();
 		ResultSet rs;
-		String query = "SELECT * FROM users,user_screen WHERE username=? AND password=?";
+		String query = "SELECT * FROM users WHERE username=? AND password=?";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setString(1, username);
@@ -1213,10 +1213,10 @@ public class AnalayzeCommand {
 			Statement selectStmt = DataBaseController.getConn().createStatement();
 			ResultSet rs = selectStmt.executeQuery(
 					"SELECT MONTHNAME(complaints.date) as complaint_month, count(complaints.idComplaint) as number_of_complaints\r\n"
-					+ "FROM complaints\r\n"
-					+ "JOIN orders ON complaints.orderId = orders.idOrder and orders.idBranch = "+report.getIdBranch()+"\r\n"
-					+ "WHERE complaints.date between "+report.getDateRange()+"\r\n"
-					+ "GROUP BY complaint_month ORDER BY complaints.date;");
+							+ "FROM complaints\r\n"
+							+ "JOIN orders ON complaints.orderId = orders.idOrder and orders.idBranch = "
+							+ report.getIdBranch() + "\r\n" + "WHERE complaints.date between " + report.getDateRange()
+							+ "\r\n" + "GROUP BY complaint_month ORDER BY complaints.date;");
 			while (rs.next()) {
 				String month = rs.getString(1);
 				int totalComplaintCountPerMonth = rs.getInt(2);
@@ -1233,12 +1233,11 @@ public class AnalayzeCommand {
 		try {
 			Statement selectStmt = DataBaseController.getConn().createStatement();
 
-			ResultSet rs = selectStmt.executeQuery(
-					"SELECT MONTHNAME(orders.date) as orders_month, SUM(orders.price) as totalInMonth\r\n"
-					+ "FROM orders\r\n"
-					+ "WHERE orders.date between "+report.getDateRange()+" and orders.idBranch = "+report.getIdBranch()+"\r\n"
-					+ "GROUP BY orders_month\r\n"
-					+ "ORDER BY orders.date;");
+			ResultSet rs = selectStmt
+					.executeQuery("SELECT MONTHNAME(orders.date) as orders_month, SUM(orders.price) as totalInMonth\r\n"
+							+ "FROM orders\r\n" + "WHERE orders.date between " + report.getDateRange()
+							+ " and orders.idBranch = " + report.getIdBranch() + "\r\n" + "GROUP BY orders_month\r\n"
+							+ "ORDER BY orders.date;");
 			while (rs.next()) {
 				String month = rs.getString(1);
 				int totalIncomePerMonth = rs.getInt(2);
@@ -1258,7 +1257,9 @@ public class AnalayzeCommand {
 					.executeQuery("SELECT SUM(order_custom_products.quantity*custom_products.price) as totalSum\r\n"
 							+ "FROM custom_products\r\n"
 							+ "JOIN order_custom_products ON custom_products.id=order_custom_products.idCustomProduct\r\n"
-							+ "JOIN orders ON orders.idOrder = order_custom_products.idOrder and orders.idBranch = "+report.getIdBranch()+" and orders.date between "+report.getDateRange()+" GROUP BY orders.idBranch;");
+							+ "JOIN orders ON orders.idOrder = order_custom_products.idOrder and orders.idBranch = "
+							+ report.getIdBranch() + " and orders.date between " + report.getDateRange()
+							+ " GROUP BY orders.idBranch;");
 			while (rs.next()) {
 				totalSum = rs.getInt(1);
 			}
@@ -1267,16 +1268,17 @@ public class AnalayzeCommand {
 		}
 		return totalSum;
 	}
-	
+
 	public static int getCustomOrdersReport(Report report) {
 		int totalQuantity = 0;
 		try {
 			Statement selectStmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = selectStmt
-					.executeQuery("SELECT SUM(order_custom_products.quantity) as totalQuantity\r\n"
-							+ "FROM custom_products\r\n"
-							+ "JOIN order_custom_products ON custom_products.id=order_custom_products.idCustomProduct\r\n"
-							+ "JOIN orders ON orders.idOrder = order_custom_products.idOrder and orders.idBranch = "+report.getIdBranch()+" and orders.date between "+report.getDateRange()+" GROUP BY orders.idBranch;");
+			ResultSet rs = selectStmt.executeQuery("SELECT SUM(order_custom_products.quantity) as totalQuantity\r\n"
+					+ "FROM custom_products\r\n"
+					+ "JOIN order_custom_products ON custom_products.id=order_custom_products.idCustomProduct\r\n"
+					+ "JOIN orders ON orders.idOrder = order_custom_products.idOrder and orders.idBranch = "
+					+ report.getIdBranch() + " and orders.date between " + report.getDateRange()
+					+ " GROUP BY orders.idBranch;");
 			while (rs.next()) {
 				totalQuantity = rs.getInt(1);
 			}
@@ -1285,14 +1287,17 @@ public class AnalayzeCommand {
 		}
 		return totalQuantity;
 	}
-	
-	public static ArrayList<CustomerOrderView> getCustomerOrders(int idUser){
+
+	public static ArrayList<CustomerOrderView> getCustomerOrders(int idUser) {
 		ArrayList<CustomerOrderView> cov = new ArrayList<>();
 		try {
 			Statement selectStmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = selectStmt.executeQuery("SELECT o.idOrder,o.status,d.status,o.date,d.deliveryDate,d.type,o.price FROM zli.orders o INNER JOIN deliveries d ON o.idOrder = d.idOrder WHERE o.idUser ="+idUser+" ORDER BY o.date DESC;");
+			ResultSet rs = selectStmt.executeQuery(
+					"SELECT o.idOrder,o.status,d.status,o.date,d.deliveryDate,d.type,o.price FROM zli.orders o INNER JOIN deliveries d ON o.idOrder = d.idOrder WHERE o.idUser ="
+							+ idUser + " ORDER BY o.date DESC;");
 			while (rs.next()) {
-				cov.add(new CustomerOrderView(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getDouble(7)));
+				cov.add(new CustomerOrderView(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
+						rs.getString(5), rs.getString(6), rs.getDouble(7)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1300,85 +1305,126 @@ public class AnalayzeCommand {
 		return cov;
 	}
 
-	
-	/**returns the products in a given order
+	/**
+	 * returns the products in a given order
+	 * 
 	 * @param idOrder
 	 * @return
 	 */
-	public static HashMap<ProductsBase,Integer> getOrderProducts(int idOrder) {
-		HashMap<ProductsBase,Integer> products = new HashMap<>();
+	public static HashMap<ProductsBase, Integer> getOrderProducts(int idOrder) {
+		HashMap<ProductsBase, Integer> products = new HashMap<>();
 		Connection conn = DataBaseController.getConn();
 		PreparedStatement preparedStmt;
 		/*
-		 * SELECT * FROM zli.order_products op INNER JOIN zli.products p ON op.idProduct=p.productID WHERE op.idOrder=4;
-			SELECT * FROM zli.order_items oi INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=4;
-			SELECT * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON ocp.idCustomProduct=cp.id WHERE ocp.idOrder=4;
+		 * SELECT * FROM zli.order_products op INNER JOIN zli.products p ON
+		 * op.idProduct=p.productID WHERE op.idOrder=4; SELECT * FROM zli.order_items oi
+		 * INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=4; SELECT *
+		 * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON
+		 * ocp.idCustomProduct=cp.id WHERE ocp.idOrder=4;
 		 */
-			String query = "SELECT * FROM zli.order_products op INNER JOIN zli.products p ON op.idProduct=p.productID WHERE op.idOrder=?;";
-			try {
-				preparedStmt = conn.prepareStatement(query);
-				preparedStmt.setInt(1, idOrder);
-				ResultSet rs = preparedStmt.executeQuery();
-				while (rs.next()) {
-					products.put(new ProductsBase(rs.getInt(4), rs.getString(5), rs.getString(7),rs.getDouble(8),rs.getString(9), rs.getString(11)),rs.getInt(3));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
+		String query = "SELECT * FROM zli.order_products op INNER JOIN zli.products p ON op.idProduct=p.productID WHERE op.idOrder=?;";
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idOrder);
+			ResultSet rs = preparedStmt.executeQuery();
+			while (rs.next()) {
+				products.put(new ProductsBase(rs.getInt(4), rs.getString(5), rs.getString(7), rs.getDouble(8),
+						rs.getString(9), rs.getString(11)), rs.getInt(3));
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return products;
 	}
-	
-	/**returns the items in a given order
+
+	/**
+	 * returns the items in a given order
+	 * 
 	 * @param idOrder
 	 * @return
 	 */
-	public static HashMap<ProductsBase,Integer> getOrderItems(int idOrder) {
-		HashMap<ProductsBase,Integer> items = new HashMap<>();
+	public static HashMap<ProductsBase, Integer> getOrderItems(int idOrder) {
+		HashMap<ProductsBase, Integer> items = new HashMap<>();
 		Connection conn = DataBaseController.getConn();
 		PreparedStatement preparedStmt;
 		/*
-		 * SELECT * FROM zli.order_products op INNER JOIN zli.products p ON op.idProduct=p.productID WHERE op.idOrder=4;
-			SELECT * FROM zli.order_items oi INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=4;
-			SELECT * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON ocp.idCustomProduct=cp.id WHERE ocp.idOrder=4;
+		 * SELECT * FROM zli.order_products op INNER JOIN zli.products p ON
+		 * op.idProduct=p.productID WHERE op.idOrder=4; SELECT * FROM zli.order_items oi
+		 * INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=4; SELECT *
+		 * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON
+		 * ocp.idCustomProduct=cp.id WHERE ocp.idOrder=4;
 		 */
-			String query = "SELECT * FROM zli.order_items oi INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=?;";
-			try {
-				preparedStmt = conn.prepareStatement(query);
-				preparedStmt.setInt(1, idOrder);
-				ResultSet rs = preparedStmt.executeQuery();
-				while (rs.next()) {
-					items.put(new ProductsBase(rs.getInt(4), rs.getString(5), rs.getString(6),rs.getDouble(7),rs.getString(8), rs.getString(9)),rs.getInt(3));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
+		String query = "SELECT * FROM zli.order_items oi INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=?;";
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idOrder);
+			ResultSet rs = preparedStmt.executeQuery();
+			while (rs.next()) {
+				items.put(new ProductsBase(rs.getInt(4), rs.getString(5), rs.getString(6), rs.getDouble(7),
+						rs.getString(8), rs.getString(9)), rs.getInt(3));
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return items;
 	}
-	
-	/**returns the Custom Products in a given order
+
+	/**
+	 * returns the Custom Products in a given order
+	 * 
 	 * @param idOrder
 	 * @return
 	 */
-	public static HashMap<ProductsBase,Integer> getOrderCustomProducts(int idOrder) {
-		HashMap<ProductsBase,Integer> customProducts = new HashMap<>();
+	public static HashMap<ProductsBase, Integer> getOrderCustomProducts(int idOrder) {
+		HashMap<ProductsBase, Integer> customProducts = new HashMap<>();
 		Connection conn = DataBaseController.getConn();
 		PreparedStatement preparedStmt;
 		/*
-		 * SELECT * FROM zli.order_products op INNER JOIN zli.products p ON op.idProduct=p.productID WHERE op.idOrder=4;
-			SELECT * FROM zli.order_items oi INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=4;
-			SELECT * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON ocp.idCustomProduct=cp.id WHERE ocp.idOrder=4;
+		 * SELECT * FROM zli.order_products op INNER JOIN zli.products p ON
+		 * op.idProduct=p.productID WHERE op.idOrder=4; SELECT * FROM zli.order_items oi
+		 * INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=4; SELECT *
+		 * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON
+		 * ocp.idCustomProduct=cp.id WHERE ocp.idOrder=4;
 		 */
-			String query = "SELECT * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON ocp.idCustomProduct=cp.id WHERE ocp.idOrder=?;";
+		String query = "SELECT * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON ocp.idCustomProduct=cp.id WHERE ocp.idOrder=?;";
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idOrder);
+			ResultSet rs = preparedStmt.executeQuery();
+			while (rs.next()) {
+				customProducts.put(new ProductsBase(rs.getInt(4), rs.getString(5), "not specified", rs.getDouble(6),
+						"not specified", "/resources/catalog/customProductImage.png"), rs.getInt(3));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return customProducts;
+	}
+
+	public static boolean insertScreens(Integer id, ArrayList<Screens> userScreen) {
+		Connection conn = DataBaseController.getConn();
+		String query = "DELETE FROM user_screen WHERE idUser = ?;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, id);
+			preparedStmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("Failed to delete user_details");
+			e.printStackTrace();
+		}
+		for (Screens screen : userScreen) {
+			 query = "INSERT INTO user_screen (idUser, screen) VALUES (?, ?);";
 			try {
 				preparedStmt = conn.prepareStatement(query);
-				preparedStmt.setInt(1, idOrder);
-				ResultSet rs = preparedStmt.executeQuery();
-				while (rs.next()) {
-					customProducts.put(new ProductsBase(rs.getInt(4), rs.getString(5), "not specified",rs.getDouble(6),"not specified", "/resources/catalog/customProductImage.png"),rs.getInt(3));
-				}
+				preparedStmt.setInt(1, id);
+				preparedStmt.setString(2, screen.toString());
+				preparedStmt.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
+				return false;
 			}
-		return customProducts;
+		}
+		return true;
 	}
 }
