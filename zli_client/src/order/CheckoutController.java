@@ -285,7 +285,7 @@ public class CheckoutController implements Initializable {
 		boolean isPickup = SingletonOrder.getInstance().getIsPickup();
 		Branch branch = isPickup ? SingletonOrder.getInstance().getPickupBranch()
 				: SingletonOrder.getInstance().getBranch();
-		String status = "Waiting for approval"; // TODO: const class or enum for order status
+		String status = "Waiting for Approval"; // TODO: const class or enum for order status
 		String paymentMethod = "credit card";
 		User user = User.getUserInstance();
 		HashMap<String, Object> message = new HashMap<>();
