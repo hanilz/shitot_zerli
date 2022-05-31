@@ -123,9 +123,9 @@
                                           <Insets />
                                        </HBox.margin>
                                     </ImageView>
-                                    <Label fx:id="amoutOfScreensLable" style="-fx-background-color: DBE1F0; -fx-background-radius: 10;" text="0">
+                                    <Label fx:id="amoutOfScreensLable" style="-fx-background-color: DBE1F0; -fx-background-radius: 50;" text="0">
                                        <font>
-                                          <Font size="15.0" />
+                                          <Font size="16.0" />
                                        </font></Label>
                                  </children>
                                  <VBox.margin>
@@ -173,7 +173,7 @@
             <Insets />
          </VBox.margin>
          <content>
-            <TilePane fx:id="userHomeScreens" alignment="CENTER" prefHeight="557.0" prefRows="3" prefWidth="1277.0" style="-fx-background-color: F1F9FF;" />
+            <TilePane fx:id="userHomeScreens" alignment="CENTER" hgap="10.0" prefHeight="557.0" prefRows="3" prefWidth="1277.0" style="-fx-background-color: F1F9FF;" vgap="10.0" />
          </content>
       </ScrollPane>
    </children>
