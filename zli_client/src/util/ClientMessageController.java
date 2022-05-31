@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import client.ClientController;
+import entities.AccountPayment;
 import entities.Branch;
 import entities.Complaint;
 import entities.Item;
@@ -62,6 +63,9 @@ public class ClientMessageController {
 			break;
 		case FETCH_PRODUCTS:
 			returnServerListRespond(new ArrayList<Product>());
+			break;
+		case FETCH_ACCOUNT_PAYMENTS:
+			returnServerListRespond(new ArrayList<AccountPayment>());
 			break;
 		case LOGIN:
 			ClientController.setResponse(message);

@@ -386,10 +386,8 @@ public class DeliveryController implements Initializable {
 	private void initBranchComboBoxes() {
 		fetchBranches();
 
-		for (Branch branch : branches) {
-			deliveryBranchComboBox.getItems().add(branch);
-			pickupBranchComboBox.getItems().add(branch);
-		}
+		deliveryBranchComboBox.getItems().addAll(branches);
+		pickupBranchComboBox.getItems().addAll(branches);
 	}
 
 	// for getting all branches for the branches ComboBoxes

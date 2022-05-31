@@ -83,7 +83,6 @@ public class User implements Serializable {
 		}
 	}
 
-
 	public String toString() {
 		return "User " + username + " logged\nidUser: " + idUser + "\nidAccount: " + idAccount + "\nuserType: "
 				+ userType;
@@ -103,6 +102,11 @@ public class User implements Serializable {
 	public UserType getType()
 	{
 		return userType;
+	}
+	
+	public void setType(String type)
+	{
+		userType = UserType.get(type);
 	}
 
 	public double getStoreCredit() {

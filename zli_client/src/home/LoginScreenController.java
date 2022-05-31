@@ -104,7 +104,7 @@ public class LoginScreenController implements Initializable {
 	}
 
 	private void cartFlow(Event event) {
-		if (User.getUserInstance().getType() != UserType.CUSTOMER) {
+		if (User.getUserInstance().getType() != UserType.CUSTOMER && User.getUserInstance().getType() != UserType.NEW_CUSTOMER) {
 			setError("Only Customers can buy from catalog");
 			System.out.println(errorLabel.getText());
 			User.getUserInstance().logout();
@@ -144,7 +144,7 @@ public class LoginScreenController implements Initializable {
 		UserType userType = (UserType) response.get("userType");
 		double storeCredit = (double) response.get("storeCredit");
 		ArrayList<Screens> UserHomeScreens = (ArrayList<Screens>) response.get("userScreen");
-		User.getUserInstance().login(idUser, username, idAccount, userType, storeCredit, UserHomeScreens);// creating running user
+		User.getUserInstance().login(idUser, username, idAccount, userType, storeCredit, UserHomeScreens);  // creating running user
 	}
 
 	private void catalogFlow(Event event) {
