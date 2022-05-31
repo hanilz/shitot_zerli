@@ -29,7 +29,11 @@ public class AddVBoxController {
 
     @FXML
     void addScreen(MouseEvent event) {
+    	if(ManageUsersPermissionController.getUserScreens().size()<6)
+    	{
 		ManageUsersPermissionController.addScreen(screen);
 		AddScreensController.removeScreens(screen);
+    	}
+    	AddScreensController.setLimitText();
 	}
 }

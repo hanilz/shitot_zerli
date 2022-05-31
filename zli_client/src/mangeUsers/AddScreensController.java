@@ -32,6 +32,13 @@ public class AddScreensController implements Initializable {
 
 	@FXML
 	private Label usernameLable;
+
+	@FXML
+	private Label amoutOfScreensLable;
+
+	@FXML
+	private Label limitLabel;
+
 	// data
 	private static ManageUsers user = null;
 	private static ArrayList<Screens> userScreens;
@@ -57,6 +64,7 @@ public class AddScreensController implements Initializable {
 		screens.removeAll(userScreens);
 		screens.removeAll(Arrays.asList(new Screens[] { Screens.GUEST_HOME, Screens.USER_HOME, Screens.LOGIN }));
 		setScreens(screens);
+		amoutOfScreensLable.setText(userScreens.size() + "");
 	}
 
 	private void setScreens(ArrayList<Screens> screens) {
@@ -78,11 +86,26 @@ public class AddScreensController implements Initializable {
 				}
 			}
 	}
-	
+
 	public static void removeScreens(Screens screen) {
-		screens.remove(screen);
-		addScreensController.setScreens(screens);
+		if (userScreens.size() <= 6) {
+			screens.remove(screen);
+			addScreensController.setScreens(screens);
+			addScreensController.amoutOfScreensLable.setText(userScreens.size() + "");
+			addScreensController.limitLabel.setText("Can Have Up To 6 Screens");
+		} else {
+			addScreensController.limitLabel.setText("Cannot Add More Screen, Go Back And Remove Some");
+		}
 	}
+
+	public static void setLimitText()
+	{
+		if (userScreens.size() < 6) {
+			addScreensController.limitLabel.setText("Can Have Up To 6 Screens");
+		}else {
+			addScreensController.limitLabel.setText("Cannot Add More Screen, Go Back And Remove");
+		}
+		}
 
 	public void backToManageUser() {
 		ManageScreens.changeScreenTo(Screens.USER_PREMISSION);
