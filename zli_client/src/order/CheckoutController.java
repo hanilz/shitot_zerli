@@ -30,20 +30,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import manageCatalog.ProductEditorController;
 import util.Commands;
 import util.ManageScreens;
 import util.Screens;
 import util.UserType;
 
 public class CheckoutController implements Initializable {
-
-	@FXML
-	private Label totalLabel;
 
 	@FXML
 	private Button backButton;
@@ -58,22 +57,22 @@ public class CheckoutController implements Initializable {
 	private Label cartTotalLabel;
 
 	@FXML
-	private Pane deliveryDetailsPane;
+	private Button deliveryDetailsButton;
 
 	@FXML
 	private Label deliveryFeeLabel;
 
 	@FXML
-	private Label deliveryFeeAmount;
-
-	@FXML
-	private Pane greetingCardPane;
+	private Button greetingCardButton;
 
 	@FXML
 	private ImageView homeButton;
 
 	@FXML
 	private Label messageLabel;
+
+	@FXML
+	private TextArea orderCommentsTextArea;
 
 	@FXML
 	private ComboBox<AccountPayment> paymentMethodComboBox;
@@ -89,6 +88,9 @@ public class CheckoutController implements Initializable {
 
 	@FXML
 	private Label storeCreditUsedLabel;
+
+	@FXML
+	private Label totalLabel;
 
 	@FXML
 	private CheckBox useStoreCreditCheckBox;
@@ -117,15 +119,9 @@ public class CheckoutController implements Initializable {
 		initPaymentMethodComboBox();
 
 		storeCreditAmountLabel.setText(InputChecker.price(User.getUserInstance().getStoreCredit()));
+		if(User.getUserInstance().getStoreCredit() == 0)
+			useStoreCreditCheckBox.setDisable(true);
 
-		initGreetingCard();
-
-		loadDeliveryDetailsVBox();
-		deliveryDetailsPane.getChildren().add(deliveryDetailsVBox);
-		deliveryFee = (!SingletonOrder.getInstance().getIsPickup()
-				? (SingletonOrder.getInstance().getIsExpress() ? 30 : 15)
-				: 0);
-		deliveryFeeAmount.setText(InputChecker.price(deliveryFee));
 		deliveryFeeLabel.setText(InputChecker.price(deliveryFee));
 
 		totalPriceBeforeCredit = deliveryFee + cartTotal;
@@ -137,6 +133,8 @@ public class CheckoutController implements Initializable {
 		totalPriceBeforeCredit += calculateDiscount();
 		totalPrice = totalPriceBeforeCredit;
 		totalLabel.setText(InputChecker.price(totalPriceBeforeCredit));
+		
+		greetingCardButton.setDisable(!SingletonOrder.getInstance().getIsGreetingCard());
 	}
 
 	private double calculateDiscount() {
@@ -144,47 +142,6 @@ public class CheckoutController implements Initializable {
 		if (type.contains("NEW"))
 			return -totalPriceBeforeCredit * 0.2;
 		return 0;
-	}
-
-	private void initGreetingCard() {
-		loadGreetingCardVBox();
-		greetingCardPane.getChildren().add(greetingCardVBox);
-	}
-
-	private void loadDeliveryDetailsVBox() {
-		if (SingletonOrder.getInstance().getIsPickup())
-			loadDeliveryDetailsPickupVBox();
-		else
-			loadDeliveryDetailsDeliveryVBox();
-	}
-
-	private void loadGreetingCardVBox() {
-		FXMLLoader loader = new FXMLLoader(GreetingCardVBoxController.class.getResource("GreetingCardVBox.fxml"));
-		try {
-			greetingCardVBox = (VBox) loader.load();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void loadDeliveryDetailsDeliveryVBox() {
-		FXMLLoader loader = new FXMLLoader(
-				DeliveryDetailsDeliveryVBoxController.class.getResource("DeliveryDetailsDeliveryVBox.fxml"));
-		try {
-			deliveryDetailsVBox = ((VBox) loader.load());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void loadDeliveryDetailsPickupVBox() {
-		FXMLLoader loader = new FXMLLoader(
-				DeliveryDetailsPickupVBoxController.class.getResource("DeliveryDetailsPickupVBox.fxml"));
-		try {
-			deliveryDetailsVBox = (VBox) loader.load();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private void initPaymentMethodComboBox() {
@@ -265,9 +222,8 @@ public class CheckoutController implements Initializable {
 		if (response.equals("update user store credit successful")) {
 			System.out.println("yayy!! user store credit updated successfully in the db to "
 					+ (User.getUserInstance().getStoreCredit() - usedStoreCredit) + "!");
-			 User.getUserInstance().setStoreCredit(newStoreCredit);
-		}
-		else
+			User.getUserInstance().setStoreCredit(newStoreCredit);
+		} else
 			System.out.println("of pufff, update user store credit failed!");
 	}
 
@@ -280,8 +236,9 @@ public class CheckoutController implements Initializable {
 	}
 
 	private void insertOrderToDB() {
+		SingletonOrder.getInstance().formatGreetingCard();
 		String greetingCard = SingletonOrder.getInstance().getGreetingCard();
-		String dOrder = ""; // TODO: for now, we need to insert new text area for dOrder
+		String dOrder = orderCommentsTextArea.getText();
 		boolean isPickup = SingletonOrder.getInstance().getIsPickup();
 		Branch branch = isPickup ? SingletonOrder.getInstance().getPickupBranch()
 				: SingletonOrder.getInstance().getBranch();
@@ -290,7 +247,8 @@ public class CheckoutController implements Initializable {
 		User user = User.getUserInstance();
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.INSERT_ORDER);
-		message.put("order", new Order(totalPrice, greetingCard, dOrder, branch, status, paymentMethod, user));
+		message.put("order",
+				new Order(totalPriceBeforeCredit, greetingCard, dOrder, branch, status, paymentMethod, user));
 		Object response = ClientFormController.client.accept(message);
 		Integer orderId = (Integer) response;
 		if (orderId != -1) { // if successful
@@ -371,7 +329,6 @@ public class CheckoutController implements Initializable {
 		Object response = ClientFormController.client.accept(message);
 		if ((Integer) response != -1)
 			System.out.println("yayy!! delivery added to the db");
-
 	}
 
 	@SuppressWarnings("unchecked")
@@ -410,7 +367,7 @@ public class CheckoutController implements Initializable {
 		HashMap<String, Object> message = new HashMap<>();
 		ArrayList<OrderCustomProduct> orderCustomProductsList = new ArrayList<>();
 		message.put("command", Commands.INSERT_ORDER_CUSTOM_PRODUCTS);
-		for (int i = 0 ; i < customProducts.size() ; i++) {
+		for (int i = 0; i < customProducts.size(); i++) {
 			CustomProduct currentCustomProduct = customProducts.get(i);
 			ProductsBase currentCustomProductBase = customProductsBase.get(i);
 			orderCustomProductsList.add(new OrderCustomProduct(orderId, currentCustomProduct,
@@ -468,5 +425,31 @@ public class CheckoutController implements Initializable {
 		message.put("idUser", User.getUserInstance().getIdUser());
 		Object response = ClientFormController.client.accept(message);
 		accountPayments = (ObservableList<AccountPayment>) response;
+	}
+
+	@FXML
+	void openDeliveryDetailsPopup(MouseEvent event) {
+		try {
+			if (SingletonOrder.getInstance().getIsPickup())
+				ManageScreens.openPopupFXML(
+						DeliveryDetailsPickupVBoxController.class.getResource("DeliveryDetailsPickupVBox.fxml"),
+						"Pickup Details");
+			else
+				ManageScreens.openPopupFXML(
+						DeliveryDetailsDeliveryVBoxController.class.getResource("DeliveryDetailsDeliveryVBox.fxml"),
+						"Delivery Details");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	void openGreetingCardPopup(MouseEvent event) {
+		try {
+			ManageScreens.openPopupFXML(GreetingCardVBoxController.class.getResource("GreetingCardVBox.fxml"),
+					"Greeting Card Details");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

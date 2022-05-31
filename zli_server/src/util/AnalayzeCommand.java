@@ -12,9 +12,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 import deliveryCoordination.DeliveryCoordinatorView;
 import entities.AccountPayment;
@@ -463,6 +468,7 @@ public class AnalayzeCommand {
 		Connection conn;
 		ResultSet rs = null;
 		int idDelivery = -1;
+	    LocalDateTime localDateTime = getNowPlus3Hours();
 		conn = DataBaseController.getConn();
 		String query = "INSERT INTO deliveries (address, receiverName, phoneNumber, deliveryDate, status, type, idOrder) VALUES (?, ?, ?, ?, ?, ?, ?);";
 		try {
@@ -470,7 +476,7 @@ public class AnalayzeCommand {
 			preparedStmt.setString(1, delivery.getAddress());
 			preparedStmt.setString(2, delivery.getReceiverName());
 			preparedStmt.setString(3, delivery.getPhoneNumber());
-			preparedStmt.setString(4, isExpress ? "date_add(NOW(), INTERVAL 3 hour)" : delivery.getDeliveryDate());
+			preparedStmt.setString(4, isExpress ? localDateTime.toString() : delivery.getDeliveryDate());
 			preparedStmt.setString(5, delivery.getStatus());
 			preparedStmt.setString(6, delivery.getType());
 			preparedStmt.setInt(7, idOrder);
@@ -482,6 +488,16 @@ public class AnalayzeCommand {
 			e.printStackTrace();
 		}
 		return idDelivery;
+	}
+
+	private static LocalDateTime getNowPlus3Hours() {
+		Calendar calendar = Calendar.getInstance();
+        TimeZone tz = calendar.getTimeZone();
+        ZoneId zoneId = tz.toZoneId();
+	    calendar.setTime(new Date());
+	    calendar.add(Calendar.HOUR_OF_DAY, 3);
+	    LocalDateTime localDateTime = LocalDateTime.ofInstant(calendar.toInstant(), zoneId);
+		return localDateTime;
 	}
 
 	public static HashMap<Integer, String> selectSurveys() {
