@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import util.Commands;
 import util.ManageScreens;
 
@@ -30,6 +31,7 @@ public class orderRowController {
 
 	@FXML
 	private Button viewDeatilsButton;
+
 
 	@FXML
 	void cancelOrder(ActionEvent event) {
@@ -78,7 +80,7 @@ public class orderRowController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		if(date.compareTo(new Date())<0) {
+		if(date.compareTo(new Date())<0 && !customerOrder.getDeliveryStatus().equals("Delivered")) {
 			deliveryStatusLabel.setText("Delivery Status: " + customerOrder.getDeliveryStatus() + " | Late");
 		}
 		else
@@ -89,6 +91,7 @@ public class orderRowController {
 		if (customerOrder.getOrderStatus().equals("Waiting for Cancellation")
 				|| customerOrder.getOrderStatus().equals("Canceled")
 				|| customerOrder.getDeliveryStatus().equals("Delivered")
+				|| customerOrder.getDeliveryStatus().equals("Delivered-Refunded")
 				|| customerOrder.getDeliveryType().equals("express delivery")
 				|| date.compareTo(new Date()) < 0)
 			cancelOrderButton.setDisable(true);

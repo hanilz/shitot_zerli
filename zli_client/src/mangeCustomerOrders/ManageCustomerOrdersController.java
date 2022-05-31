@@ -198,7 +198,6 @@ public class ManageCustomerOrdersController implements Initializable{
 			ordersToApprove.remove(mov);
 			newOrderTable.refresh();
 		}
-		//TODO issue refund for the user
 		NotificationManager.sendNotification(mov.getIdUser(), NotificationType.ORDER_NOT_ACCEPTED, mov.getIdOrder());
 		
     }
@@ -233,7 +232,6 @@ public class ManageCustomerOrdersController implements Initializable{
 			ordersToCancel.remove(mov);
 			newOrderTable.refresh();
 		}
-		//TODO calculate refund and refund the user in the system
 		NotificationManager.sendNotification(mov.getIdUser(), NotificationType.CANCEL_REQUEST_APPROVED, refund);
     }
 

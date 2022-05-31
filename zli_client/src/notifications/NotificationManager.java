@@ -48,7 +48,9 @@ public class NotificationManager {
 		case COMPLAINT_DUE:
 			return "Complaint Number: " + (int)param + " is Due, Please attend it as soon as possible.";
 		case DELIVERY_LATE_REFUND:
-			return "We are deeply sorry for the delivery delay you will be issued a " +InputChecker.price((Double)param) + " refund.";
+			return "We are deeply sorry for the delivery delay on your order with order number "+(int)param+" you will be issued a full refund for your order.";
+		case DELIVERY_CONFIRMATION:
+			return "Your order with order number "+(int)param+" has been delivered!\nThank you for shopping with us, we hope to see you again soon!";
 		case ORDER_ACCEPTED:
 			return "Congratulations! Your order with order number "+ (int)param +" has been accepted and is now getting ready for delivery.";
 		case ORDER_CANCELED_REFUND:
