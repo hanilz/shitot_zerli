@@ -142,8 +142,7 @@ public class LoginScreenController implements Initializable {
 		int idUser = (Integer) response.get("idUser");
 		int idAccount = (Integer) response.get("idAccount");
 		UserType userType = (UserType) response.get("userType");
-		ArrayList<Screens> UserHomeScreens=(ArrayList<Screens>) response.get("userScreen");
-		User.getUserInstance().login(idUser, username, idAccount, userType,UserHomeScreens);// creating running user
+		User.getUserInstance().login(idUser, username, idAccount, userType);// creating running user
 	}
 
 	private void catalogFlow(Event event) {

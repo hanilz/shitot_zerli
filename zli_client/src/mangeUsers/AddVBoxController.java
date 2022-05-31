@@ -31,6 +31,5 @@ public class AddVBoxController {
     void addScreen(MouseEvent event) {
 		ManageUsersPermissionController.addScreen(screen);
 		AddScreensController.removeScreens(screen);
-	//	ManageUsersPermissionController.connect().enableSave();
 	}
 }

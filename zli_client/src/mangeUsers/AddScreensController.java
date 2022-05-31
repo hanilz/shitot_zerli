@@ -33,14 +33,11 @@ public class AddScreensController implements Initializable {
 	@FXML
 	private Label usernameLable;
 	// data
-	// private int userId=ManageUsersPermissionController.connect().UserId();
 	private static ManageUsers user = null;
 	private static ArrayList<Screens> userScreens;
 	private UserType userType;
 	private static AddScreensController addScreensController;
 	private static ArrayList<Screens> screens;
-	// private static ArrayList<Screens>
-	// userScreens=ManageUsersPermissionController.getUserScreens();
 
 	@FXML
 	void changeToHome(MouseEvent event) {
@@ -81,7 +78,7 @@ public class AddScreensController implements Initializable {
 				}
 			}
 	}
-
+	
 	public static void removeScreens(Screens screen) {
 		screens.remove(screen);
 		addScreensController.setScreens(screens);
