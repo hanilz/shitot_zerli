@@ -2,17 +2,17 @@ package server;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import client.ClientFormController;
+import entities.Branch;
 import entities.Complaint;
 import gui.ServerFormController;
-import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import notifications.NotificationController;
-import notifications.NotificationManager;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 import util.AnalayzeCommand;
@@ -117,37 +117,76 @@ public class ServerController extends AbstractServer implements Runnable {
 				return "Can not listen";
 			}
 		runComplaintsThread();
+		generateReports();
 		return isListening() ? "Server listening for connections on port " + getPort()
 				: "Server has stopped listening for connections.";
 	}
 
-	private	synchronized void runComplaintsThread() {
+	private synchronized void runComplaintsThread() {
 		Thread complaints = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				ArrayList<Complaint> complaintList;
-				while(true) {
+				while (true) {
 					complaintList = AnalayzeCommand.getAllComplaintsForServer();
-					if(!complaintList.isEmpty()) {
+					if (!complaintList.isEmpty()) {
 						for (Iterator<Complaint> iterator = complaintList.iterator(); iterator.hasNext();) {
 							Complaint comp = iterator.next();
-							if(comp.getRemainingMinutes()<=0) 
-								util.ServerNotificationManager.sendNotification(comp.getIdUser(),NotificationType.COMPLAINT_DUE,comp.getComplaintID() );
+							if (comp.getRemainingMinutes() <= 0)
+								util.ServerNotificationManager.sendNotification(comp.getIdUser(),
+										NotificationType.COMPLAINT_DUE, comp.getComplaintID());
 							else
 								iterator.remove();
 						}
-						AnalayzeCommand.updateComplaintsStatus(complaintList);						
+						AnalayzeCommand.updateComplaintsStatus(complaintList);
 					}
 					try {
 						Thread.sleep(60000);
 					} catch (InterruptedException e) {
 						System.out.println(e);
 					}
-					
 				}
 			}
 		});
 		complaints.start();
+	}
+
+	private synchronized void generateReports() {
+		Thread reportsThread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while (true) {
+					Calendar calendar = Calendar.getInstance();
+					calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DATE));
+					Date lastDayOfMonth = calendar.getTime();
+					Date currentDate = new Date();
+					if (!lastDayOfMonth.toString().equals(currentDate.toString()))
+						sleepForOneDay(calendar);
+					else {
+						//generate new reports
+						if(!isGenerated(currentDate)) {
+							ArrayList<String> reportsType = new ArrayList<String>(Arrays.asList("income", "orders", "complaints", "income histogram"));
+							ArrayList<Branch> branches = AnalayzeCommand.selectAllBranches();
+							AnalayzeCommand.generateNewReports(reportsType, branches, currentDate);
+							sleepForOneDay(calendar);
+						}
+						else
+							sleepForOneDay(calendar);
+					}
+				}
+			}
+		});
+		reportsThread.start();
+	}
+
+	private void sleepForOneDay(Calendar calendar) {
+		try {
+			Thread.sleep((calendar.get(Calendar.HOUR_OF_DAY) * 3600 + calendar.get(Calendar.MINUTE) * 60 + calendar.get(Calendar.SECOND)) * 1000 + calendar.get(Calendar.MILLISECOND));
+		} catch (InterruptedException e) {}
+	}
+	
+	private boolean isGenerated(Date currentDate) {
+		return AnalayzeCommand.isGeneratedReports(currentDate);
 	}
 
 	@Override

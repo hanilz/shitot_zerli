@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -468,7 +467,7 @@ public class AnalayzeCommand {
 		Connection conn;
 		ResultSet rs = null;
 		int idDelivery = -1;
-	    LocalDateTime localDateTime = getNowPlus3Hours();
+		LocalDateTime localDateTime = getNowPlus3Hours();
 		conn = DataBaseController.getConn();
 		String query = "INSERT INTO deliveries (address, receiverName, phoneNumber, deliveryDate, status, type, idOrder) VALUES (?, ?, ?, ?, ?, ?, ?);";
 		try {
@@ -492,11 +491,11 @@ public class AnalayzeCommand {
 
 	private static LocalDateTime getNowPlus3Hours() {
 		Calendar calendar = Calendar.getInstance();
-        TimeZone tz = calendar.getTimeZone();
-        ZoneId zoneId = tz.toZoneId();
-	    calendar.setTime(new Date());
-	    calendar.add(Calendar.HOUR_OF_DAY, 3);
-	    LocalDateTime localDateTime = LocalDateTime.ofInstant(calendar.toInstant(), zoneId);
+		TimeZone tz = calendar.getTimeZone();
+		ZoneId zoneId = tz.toZoneId();
+		calendar.setTime(new Date());
+		calendar.add(Calendar.HOUR_OF_DAY, 3);
+		LocalDateTime localDateTime = LocalDateTime.ofInstant(calendar.toInstant(), zoneId);
 		return localDateTime;
 	}
 
@@ -698,13 +697,15 @@ public class AnalayzeCommand {
 		return orders;
 	}
 
-	public static boolean deleteComlaint(int complaintID) {
+	public static boolean setComlaintClosedAndRefund(int complaintID, Double refund) {
 		Connection conn = DataBaseController.getConn();
-		String query = "UPDATE complaints SET status = 'Closed' WHERE idComplaint = ? ;";
+		String query = "UPDATE complaints c,orders o,users u SET c.status = 'Closed', o.refund = ?, u.storeCredit = u.storeCredit + ?  WHERE c.idUser = u.idUser AND c.orderID = o.idOrder AND c.idComplaint = ? ;";
 		// String query = "UPDATE FROM complaints WHERE idComplaint = ?;";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setInt(1, complaintID);
+			preparedStmt.setDouble(1, refund);
+			preparedStmt.setDouble(2, refund);
+			preparedStmt.setInt(3, complaintID);
 			int row = preparedStmt.executeUpdate();
 			if (row == 0)
 				return false;
@@ -755,12 +756,6 @@ public class AnalayzeCommand {
 	public static ArrayList<ManagerOrderView> selectOrdersForManager(int mangerID) {
 		ArrayList<ManagerOrderView> orders = new ArrayList<>();
 		Connection conn = DataBaseController.getConn();
-		// String query = "SELECT O.idOrder, O.price,
-		// UD.firstName,UD.lastName,O.date,O.status,O.idUser FROM zli.orders o,
-		// zli.branches b,zli.user_details UD,zli.users U WHERE o.idBranch=b.idBranch
-		// AND b.idManager =? AND (O.status = 'Waiting for Approval' OR O.status =
-		// 'Waiting for Cancellation' ) AND U.idUser = O.idUser AND
-		// UD.idAccount=U.idAccount;";
 		String query = "SELECT distinct o.idOrder, o.price, UD.firstName,UD.lastName,o.status,o.idUser,o.date AS orderDate, d.deliveryDate,d.type,o.lastModified,TIMESTAMPDIFF(minute,o.lastModified,d.deliveryDate) AS timeTillDelivery FROM zli.orders o, zli.branches b,zli.user_details UD,zli.users U,zli.orders, zli.deliveries d WHERE o.idBranch=b.idBranch AND b.idManager =? AND (o.status = 'Waiting for Approval' OR o.status = 'Waiting for Cancellation' ) AND U.idUser = o.idUser AND UD.idAccount=U.idAccount AND d.idOrder=o.idOrder;";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -788,17 +783,19 @@ public class AnalayzeCommand {
 		return orders;
 	}
 
-	public static boolean approveOrder(int idOrder) {
+	public static boolean approveOrder(int idOrder, String orderType) {
 		Connection conn = DataBaseController.getConn();
 		String query = "UPDATE orders SET status = 'Approved' WHERE idOrder = ? ;";
-		// String query = "UPDATE FROM complaints WHERE idComplaint = ?;";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
 			int row = preparedStmt.executeUpdate();
 			if (row == 0)
 				return false;
-			query = "UPDATE deliveries SET deliveries.status = 'Awaiting Delivery' WHERE idOrder = ?;";
+			if (orderType.equals("express delivery"))
+				query = "UPDATE deliveries SET status = 'Awaiting Delivery' ,deliveryDate =DATE_ADD(now(),interval 3 hour) WHERE idOrder = ?;";
+			else
+				query = "UPDATE deliveries SET status = 'Awaiting Delivery' WHERE idOrder = ?;";
 			preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
 			preparedStmt.executeUpdate();
@@ -1041,16 +1038,17 @@ public class AnalayzeCommand {
 	public static boolean uploadFileToDB(File file) {
 		Connection conn = DataBaseController.getConn();
 		byte[] fileBytes = new byte[(int) file.length()];
-		PreparedStatement psmnt;
+		PreparedStatement psmt;
 		try {
-			FileInputStream io = new FileInputStream(file);
-			Blob fileBlob = conn.createBlob();
-			fileBlob.setBytes(1, fileBytes);
-			psmnt = conn.prepareStatement("INSERT INTO blob_file_table (idblobFile, blobFile) VALUES  (?,?)");
-			psmnt.setString(1, file.getName());
+			FileInputStream fis = new FileInputStream(file);
+//			Blob fileBlob = conn.createBlob();
+//			fileBlob.setBytes(1, fileBytes);
+			psmt = conn.prepareStatement("INSERT INTO blob_file_table (idblobFile, blobFile) VALUES  (?,?)");
+			psmt.setString(1, file.getName());
 			// psmnt.setBlob(2, fileBlob);
-			psmnt.setBinaryStream(2, (InputStream) io, (int) file.length());
-			if (psmnt.executeUpdate() == 0)
+//			psmnt.setBinaryStream(2, (InputStream) io, (int) file.length());
+			psmt.setBlob(2, fis);
+			if (psmt.executeUpdate() == 0)
 				return false;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1065,8 +1063,8 @@ public class AnalayzeCommand {
 	// as of right now this is just a big mess, the file downloads but its only 1 kb
 	// and it wont open because it was corrupted and im not sure if
 	// it happened in the encoding or decoding process
-	public static File retriveFileFromDB() {
-//		ArrayList<File> files = new ArrayList<>();
+	public static ArrayList<File> retriveFileFromDB() {
+		ArrayList<File> files = new ArrayList<>();
 //		try {
 //			Statement stmt = DataBaseController.getConn().createStatement();
 //			ResultSet rs = stmt.executeQuery("SELECT * FROM blob_file_table;");
@@ -1097,7 +1095,7 @@ public class AnalayzeCommand {
 			stmt = conn.prepareStatement("SELECT * FROM blob_file_table;");
 			rs = stmt.executeQuery();
 
-			if (rs.next()) {
+			while (rs.next()) {
 				fileName = rs.getString(1);
 				ret = new File("D:\\" + fileName);
 				output = new FileOutputStream(ret);
@@ -1115,6 +1113,7 @@ public class AnalayzeCommand {
 				while ((r = input.read()) != -1) {
 					output.write(r);
 				}
+				files.add(ret);
 			}
 			System.out.println("File writing complete !");
 
@@ -1145,7 +1144,7 @@ public class AnalayzeCommand {
 
 		}
 		// return new File("D:\\" + fileName);
-		return ret;
+		return files;
 	}
 
 	public static Map<String, Integer> getItemsIncomeReport(Report report) {
@@ -1678,5 +1677,49 @@ public class AnalayzeCommand {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public static boolean generateNewReports(ArrayList<String> reportsTypes, ArrayList<Branch> branches, Date date) {
+		Connection conn = DataBaseController.getConn();
+		String query = "insert into reports (type, date, idBranch) values ";
+		Statement stmt;
+		StringBuffer buffer = new StringBuffer(query);
+		java.sql.Timestamp currentDateTime = new java.sql.Timestamp(date.getTime());
+		String currentDate = currentDateTime.toString().substring(0, currentDateTime.toString().length() - 4);
+		for (Branch currentBranch : branches) {
+			for (String currentType : reportsTypes) {
+				buffer.append("('" + currentType + "','" + currentDate + "'," + currentBranch.getIdBranch() + "), ");
+			}
+		}
+		buffer.delete(buffer.toString().length() - 2, buffer.toString().length());
+		buffer.append(";");
+		try {
+			stmt = conn.createStatement();
+			stmt.executeUpdate(buffer.toString());
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static boolean isGeneratedReports(Date date) {
+		Connection conn = DataBaseController.getConn();
+		Statement stmt;
+		java.sql.Timestamp currentDateTime = new java.sql.Timestamp(date.getTime());
+		String currentDate = currentDateTime.toString().substring(0, currentDateTime.toString().length() - 13);
+		String query = "SELECT date FROM zli.reports WHERE date BETWEEN '" + currentDate + "' AND '" + currentDate
+				+ " 23:59:59';";
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				if (rs.getString(1).contains(currentDate))
+					return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

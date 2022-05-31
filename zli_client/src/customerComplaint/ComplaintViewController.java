@@ -76,6 +76,7 @@ public class ComplaintViewController implements Initializable {
     	HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.CLOSE_COMPLAINT);
 		message.put("Complaint Number", complaint.getComplaintID());
+		message.put("refund", 0.0);
 		Object response = ClientFormController.client.accept(message);
 		if (!(boolean) response) {
 			errorLabel.setText("*Failed to close request");
@@ -95,17 +96,17 @@ public class ComplaintViewController implements Initializable {
 
     @FXML
     void refundUser(ActionEvent event) {
-    	//refund = Double.parseDouble(refundText.getText());
     	HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.CLOSE_COMPLAINT);//might need to be changed in the future to save the refund to the user
 		message.put("Complaint Number", complaint.getComplaintID());
+		message.put("refund", refund);
 		Object response = ClientFormController.client.accept(message);
 		if (!(boolean) response) {
 			errorLabel.setText("*Failed to close request");
 			errorLabel.setVisible(true);
 			return;
 		}
-		displayPopUp("Customer refunded","Complaint has been closed\nCustomer has been refunded "+ refund+" NIS.");
+		displayPopUp("Customer refunded","Complaint has been closed\nCustomer has been refunded "+ InputChecker.price(refund));
 		ManageScreens.changeScreenTo(Screens.COMPLAINT_HOME);
     }
 

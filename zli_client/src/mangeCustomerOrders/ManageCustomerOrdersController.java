@@ -169,6 +169,7 @@ public class ManageCustomerOrdersController implements Initializable{
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.APPROVE_ORDER);
 		message.put("order id", mov.getIdOrder());
+		message.put("orderType", mov.getDeliveryType());
 		Object response = ClientFormController.client.accept(message);
 		if((boolean)response) {
 			ManageScreens.displayAlert("Order Approved","Order "+ mov.getIdOrder()+" Approved!");

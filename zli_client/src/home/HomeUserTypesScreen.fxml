@@ -16,6 +16,7 @@
    <children>
       <VBox alignment="CENTER" prefHeight="500.0" prefWidth="294.0" spacing="30.0">
          <children>
+            <Label text="Label" />
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="276.0" text="Welcome To Zer-Li">
                <font>
                   <Font name="System Bold" size="30.0" />
@@ -29,26 +30,32 @@
                   <Insets right="-16.0" />
                </padding>
             </Label>
-            <HBox prefHeight="76.0" prefWidth="97.0">
+            <VBox alignment="CENTER">
                <children>
-                  <ImageView fx:id="notificationIcon" fitHeight="76.0" fitWidth="73.0" onMousePressed="#showNotifications" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../resources/home/notification.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
-                  <Label fx:id="notificationLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="43.0" prefWidth="44.0" style="-fx-background-color: LAVENDER; -fx-background-radius: 30;" text="0">
+                  <HBox alignment="TOP_CENTER" maxHeight="75.0" maxWidth="150.0" minHeight="75.0" minWidth="150.0" prefHeight="75.0" prefWidth="150.0">
+                     <children>
+                        <ImageView fx:id="notificationIcon" fitHeight="76.0" fitWidth="73.0" onMousePressed="#showNotifications" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/home/notification.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                        <Label fx:id="notificationLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="43.0" prefWidth="44.0" style="-fx-background-color: LAVENDER; -fx-background-radius: 30;" text="0">
+                           <font>
+                              <Font size="29.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Label text="Notifications">
                      <font>
-                        <Font size="29.0" />
+                        <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
                </children>
-               <padding>
-                  <Insets left="100.0" />
-               </padding>
-            </HBox>
+            </VBox>
          </children>
          <HBox.margin>
             <Insets />

@@ -4,6 +4,7 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -44,21 +45,24 @@ public class SurveyAnalysisViewHomeController implements Initializable {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.FETCH_FILES);//TODO currently brings only one file
 		Object response = ClientFormController.client.accept(message);
-		file = (File) response;
-		if (file != null) {
-			Button btn = new Button(file.getName());
-			btn.setOnAction(new EventHandler<ActionEvent>() {
-
-				@Override
-				public void handle(ActionEvent event) {
-					configureFileChooser(fileChooser);
-					File file = fileChooser.showOpenDialog(ManageScreens.getStage());
-					if (file != null) {
+		ArrayList<File> files = (ArrayList<File>) response;
+		if(!files.isEmpty()) {
+			for(File file : files) {
+				Button btn = new Button(file.getName());
+				btn.setOnAction(new EventHandler<ActionEvent>() {
+					
+					@Override
+					public void handle(ActionEvent event) {
+						configureFileChooser(fileChooser);
+						File file = fileChooser.showOpenDialog(ManageScreens.getStage());
+						if (file != null) {
 							openFile(file);
+						}
 					}
-				}
-			});
-			reportList.getChildren().add(btn);
+				});
+				reportList.getChildren().add(btn);				
+			}
+			
 		}
 		
 		else
