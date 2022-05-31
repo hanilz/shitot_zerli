@@ -13,12 +13,8 @@ public class CatalogVBox extends VBox implements ICatalogVBox{
 	protected VBox nameVBox = new VBox();
 	protected ImageView image;
 	protected Label priceLabel = new Label("Price:");
-<<<<<<< HEAD
 	protected Label amountLabel = new Label();  // will show the price
-=======
-	protected Label amountLabel = new Label();; // will show the price
 	protected Label discountLabel = new Label("");
->>>>>>> ce239087421a6e6d2e0c97a3d84650ca57abebae
 	protected HBox priceHBox = new HBox();
 	protected Button addToCartButton = new Button("Add To Cart");
 
