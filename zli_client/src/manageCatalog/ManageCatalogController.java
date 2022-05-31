@@ -1,128 +1,78 @@
 package manageCatalog;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 
-import client.ClientFormController;
-import entities.Item;
-import entities.Product;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.RowConstraints;
-import util.Commands;
+import javafx.scene.layout.VBox;
+import util.ManageData;
 import util.ManageScreens;
 
 public class ManageCatalogController implements Initializable {// might extends
 
-	@FXML
-	private Label catalogLbl;
-
-	@FXML
-	private HBox hbox;
-
-	@FXML
-	private ImageView homeImage;
-
-	@FXML
-	private ScrollPane scrollCatalogPane;
-
-	private ObservableList<Product> products = FXCollections.observableArrayList();
-
-	private ObservableList<Item> items = FXCollections.observableArrayList();
-	
-	private ObservableList<String> searchBy = FXCollections.observableArrayList("Name","Id","Type","Color");
-
-	@FXML
-	private GridPane catalogGrid;
-	
-    @FXML
-    private Button searchBtn;
 
     @FXML
-    private ComboBox<String> searchOptions;
+    private Button addNewProductButton;
 
     @FXML
-    private TextArea searchText;
+    private VBox catalogVBox;
 
-	private ArrayList<ManageCatalogVBox> catalogVBoxList = new ArrayList<>();
+    @FXML
+    private Button filterButton;
 
-	@FXML
-	void goToHomeScreen(MouseEvent event) {
-		ManageScreens.home();
-	}
+    @FXML
+    private ScrollPane filterScrollPane;
+
+    @FXML
+    private ImageView homeImage;
+
+    @FXML
+    private VBox homeVBox;
+
+    @FXML
+    private HBox loginHBox;
+
+    @FXML
+    private VBox loginVBox;
+
+    @FXML
+    private ScrollPane manageScrollPane;
+
+    @FXML
+    private TextField searchBar;
+
+    @FXML
+    private Button searchButton;
+
+	private GridPane manageGrid;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		fetchProducts();
-		fetchItems();
-		initCatalogItemVBoxes();
-		initGrid();
-		searchOptions.setItems(searchBy);
+		manageGrid = ManageData.manageGrid;
+		manageScrollPane.setContent(manageGrid);
 	}
 
-	@SuppressWarnings("unchecked")
-	private void fetchItems() {
-		HashMap<String, Object> message = new HashMap<>();
-		message.put("command", Commands.FETCH_ITEMS);
-		Object response = ClientFormController.client.accept(message);
-		items = (ObservableList<Item>) response;
+	@FXML
+	void changeToHomeScreen(MouseEvent event) {
+		ManageScreens.home();
 	}
-
-	@SuppressWarnings("unchecked")
-	private void fetchProducts() {
-		HashMap<String, Object> message = new HashMap<>();
-		message.put("command", Commands.FETCH_PRODUCTS);
-		Object response = ClientFormController.client.accept(message);
-		products = (ObservableList<Product>) response;
-	}
-
-	private void initGrid() {
-		int numberOfRows = (int) Math.ceil((products.size() + items.size()) / 3.0);
-		for (int i = 0; i < numberOfRows; i++) {
-			RowConstraints rowConst = new RowConstraints();
-			rowConst.setPercentHeight(100.0 / numberOfRows);
-			catalogGrid.getRowConstraints().add(rowConst);
-		}
-		for (int i = 0; i < catalogVBoxList.size(); i++) {
-			catalogGrid.add(catalogVBoxList.get(i), i % 3, i / 3);
-		}
-		catalogGrid.setVgap(20);
-	}
-
-	private void initCatalogItemVBoxes() {
-		for (int i = 0; i < products.size(); i++) {
-			ManageCatalogVBox catalogProductVBox = new ManageCatalogVBox(products.get(i));
-			catalogProductVBox.initVBox();
-			catalogVBoxList.add(catalogProductVBox);
-		}
-		for (int i = 0; i < items.size(); i++) {
-			ManageCatalogVBox catalogItemVBox = new ManageCatalogVBox(items.get(i));
-			catalogItemVBox.initVBox();
-			catalogVBoxList.add(catalogItemVBox);
-		}
-	}
-
+	
     @FXML
-    void search(MouseEvent event) {
+    void changeToAddNewProduct(MouseEvent event) {
 
     }
-    @FXML
-    void selectSearchOption(ActionEvent event) {
-    	String s=searchOptions.getSelectionModel().getSelectedItem().toString();
-    	System.out.println(s);
-    }
+
+	@FXML
+	void search(MouseEvent event) {
+
+	}
 
 }

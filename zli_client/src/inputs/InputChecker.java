@@ -54,6 +54,12 @@ public class InputChecker {
 		return true;
 	}
 
+	public static boolean isFieldsEmpty(String field) {
+		if (field.isEmpty())
+			return true;
+		return false;
+	}
+
 	// for delivery screen
 	public static boolean isBranchNotNull(Branch branch) {
 		if (branch == null)
@@ -124,6 +130,7 @@ public class InputChecker {
 
 	}
 
+
 	public static boolean isDateBeforeNow(String dateTime) {
 		boolean response = false;
 		try {
@@ -141,5 +148,29 @@ public class InputChecker {
 	public static boolean areGreetingCardFieldsEmptyChecker(boolean selected, String text, String text2, String text3,
 			String text4) {
 		return selected ? (text.isEmpty() || text2.isEmpty() || text3.isEmpty() || text4.isEmpty()) : false;
+	}
+
+	public static boolean isInteger(String check) {
+		try {
+			Integer.parseInt(check);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+	public static boolean isDouble(String check) {
+		try {
+			Double.parseDouble(check);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+	public static boolean isContainsLetters(String check) {
+		if (check.matches("^[ A-Za-z]+$"))
+			return true;
+		return false;
 	}
 }

@@ -50,14 +50,13 @@ public class User implements Serializable {
 		return userInstance == null ? userInstance = new User() : userInstance;
 	}
 
-	public void login(int idUser, String username, int idAccount, UserType userType, double storeCredit, ArrayList<Screens> userHomeScreens) {
+	public void login(int idUser, String username, int idAccount, UserType userType, double storeCredit) {
 		if (!isLogged) {
 			this.idUser = idUser;
 			this.username = username;
 			this.idAccount = idAccount;
 			this.userType = userType;
 			this.storeCredit = storeCredit;
-			this.userHomeScreens=userHomeScreens;
 			isLogged = true;
 		}
 	}
@@ -107,6 +106,13 @@ public class User implements Serializable {
 	public void setType(String type)
 	{
 		userType = UserType.get(type);
+	}
+
+	@Override
+	public boolean equals(Object user)
+	{
+		User currUser=(User)user;
+		return currUser.idUser==idUser;
 	}
 
 	public double getStoreCredit() {

@@ -129,4 +129,10 @@ public class ViewOrdersController implements Initializable{
 		((OrderProductRowController) loader.getController()).initRow();
 		return orderProductRow;
 	}
+	
+	public void updateOrderStatus(CustomerOrderView cov) {
+		customerOrders.get(customerOrders.indexOf(cov)).setDeliveryStatus("Waiting for Cancellation");
+		customerOrders.get(customerOrders.indexOf(cov)).setOrderStatus("Waiting for Cancellation");
+		initializeOverview(cov);
+	}
 }

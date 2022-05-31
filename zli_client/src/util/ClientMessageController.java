@@ -107,6 +107,18 @@ public class ClientMessageController {
 		case GET_CUSTOM_ORDERS_REPORT:
 			returnServerRespond();
 			break;
+		case REMOVE_PRODUCT_BASE:
+			returnServerRespond();
+			break;
+		case GET_PRODUCT:
+			returnServerRespond();
+			break;
+		case GET_ITEM:
+			returnServerRespond();
+			break;
+		case GET_TOTAL_REFUNDS:
+			returnServerRespond();
+			break;
 		default:
 			returnServerRespond();
 			break;

@@ -2,17 +2,15 @@ package manageCatalog;
 
 import entities.ProductsBase;
 import inputs.InputChecker;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import util.ManageScreens;
 
 public class ManageCatalogVBox extends VBox {
 	protected Label nameLabel = new Label(); // will show the product name
@@ -32,6 +30,12 @@ public class ManageCatalogVBox extends VBox {
 		initImageProduct();
 		this.getChildren().add(image);
 		amountLabel.setText("" + InputChecker.price(((double) product.getPrice())));//int->double
+		if(product.getDiscount() != 0) {
+			double discount = product.getPrice() - (product.getPrice()*(product.getDiscount()/100));
+			amountLabel.setId("discount");
+			amountLabel.setStyle("-fx-text-fill: #F70000;");
+			amountLabel.setText(InputChecker.price(discount));
+		}
 		initPriceHBox();
 		this.getChildren().add(priceHBox);
 		this.setAlignment(Pos.CENTER);
@@ -51,26 +55,17 @@ public class ManageCatalogVBox extends VBox {
 		image.setCursor(Cursor.HAND);
 	}
 
-	private void initImageProduct() { // same function but not with the event so we will call super.
+	private void initImageProduct() { 
 		image = new ImageView(product.getImagePath());
 		setImageProp();
 		image.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				PVBox popup = new PVBox(product);
-
-				popup.initProductVBox();
-				Scene scene = new Scene(popup);
-				Stage stage = new Stage();
-				popup.sceneProperty().addListener((obs, oldVal, newVal) -> {
-		            System.out.println("hello");
-		            Platform.runLater(() -> {
-		            	stage.sizeToScene();    
-		            });
-		        });
-				stage.setTitle("Product Details - " + product.getName());
-				stage.setScene(scene);
-				stage.showAndWait();
+				ProductEditorController.setProductEditorController(product);
+				try {
+					ManageScreens.openPopupFXML(ProductEditorController.class.getResource("ProductEditorPopup.fxml"),
+							"Product Editor");
+				} catch (Exception e) {}
 			}
 		});
 	}

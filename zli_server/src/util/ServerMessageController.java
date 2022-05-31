@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import deliveryCoordination.DeliveryCoordinatorView;
 import entities.AccountPayment;
 import entities.Branch;
 import entities.Complaint;
 import entities.CustomProduct;
-import entities.DeliveriesOrders;
 import entities.Delivery;
 import entities.Item;
 import entities.ManageUsers;
@@ -206,8 +206,8 @@ public class ServerMessageController {
 			message.put("response", compailntSubmited);
 			break;
 		case UPDATE_PRODUCTS_BASE:
-			boolean isUpdated;
-			isUpdated = message.get("type").equals("item") ? AnalayzeCommand.updateItem((Item) message.get("unit"))
+			boolean isUpdated = message.get("type").equals("item")
+					? AnalayzeCommand.updateItem((Item) message.get("unit"))
 					: AnalayzeCommand.updateProduct((Product) message.get("unit"));
 			message.put("response", isUpdated);
 			break;
@@ -270,7 +270,8 @@ public class ServerMessageController {
 			message.put("response", approve);
 			break;
 		case CANCEL_ORDER:
-			boolean cancel = AnalayzeCommand.cancelOrder((Integer) message.get("order id"));
+			boolean cancel = AnalayzeCommand.cancelOrder((Integer) message.get("order id"),
+					(Double) message.get("refund"), (Integer) message.get("idUser"));
 			message.put("response", cancel);
 			break;
 		case FETCH_NOTIFICATIONS:
@@ -356,6 +357,49 @@ public class ServerMessageController {
 			ArrayList<Screens> userScreens = AnalayzeCommand.getUserHomeScreens((Integer) message.get("id"),
 					(UserType) message.get("userType"));
 			message.put("response", userScreens);
+			break;
+		case SAVE_SCREENS:
+			System.out.println((Integer) message.get("id"));
+			System.out.println((ArrayList<Screens>) message.get("screens"));
+			boolean isSaved = AnalayzeCommand.insertScreens((Integer) message.get("id"),
+					(ArrayList<Screens>) message.get("screens"));
+			message.put("response", isSaved);
+			break;
+		case CANCEL_ORDER_REQUEST:
+			boolean requested = AnalayzeCommand.cancelOrderRequest((int) message.get("order id"));
+			message.put("response", requested);
+			break;
+		case REMOVE_PRODUCT_BASE:
+			boolean isProductRemoved = message.get("type").equals("item")
+					? AnalayzeCommand.removeItemFromDB((Integer) message.get("item"))
+					: AnalayzeCommand.removeProductFromDB((Integer) message.get("product"));
+			message.put("response", isProductRemoved);
+			break;
+		case GET_PRODUCT:
+			Product updatedProduct = AnalayzeCommand.getSelectedProduct((Integer) message.get("product"));
+			message.put("response", updatedProduct);
+			break;
+		case GET_ITEM:
+			Item updatedItem = AnalayzeCommand.getSelectedItem((Integer) message.get("item"));
+			message.put("response", updatedItem);
+			break;
+		case GET_TOTAL_REFUNDS:
+			Integer totalRefunds = AnalayzeCommand.getTotalRefunds((Report) message.get("selected report"));
+			message.put("response", totalRefunds);
+			break;
+		case FETCH_ORDERS_DELIVERY_COORDINATOR:
+			ArrayList<DeliveryCoordinatorView> ordersReadyForDelivery = AnalayzeCommand
+					.fetchOrdersForDeliveryCoordinator();
+			message.put("response", ordersReadyForDelivery);
+			break;
+		case CONFIRM_DELIVERY:
+			boolean delivered = AnalayzeCommand.markOrderAsDelivered((Integer) message.get("idOrder"));
+			message.put("response", delivered);
+			break;
+		case REFUND_USER_FOR_LATE_DELIVERY:
+			boolean refunded = AnalayzeCommand.refundUserForLateDelivery((Integer) message.get("idUser"),
+					(Integer) message.get("idOrder"));
+			message.put("response", refunded);
 			break;
 		default:
 			break;

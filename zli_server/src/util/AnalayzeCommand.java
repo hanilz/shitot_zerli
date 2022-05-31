@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import deliveryCoordination.DeliveryCoordinatorView;
 import entities.AccountPayment;
 import entities.Branch;
 import entities.Complaint;
@@ -63,11 +64,12 @@ public class AnalayzeCommand {
 					String productType = rs.getString(6);
 					String productDesc = rs.getString(7);
 					String imagePath = rs.getString(8);
+					int discount = rs.getInt(9);
 					Product productResult = new Product(productId, productName, productColor, productPrice, productType,
-							imagePath, flowerType, productDesc);
+							imagePath, discount, flowerType, productDesc);
 					products.add(productResult);
 					HashMap<Item, Integer> items = new HashMap<>();
-					items.put(currentItem, rs.getInt(9));
+					items.put(currentItem, rs.getInt(10));
 					products_items.put(productId, items);
 				} else
 					products_items.get(productId).put(currentItem, rs.getInt(9));
@@ -82,13 +84,14 @@ public class AnalayzeCommand {
 	}
 
 	private static Item getItemFromResultSet(ResultSet rs) throws SQLException {
-		int itemID = rs.getInt(10);
-		String itemName = rs.getString(11);
-		String itemColor = rs.getString(12);
-		double itemPrice = rs.getDouble(13);
-		String itemType = rs.getString(14);
-		String imagePath = rs.getString(15);
-		Item itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath);
+		int itemID = rs.getInt(11);
+		String itemName = rs.getString(12);
+		String itemColor = rs.getString(13);
+		double itemPrice = rs.getDouble(14);
+		String itemType = rs.getString(15);
+		String imagePath = rs.getString(16);
+		int discount = rs.getInt(17);
+		Item itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath, discount);
 
 		return itemResult;
 	}
@@ -105,7 +108,8 @@ public class AnalayzeCommand {
 				double itemPrice = rs.getDouble(4);
 				String itemType = rs.getString(5);
 				String imagePath = rs.getString(6);
-				Item itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath);
+				int ratio = rs.getInt(7);
+				Item itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath, ratio);
 				items.add(itemResult);
 			}
 		} catch (SQLException e) {
@@ -182,9 +186,10 @@ public class AnalayzeCommand {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, userId);
 			rs = preparedStmt.executeQuery();
-			if (!rs.next())
+			if (!rs.next()) {
+				insertScreens(userId, ManageClients.getUserScreens(userType));// save default in screens not exist
 				userHomeScreens.addAll(ManageClients.getUserScreens(userType));
-			else {
+			} else {
 				rs.previous();
 				while (rs.next()) {
 					userHomeScreens.add(Screens.valueOf((rs.getString(1))));
@@ -202,7 +207,7 @@ public class AnalayzeCommand {
 		HashMap<String, Object> login = new HashMap<>();
 		conn = DataBaseController.getConn();
 		ResultSet rs;
-		String query = "SELECT * FROM users,user_screen WHERE username=? AND password=?";
+		String query = "SELECT * FROM users WHERE username=? AND password=?";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setString(1, username);
@@ -225,8 +230,6 @@ public class AnalayzeCommand {
 					preparedStmt.setInt(1, 1);
 					preparedStmt.setString(2, username);
 					preparedStmt.setString(3, password);
-					login.put("userScreen",
-							getUserHomeScreens((Integer) login.get("idUser"), (UserType) login.get("userType")));
 					if (preparedStmt.executeUpdate() == 1)
 						status = Status.NEW_LOG_IN;
 
@@ -628,15 +631,13 @@ public class AnalayzeCommand {
 	public static boolean updateItem(Item item) {
 		Connection conn;
 		conn = DataBaseController.getConn();
-		String query = "UPDATE items SET itemName = ? , itemColor=? , itemPrice=? WHERE itemID = ?";
+		String query = "UPDATE items SET itemPrice=? , discount = ? WHERE itemID = ?";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setString(1, item.getName());
-			preparedStmt.setString(2, item.getColor());
-			preparedStmt.setDouble(3, item.getPrice());
-			System.out.println(item.getPrice());
-			preparedStmt.setInt(4, item.getId());
-			System.out.println(preparedStmt.executeUpdate());
+			preparedStmt.setDouble(1, item.getPrice());
+			preparedStmt.setDouble(2, item.getDiscount());
+			preparedStmt.setInt(3, item.getId());
+			preparedStmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -647,16 +648,13 @@ public class AnalayzeCommand {
 	public static boolean updateProduct(Product product) {
 		Connection conn;
 		conn = DataBaseController.getConn();
-		String query = "UPDATE products SET productName = ? , flowerType=? , productColor=? , productPrice=? , productType=? , productDescription=?  WHERE productID = ?;";
+		String query = "UPDATE products SET productPrice=?, productDescription=?, discount = ? WHERE productID = ?;";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setString(1, product.getName());
-			preparedStmt.setString(2, product.getFlowerType());
-			preparedStmt.setString(3, product.getColor());
-			preparedStmt.setDouble(4, product.getPrice());
-			preparedStmt.setString(5, product.getType());
-			preparedStmt.setString(6, product.getProductDescription());
-			preparedStmt.setInt(7, product.getId());
+			preparedStmt.setDouble(1, product.getPrice());
+			preparedStmt.setString(2, product.getProductDescription());
+			preparedStmt.setDouble(3, product.getDiscount());
+			preparedStmt.setInt(4, product.getId());
 			preparedStmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {
@@ -741,8 +739,13 @@ public class AnalayzeCommand {
 	public static ArrayList<ManagerOrderView> selectOrdersForManager(int mangerID) {
 		ArrayList<ManagerOrderView> orders = new ArrayList<>();
 		Connection conn = DataBaseController.getConn();
-		String query = "SELECT O.idOrder, O.price, UD.firstName,UD.lastName,O.date,O.status,O.idUser FROM zli.orders o, zli.branches b,zli.user_details UD,zli.users U WHERE o.idBranch=b.idBranch AND b.idManager =? AND (O.status = 'Waiting for Approval' OR O.status = 'Waiting for Cancelation' ) AND U.idUser = O.idUser AND UD.idAccount=U.idAccount;";
-
+		// String query = "SELECT O.idOrder, O.price,
+		// UD.firstName,UD.lastName,O.date,O.status,O.idUser FROM zli.orders o,
+		// zli.branches b,zli.user_details UD,zli.users U WHERE o.idBranch=b.idBranch
+		// AND b.idManager =? AND (O.status = 'Waiting for Approval' OR O.status =
+		// 'Waiting for Cancellation' ) AND U.idUser = O.idUser AND
+		// UD.idAccount=U.idAccount;";
+		String query = "SELECT distinct o.idOrder, o.price, UD.firstName,UD.lastName,o.status,o.idUser,o.date AS orderDate, d.deliveryDate,d.type,o.lastModified,TIMESTAMPDIFF(minute,o.lastModified,d.deliveryDate) AS timeTillDelivery FROM zli.orders o, zli.branches b,zli.user_details UD,zli.users U,zli.orders, zli.deliveries d WHERE o.idBranch=b.idBranch AND b.idManager =? AND (o.status = 'Waiting for Approval' OR o.status = 'Waiting for Cancellation' ) AND U.idUser = o.idUser AND UD.idAccount=U.idAccount AND d.idOrder=o.idOrder;";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, mangerID);
@@ -752,10 +755,15 @@ public class AnalayzeCommand {
 				Double price = rs.getDouble(2);
 				String firstName = rs.getString(3);
 				String lastName = rs.getString(4);
-				String date = rs.getString(5);
-				String status = rs.getString(6);
-				int idUser = rs.getInt(7);
-				orders.add(new ManagerOrderView(idOrder, price, firstName, lastName, date, status, idUser));
+				String status = rs.getString(5);
+				int idUser = rs.getInt(6);
+				String orderDate = rs.getString(7);
+				String deliveryTime = rs.getString(8);
+				String deliveryType = rs.getString(9);
+				String lastModified = rs.getString(10);
+				int timeTillDelivery = rs.getInt(11);
+				orders.add(new ManagerOrderView(idOrder, price, firstName, lastName, status, idUser, orderDate,
+						deliveryTime, deliveryType, lastModified, timeTillDelivery));
 			}
 		} catch (SQLException e) {
 			System.out.println("failed to fetch orders for manager");
@@ -785,18 +793,24 @@ public class AnalayzeCommand {
 		return true;
 	}
 
-	public static boolean cancelOrder(int idOrder) {
+	public static boolean cancelOrder(int idOrder, Double refund, int idUser) {
 		Connection conn = DataBaseController.getConn();
-		String query = "UPDATE orders SET status = 'Canceled' WHERE idOrder = ? ;";
+		String query = "UPDATE orders SET status = 'Canceled', refund =? WHERE idOrder = ? ;";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setInt(1, idOrder);
+			preparedStmt.setDouble(1, refund);
+			preparedStmt.setInt(2, idOrder);
 			int row = preparedStmt.executeUpdate();
 			if (row == 0)
 				return false;
 			query = "UPDATE deliveries SET deliveries.status = 'Canceled' WHERE idOrder = ?;";
 			preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
+			preparedStmt.executeUpdate();
+			query = "UPDATE users SET storeCredit = storeCredit+? WHERE idUser = ?;";
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setDouble(1, refund);
+			preparedStmt.setInt(2, idUser);
 			preparedStmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("failed to cancel order");
@@ -1304,13 +1318,6 @@ public class AnalayzeCommand {
 		HashMap<ProductsBase, Integer> products = new HashMap<>();
 		Connection conn = DataBaseController.getConn();
 		PreparedStatement preparedStmt;
-		/*
-		 * SELECT * FROM zli.order_products op INNER JOIN zli.products p ON
-		 * op.idProduct=p.productID WHERE op.idOrder=4; SELECT * FROM zli.order_items oi
-		 * INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=4; SELECT *
-		 * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON
-		 * ocp.idCustomProduct=cp.id WHERE ocp.idOrder=4;
-		 */
 		String query = "SELECT * FROM zli.order_products op INNER JOIN zli.products p ON op.idProduct=p.productID WHERE op.idOrder=?;";
 		try {
 			preparedStmt = conn.prepareStatement(query);
@@ -1336,13 +1343,6 @@ public class AnalayzeCommand {
 		HashMap<ProductsBase, Integer> items = new HashMap<>();
 		Connection conn = DataBaseController.getConn();
 		PreparedStatement preparedStmt;
-		/*
-		 * SELECT * FROM zli.order_products op INNER JOIN zli.products p ON
-		 * op.idProduct=p.productID WHERE op.idOrder=4; SELECT * FROM zli.order_items oi
-		 * INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=4; SELECT *
-		 * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON
-		 * ocp.idCustomProduct=cp.id WHERE ocp.idOrder=4;
-		 */
 		String query = "SELECT * FROM zli.order_items oi INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=?;";
 		try {
 			preparedStmt = conn.prepareStatement(query);
@@ -1368,13 +1368,6 @@ public class AnalayzeCommand {
 		HashMap<ProductsBase, Integer> customProducts = new HashMap<>();
 		Connection conn = DataBaseController.getConn();
 		PreparedStatement preparedStmt;
-		/*
-		 * SELECT * FROM zli.order_products op INNER JOIN zli.products p ON
-		 * op.idProduct=p.productID WHERE op.idOrder=4; SELECT * FROM zli.order_items oi
-		 * INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=4; SELECT *
-		 * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON
-		 * ocp.idCustomProduct=cp.id WHERE ocp.idOrder=4;
-		 */
 		String query = "SELECT * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON ocp.idCustomProduct=cp.id WHERE ocp.idOrder=?;";
 		try {
 			preparedStmt = conn.prepareStatement(query);
@@ -1446,6 +1439,33 @@ public class AnalayzeCommand {
 		return true;
 	}
 
+	public static boolean insertScreens(Integer id, ArrayList<Screens> userScreen) {
+		Connection conn = DataBaseController.getConn();
+		String query = "DELETE FROM user_screen WHERE idUser = ?;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, id);
+			preparedStmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("Failed to delete user_details");
+			e.printStackTrace();
+		}
+		for (Screens screen : userScreen) {
+			query = "INSERT INTO user_screen (idUser, screen) VALUES (?, ?);";
+			try {
+				preparedStmt = conn.prepareStatement(query);
+				preparedStmt.setInt(1, id);
+				preparedStmt.setString(2, screen.toString());
+				preparedStmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public static boolean updateUserStoreCredit(double newStoreCredit, int idUser) {
 		Connection conn;
 		conn = DataBaseController.getConn();
@@ -1459,5 +1479,188 @@ public class AnalayzeCommand {
 			e.printStackTrace();
 			return false;
 		}
-		return true;	}
+		return true;
+	}
+
+	public static boolean cancelOrderRequest(int idOrder) {
+		Connection conn = DataBaseController.getConn();
+		String query = "UPDATE orders SET status = 'Waiting for Cancellation',lastModified = CURRENT_TIMESTAMP WHERE idOrder = ? ;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idOrder);
+			preparedStmt.executeUpdate();
+			query = "UPDATE deliveries SET status = 'Waiting for Cancellation' WHERE idOrder = ? ;";
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idOrder);
+			preparedStmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Failed to update status");
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static boolean removeProductFromDB(int productId) {
+		Connection conn = DataBaseController.getConn();
+		String query = "DELETE FROM products WHERE productID = ?;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, productId);
+			preparedStmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Failed to delete notification");
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static boolean removeItemFromDB(int itemId) {
+		Connection conn = DataBaseController.getConn();
+		String query = "DELETE FROM items WHERE itemID = ?;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, itemId);
+			preparedStmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Failed to delete notification");
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static Product getSelectedProduct(Integer id) {
+		Product productResult = null;
+		Connection conn = DataBaseController.getConn();
+		String query = "SELECT * FROM PRODUCTS WHERE ProductID = ?;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, id);
+			ResultSet rs = preparedStmt.executeQuery();
+			while (rs.next()) {
+				int productId = rs.getInt(1);
+				String productName = rs.getString(2);
+				String flowerType = rs.getString(3);
+				String productColor = rs.getString(4);
+				double productPrice = rs.getDouble(5);// double
+				String productType = rs.getString(6);
+				String productDesc = rs.getString(7);
+				String imagePath = rs.getString(8);
+				int discount = rs.getInt(9);
+				productResult = new Product(productId, productName, productColor, productPrice, productType, imagePath,
+						discount, flowerType, productDesc);
+			}
+			return productResult;
+		} catch (SQLException e) {
+			System.out.println("Failed to delete notification");
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static Item getSelectedItem(Integer id) {
+		Item itemResult = null;
+		Connection conn = DataBaseController.getConn();
+		String query = "SELECT * FROM Items WHERE itemID = ?;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, id);
+			ResultSet rs = preparedStmt.executeQuery();
+			while (rs.next()) {
+				int itemID = rs.getInt(1);
+				String itemName = rs.getString(2);
+				String itemColor = rs.getString(3);
+				double itemPrice = rs.getDouble(4);
+				String itemType = rs.getString(5);
+				String imagePath = rs.getString(6);
+				int discount = rs.getInt(7);
+				itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath, discount);
+			}
+			return itemResult;
+		} catch (SQLException e) {
+			System.out.println("Failed to delete notification");
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static int getTotalRefunds(Report report) {
+		int totalRefund = 0;
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt.executeQuery("SELECT SUM(refund) as totalRefund\r\n" + "FROM zli.orders\r\n"
+					+ "WHERE idBranch = " + report.getIdBranch() + " and orders.date between " + report.getDateRange()
+					+ " \r\n" + "GROUP BY idBRanch;");
+			while (rs.next()) {
+				totalRefund = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalRefund;
+	}
+
+	public static ArrayList<DeliveryCoordinatorView> fetchOrdersForDeliveryCoordinator() {
+		ArrayList<DeliveryCoordinatorView> dcv = new ArrayList<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			String query = "SELECT o.idOrder,ud.firstName,ud.lastName ,d.address,d.deliveryDate ,u.idUser,d.type,TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP,d.deliveryDate) as timeTillDelivery,ud.id FROM (((zli.deliveries d INNER JOIN zli.orders o ON o.idOrder=d.idOrder) INNER JOIN zli.users u ON o.idUser=u.idUser) INNER JOIN zli.user_details ud ON u.idAccount=ud.idAccount) WHERE d.status='Awaiting Delivery';";
+			ResultSet rs = selectStmt.executeQuery(query);
+			while (rs.next()) {
+				dcv.add(new DeliveryCoordinatorView(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
+						rs.getString(5), rs.getInt(6), rs.getString(7), rs.getInt(8), rs.getString(9)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return dcv;
+	}
+
+	public static boolean markOrderAsDelivered(int idOrder) {
+		Connection conn = DataBaseController.getConn();
+		String query = "UPDATE orders SET status = 'Delivered',lastModified = CURRENT_TIMESTAMP WHERE idOrder = ? ;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idOrder);
+			preparedStmt.executeUpdate();
+			query = "UPDATE deliveries SET status = 'Delivered' WHERE idOrder = ? ;";
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idOrder);
+			preparedStmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Failed to deliver order");
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static boolean refundUserForLateDelivery(int idUser, int idOrder) {
+		Connection conn = DataBaseController.getConn();
+		String query = "UPDATE orders SET refund = price, status = 'Delivered-Refunded' WHERE idOrder = ? ;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idOrder);
+			preparedStmt.executeUpdate();
+			query = "UPDATE users SET storeCredit = storeCredit + (SELECT price FROM orders WHERE idOrder = ?)  WHERE idUser = ? ;";
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idOrder);
+			preparedStmt.setInt(2, idUser);
+			preparedStmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Failed to refund user");
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

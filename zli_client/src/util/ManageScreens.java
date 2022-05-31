@@ -2,10 +2,13 @@ package util;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Optional;
 
 import cart.CartController;
 import catalog.CatalogController;
 import catalog.SplashScreenController;
+import client.ClientFormController;
 import client.ClientScreen;
 import customProduct.CustomProductBuilderController;
 import customerComplaint.ComplaintViewController;
@@ -16,20 +19,18 @@ import home.HomeGuestController;
 import home.HomeUserTypesController;
 import home.LoginScreenController;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 import manageCatalog.ManageCatalogController;
 import mangeCustomerOrders.ManageCustomerOrdersController;
+import mangeUsers.AddScreensController;
 import mangeUsers.ManageUsersController;
 import mangeUsers.ManageUsersPermissionController;
 import order.CheckoutController;
@@ -99,6 +100,23 @@ public class ManageScreens {
 		setIconApplication((Stage)a.getDialogPane().getScene().getWindow());
 		a.show();
 	}
+	
+	/**display Alert with a yes no question
+	 * @param title
+	 * @param header
+	 * @param content
+	 * @return true if yes button was pressed, false otherwise
+	 */
+	public static boolean getYesNoDecisionAlert(String title, String header, String content) {
+		Alert alert = new Alert(AlertType.NONE, header, ButtonType.YES, ButtonType.NO);
+		alert.initOwner(ManageScreens.getStage());
+		alert.setTitle(title);
+		alert.setHeaderText(content);
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.YES)
+			return true;
+		return false;
+	}
 
 	public static void openPopupFXML(URL url, String title) throws Exception {
 		// setIconApplication();
@@ -163,6 +181,7 @@ public class ManageScreens {
 		return popupStage;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static void changeScreenTo(Screens screen) {
 		setPreviousScreen(currentScreen);// saved one become last one
 		try {
@@ -171,6 +190,11 @@ public class ManageScreens {
 				ManageScreens.changeScene(HomeGuestController.class.getResource("HomeGuestScreen.fxml"), "HomeScreen");
 				break;
 			case USER_HOME:
+				HashMap<String, Object> message = new HashMap<>();
+				message.put("command", Commands.GET_USER_SCREENS);
+				message.put("id", User.getUserInstance().getIdUser());
+				message.put("userType",  User.getUserInstance().getType());
+				User.getUserInstance().setUserScreens((ArrayList<Screens>) ClientFormController.client.accept(message));
 				ManageScreens.changeScene(HomeUserTypesController.class.getResource("HomeUserTypesScreen.fxml"),
 						"HomeScreen");
 				break;
@@ -278,6 +302,9 @@ public class ManageScreens {
 				ManageScreens.changeScene(ManageUsersPermissionController.class.getResource("ManageUsersPermission.fxml"),
 						"Users Premission");
 				break;
+			case ADD_SCREENS:
+				ManageScreens.changeScene(AddScreensController.class.getResource("AddScreens.fxml"),
+						"Add Screens");
 			default:
 				break;
 			}
@@ -360,6 +387,8 @@ public class ManageScreens {
 			return "Deliver Orders";
 		case USER_PREMISSION:
 			return "Users Premission";
+		case ADD_SCREENS:
+			return "Add Screens";
 		default:
 			return "";
 		}
