@@ -240,7 +240,7 @@ public class ServerMessageController {
 			message.put("response", complaints);
 			break;
 		case CLOSE_COMPLAINT:
-			boolean ans = AnalayzeCommand.deleteComlaint((Integer) message.get("Complaint Number"));
+			boolean ans = AnalayzeCommand.setComlaintClosedAndRefund((Integer) message.get("Complaint Number"),(Double) message.get("refund"));
 			message.put("response", ans);
 			break;
 		case GET_ORDER_SUM:
@@ -266,7 +266,7 @@ public class ServerMessageController {
 			message.put("response", orders);
 			break;
 		case APPROVE_ORDER:
-			boolean approve = AnalayzeCommand.approveOrder((Integer) message.get("order id"));
+			boolean approve = AnalayzeCommand.approveOrder((Integer) message.get("order id"),(String)message.get("orderType"));
 			message.put("response", approve);
 			break;
 		case CANCEL_ORDER:
@@ -300,8 +300,8 @@ public class ServerMessageController {
 			message.put("response", uploaded);
 			break;
 		case FETCH_FILES:
-			File file = AnalayzeCommand.retriveFileFromDB();// (File)message.get("FILE")
-			message.put("response", file);
+			ArrayList<File> files = AnalayzeCommand.retriveFileFromDB();
+			message.put("response", files);
 			break;
 		case GET_ITEMS_INCOME_REPORT:
 			Map<String, Integer> itemsIncomeLabels = AnalayzeCommand

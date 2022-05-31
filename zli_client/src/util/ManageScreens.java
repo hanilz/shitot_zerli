@@ -305,6 +305,11 @@ public class ManageScreens {
 			case ADD_SCREENS:
 				ManageScreens.changeScene(AddScreensController.class.getResource("AddScreens.fxml"),
 						"Add Screens");
+				break;
+			case CREATE_NEW_PRODUCT:
+				ManageScreens.changeScene(ManageCatalogController.class.getResource("NewProduct.fxml"),
+						"Manage Catalog");
+				break;
 			default:
 				break;
 			}

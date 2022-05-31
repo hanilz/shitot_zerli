@@ -1,5 +1,6 @@
 package inputs;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -38,7 +39,8 @@ public class InputChecker {
 
 	public static String price(double amount) {// setting price of num+NIS
 		int a = 0x20AA;
-		String price = amount + " " + Character.toString((char) a);
+		DecimalFormat df = new DecimalFormat("0.##");
+		String price = df.format(amount) + " " + Character.toString((char) a);
 		return price;
 	}
 

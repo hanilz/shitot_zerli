@@ -3,8 +3,11 @@ package manageCatalog;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -15,6 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import util.ManageData;
 import util.ManageScreens;
+import util.Screens;
 
 public class ManageCatalogController implements Initializable {// might extends
 
@@ -57,7 +61,27 @@ public class ManageCatalogController implements Initializable {// might extends
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		manageGrid = ManageData.manageGrid;
+		manageGrid.add(addNewProduct(), 0, 0);
 		manageScrollPane.setContent(manageGrid);
+	}
+
+	private VBox addNewProduct() {
+		VBox newItemVBox = new VBox();
+		newItemVBox.setAlignment(Pos.CENTER);
+		ImageView image = new ImageView("/resources/catalog/newProduct.png");
+		image.setFitHeight(130);
+		image.setFitWidth(130);
+		image.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				ManageScreens.changeScreenTo(Screens.CREATE_NEW_PRODUCT);
+			}
+		
+		});
+		newItemVBox.getChildren().add(image);
+		// TODO Auto-generated method stub
+		return newItemVBox;
 	}
 
 	@FXML

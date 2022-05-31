@@ -683,13 +683,15 @@ public class AnalayzeCommand {
 		return orders;
 	}
 
-	public static boolean deleteComlaint(int complaintID) {
+	public static boolean setComlaintClosedAndRefund(int complaintID, Double refund) {
 		Connection conn = DataBaseController.getConn();
-		String query = "UPDATE complaints SET status = 'Closed' WHERE idComplaint = ? ;";
+		String query = "UPDATE complaints c,orders o,users u SET c.status = 'Closed', o.refund = ?, u.storeCredit = u.storeCredit + ?  WHERE c.idUser = u.idUser AND c.orderID = o.idOrder AND c.idComplaint = ? ;";
 		// String query = "UPDATE FROM complaints WHERE idComplaint = ?;";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setInt(1, complaintID);
+			preparedStmt.setDouble(1, refund);
+			preparedStmt.setDouble(2, refund);
+			preparedStmt.setInt(3, complaintID);
 			int row = preparedStmt.executeUpdate();
 			if (row == 0)
 				return false;
@@ -740,12 +742,6 @@ public class AnalayzeCommand {
 	public static ArrayList<ManagerOrderView> selectOrdersForManager(int mangerID) {
 		ArrayList<ManagerOrderView> orders = new ArrayList<>();
 		Connection conn = DataBaseController.getConn();
-		// String query = "SELECT O.idOrder, O.price,
-		// UD.firstName,UD.lastName,O.date,O.status,O.idUser FROM zli.orders o,
-		// zli.branches b,zli.user_details UD,zli.users U WHERE o.idBranch=b.idBranch
-		// AND b.idManager =? AND (O.status = 'Waiting for Approval' OR O.status =
-		// 'Waiting for Cancellation' ) AND U.idUser = O.idUser AND
-		// UD.idAccount=U.idAccount;";
 		String query = "SELECT distinct o.idOrder, o.price, UD.firstName,UD.lastName,o.status,o.idUser,o.date AS orderDate, d.deliveryDate,d.type,o.lastModified,TIMESTAMPDIFF(minute,o.lastModified,d.deliveryDate) AS timeTillDelivery FROM zli.orders o, zli.branches b,zli.user_details UD,zli.users U,zli.orders, zli.deliveries d WHERE o.idBranch=b.idBranch AND b.idManager =? AND (o.status = 'Waiting for Approval' OR o.status = 'Waiting for Cancellation' ) AND U.idUser = o.idUser AND UD.idAccount=U.idAccount AND d.idOrder=o.idOrder;";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -773,17 +769,19 @@ public class AnalayzeCommand {
 		return orders;
 	}
 
-	public static boolean approveOrder(int idOrder) {
+	public static boolean approveOrder(int idOrder,String orderType) {
 		Connection conn = DataBaseController.getConn();
 		String query = "UPDATE orders SET status = 'Approved' WHERE idOrder = ? ;";
-		// String query = "UPDATE FROM complaints WHERE idComplaint = ?;";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
 			int row = preparedStmt.executeUpdate();
 			if (row == 0)
 				return false;
-			query = "UPDATE deliveries SET deliveries.status = 'Awaiting Delivery' WHERE idOrder = ?;";
+			if(orderType.equals("express delivery"))
+				query = "UPDATE deliveries SET status = 'Awaiting Delivery' ,deliveryDate =DATE_ADD(now(),interval 3 hour) WHERE idOrder = ?;";
+			else	
+				query = "UPDATE deliveries SET status = 'Awaiting Delivery' WHERE idOrder = ?;";
 			preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
 			preparedStmt.executeUpdate();
@@ -1026,16 +1024,17 @@ public class AnalayzeCommand {
 	public static boolean uploadFileToDB(File file) {
 		Connection conn = DataBaseController.getConn();
 		byte[] fileBytes = new byte[(int) file.length()];
-		PreparedStatement psmnt;
+		PreparedStatement psmt;
 		try {
-			FileInputStream io = new FileInputStream(file);
-			Blob fileBlob = conn.createBlob();
-			fileBlob.setBytes(1, fileBytes);
-			psmnt = conn.prepareStatement("INSERT INTO blob_file_table (idblobFile, blobFile) VALUES  (?,?)");
-			psmnt.setString(1, file.getName());
+			FileInputStream fis = new FileInputStream(file);
+//			Blob fileBlob = conn.createBlob();
+//			fileBlob.setBytes(1, fileBytes);
+			psmt = conn.prepareStatement("INSERT INTO blob_file_table (idblobFile, blobFile) VALUES  (?,?)");
+			psmt.setString(1, file.getName());
 			// psmnt.setBlob(2, fileBlob);
-			psmnt.setBinaryStream(2, (InputStream) io, (int) file.length());
-			if (psmnt.executeUpdate() == 0)
+//			psmnt.setBinaryStream(2, (InputStream) io, (int) file.length());
+			psmt.setBlob(2,fis);
+			if (psmt.executeUpdate() == 0)
 				return false;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1050,8 +1049,8 @@ public class AnalayzeCommand {
 	// as of right now this is just a big mess, the file downloads but its only 1 kb
 	// and it wont open because it was corrupted and im not sure if
 	// it happened in the encoding or decoding process
-	public static File retriveFileFromDB() {
-//		ArrayList<File> files = new ArrayList<>();
+	public static ArrayList<File> retriveFileFromDB() {
+		ArrayList<File> files = new ArrayList<>();
 //		try {
 //			Statement stmt = DataBaseController.getConn().createStatement();
 //			ResultSet rs = stmt.executeQuery("SELECT * FROM blob_file_table;");
@@ -1082,7 +1081,7 @@ public class AnalayzeCommand {
 			stmt = conn.prepareStatement("SELECT * FROM blob_file_table;");
 			rs = stmt.executeQuery();
 
-			if (rs.next()) {
+			while (rs.next()) {
 				fileName = rs.getString(1);
 				ret = new File("D:\\" + fileName);
 				output = new FileOutputStream(ret);
@@ -1100,6 +1099,7 @@ public class AnalayzeCommand {
 				while ((r = input.read()) != -1) {
 					output.write(r);
 				}
+				files.add(ret);
 			}
 			System.out.println("File writing complete !");
 
@@ -1130,7 +1130,7 @@ public class AnalayzeCommand {
 
 		}
 		// return new File("D:\\" + fileName);
-		return ret;
+		return files;
 	}
 
 	public static Map<String, Integer> getItemsIncomeReport(Report report) {
