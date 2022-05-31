@@ -3,6 +3,7 @@ package catalog;
 import entities.Cart;
 import entities.Product;
 import inputs.InputChecker;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
@@ -10,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import util.ManageScreens;
 
 public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
@@ -26,7 +28,14 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 		nameLabel.setText(product.getName());
 		initImageProduct();
 
-		amountLabel.setText("" + InputChecker.price((product.getPrice())));
+		amountLabel.setText(InputChecker.price(product.getPrice()));
+		if(product.getDiscount() != 0) {
+			double discount = product.getPrice() - (product.getPrice()*(product.getDiscount()/100));
+			amountLabel.setId("discount");
+			amountLabel.setStyle("-fx-text-fill: #F70000;");
+			amountLabel.setText(InputChecker.price(discount));
+		}
+			
 
 		initPriceHBox();
 
@@ -45,6 +54,10 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 				System.out.println("Cart is: " + Cart.getInstance().getCart());
 				System.out.println(product.getName() + " added to cart woohoooo");
 				CatalogController.refreshTotalAmountInCart();
+				addToCartButton.setText("Product Added To Cart!");
+				PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+				pause.setOnFinished(e -> addToCartButton.setText("Add To Cart"));
+				pause.play();
 			}
 		});
 	}

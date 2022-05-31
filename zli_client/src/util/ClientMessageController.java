@@ -2,8 +2,10 @@ package util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import client.ClientController;
+import entities.AccountPayment;
 import entities.Branch;
 import entities.Complaint;
 import entities.Item;
@@ -62,6 +64,9 @@ public class ClientMessageController {
 		case FETCH_PRODUCTS:
 			returnServerListRespond(new ArrayList<Product>());
 			break;
+		case FETCH_ACCOUNT_PAYMENTS:
+			returnServerListRespond(new ArrayList<AccountPayment>());
+			break;
 		case LOGIN:
 			ClientController.setResponse(message);
 			break;
@@ -78,6 +83,42 @@ public class ClientMessageController {
 		case FETCH_COMPLAINTS:
 			returnServerListRespond(new ArrayList<Complaint>());
 			break;
+		case GET_ITEMS_INCOME_REPORT:
+			returnServerMapRespond(new HashMap<String,Integer>());
+			break;
+		case GET_PRODUCTS_INCOME_REPORT:
+			returnServerMapRespond(new HashMap<String,Integer>());
+			break;
+		case GET_ITEMS_ORDERS_REPORT:
+			returnServerMapRespond(new HashMap<String,Integer>());
+			break;
+		case GET_PRODUCTS_ORDERS_REPORT:
+			returnServerMapRespond(new HashMap<String,Integer>());
+			break;
+		case GET_COMPLAINT_REPORT:
+			returnServerMapRespond(new HashMap<String,Integer>());
+			break;
+		case GET_INCOME_HISTOGRAM_REPORT:
+			returnServerMapRespond(new HashMap<String,Integer>());
+			break;
+		case GET_CUSTOM_INCOME_REPORT:
+			returnServerRespond();
+			break;
+		case GET_CUSTOM_ORDERS_REPORT:
+			returnServerRespond();
+			break;
+		case REMOVE_PRODUCT_BASE:
+			returnServerRespond();
+			break;
+		case GET_PRODUCT:
+			returnServerRespond();
+			break;
+		case GET_ITEM:
+			returnServerRespond();
+			break;
+		case GET_TOTAL_REFUNDS:
+			returnServerRespond();
+			break;
 		default:
 			returnServerRespond();
 			break;
@@ -91,6 +132,12 @@ public class ClientMessageController {
 	private void returnServerListRespond(ArrayList<?> listResponse) {
 		ArrayList<?> respondAsList = ((listResponse.isEmpty()) ? (ArrayList<?>) message.get("response") : listResponse);
 		response = FXCollections.observableArrayList(respondAsList);
+		ClientController.setResponse(response);
+	}
+	
+	private void returnServerMapRespond(Map<?,?> mapResponse) {
+		Map<?,?> respondAsMap = ((mapResponse.isEmpty()) ? (Map<?,?>) message.get("response") : mapResponse);
+		response = respondAsMap;
 		ClientController.setResponse(response);
 	}
 

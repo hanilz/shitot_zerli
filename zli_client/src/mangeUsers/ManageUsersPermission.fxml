@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" style="-fx-background-color: F1EDF0;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mangeUsers.ManageUsersPermissionController">
+   <children>
+      <GridPane alignment="CENTER">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <HBox>
+               <children>
+                  <ImageView fitHeight="89.0" fitWidth="82.0" onMouseClicked="#changeToHome" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/catalog/home.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="10.0" top="20.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" GridPane.columnIndex="1">
+               <children>
+                  <Label text="Manage User Screens" textAlignment="JUSTIFY" wrapText="true">
+                     <font>
+                        <Font name="Arial" size="45.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </GridPane>
+      <VBox spacing="10.0">
+         <children>
+            <HBox alignment="CENTER" spacing="20.0">
+               <children>
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <ComboBox fx:id="usersOption" onAction="#getUser" prefHeight="27.0" prefWidth="197.0" promptText="Click here to select user id" style="-fx-border-color: #D9B8C4; -fx-background-radius: 5; -fx-background-color: E1D1DA;" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <Label text="Name:">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="usernameLable" text="Please Select User" textFill="#2600ff">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <Label text="Use Type:">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="userTypeLable" text="Premission" textFill="#2600ff">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="32.0" prefWidth="1280.0">
+               <children>
+                  <Label fx:id="errorLable" text="ERROR! PLEASE SELECT A USER FIRST!" textFill="#dd0f0f" visible="false">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" spacing="50.0">
+               <children>
+                  <HBox fx:id="saveScreenButton" disable="true" onMouseClicked="#clickSaveScreen" style="-fx-background-color: E4C2C2; -fx-background-radius: 20;">
+                     <children>
+                        <Button mnemonicParsing="false" onMouseClicked="#clickSaveScreen" style="-fx-background-color: transparent;" text="SAVE User Screens" textFill="#1f219a">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#clickSaveScreen" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/manageHome/save.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </HBox>
+                  <HBox fx:id="defaultScreenButton" disable="true" onMouseClicked="#setDefaultScreens" style="-fx-background-color: E4C2C2; -fx-background-radius: 20;">
+                     <children>
+                        <Button mnemonicParsing="false" onMouseClicked="#setDefaultScreens" style="-fx-background-color: transparent;" text="Use DEFAULT Screens">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#setDefaultScreens" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/manageHome/userScreen.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </HBox>
+                  <HBox fx:id="addScreenButton" disable="true" onMouseClicked="#addScreens" style="-fx-background-radius: 20; -fx-background-color: E4C2C2;">
+                     <children>
+                        <Button mnemonicParsing="false" onMouseClicked="#addScreens" style="-fx-background-color: transparent;" text="ADD Screens">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#addScreens" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/manageHome/add.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </HBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <ScrollPane>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <content>
+            <TilePane fx:id="userHomeScreens" alignment="CENTER" prefHeight="557.0" prefRows="3" prefWidth="1277.0" style="-fx-background-color: FDFFFD;" />
+         </content>
+      </ScrollPane>
+   </children>
+   <padding>
+      <Insets top="20.0" />
+   </padding>
+</VBox>

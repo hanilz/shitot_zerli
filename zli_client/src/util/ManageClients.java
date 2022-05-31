@@ -37,22 +37,25 @@ public class ManageClients {
 			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.VIEW_REPORTS}));
 		case CUSTOMER:
 			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.CATALOG,Screens.VIEW_ORDERS_CUSTOMER}));
+		case NEW_CUSTOMER:
+			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.CATALOG,Screens.VIEW_ORDERS_CUSTOMER}));
 		case CUSTOMER_SERVICE:
-			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.SURVEY_HOME,Screens.COMPLAINT_HOME}));
+			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.COMPLAINT_HOME,Screens.SURVEY_HOME,Screens.VIEW_SURVEY_ANALYSIS_RESULTS}));
 		case DELIVERY_COORDINATOR:
-			break;
+			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.DELIVER_ORDERS}));
 		case MARKETING_WORKER:
 			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.EDIT_CATALOG}));
 		case SERVICE_EXPERT:
 			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.VIEW_ANSWERED_SURVEYS}));
 		case STORE_MANGER:
-			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.MANAGE_USERS, Screens.REGISTER_CUSTMER,Screens.VIEW_ORDERS_MANAGER,Screens.VIEW_REPORTS}));
+			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.MANAGE_USERS, Screens.REGISTER_CUSTMER,Screens.VIEW_ORDERS_MANAGER,Screens.VIEW_REPORTS,Screens.USER_PREMISSION}));
 		case STORE_WORKER:
 			break;
 		default:
-			return null;
+			return new ArrayList<>();
 		}
 		return null;
 	}
+
 			
 }

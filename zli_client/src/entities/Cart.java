@@ -6,10 +6,6 @@ import java.util.Map;
 public class Cart {
 	private Map<ProductsBase, Integer> cart = new HashMap<>(); // saves the product or items and the quantity of the
 																// product in the cart
-
-	// private Map<Item, Integer> itemCart = new HashMap<>(); // saves the item and
-	// the quantity of the item in the cart
-
 	private static Cart cartInstance = null;
 
 	private double totalPrice = 0;
@@ -37,7 +33,7 @@ public class Cart {
 		if (product instanceof CustomProduct) {
 			cart.put(product, quantity);
 			
-			calculateTotalPrice(product.getPrice());
+			calculateTotalPrice(product.getPrice() * quantity);
 			return true;
 		}
 		ProductsBase foundProduct = findByID(product);
@@ -59,7 +55,6 @@ public class Cart {
 
 	public void emptyCart() {
 		cart.clear();
-		// itemCart.clear();
 		totalPrice = 0;
 	}
 

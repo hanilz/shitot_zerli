@@ -8,16 +8,15 @@ import entities.UserDetails;
 import inputs.InputChecker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import notifications.NotificationManager;
 import util.Commands;
 import util.ManageScreens;
+import util.NotificationType;
 
 public class RegistrationController {
 
@@ -127,8 +126,8 @@ public class RegistrationController {
 			return;
 		} else
 			errorLabel.setVisible(false);
-		
-		displayPopUp("User Registered","Congrats on registering a new user");
+		NotificationManager.sendNotification(idUser, NotificationType.REGISTRATION_DISCOUNT, null);
+		ManageScreens.displayAlert("User Registered","Congrats on registering a new user");
 		ManageScreens.home();
 	}
 
@@ -139,13 +138,6 @@ public class RegistrationController {
 		Object response = ClientFormController.client.accept(message);
 		if((boolean)response)
 			System.out.println("deleted user: "+ idAccount);
-	}
-
-	private void displayPopUp(String title, String text) {
-		Alert a = new Alert(AlertType.NONE,title,ButtonType.CLOSE);
-		a.setTitle(title);
-		a.setContentText(text);
-		a.show();
 	}
 
 	// this method is used to insert a user into user_details Table
@@ -206,48 +198,5 @@ public class RegistrationController {
 			return false;
 		}
 		return true;
-//		boolean ok = true;
-//		if (firstNameLabel.getText().isEmpty()) {
-//			firstNameLabel.styleProperty().set("-fx-background-color : PINK");
-//			ok = false;
-//		} else {
-//			firstNameLabel.styleProperty().set("-fx-background-color : NONE");
-//		}
-//		if (lastNameLabel.getText().isEmpty()) {
-//			lastNameLabel.styleProperty().set("-fx-background-color : PINK");
-//			ok = false;
-//		} else
-//			lastNameLabel.styleProperty().set("-fx-background-color : NONE");
-//		if (idLabel.getText().isEmpty()) {
-//			idLabel.styleProperty().set("-fx-background-color : PINK");
-//			ok = false;
-//		} else
-//			idLabel.styleProperty().set("-fx-background-color : NONE");
-//		if (monthLabel.getText().isEmpty()) {
-//			monthLabel.styleProperty().set("-fx-background-color : PINK");
-//			ok = false;
-//		} else
-//			monthLabel.styleProperty().set("-fx-background-color : NONE");
-//		if (yearLabel.getText().isEmpty()) {
-//			yearLabel.styleProperty().set("-fx-background-color : PINK");
-//			ok = false;
-//		} else
-//			yearLabel.styleProperty().set("-fx-background-color : NONE");
-//		if (phoneLabel.getText().isEmpty()) {
-//			phoneLabel.styleProperty().set("-fx-background-color : PINK");
-//			ok = false;
-//		} else
-//			phoneLabel.styleProperty().set("-fx-background-color : NONE");
-//		if (passwordLabel.getText().isEmpty()) {
-//			passwordLabel.styleProperty().set("-fx-background-color : PINK");
-//			ok = false;
-//		} else
-//			passwordLabel.styleProperty().set("-fx-background-color : NONE");
-//		if (usernameLabel.getText().isEmpty()) {
-//			usernameLabel.styleProperty().set("-fx-background-color : PINK");
-//			ok = false;
-//		} else
-//			usernameLabel.styleProperty().set("-fx-background-color : NONE");
-//		return ok;
 	}
 }

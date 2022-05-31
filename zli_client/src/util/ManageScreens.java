@@ -2,30 +2,37 @@ package util;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Optional;
 
 import cart.CartController;
 import catalog.CatalogController;
 import catalog.SplashScreenController;
+import client.ClientFormController;
 import client.ClientScreen;
 import customProduct.CustomProductBuilderController;
 import customerComplaint.ComplaintViewController;
 import customerComplaint.CustomerComplaintHomeController;
+import deliveryCoordination.DeliveryCoordinatorController;
 import entities.User;
 import home.HomeGuestController;
 import home.HomeUserTypesController;
 import home.LoginScreenController;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import manageCatalog.ManageCatalogController;
 import mangeCustomerOrders.ManageCustomerOrdersController;
+import mangeUsers.AddScreensController;
 import mangeUsers.ManageUsersController;
+import mangeUsers.ManageUsersPermissionController;
 import order.CheckoutController;
 import order.DeliveryController;
 import order.GreetingCardController;
@@ -36,6 +43,7 @@ import report.ReportsController;
 import survey.SurveyHomeController;
 import surveyAnalysis.AnalyzeAnswersController;
 import surveyAnalysis.SurveyAnswersHomeController;
+import surveyAnalysisView.SurveyAnalysisViewHomeController;
 
 public class ManageScreens {
 	private static Stage stage;
@@ -79,6 +87,36 @@ public class ManageScreens {
 		style += "css";
 		scene.getStylesheets().add("resources/css/" + style);
 	}
+	
+	
+	/**add a title for the alert and the text do display it
+	 * @param title
+	 * @param text
+	 */
+	public static void displayAlert(String title, String text) {
+		Alert a = new Alert(AlertType.NONE,title,ButtonType.CLOSE);
+		a.setTitle(title);
+		a.setContentText(text);
+		setIconApplication((Stage)a.getDialogPane().getScene().getWindow());
+		a.show();
+	}
+	
+	/**display Alert with a yes no question
+	 * @param title
+	 * @param header
+	 * @param content
+	 * @return true if yes button was pressed, false otherwise
+	 */
+	public static boolean getYesNoDecisionAlert(String title, String header, String content) {
+		Alert alert = new Alert(AlertType.NONE, header, ButtonType.YES, ButtonType.NO);
+		alert.initOwner(ManageScreens.getStage());
+		alert.setTitle(title);
+		alert.setHeaderText(content);
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.YES)
+			return true;
+		return false;
+	}
 
 	public static void openPopupFXML(URL url, String title) throws Exception {
 		// setIconApplication();
@@ -92,13 +130,16 @@ public class ManageScreens {
 		Scene scene = new Scene(root);
 		popupStage = new Stage();
 		addPopup(popupStage);
+		setIconApplication(popupStage);
 		Platform.runLater(new Runnable() { // this thread will help us change between scenes and avoid exceptions
 			@Override
 			public void run() {
 				popupStage.setTitle(title);
 				popupStage.setScene(scene);
-				popupStage.initModality(Modality.APPLICATION_MODAL);
-				popupStage.showAndWait();
+				if (popupStage.getModality() == Modality.NONE)
+					popupStage.initModality(Modality.APPLICATION_MODAL);
+				if(!popupStage.isShowing())
+					popupStage.showAndWait();
 				removePopup(popupStage);
 			}
 		});
@@ -109,7 +150,7 @@ public class ManageScreens {
 		previousScreen = lastScreen;
 	}
 
-	private static void setIconApplication() {
+	private static void setIconApplication(Stage stage) {
 		stage.getIcons().add(new Image("/resources/icon.png"));
 	}
 
@@ -129,7 +170,7 @@ public class ManageScreens {
 
 	public static void setStage(Stage stage) {
 		ManageScreens.stage = stage;
-		setIconApplication();
+		setIconApplication(stage);
 	}
 
 	public static Stage getStage() {
@@ -140,6 +181,7 @@ public class ManageScreens {
 		return popupStage;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static void changeScreenTo(Screens screen) {
 		setPreviousScreen(currentScreen);// saved one become last one
 		try {
@@ -148,6 +190,11 @@ public class ManageScreens {
 				ManageScreens.changeScene(HomeGuestController.class.getResource("HomeGuestScreen.fxml"), "HomeScreen");
 				break;
 			case USER_HOME:
+				HashMap<String, Object> message = new HashMap<>();
+				message.put("command", Commands.GET_USER_SCREENS);
+				message.put("id", User.getUserInstance().getIdUser());
+				message.put("userType",  User.getUserInstance().getType());
+				User.getUserInstance().setUserScreens((ArrayList<Screens>) ClientFormController.client.accept(message));
 				ManageScreens.changeScene(HomeUserTypesController.class.getResource("HomeUserTypesScreen.fxml"),
 						"HomeScreen");
 				break;
@@ -164,7 +211,7 @@ public class ManageScreens {
 			case CART:
 				ManageScreens.changeScene(CartController.class.getResource("CartScreen.fxml"), "Cart Screen");
 				break;
-			case GREATING_CARD:
+			case GREETING_CARD:
 				ManageScreens.changeScene(GreetingCardController.class.getResource("GreetingCardScreen.fxml"),
 						"Greeting Card Screen");
 				break;
@@ -243,6 +290,21 @@ public class ManageScreens {
 				ManageScreens.changeScene(ReportsController.class.getResource("reportsScreen.fxml"),
 						"View Reports");
 				break;
+			case VIEW_SURVEY_ANALYSIS_RESULTS:
+				ManageScreens.changeScene(SurveyAnalysisViewHomeController.class.getResource("SurveyReportsHomeScreen.fxml"),
+						"View Reports");
+				break;
+			case DELIVER_ORDERS:
+				ManageScreens.changeScene(DeliveryCoordinatorController.class.getResource("DeliveryCoordinatorScreen.fxml"),
+						"Delivery Coordinator");
+				break;
+			case USER_PREMISSION:
+				ManageScreens.changeScene(ManageUsersPermissionController.class.getResource("ManageUsersPermission.fxml"),
+						"Users Premission");
+				break;
+			case ADD_SCREENS:
+				ManageScreens.changeScene(AddScreensController.class.getResource("AddScreens.fxml"),
+						"Add Screens");
 			default:
 				break;
 			}
@@ -281,7 +343,7 @@ public class ManageScreens {
 			return "Client";
 		case DELIVERY_DETAILS:
 			return "Delivery Details";
-		case GREATING_CARD:
+		case GREETING_CARD:
 			return "Greating Card";
 		case GUEST_HOME:
 			return "Guest Home";
@@ -301,8 +363,6 @@ public class ManageScreens {
 			return "Income Report";
 		case VIEW_ORDERS:
 			return "Orders";
-		case VIEW_ORDERS_REPORT:
-			break;
 		case MANAGE_USERS:
 			return "Manage Users";
 		case SURVEY_HOME:
@@ -321,8 +381,17 @@ public class ManageScreens {
 			return "Analyze Surveys";
 		case VIEW_REPORTS:
 			return "View Reports";
+		case VIEW_SURVEY_ANALYSIS_RESULTS:
+			return "Survey Results";
+		case DELIVER_ORDERS:
+			return "Deliver Orders";
+		case USER_PREMISSION:
+			return "Users Premission";
+		case ADD_SCREENS:
+			return "Add Screens";
+		default:
+			return "";
 		}
-		return null;
 	}
 
 	public static String getIconPath(Screens user) {
@@ -337,7 +406,7 @@ public class ManageScreens {
 			return "";
 		case DELIVERY_DETAILS:
 			return "";
-		case GREATING_CARD:
+		case GREETING_CARD:
 			return "";
 		case GUEST_HOME:
 			return "resources/catalog/home.png";
@@ -377,6 +446,12 @@ public class ManageScreens {
 			return "resources/home/survey.png";
 		case VIEW_REPORTS:
 			return "resources/home/reports.png";
+		case VIEW_SURVEY_ANALYSIS_RESULTS:
+			return "resources/home/survey_results.png";
+		case DELIVER_ORDERS:
+			return "resources/home/delivery.png";
+		case USER_PREMISSION:
+			return "resources/home/homeSetting.png";
 		default:
 			return "";// no such user//
 		}

@@ -7,11 +7,12 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <HBox alignment="CENTER_LEFT" maxHeight="65.0" maxWidth="1200.0" minHeight="65.0" minWidth="1200.0" prefHeight="65.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="surveyAnalysis.QuestionAnswerRowController">
    <children>
-      <Label fx:id="questionLabel" prefHeight="55.0" prefWidth="571.0" text="Question" wrapText="true">
+      <Label fx:id="questionLabel" prefHeight="55.0" prefWidth="503.0" text="Question" wrapText="true">
          <font>
             <Font size="18.0" />
          </font>
@@ -98,6 +99,16 @@
             </Label>
          </children>
       </GridPane>
+      <VBox alignment="CENTER" prefHeight="59.0" prefWidth="73.0" spacing="5.0">
+         <children>
+            <Label text="Average">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="averageLabel" text="avg" />
+         </children>
+      </VBox>
    </children>
    <padding>
       <Insets bottom="3.0" left="10.0" top="3.0" />

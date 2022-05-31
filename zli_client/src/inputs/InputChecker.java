@@ -2,6 +2,8 @@ package inputs;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 
 import entities.Branch;
 
@@ -21,6 +23,10 @@ public class InputChecker {
 		return false;
 	}
 
+	public static boolean isNull(Object object) {
+		return object == null;
+	}
+
 	private static boolean isValidDate(SimpleDateFormat format, String input) {
 		try {
 			format.parse(input);
@@ -36,27 +42,34 @@ public class InputChecker {
 		return price;
 	}
 
-	public static boolean isFieldsAreEmptyChecker(boolean isSelected, String field1, String field2, String field3,
-			String field4) {
-		if (isSelected) {
-			if (field3 == null) // for the delivery option
-				return true;
-			if (field1.isEmpty() || field2.isEmpty() || field3.isEmpty() || field4.isEmpty())
-				return true;
-		}
+	public static boolean isFieldsAreEmptyChecker(String field1, String field2, String field3) {
+		if (field1.isEmpty() || field2.isEmpty() || field3.isEmpty())
+			return true;
 		return false;
 	}
 
-	public static boolean isDeliveryComboBoxChanged(String hour, String minutes, String region) {
-		if (hour == null || minutes == null || region == null)
+	public static boolean isDeliveryComboBoxChanged(String hour, String minutes, Branch branch) {
+		if (hour == null || minutes == null || branch == null)
 			return false;
 		return true;
 	}
 
-	public static boolean isPickUpComboBoxChanged(Branch branch) {
+	public static boolean isFieldsEmpty(String field) {
+		if (field.isEmpty())
+			return true;
+		return false;
+	}
+
+	// for delivery screen
+	public static boolean isBranchNotNull(Branch branch) {
 		if (branch == null)
 			return false;
 		return true;
+	}
+
+	// for delivery screen
+	public static boolean isStringNone(String str) {
+		return str.contains("None");
 	}
 
 	public static boolean isPaymentFieldsEmpty(String firstName, String lastName, String cardNumber, String month,
@@ -77,7 +90,7 @@ public class InputChecker {
 			return false;
 		else if (!firstName.matches("^[ A-Za-z]+$") || !lastName.matches("^[ A-Za-z]+$"))
 			return false;
-		if(Integer.parseInt(month)<=0 || Integer.parseInt(month)>12)
+		if (Integer.parseInt(month) <= 0 || Integer.parseInt(month) > 12)
 			return false;
 		return true;
 	}
@@ -115,5 +128,49 @@ public class InputChecker {
 			return true;
 		return false;
 
+	}
+
+
+	public static boolean isDateBeforeNow(String dateTime) {
+		boolean response = false;
+		try {
+			response = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateTime).before(new Date());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return response;
+	}
+
+	public static boolean areDateTimeFieldsNotSelected(LocalDate date, String hour, String minutes) {
+		return (isNull(date) || isNull(hour) || isNull(minutes));
+	}
+
+	public static boolean areGreetingCardFieldsEmptyChecker(boolean selected, String text, String text2, String text3,
+			String text4) {
+		return selected ? (text.isEmpty() || text2.isEmpty() || text3.isEmpty() || text4.isEmpty()) : false;
+	}
+
+	public static boolean isInteger(String check) {
+		try {
+			Integer.parseInt(check);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+	public static boolean isDouble(String check) {
+		try {
+			Double.parseDouble(check);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+	public static boolean isContainsLetters(String check) {
+		if (check.matches("^[ A-Za-z]+$"))
+			return true;
+		return false;
 	}
 }

@@ -9,33 +9,23 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class CatalogVBox extends VBox implements ICatalogVBox{
-	protected Label nameLabel = new Label(); // will show the product name
+	protected Label nameLabel = new Label();  // will show the product name
 	protected VBox nameVBox = new VBox();
 	protected ImageView image;
 	protected Label priceLabel = new Label("Price:");
-	protected Label amountLabel = new Label();; // will show the price
+	protected Label amountLabel = new Label();  // will show the price
+	protected Label discountLabel = new Label("");
 	protected HBox priceHBox = new HBox();
 	protected Button addToCartButton = new Button("Add To Cart");
 
 	@Override
 	public void initVBox() {
-//		this.setPrefHeight(150);
 		this.setPrefWidth(200);
-////
-////		this.setMinHeight(USE_PREF_SIZE);
-////		this.setMaxHeight(USE_PREF_SIZE);
-////		this.setMinWidth(USE_PREF_SIZE);
-////		this.setMaxWidth(USE_PREF_SIZE);
-//		nameVBox.setMinHeight(USE_PREF_SIZE);
-//		nameVBox.setPrefHeight(20);
-//		nameVBox.setAlignment(Pos.CENTER);
 		nameLabel.setMinHeight(40);
 		nameLabel.setMaxWidth(200);
 
 		nameLabel.setWrapText(true);
 		nameLabel.setAlignment(Pos.BOTTOM_CENTER);
-//		nameVBox.getChildren().add(nameLabel);
-		
 		addToCartButton.setId("catalogBtn");
 		nameLabel.setId("productsLabel");
 		priceLabel.setId("priceLabel");
@@ -46,13 +36,14 @@ public class CatalogVBox extends VBox implements ICatalogVBox{
 		this.setAlignment(Pos.CENTER);
 	}
 	
-	protected void initPriceHBox() { //same
+	protected void initPriceHBox() {
 		priceHBox.getChildren().add(priceLabel);
 		priceHBox.getChildren().add(amountLabel);
+		priceHBox.getChildren().add(discountLabel);
 		priceHBox.setAlignment(Pos.CENTER);
 		priceHBox.setSpacing(25);
 	}
-	
+
 	protected void setImageProp() {
 		image.setFitHeight(140);
 		image.setFitWidth(200);

@@ -48,19 +48,21 @@ public class NotificationManager {
 		case COMPLAINT_DUE:
 			return "Complaint Number: " + (int)param + " is Due, Please attend it as soon as possible.";
 		case DELIVERY_LATE_REFUND:
-			return "We are deeply sorry for the delivery delay you will be issued a " +InputChecker.price((Double)param) + " refund.";
+			return "We are deeply sorry for the delivery delay on your order with order number "+(int)param+" you will be issued a full refund for your order.";
+		case DELIVERY_CONFIRMATION:
+			return "Your order with order number "+(int)param+" has been delivered!\nThank you for shopping with us, we hope to see you again soon!";
 		case ORDER_ACCEPTED:
-			return "Congrats! Your order with order number "+ (int)param +" has been accepted and is now getting ready for delivery.";
+			return "Congratulations! Your order with order number "+ (int)param +" has been accepted and is now getting ready for delivery.";
 		case ORDER_CANCELED_REFUND:
 			return "We are deeply sorry for the delivery delay you will be issued a " +InputChecker.price((Double)param) + " refund.";
 		case REGISTRATION_DISCOUNT:
-			return "Congrats on completing your registration, you will be eligible for a 20% discount on your first order.";
+			return "Congratulations on completing your registration!\nyou will be eligible for a 20% discount on your first order.";
 		case CANCEL_REQUEST_DENIED:
 			return "Unfortunately your request to cancel for order number "+ (int)param+" was denied, don't wory you will still get the order anyway.";
 		case CANCEL_REQUEST_APPROVED:
 			return "We are deeply sorry you didn't like your experience with us\nYou will be issued a "+InputChecker.price((Double)param)+ " store credit for your next order.";
 		case ORDER_NOT_ACCEPTED:
-			return "We are deeply sorry to inform you taht your order with order number "+(int)param+"wasn't approved,\nyou will be issued a full refund in a form of a store credit for your next purchase ";
+			return "We are deeply sorry to inform you that your order with order number "+(int)param+" wasn't approved,\nyou will be issued a full refund in a form of a store credit for your next purchase ";
 		default:
 			return "Test Notifications.";
 		}

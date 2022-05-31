@@ -2,6 +2,7 @@ package home;
 
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -26,6 +27,9 @@ public class HomeVBox extends VBox {
 	}
 
 	public void init() {
+		this.setStyle("-fx-background-color : LAVENDER; -fx-background-radius :20");
+		this.setPadding(new Insets(10));
+		this.setSpacing(10);
 		this.getChildren().add(button);
 		if (image != null) {
 			image.setFitWidth(150);
@@ -45,8 +49,8 @@ public class HomeVBox extends VBox {
 		});
 		this.setAlignment(Pos.CENTER);
 	}
-	public String toString()
-	{
+
+	public String toString() {
 		return ManageScreens.getName(changeToScreen);
 	}
 
