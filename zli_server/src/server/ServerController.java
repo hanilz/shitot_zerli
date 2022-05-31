@@ -145,7 +145,6 @@ public class ServerController extends AbstractServer implements Runnable {
 					} catch (InterruptedException e) {
 						System.out.println(e);
 					}
-
 				}
 			}
 		});
@@ -161,26 +160,33 @@ public class ServerController extends AbstractServer implements Runnable {
 					calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DATE));
 					Date lastDayOfMonth = calendar.getTime();
 					Date currentDate = new Date();
-					if (!lastDayOfMonth.toString().equals(currentDate.toString())) {
-						try {
-							Thread.sleep((calendar.get(Calendar.HOUR_OF_DAY) * 3600 + calendar.get(Calendar.MINUTE) * 60 + calendar.get(Calendar.SECOND)) * 1000 + calendar.get(Calendar.MILLISECOND)); //sleeping for one day if it is not the end of the month
-						} catch (InterruptedException e) {}
-					}
+					if (!lastDayOfMonth.toString().equals(currentDate.toString()))
+						sleepForOneDay(calendar);
 					else {
 						//generate new reports
-						ArrayList<String> reportsType = new ArrayList<String>(Arrays.asList("income", "orders", "complaints", "income histogram"));
-						ArrayList<Branch> branches = AnalayzeCommand.selectAllBranches();
-						AnalayzeCommand.generateNewReports(reportsType, branches, currentDate);
-						try {
-							Thread.sleep((calendar.get(Calendar.HOUR_OF_DAY) * 3600 + calendar.get(Calendar.MINUTE) * 60 + calendar.get(Calendar.SECOND)) * 1000 + calendar.get(Calendar.MILLISECOND));
-						} catch (InterruptedException e) {
+						if(!isGenerated(currentDate)) {
+							ArrayList<String> reportsType = new ArrayList<String>(Arrays.asList("income", "orders", "complaints", "income histogram"));
+							ArrayList<Branch> branches = AnalayzeCommand.selectAllBranches();
+							AnalayzeCommand.generateNewReports(reportsType, branches, currentDate);
+							sleepForOneDay(calendar);
 						}
+						else
+							sleepForOneDay(calendar);
 					}
 				}
 			}
-
 		});
 		reportsThread.start();
+	}
+
+	private void sleepForOneDay(Calendar calendar) {
+		try {
+			Thread.sleep((calendar.get(Calendar.HOUR_OF_DAY) * 3600 + calendar.get(Calendar.MINUTE) * 60 + calendar.get(Calendar.SECOND)) * 1000 + calendar.get(Calendar.MILLISECOND));
+		} catch (InterruptedException e) {}
+	}
+	
+	private boolean isGenerated(Date currentDate) {
+		return AnalayzeCommand.isGeneratedReports(currentDate);
 	}
 
 	@Override

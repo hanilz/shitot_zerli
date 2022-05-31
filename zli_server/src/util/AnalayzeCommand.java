@@ -1664,20 +1664,20 @@ public class AnalayzeCommand {
 			return false;
 		}
 	}
-	
-	public static boolean generateNewReports(ArrayList<String> reportsTypes, ArrayList<Branch> branches, Date current) {
+
+	public static boolean generateNewReports(ArrayList<String> reportsTypes, ArrayList<Branch> branches, Date date) {
 		Connection conn = DataBaseController.getConn();
 		String query = "insert into reports (type, date, idBranch) values ";
 		Statement stmt;
 		StringBuffer buffer = new StringBuffer(query);
-		java.sql.Timestamp currentDateTime = new java.sql.Timestamp(current.getTime());
-		String currentDate = currentDateTime.toString().substring(0, currentDateTime.toString().length()-4);
-		for(Branch currentBranch : branches) {
-			for(String currentType : reportsTypes) {
-				buffer.append("('"+currentType+"','"+currentDate+"',"+currentBranch.getIdBranch()+"), ");
+		java.sql.Timestamp currentDateTime = new java.sql.Timestamp(date.getTime());
+		String currentDate = currentDateTime.toString().substring(0, currentDateTime.toString().length() - 4);
+		for (Branch currentBranch : branches) {
+			for (String currentType : reportsTypes) {
+				buffer.append("('" + currentType + "','" + currentDate + "'," + currentBranch.getIdBranch() + "), ");
 			}
 		}
-		buffer.delete(buffer.toString().length()-2, buffer.toString().length());
+		buffer.delete(buffer.toString().length() - 2, buffer.toString().length());
 		buffer.append(";");
 		try {
 			stmt = conn.createStatement();
@@ -1687,5 +1687,25 @@ public class AnalayzeCommand {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public static boolean isGeneratedReports(Date date) {
+		Connection conn = DataBaseController.getConn();
+		Statement stmt;
+		java.sql.Timestamp currentDateTime = new java.sql.Timestamp(date.getTime());
+		String currentDate = currentDateTime.toString().substring(0, currentDateTime.toString().length() - 13);
+		String query = "SELECT date FROM zli.reports WHERE date BETWEEN '" + currentDate + "' AND '" + currentDate
+				+ " 23:59:59';";
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				if (rs.getString(1).contains(currentDate))
+					return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }
