@@ -2,11 +2,13 @@ package util;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 
 import cart.CartController;
 import catalog.CatalogController;
 import catalog.SplashScreenController;
+import client.ClientFormController;
 import client.ClientScreen;
 import customProduct.CustomProductBuilderController;
 import customerComplaint.ComplaintViewController;
@@ -179,6 +181,7 @@ public class ManageScreens {
 		return popupStage;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static void changeScreenTo(Screens screen) {
 		setPreviousScreen(currentScreen);// saved one become last one
 		try {
@@ -187,6 +190,11 @@ public class ManageScreens {
 				ManageScreens.changeScene(HomeGuestController.class.getResource("HomeGuestScreen.fxml"), "HomeScreen");
 				break;
 			case USER_HOME:
+				HashMap<String, Object> message = new HashMap<>();
+				message.put("command", Commands.GET_USER_SCREENS);
+				message.put("id", User.getUserInstance().getIdUser());
+				message.put("userType",  User.getUserInstance().getType());
+				User.getUserInstance().setUserScreens((ArrayList<Screens>) ClientFormController.client.accept(message));
 				ManageScreens.changeScene(HomeUserTypesController.class.getResource("HomeUserTypesScreen.fxml"),
 						"HomeScreen");
 				break;

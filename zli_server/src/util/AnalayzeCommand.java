@@ -184,8 +184,10 @@ public class AnalayzeCommand {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, userId);
 			rs = preparedStmt.executeQuery();
-			if (!rs.next())
+			if (!rs.next()) {
+				insertScreens(userId,ManageClients.getUserScreens(userType));//save default in screens not exist
 				userHomeScreens.addAll(ManageClients.getUserScreens(userType));
+			}
 			else {
 				rs.previous();
 				while (rs.next()) {
@@ -226,8 +228,6 @@ public class AnalayzeCommand {
 					preparedStmt.setInt(1, 1);
 					preparedStmt.setString(2, username);
 					preparedStmt.setString(3, password);
-					login.put("userScreen",
-							getUserHomeScreens((Integer) login.get("idUser"), (UserType) login.get("userType")));
 					if (preparedStmt.executeUpdate() == 1)
 						status = Status.NEW_LOG_IN;
 

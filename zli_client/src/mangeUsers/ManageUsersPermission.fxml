@@ -30,12 +30,12 @@
          <children>
             <HBox>
                <children>
-                  <ImageView fitHeight="93.0" fitWidth="82.0" onMouseClicked="#changeToHome" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="89.0" fitWidth="82.0" onMouseClicked="#changeToHome" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/catalog/home.png" />
                      </image>
                      <HBox.margin>
-                        <Insets left="10.0" top="10.0" />
+                        <Insets left="10.0" top="20.0" />
                      </HBox.margin>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -65,12 +65,12 @@
                   </HBox>
                   <HBox alignment="CENTER" spacing="10.0">
                      <children>
-                        <Label text="name:">
+                        <Label text="Name:">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label fx:id="usernameLable" text="please select user" textFill="#2600ff">
+                        <Label fx:id="usernameLable" text="Please Select User" textFill="#2600ff">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -82,12 +82,12 @@
                   </HBox>
                   <HBox alignment="CENTER" spacing="10.0">
                      <children>
-                        <Label text="use type:">
+                        <Label text="Use Type:">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label fx:id="userTypeLable" text="premission" textFill="#2600ff">
+                        <Label fx:id="userTypeLable" text="Premission" textFill="#2600ff">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -97,7 +97,6 @@
                         <Insets right="20.0" />
                      </padding>
                   </HBox>
-                  <HBox alignment="CENTER" spacing="25.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="32.0" prefWidth="1280.0">
@@ -111,21 +110,66 @@
             </HBox>
             <HBox alignment="CENTER" spacing="50.0">
                <children>
-                  <Button fx:id="defaultScreenButton" disable="true" mnemonicParsing="false" onMouseClicked="#setDefaultScreens" style="-fx-background-radius: 20; -fx-background-color: E4C2C2;" text="Use Default Screens" textFill="#0a195b">
+                  <HBox fx:id="defaultScreenButton" disable="true" onMouseClicked="#setDefaultScreens" style="-fx-background-color: E4C2C2; -fx-background-radius: 20;">
+                     <children>
+                        <Button mnemonicParsing="false" onMouseClicked="#setDefaultScreens" style="-fx-background-color: transparent;" text="Use DEFAULT Screens">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#setDefaultScreens" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/manageHome/userScreen.png" />
+                           </image>
+                        </ImageView>
+                     </children>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
-                  </Button>
-                  <Button fx:id="addScreenButton" disable="true" mnemonicParsing="false" onMouseClicked="#addScreens" style="-fx-background-radius: 20; -fx-background-color: E4C2C2;" text="Add Screens" textFill="#0a195b">
+                  </HBox>
+                  <HBox fx:id="addScreenButton" disable="true" onMouseClicked="#addScreens" style="-fx-background-radius: 20; -fx-background-color: E4C2C2;">
+                     <children>
+                        <Button mnemonicParsing="false" onMouseClicked="#addScreens" style="-fx-background-color: transparent;" text="ADD Screens">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#addScreens" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/manageHome/add.png" />
+                           </image>
+                        </ImageView>
+                     </children>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
-                  </Button>
-                  <Button fx:id="saveScreenButton" disable="true" mnemonicParsing="false" onMouseClicked="#clickSaveScreen" style="-fx-background-radius: 20; -fx-background-color: E4C2C2;" text="Save User Screens" textFill="#0a195b">
+                  </HBox>
+                  <HBox fx:id="saveScreenButton" disable="true" onMouseClicked="#clickSaveScreen" style="-fx-background-color: E4C2C2; -fx-background-radius: 20;">
+                     <children>
+                        <Button mnemonicParsing="false" onMouseClicked="#clickSaveScreen" style="-fx-background-color: transparent;" text="SAVE User Screens" textFill="#1f219a">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#clickSaveScreen" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/manageHome/save.png" />
+                           </image>
+                        </ImageView>
+                     </children>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
-                  </Button>
+                  </HBox>
                </children>
             </HBox>
          </children>
@@ -135,11 +179,11 @@
             <Insets />
          </VBox.margin>
          <content>
-            <TilePane fx:id="userHomeScreens" alignment="CENTER" prefHeight="557.0" prefRows="3" prefWidth="1277.0" />
+            <TilePane fx:id="userHomeScreens" alignment="CENTER" prefHeight="557.0" prefRows="3" prefWidth="1277.0" style="-fx-background-color: FDFFFD;" />
          </content>
       </ScrollPane>
    </children>
    <padding>
-      <Insets top="10.0" />
+      <Insets top="20.0" />
    </padding>
 </VBox>

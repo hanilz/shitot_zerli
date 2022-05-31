@@ -49,13 +49,12 @@ public class User implements Serializable {
 		return userInstance == null ? userInstance = new User() : userInstance;
 	}
 
-	public void login(int idUser, String username, int idAccount, UserType userType, ArrayList<Screens> userHomeScreens) {
+	public void login(int idUser, String username, int idAccount, UserType userType) {
 		if (!isLogged) {
 			this.idUser = idUser;
 			this.username = username;
 			this.idAccount = idAccount;
 			this.userType = userType;
-			this.userHomeScreens=userHomeScreens;
 			isLogged = true;
 		}
 	}
@@ -101,6 +100,15 @@ public class User implements Serializable {
 	public UserType getType()
 	{
 		return userType;
+	}
+	@Override
+	public boolean equals(Object user)
+	{
+		User currUser=(User)user;
+		System.out.println(currUser.idUser);
+		System.out.println(idUser);		
+		return currUser.idUser==idUser;
+		
 	}
 
 }

@@ -16,11 +16,13 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.util.Duration;
 import util.Commands;
 import util.ManageClients;
@@ -34,20 +36,20 @@ public class ManageUsersPermissionController implements Initializable {
 	private TilePane userHomeScreens;
 
 	@FXML
-	private ComboBox<Integer> usersOption;
+	private ComboBox<String> usersOption;
 	@FXML
 	private Label userTypeLable;
 
 	@FXML
 	private Label usernameLable;
 	@FXML
-	private Button addScreenButton;
+	private HBox addScreenButton;
 
 	@FXML
-	private Button defaultScreenButton;
+	private HBox defaultScreenButton;
 
 	@FXML
-	private Button saveScreenButton;
+	private HBox saveScreenButton;
 
 	private static ObservableList<ManageUsers> users = FXCollections.observableArrayList();
 	@FXML
@@ -57,6 +59,7 @@ public class ManageUsersPermissionController implements Initializable {
 	private static ArrayList<Screens> userScreens, initUserScreens = new ArrayList<>();
 	private static ManageUsersPermissionController instace;
 	private ManageUsers curUser;
+	private PauseTransition visiblePause;
 
 	@FXML
 	void changeToHome(Event event) {
@@ -68,11 +71,11 @@ public class ManageUsersPermissionController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		instace = this;
 		users = getUsersFromDB();
-		ObservableList<Integer> ids = FXCollections.observableArrayList();
+		ObservableList<String> idAndName = FXCollections.observableArrayList();
 		for (ManageUsers user : users) {
-			ids.add(user.getIdUser());
+			idAndName.add(user.getIdUser() + " " + user.getFirstName());
 		}
-		usersOption.setItems(ids);// set the information in the table
+		usersOption.setItems(idAndName);// set the information in the table
 		if (AddScreensController.getUser() != null) {
 			curUser = AddScreensController.getUser();
 			setTextForUser();
@@ -82,14 +85,14 @@ public class ManageUsersPermissionController implements Initializable {
 
 	public void clickSaveScreen() {
 		if (userScreens.isEmpty()) {
-			errorLable.setText("No Screens Is NOT Allowed");
-			showError();
+			showMessage("No Screens Is NOT Allowed", "red");
 		} else if (!saveScreensInDB()) {
-			errorLable.setText("Screens Not Saved Due To A DB Problem");
-			showError();
+			showMessage("Screens Not Saved Due To A DB Problem", "red");
 		}
 		disableSave();
 		setInitUserScreen();
+		showMessage("Screens Saved", "blue");
+
 	}
 
 	private void setInitUserScreen() {
@@ -118,7 +121,7 @@ public class ManageUsersPermissionController implements Initializable {
 		disableSave();
 		curUser = null;
 		AddScreensController.removeUser();
-		userId = usersOption.getValue();
+		userId = Integer.parseInt(usersOption.getValue().split(" ")[0]);
 		for (ManageUsers user : users) {
 			if (user.getIdUser() == userId) {
 				curUser = user;
@@ -136,8 +139,7 @@ public class ManageUsersPermissionController implements Initializable {
 
 	void getUserHomeScreen() {// get home icons
 		if (usersOption.getValue() == null && curUser == null) {
-			errorLable.setText("ERROR! PLEASE SELECT A USER FIRST!");
-			showError();
+			showMessage("ERROR! PLEASE SELECT A USER FIRST!", "red");
 		} else {
 			if (AddScreensController.getUser() != null)
 				userScreens = AddScreensController.setScreens();
@@ -149,9 +151,13 @@ public class ManageUsersPermissionController implements Initializable {
 		}
 	}
 
-	private void showError() {
+	private void showMessage(String message, String color) {
+		errorLable.setText(message);
+		errorLable.setTextFill(Paint.valueOf(color));
 		errorLable.setVisible(true);
-		PauseTransition visiblePause = new PauseTransition(Duration.seconds(5));
+		if (visiblePause != null)
+			visiblePause.stop();
+		visiblePause = new PauseTransition(Duration.seconds(10));
 		visiblePause.setOnFinished(event -> errorLable.setVisible(false));
 		visiblePause.play();
 	}
@@ -191,23 +197,20 @@ public class ManageUsersPermissionController implements Initializable {
 
 	public void enableSave() {
 		if (!userScreens.equals(initUserScreens) && !userScreens.isEmpty()) {
-			System.out.println(userScreens);
-			System.out.println(initUserScreens);
 			saveScreenButton.setDisable(false);
-			saveScreenButton.setStyle("-fx-background-radius: 20; -fx-background-color: AAC6BC;");
-			errorLable.setText("Please Save Before Switching ID");
-			showError();
+			((Labeled) saveScreenButton.getChildren().get(0)).setUnderline(true);
+			saveScreenButton.setStyle("-fx-background-radius: 20; -fx-background-color: AAC6BD;");// AAC6BC
+			showMessage("Please Save Before Switching ID", "red");
 		} else
 			disableSave();
 		if (userScreens.isEmpty()) {
-			errorLable.setText("User Must Have At Least One Screen");
-			showError();
+			showMessage("User Must Have At Least One Screen", "red");
 		}
 	}
 
-	@SuppressWarnings("unlikely-arg-type")
 	public void enableDefault() {
-		if (userScreens.containsAll(ManageClients.getUserScreens(UserType.valueOf(curUser.getUserType())))&&(ManageClients.getUserScreens(UserType.valueOf(curUser.getUserType())).containsAll(userScreens))) {
+		if (userScreens.containsAll(ManageClients.getUserScreens(UserType.valueOf(curUser.getUserType())))
+				&& (ManageClients.getUserScreens(UserType.valueOf(curUser.getUserType())).containsAll(userScreens))) {
 			defaultScreenButton.setStyle("-fx-background-radius: 20; -fx-background-color: E4C2C2;");
 			defaultScreenButton.setDisable(true);
 		} else {
@@ -229,6 +232,7 @@ public class ManageUsersPermissionController implements Initializable {
 
 	public void disableSave() {
 		saveScreenButton.setDisable(true);
+		((Labeled) saveScreenButton.getChildren().get(0)).setUnderline(false);
 		saveScreenButton.setStyle("-fx-background-radius: 20; -fx-background-color: E4C2C2;");
 	}
 
@@ -236,6 +240,7 @@ public class ManageUsersPermissionController implements Initializable {
 		userScreens.remove(screen);
 		instace.setScreen(userScreens);
 	}
+
 	public static void addScreen(Screens screen) {
 		userScreens.add(screen);
 		instace.setScreen(userScreens);

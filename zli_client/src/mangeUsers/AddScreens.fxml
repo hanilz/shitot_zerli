@@ -29,7 +29,7 @@
          <children>
             <HBox>
                <children>
-                  <ImageView fitHeight="93.0" fitWidth="82.0" onMouseClicked="#changeToHome" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="79.0" fitWidth="198.0" onMouseClicked="#changeToHome" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/catalog/home.png" />
                      </image>
@@ -51,11 +51,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER" GridPane.columnIndex="2">
-               <children>
-                  <Button mnemonicParsing="false" onMouseClicked="#backToManageUser" text="Back to Manage User Screens" />
-               </children>
-            </HBox>
+            <HBox alignment="CENTER" GridPane.columnIndex="2" />
          </children>
       </GridPane>
       <VBox spacing="10.0">
@@ -100,15 +96,38 @@
                   <HBox alignment="CENTER" spacing="25.0" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="32.0" prefWidth="1280.0">
+            <GridPane>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="914.0" minWidth="10.0" prefWidth="908.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="407.0" minWidth="10.0" prefWidth="372.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
                <children>
-                  <Label fx:id="errorLable" text="Inorder To Save New Screens Go Back To Mange User Screens" textFill="#540fdb">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
+                  <HBox alignment="CENTER_RIGHT">
+                     <children>
+                        <Label fx:id="errorLable" prefWidth="497.0" text="To Save New Screens Go Back To Mange User Screens" textFill="#ae0e0e">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="31.0" prefWidth="42.0" GridPane.columnIndex="1">
+                     <children>
+                        <Button mnemonicParsing="false" onMouseClicked="#backToManageUser" prefHeight="31.0" prefWidth="237.0" style="-fx-background-radius: 20; -fx-background-color: AAC6BC;" text="Back to Manage User Screens">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
+            </GridPane>
          </children>
       </VBox>
       <ScrollPane>
@@ -116,7 +135,7 @@
             <Insets />
          </VBox.margin>
          <content>
-            <TilePane fx:id="userHomeScreens" alignment="CENTER" prefHeight="557.0" prefRows="3" prefWidth="1277.0" />
+            <TilePane fx:id="userHomeScreens" alignment="CENTER" prefHeight="557.0" prefRows="3" prefWidth="1277.0" style="-fx-background-color: F1F9FF;" />
          </content>
       </ScrollPane>
    </children>
