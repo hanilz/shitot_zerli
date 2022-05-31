@@ -111,7 +111,7 @@ public class ServerFormController implements Initializable {
 	 */
 	@FXML
 	void clickOnConnect(MouseEvent event) {
-		String port = portTextField.getText();
+		//String port = portTextField.getText();
 		String ip = IPTextField.getText();
 		String dbName = DBNameField.getText();
 		String dbUsername = DBUserTextField.getText();

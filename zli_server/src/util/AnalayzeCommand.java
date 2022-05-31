@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -1659,6 +1660,30 @@ public class AnalayzeCommand {
 			return true;
 		} catch (SQLException e) {
 			System.out.println("Failed to refund user");
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public static boolean generateNewReports(ArrayList<String> reportsTypes, ArrayList<Branch> branches, Date current) {
+		Connection conn = DataBaseController.getConn();
+		String query = "insert into reports (type, date, idBranch) values ";
+		Statement stmt;
+		StringBuffer buffer = new StringBuffer(query);
+		java.sql.Timestamp currentDateTime = new java.sql.Timestamp(current.getTime());
+		String currentDate = currentDateTime.toString().substring(0, currentDateTime.toString().length()-4);
+		for(Branch currentBranch : branches) {
+			for(String currentType : reportsTypes) {
+				buffer.append("('"+currentType+"','"+currentDate+"',"+currentBranch.getIdBranch()+"), ");
+			}
+		}
+		buffer.delete(buffer.toString().length()-2, buffer.toString().length());
+		buffer.append(";");
+		try {
+			stmt = conn.createStatement();
+			stmt.executeUpdate(buffer.toString());
+			return true;
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
