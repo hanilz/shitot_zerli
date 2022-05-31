@@ -337,7 +337,7 @@
                                        <graphic>
                                           <ImageView fitHeight="53.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../../../../../../Downloads/1080403-200.png" />
+                                                <Image url="@../resources/checkout/1080403-200.png" />
                                              </image>
                                           </ImageView>
                                        </graphic>
@@ -360,7 +360,7 @@
                                  <graphic>
                                     <ImageView fitHeight="53.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../../../Downloads/box-icon-png-0.jpg" />
+                                          <Image url="@../resources/checkout/box-icon-png-0.jpg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
