@@ -179,7 +179,7 @@
             <Insets />
          </VBox.margin>
          <content>
-            <TilePane fx:id="userHomeScreens" alignment="CENTER" prefHeight="557.0" prefRows="3" prefWidth="1277.0" style="-fx-background-color: FDFFFD;" />
+            <TilePane fx:id="userHomeScreens" alignment="CENTER" hgap="10.0" prefHeight="557.0" prefRows="3" prefWidth="1277.0" style="-fx-background-color: FDFFFD;" vgap="10.0" />
          </content>
       </ScrollPane>
    </children>
