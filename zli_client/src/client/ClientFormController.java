@@ -1,12 +1,18 @@
 package client;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.WindowEvent;
 import util.ManageClients;
@@ -17,7 +23,7 @@ import util.Screens;
  * ClientFormController will handle all the events from the gui
  *
  */
-public class ClientFormController {
+public class ClientFormController implements Initializable{
 
 	@FXML
 	private Button connectToIPButton;
@@ -42,7 +48,7 @@ public class ClientFormController {
 	 * @param event
 	 */
 	@FXML
-	void clickOnConnectButton(MouseEvent event) {
+	void clickOnConnectButton(Event event) {
 		String ip = ipTextField.getText();
 		try {
 			client = new ClientController(ip);
@@ -75,4 +81,16 @@ public class ClientFormController {
 
 	}
 
+	private void setTextBehaviour(Node txt) {
+		txt.setOnKeyReleased(event -> {
+			if (event.getCode() == KeyCode.ENTER) {
+				clickOnConnectButton(event);
+			}
+		});
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		setTextBehaviour(ipTextField);		
+	}	
 }

@@ -91,7 +91,6 @@
                 <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="89.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TextArea fx:id="greetingCardTextArea" prefHeight="196.0" prefWidth="527.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Label text="Title:">
@@ -123,6 +122,7 @@
                   <TextField fx:id="titleTextField" GridPane.columnIndex="1" />
                   <TextField fx:id="fromTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <TextField fx:id="toTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextArea fx:id="greetingCardTextArea" prefHeight="196.0" prefWidth="527.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>
             <HBox alignment="BOTTOM_CENTER" prefHeight="76.0" prefWidth="878.0" spacing="59.0">

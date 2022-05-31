@@ -6,16 +6,19 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 import deliveryCoordination.DeliveryCoordinatorView;
 import entities.AccountPayment;
@@ -464,6 +467,7 @@ public class AnalayzeCommand {
 		Connection conn;
 		ResultSet rs = null;
 		int idDelivery = -1;
+		LocalDateTime localDateTime = getNowPlus3Hours();
 		conn = DataBaseController.getConn();
 		String query = "INSERT INTO deliveries (address, receiverName, phoneNumber, deliveryDate, status, type, idOrder) VALUES (?, ?, ?, ?, ?, ?, ?);";
 		try {
@@ -471,7 +475,7 @@ public class AnalayzeCommand {
 			preparedStmt.setString(1, delivery.getAddress());
 			preparedStmt.setString(2, delivery.getReceiverName());
 			preparedStmt.setString(3, delivery.getPhoneNumber());
-			preparedStmt.setString(4, isExpress ? "date_add(NOW(), INTERVAL 3 hour)" : delivery.getDeliveryDate());
+			preparedStmt.setString(4, isExpress ? localDateTime.toString() : delivery.getDeliveryDate());
 			preparedStmt.setString(5, delivery.getStatus());
 			preparedStmt.setString(6, delivery.getType());
 			preparedStmt.setInt(7, idOrder);
@@ -483,6 +487,16 @@ public class AnalayzeCommand {
 			e.printStackTrace();
 		}
 		return idDelivery;
+	}
+
+	private static LocalDateTime getNowPlus3Hours() {
+		Calendar calendar = Calendar.getInstance();
+		TimeZone tz = calendar.getTimeZone();
+		ZoneId zoneId = tz.toZoneId();
+		calendar.setTime(new Date());
+		calendar.add(Calendar.HOUR_OF_DAY, 3);
+		LocalDateTime localDateTime = LocalDateTime.ofInstant(calendar.toInstant(), zoneId);
+		return localDateTime;
 	}
 
 	public static HashMap<Integer, String> selectSurveys() {
@@ -769,7 +783,7 @@ public class AnalayzeCommand {
 		return orders;
 	}
 
-	public static boolean approveOrder(int idOrder,String orderType) {
+	public static boolean approveOrder(int idOrder, String orderType) {
 		Connection conn = DataBaseController.getConn();
 		String query = "UPDATE orders SET status = 'Approved' WHERE idOrder = ? ;";
 		try {
@@ -778,9 +792,9 @@ public class AnalayzeCommand {
 			int row = preparedStmt.executeUpdate();
 			if (row == 0)
 				return false;
-			if(orderType.equals("express delivery"))
+			if (orderType.equals("express delivery"))
 				query = "UPDATE deliveries SET status = 'Awaiting Delivery' ,deliveryDate =DATE_ADD(now(),interval 3 hour) WHERE idOrder = ?;";
-			else	
+			else
 				query = "UPDATE deliveries SET status = 'Awaiting Delivery' WHERE idOrder = ?;";
 			preparedStmt = conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
@@ -1033,7 +1047,7 @@ public class AnalayzeCommand {
 			psmt.setString(1, file.getName());
 			// psmnt.setBlob(2, fileBlob);
 //			psmnt.setBinaryStream(2, (InputStream) io, (int) file.length());
-			psmt.setBlob(2,fis);
+			psmt.setBlob(2, fis);
 			if (psmt.executeUpdate() == 0)
 				return false;
 		} catch (SQLException e) {

@@ -164,7 +164,7 @@ public class DeliveryController implements Initializable {
 
 	private boolean checkDateNotPassed(LocalDate value, String value2, String value3) {
 		String dateTime = String.format("%s %s:%s:00", value.toString(), value2, value3);
-		return InputChecker.isDateBeforeNow(dateTime);
+		return InputChecker.isDateBeforeNow3Hours(dateTime);
 	}
 
 	private boolean checkInputDelivery(boolean canProceed) {

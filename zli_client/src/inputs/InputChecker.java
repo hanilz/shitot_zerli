@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 
 import entities.Branch;
@@ -133,10 +134,13 @@ public class InputChecker {
 	}
 
 
-	public static boolean isDateBeforeNow(String dateTime) {
+	public static boolean isDateBeforeNow3Hours(String dateTime) {
 		boolean response = false;
+	    Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(new Date());
+	    calendar.add(Calendar.HOUR_OF_DAY, 3);
 		try {
-			response = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateTime).before(new Date());
+			response = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateTime).before(calendar.getTime());
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

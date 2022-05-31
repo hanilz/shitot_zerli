@@ -6,14 +6,17 @@ import java.util.ResourceBundle;
 import entities.SingletonOrder;
 import inputs.InputChecker;
 import javafx.animation.PauseTransition;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import util.ManageScreens;
@@ -55,7 +58,7 @@ public class GreetingCardController implements Initializable {
 	}
 
 	@FXML
-	void changeToDeliveryScreen(MouseEvent event) {
+	void changeToDeliveryScreen(Event event) {
 		// first - check if the user filled all the fields for the greeting card if
 		// selected.
 		// if true -> the controller will appear a label for filling all the fields
@@ -64,6 +67,9 @@ public class GreetingCardController implements Initializable {
 				fromTextField.getText(), toTextField.getText(), greetingCardTextArea.getText())) {
 			switchFillAllFieldsLabel(
 					"* Please fill all the fields for the greeting card in order to proceed with the order!");
+		} else if (isIncludedCheckBox.isSelected()
+				&& !InputChecker.isGreetingCardInputVaild(fromTextField.getText(), toTextField.getText())) {
+			switchFillAllFieldsLabel("* Please check the input of the greeting card!");
 		} else if (isIncludedCheckBox.isSelected()
 				&& !InputChecker.isGreetingCardInputVaild(fromTextField.getText(), toTextField.getText())) {
 			switchFillAllFieldsLabel("* Please check the input of the greeting card!");
@@ -91,20 +97,18 @@ public class GreetingCardController implements Initializable {
 	}
 
 	@FXML
-	void changeToHomeScreen(MouseEvent event) {
+	void changeToHomeScreen(Event event) {
 		insertGreetingCardIntoOrder();
 		ManageScreens.home();
 	}
 
 	@FXML
 	void includeGreetingCard(MouseEvent event) {
-		if (isIncludedCheckBox.isSelected()) {
-			System.out.println("I am selected! :)");
+		if (isIncludedCheckBox.isSelected())
 			enableGreetingCard(false);
-		} else {
-			System.out.println("I am not selected :(");
+		else 
 			enableGreetingCard(true);
-		}
+		
 	}
 
 	private void enableGreetingCard(boolean setOption) {
@@ -128,5 +132,17 @@ public class GreetingCardController implements Initializable {
 		toTextField.setText(SingletonOrder.getInstance().getGreetingCardTo());
 		fromTextField.setText(SingletonOrder.getInstance().getGreetingCardFrom());
 		greetingCardTextArea.setText(SingletonOrder.getInstance().getGreetingCardContent());
+		setAdvanceBehaviour(titleTextField);
+		setAdvanceBehaviour(toTextField);
+		setAdvanceBehaviour(fromTextField);
+	}
+	
+	private void setAdvanceBehaviour(Node node) {
+		node.setOnKeyReleased(event -> {
+			if (event.getCode() == KeyCode.ENTER) 
+				changeToDeliveryScreen(event);
+			else if(event.getCode() == KeyCode.ESCAPE)
+				changeToHomeScreen(event);
+		});
 	}
 }
