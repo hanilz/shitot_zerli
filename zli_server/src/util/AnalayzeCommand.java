@@ -27,6 +27,7 @@ import entities.ManageUsers;
 import entities.ManagerOrderView;
 import entities.Notification;
 import entities.Order;
+import entities.OrderCustomProduct;
 import entities.OrderItem;
 import entities.OrderProduct;
 import entities.Product;
@@ -38,7 +39,7 @@ import ordersView.CustomerOrderView;
 import surveyAnalysis.QuestionAnswer;
 
 /**
- * AnaylzeCommand - will anaylze the command that given from the server
+ * AnaylzeCommand - will analyze the command that given from the server
  * controller and will execute the sql query.
  */
 public class AnalayzeCommand {
@@ -186,10 +187,9 @@ public class AnalayzeCommand {
 			preparedStmt.setInt(1, userId);
 			rs = preparedStmt.executeQuery();
 			if (!rs.next()) {
-				insertScreens(userId,ManageClients.getUserScreens(userType));//save default in screens not exist
+				insertScreens(userId, ManageClients.getUserScreens(userType));// save default in screens not exist
 				userHomeScreens.addAll(ManageClients.getUserScreens(userType));
-			}
-			else {
+			} else {
 				rs.previous();
 				while (rs.next()) {
 					userHomeScreens.add(Screens.valueOf((rs.getString(1))));
@@ -224,6 +224,7 @@ public class AnalayzeCommand {
 					login.put("idUser", Integer.parseInt(rs.getString(1)));
 					login.put("idAccount", Integer.parseInt(rs.getString(4)));
 					login.put("userType", UserType.get(rs.getString(5)));
+					login.put("storeCredit", Double.parseDouble(rs.getString(8)));
 					query = "UPDATE users SET isLogin = ? WHERE username = ? AND password = ?";
 					preparedStmt = conn.prepareStatement(query);
 					preparedStmt.setInt(1, 1);
@@ -458,43 +459,29 @@ public class AnalayzeCommand {
 		}
 	}
 
-	public static int insertNewDelivery(Delivery delivery) {
+	public static int insertNewDelivery(Delivery delivery, int idOrder, boolean isExpress) {
 		Connection conn;
 		ResultSet rs = null;
-		int idOrder = -1;
+		int idDelivery = -1;
 		conn = DataBaseController.getConn();
-		String query = "INSERT INTO deliveries (address, receiverName, phoneNumber, deliveryDate, status) VALUES (?, ?, ?, ?, ?);";
+		String query = "INSERT INTO deliveries (address, receiverName, phoneNumber, deliveryDate, status, type, idOrder) VALUES (?, ?, ?, ?, ?, ?, ?);";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 			preparedStmt.setString(1, delivery.getAddress());
 			preparedStmt.setString(2, delivery.getReceiverName());
 			preparedStmt.setString(3, delivery.getPhoneNumber());
-			preparedStmt.setString(4, delivery.getDeliveryDate());
+			preparedStmt.setString(4, isExpress ? "date_add(NOW(), INTERVAL 3 hour)" : delivery.getDeliveryDate());
 			preparedStmt.setString(5, delivery.getStatus());
+			preparedStmt.setString(6, delivery.getType());
+			preparedStmt.setInt(7, idOrder);
 			preparedStmt.executeUpdate();
 			rs = preparedStmt.getGeneratedKeys();
 			if (rs.next())
-				idOrder = rs.getInt(1);
+				idDelivery = rs.getInt(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return idOrder;
-	}
-
-	public static boolean insertDeliveryOrder(int idOrder, int idDelivery) {
-		Connection conn;
-		conn = DataBaseController.getConn();
-		String query = "INSERT INTO deliveries_orders (idOrder, idDelivery) VALUES (?, ?);";
-		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setInt(1, idOrder);
-			preparedStmt.setInt(2, idDelivery);
-			preparedStmt.executeUpdate();
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
+		return idDelivery;
 	}
 
 	public static HashMap<Integer, String> selectSurveys() {
@@ -752,7 +739,12 @@ public class AnalayzeCommand {
 	public static ArrayList<ManagerOrderView> selectOrdersForManager(int mangerID) {
 		ArrayList<ManagerOrderView> orders = new ArrayList<>();
 		Connection conn = DataBaseController.getConn();
-		//String query = "SELECT O.idOrder, O.price, UD.firstName,UD.lastName,O.date,O.status,O.idUser FROM zli.orders o, zli.branches b,zli.user_details UD,zli.users U WHERE o.idBranch=b.idBranch AND b.idManager =? AND (O.status = 'Waiting for Approval' OR O.status = 'Waiting for Cancellation' ) AND U.idUser = O.idUser AND UD.idAccount=U.idAccount;";
+		// String query = "SELECT O.idOrder, O.price,
+		// UD.firstName,UD.lastName,O.date,O.status,O.idUser FROM zli.orders o,
+		// zli.branches b,zli.user_details UD,zli.users U WHERE o.idBranch=b.idBranch
+		// AND b.idManager =? AND (O.status = 'Waiting for Approval' OR O.status =
+		// 'Waiting for Cancellation' ) AND U.idUser = O.idUser AND
+		// UD.idAccount=U.idAccount;";
 		String query = "SELECT distinct o.idOrder, o.price, UD.firstName,UD.lastName,o.status,o.idUser,o.date AS orderDate, d.deliveryDate,d.type,o.lastModified,TIMESTAMPDIFF(minute,o.lastModified,d.deliveryDate) AS timeTillDelivery FROM zli.orders o, zli.branches b,zli.user_details UD,zli.users U,zli.orders, zli.deliveries d WHERE o.idBranch=b.idBranch AND b.idManager =? AND (o.status = 'Waiting for Approval' OR o.status = 'Waiting for Cancellation' ) AND U.idUser = o.idUser AND UD.idAccount=U.idAccount AND d.idOrder=o.idOrder;";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -762,15 +754,16 @@ public class AnalayzeCommand {
 				int idOrder = rs.getInt(1);
 				Double price = rs.getDouble(2);
 				String firstName = rs.getString(3);
-				String lastName= rs.getString(4);
-				String status= rs.getString(5);
-				int idUser= rs.getInt(6);
-				String orderDate= rs.getString(7);
-				String deliveryTime= rs.getString(8);
-				String deliveryType= rs.getString(9);
-				String lastModified= rs.getString(10);
-				int timeTillDelivery= rs.getInt(11);
-				orders.add(new ManagerOrderView(idOrder, price, firstName, lastName, status, idUser,orderDate,deliveryTime,deliveryType,lastModified,timeTillDelivery));
+				String lastName = rs.getString(4);
+				String status = rs.getString(5);
+				int idUser = rs.getInt(6);
+				String orderDate = rs.getString(7);
+				String deliveryTime = rs.getString(8);
+				String deliveryType = rs.getString(9);
+				String lastModified = rs.getString(10);
+				int timeTillDelivery = rs.getInt(11);
+				orders.add(new ManagerOrderView(idOrder, price, firstName, lastName, status, idUser, orderDate,
+						deliveryTime, deliveryType, lastModified, timeTillDelivery));
 			}
 		} catch (SQLException e) {
 			System.out.println("failed to fetch orders for manager");
@@ -800,7 +793,7 @@ public class AnalayzeCommand {
 		return true;
 	}
 
-	public static boolean cancelOrder(int idOrder, Double refund,int idUser) {
+	public static boolean cancelOrder(int idOrder, Double refund, int idUser) {
 		Connection conn = DataBaseController.getConn();
 		String query = "UPDATE orders SET status = 'Canceled', refund =? WHERE idOrder = ? ;";
 		try {
@@ -912,11 +905,12 @@ public class AnalayzeCommand {
 		return true;
 	}
 
-	public static boolean insertOrderCustomProducts(ArrayList<CustomProduct> customProducts, Integer idOrder) {
+	public static boolean insertOrderCustomProducts(ArrayList<OrderCustomProduct> orderCustomProducts) {
 		StringBuffer buff = new StringBuffer();
-		buff.append("INSERT INTO order_custom_products (idOrder, idCustomProduct) VALUES ");
-		for (CustomProduct customProduct : customProducts)
-			buff.append("(" + idOrder + ", " + customProduct.getId() + "),");
+		buff.append("INSERT INTO order_custom_products (idOrder, idCustomProduct, quantity) VALUES ");
+		for (OrderCustomProduct orderCustomProduct : orderCustomProducts)
+			buff.append("(" + orderCustomProduct.getIdOrder() + ", " + orderCustomProduct.getCustomProduct().getId()
+					+ ", " + orderCustomProduct.getQuantity() + "),");
 		buff.deleteCharAt(buff.length() - 1);
 		buff.append(";");
 		try {
@@ -1389,6 +1383,62 @@ public class AnalayzeCommand {
 		return customProducts;
 	}
 
+	public static ArrayList<AccountPayment> selectAccountPayments(int idUser) {
+		ArrayList<AccountPayment> accountPayments = new ArrayList<>();
+		Connection conn = DataBaseController.getConn();
+		PreparedStatement preparedStmt;
+		String query = "SELECT * FROM zli.account_payment ap WHERE ap.idUser=?;";
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idUser);
+			ResultSet rs = preparedStmt.executeQuery();
+			while (rs.next()) {
+				AccountPayment accountPayment = new AccountPayment(rs.getString(2), rs.getString(3), rs.getString(4),
+						rs.getString(5), idUser);
+				accountPayment.setId(rs.getInt(1));
+				accountPayments.add(accountPayment);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return accountPayments;
+	}
+
+	public static int insertNewPickup(Delivery pickup, int idOrder) {
+		Connection conn;
+		ResultSet rs = null;
+		int idDelivery = -1;
+		conn = DataBaseController.getConn();
+		String query = "INSERT INTO deliveries (deliveryDate, idOrder) VALUES (?, ?);";
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			preparedStmt.setString(1, pickup.getDeliveryDate());
+			preparedStmt.setInt(2, idOrder);
+			preparedStmt.executeUpdate();
+			rs = preparedStmt.getGeneratedKeys();
+			if (rs.next())
+				idDelivery = rs.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return idDelivery;
+	}
+
+	public static boolean updateUserTypeToCustomer(int idUser) {
+		Connection conn;
+		conn = DataBaseController.getConn();
+		String query = "UPDATE users SET userType = 'CUSTOMER' WHERE idUser = ?;";
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idUser);
+			preparedStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
 	public static boolean insertScreens(Integer id, ArrayList<Screens> userScreen) {
 		Connection conn = DataBaseController.getConn();
 		String query = "DELETE FROM user_screen WHERE idUser = ?;";
@@ -1402,7 +1452,7 @@ public class AnalayzeCommand {
 			e.printStackTrace();
 		}
 		for (Screens screen : userScreen) {
-			 query = "INSERT INTO user_screen (idUser, screen) VALUES (?, ?);";
+			query = "INSERT INTO user_screen (idUser, screen) VALUES (?, ?);";
 			try {
 				preparedStmt = conn.prepareStatement(query);
 				preparedStmt.setInt(1, id);
@@ -1412,6 +1462,22 @@ public class AnalayzeCommand {
 				e.printStackTrace();
 				return false;
 			}
+		}
+		return true;
+	}
+
+	public static boolean updateUserStoreCredit(double newStoreCredit, int idUser) {
+		Connection conn;
+		conn = DataBaseController.getConn();
+		String query = "UPDATE users SET storeCredit = ? WHERE idUser = ?;";
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setDouble(1, newStoreCredit);
+			preparedStmt.setInt(2, idUser);
+			preparedStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
 		}
 		return true;
 	}
@@ -1529,11 +1595,9 @@ public class AnalayzeCommand {
 		int totalRefund = 0;
 		try {
 			Statement selectStmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = selectStmt
-					.executeQuery("SELECT SUM(refund) as totalRefund\r\n"
-							+ "FROM zli.orders\r\n"
-							+ "WHERE idBranch = "+report.getIdBranch()+" and orders.date between "+report.getDateRange()+" \r\n"
-							+ "GROUP BY idBRanch;");
+			ResultSet rs = selectStmt.executeQuery("SELECT SUM(refund) as totalRefund\r\n" + "FROM zli.orders\r\n"
+					+ "WHERE idBranch = " + report.getIdBranch() + " and orders.date between " + report.getDateRange()
+					+ " \r\n" + "GROUP BY idBRanch;");
 			while (rs.next()) {
 				totalRefund = rs.getInt(1);
 			}
@@ -1542,16 +1606,16 @@ public class AnalayzeCommand {
 		}
 		return totalRefund;
 	}
-	
-	
+
 	public static ArrayList<DeliveryCoordinatorView> fetchOrdersForDeliveryCoordinator() {
-		ArrayList<DeliveryCoordinatorView> dcv= new ArrayList<>();
+		ArrayList<DeliveryCoordinatorView> dcv = new ArrayList<>();
 		try {
 			Statement selectStmt = DataBaseController.getConn().createStatement();
-			String query ="SELECT o.idOrder,ud.firstName,ud.lastName ,d.address,d.deliveryDate ,u.idUser,d.type,TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP,d.deliveryDate) as timeTillDelivery,ud.id FROM (((zli.deliveries d INNER JOIN zli.orders o ON o.idOrder=d.idOrder) INNER JOIN zli.users u ON o.idUser=u.idUser) INNER JOIN zli.user_details ud ON u.idAccount=ud.idAccount) WHERE d.status='Awaiting Delivery';";
+			String query = "SELECT o.idOrder,ud.firstName,ud.lastName ,d.address,d.deliveryDate ,u.idUser,d.type,TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP,d.deliveryDate) as timeTillDelivery,ud.id FROM (((zli.deliveries d INNER JOIN zli.orders o ON o.idOrder=d.idOrder) INNER JOIN zli.users u ON o.idUser=u.idUser) INNER JOIN zli.user_details ud ON u.idAccount=ud.idAccount) WHERE d.status='Awaiting Delivery';";
 			ResultSet rs = selectStmt.executeQuery(query);
 			while (rs.next()) {
-				dcv.add(new DeliveryCoordinatorView(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getInt(6),rs.getString(7),rs.getInt(8),rs.getString(9)));
+				dcv.add(new DeliveryCoordinatorView(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
+						rs.getString(5), rs.getInt(6), rs.getString(7), rs.getInt(8), rs.getString(9)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1579,7 +1643,7 @@ public class AnalayzeCommand {
 		}
 	}
 
-	public static boolean refundUserForLateDelivery(int idUser,int idOrder) {
+	public static boolean refundUserForLateDelivery(int idUser, int idOrder) {
 		Connection conn = DataBaseController.getConn();
 		String query = "UPDATE orders SET refund = price, status = 'Delivered-Refunded' WHERE idOrder = ? ;";
 		PreparedStatement preparedStmt;
@@ -1599,5 +1663,4 @@ public class AnalayzeCommand {
 			return false;
 		}
 	}
-	
 }

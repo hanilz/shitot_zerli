@@ -11,7 +11,7 @@ public class AccountPayment implements Serializable{
 	private int id;
 	private String fullName;
 	private String cardNumber;
-	private String cardDate; //format: mm/yy
+	private String cardDate;  //format: mm/yy
 	private String cardVCC;
 	private User user;
 	private int idUser=-1;
@@ -90,6 +90,10 @@ public class AccountPayment implements Serializable{
 
 	public int getIdUser() {
 		return idUser;
+	}
+	
+	public String toString() {
+		return "****-****-****-" + cardNumber.substring(cardNumber.length() - 4) + " " + cardDate;
 	}
 
 }

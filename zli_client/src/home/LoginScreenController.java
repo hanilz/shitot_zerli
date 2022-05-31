@@ -1,7 +1,6 @@
 package home;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -83,7 +82,7 @@ public class LoginScreenController implements Initializable {
 			loginUser(username);
 			if (isCart) {
 				cartFlow(event);
-			} else if (isCatalog) 
+			} else if (isCatalog)
 				catalogFlow(event);
 			else {
 				ManageScreens.home();
@@ -100,11 +99,12 @@ public class LoginScreenController implements Initializable {
 			setError("User Suspended");
 			break;
 		}
-		
+
 	}
 
 	private void cartFlow(Event event) {
-		if (User.getUserInstance().getType() != UserType.CUSTOMER) {
+		if (User.getUserInstance().getType() != UserType.CUSTOMER
+				&& User.getUserInstance().getType() != UserType.NEW_CUSTOMER) {
 			setError("Only Customers can buy from catalog");
 			System.out.println(errorLabel.getText());
 			User.getUserInstance().logout();
@@ -133,8 +133,8 @@ public class LoginScreenController implements Initializable {
 	}
 
 	public static void resetLogin() {
-		isCart=false;
-		isCatalog=false;
+		isCart = false;
+		isCatalog = false;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -142,7 +142,8 @@ public class LoginScreenController implements Initializable {
 		int idUser = (Integer) response.get("idUser");
 		int idAccount = (Integer) response.get("idAccount");
 		UserType userType = (UserType) response.get("userType");
-		User.getUserInstance().login(idUser, username, idAccount, userType);// creating running user
+		double storeCredit = (double) response.get("storeCredit");
+		User.getUserInstance().login(idUser, username, idAccount, userType, storeCredit); // creating running user
 	}
 
 	private void catalogFlow(Event event) {
@@ -151,7 +152,7 @@ public class LoginScreenController implements Initializable {
 			CloseWindow(event);
 		} else
 			ManageScreens.home();
-		isCatalog=false;
+		isCatalog = false;
 		CloseWindow(event);
 	}
 

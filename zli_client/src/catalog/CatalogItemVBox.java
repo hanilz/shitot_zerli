@@ -3,6 +3,7 @@ package catalog;
 import entities.Cart;
 import entities.Item;
 import inputs.InputChecker;
+import javafx.animation.PauseTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -16,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 	private Item item; // will be used to get the data from item
@@ -109,13 +111,20 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 		addToCartButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				int quantity = Integer.valueOf(quantityField.getText());
+				String quantityString = quantityField.getText();
+				if(quantityString.isEmpty())
+					quantityField.setText("0");
+				int quantity = Integer.valueOf(quantityString);
 				if (quantity < 1)
 					return;
 				Cart.getInstance().addToCart(item, quantity, true);
 				System.out.println("Cart is: " + Cart.getInstance().getCart());
 				System.out.println(item.getName() + " added to cart woohoooo");
 				CatalogController.refreshTotalAmountInCart();
+				addToCartButton.setText("Item Added To Cart!");
+				PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+				pause.setOnFinished(e -> addToCartButton.setText("Add To Cart"));
+				pause.play();
 			}
 		});
 	}

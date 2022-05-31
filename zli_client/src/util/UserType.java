@@ -24,6 +24,8 @@ public enum UserType {
 			return SERVICE_EXPERT;
 		case "CEO":
 			return CEO;
+		case "NEW_CUSTOMER":
+			return NEW_CUSTOMER;
 		}
 		return UNDEFINED;
 	}

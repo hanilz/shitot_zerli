@@ -1,5 +1,6 @@
 package order;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,9 +11,9 @@ import entities.AccountPayment;
 import entities.Branch;
 import entities.Cart;
 import entities.CustomProduct;
-import entities.DeliveriesOrders;
 import entities.Item;
 import entities.Order;
+import entities.OrderCustomProduct;
 import entities.OrderItem;
 import entities.OrderProduct;
 import entities.Product;
@@ -21,68 +22,177 @@ import entities.SingletonOrder;
 import entities.User;
 import inputs.InputChecker;
 import javafx.animation.PauseTransition;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import util.Commands;
 import util.ManageScreens;
 import util.Screens;
+import util.UserType;
 
 public class CheckoutController implements Initializable {
+
+	@FXML
+	private Label totalLabel;
 
 	@FXML
 	private Button backButton;
 
 	@FXML
-	private TextField cardNumberField;
+	private Label cartSummaryTotalLabel;
 
 	@FXML
-	private TextField firstNameField;
+	private VBox cartSummaryVBox;
+
+	@FXML
+	private Label cartTotalLabel;
+
+	@FXML
+	private Pane deliveryDetailsPane;
+
+	@FXML
+	private Label deliveryFeeLabel;
+
+	@FXML
+	private Label deliveryFeeAmount;
+
+	@FXML
+	private Pane greetingCardPane;
 
 	@FXML
 	private ImageView homeButton;
 
 	@FXML
-	private TextField idField;
-
-	@FXML
-	private TextField lastNameField;
-
-	@FXML
 	private Label messageLabel;
 
 	@FXML
-	private TextField monthField;
-
-	@FXML
-	private VBox orderSummaryVBox;
+	private ComboBox<AccountPayment> paymentMethodComboBox;
 
 	@FXML
 	private Button placeOrderButton;
 
 	@FXML
-	private Label totalPriceLabel;
+	private Label specialDiscountsLabel;
 
 	@FXML
-	private TextField vccField;
+	private Label storeCreditAmountLabel;
 
 	@FXML
-	private TextField yearField;
+	private Label storeCreditUsedLabel;
+
+	@FXML
+	private CheckBox useStoreCreditCheckBox;
 
 	private ArrayList<CustomProduct> customProducts = new ArrayList<>();
+	private ArrayList<ProductsBase> customProductsBase = new ArrayList<>();
 
 	private ArrayList<Product> products = new ArrayList<>();
-	
+
 	private ArrayList<Item> items = new ArrayList<>();
-	
+
+	private ObservableList<AccountPayment> accountPayments;
+
+	private VBox greetingCardVBox = new VBox();
+	private VBox deliveryDetailsVBox = new VBox();
+
+	private double deliveryFee;
+	private double cartTotal;
+	private double totalPriceBeforeCredit;
+	private double usedStoreCredit;
+	private double totalPrice;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		initCartSummaryVBox();
+		initPaymentMethodComboBox();
+
+		storeCreditAmountLabel.setText(InputChecker.price(User.getUserInstance().getStoreCredit()));
+
+		initGreetingCard();
+
+		loadDeliveryDetailsVBox();
+		deliveryDetailsPane.getChildren().add(deliveryDetailsVBox);
+		deliveryFee = (!SingletonOrder.getInstance().getIsPickup()
+				? (SingletonOrder.getInstance().getIsExpress() ? 30 : 15)
+				: 0);
+		deliveryFeeAmount.setText(InputChecker.price(deliveryFee));
+		deliveryFeeLabel.setText(InputChecker.price(deliveryFee));
+
+		totalPriceBeforeCredit = deliveryFee + cartTotal;
+
+		storeCreditUsedLabel.setText(InputChecker.price(0));
+
+		specialDiscountsLabel.setText(InputChecker.price(calculateDiscount()));
+
+		totalPriceBeforeCredit += calculateDiscount();
+		totalPrice = totalPriceBeforeCredit;
+		totalLabel.setText(InputChecker.price(totalPriceBeforeCredit));
+	}
+
+	private double calculateDiscount() {
+		String type = User.getUserInstance().getType().toString();
+		if (type.contains("NEW"))
+			return -totalPriceBeforeCredit * 0.2;
+		return 0;
+	}
+
+	private void initGreetingCard() {
+		loadGreetingCardVBox();
+		greetingCardPane.getChildren().add(greetingCardVBox);
+	}
+
+	private void loadDeliveryDetailsVBox() {
+		if (SingletonOrder.getInstance().getIsPickup())
+			loadDeliveryDetailsPickupVBox();
+		else
+			loadDeliveryDetailsDeliveryVBox();
+	}
+
+	private void loadGreetingCardVBox() {
+		FXMLLoader loader = new FXMLLoader(GreetingCardVBoxController.class.getResource("GreetingCardVBox.fxml"));
+		try {
+			greetingCardVBox = (VBox) loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void loadDeliveryDetailsDeliveryVBox() {
+		FXMLLoader loader = new FXMLLoader(
+				DeliveryDetailsDeliveryVBoxController.class.getResource("DeliveryDetailsDeliveryVBox.fxml"));
+		try {
+			deliveryDetailsVBox = ((VBox) loader.load());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void loadDeliveryDetailsPickupVBox() {
+		FXMLLoader loader = new FXMLLoader(
+				DeliveryDetailsPickupVBoxController.class.getResource("DeliveryDetailsPickupVBox.fxml"));
+		try {
+			deliveryDetailsVBox = (VBox) loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void initPaymentMethodComboBox() {
+		fetchAccountPayments();
+		paymentMethodComboBox.getItems().addAll(accountPayments);
+	}
+
+	private void initCartSummaryVBox() {
 		System.out.println("Adding all product to cart screen...");
 
 		for (ProductsBase product : Cart.getInstance().getCart().keySet()) {
@@ -91,22 +201,25 @@ public class CheckoutController implements Initializable {
 
 			OrderSummaryHBox productSummaryHBox = new OrderSummaryHBox(product, quantity);
 			productSummaryHBox.initHBox();
-			orderSummaryVBox.getChildren().add(productSummaryHBox);
-			
+			cartSummaryVBox.getChildren().add(productSummaryHBox);
+
 			addToLists(product);
 		}
-		totalPriceLabel.setText(InputChecker.price(Cart.getInstance().getTotalPrice()));
+		cartTotal = Cart.getInstance().getTotalPrice();
+		cartSummaryTotalLabel.setText(InputChecker.price(cartTotal));
+		cartTotalLabel.setText(InputChecker.price(Cart.getInstance().getTotalPrice()));
 	}
 
 	private void addToLists(ProductsBase product) {
-		if(product instanceof CustomProduct)
+		if (product instanceof CustomProduct) {
 			customProducts.add((CustomProduct) product);
-		else if(product instanceof Product)
+			customProductsBase.add(product);
+		} else if (product instanceof Product)
 			products.add((Product) product);
-		else if(product instanceof Item)
+		else if (product instanceof Item)
 			items.add((Item) product);
 	}
-	
+
 	@FXML
 	void changeToDeliveryScreen(MouseEvent event) {
 		ManageScreens.changeScreenTo(Screens.DELIVERY_DETAILS);
@@ -115,97 +228,104 @@ public class CheckoutController implements Initializable {
 	@FXML
 	void placeOrder(MouseEvent event) {
 		try {
-			if (checkCheckoutFields()) {
-				insertPaymentDetailsToDB();
+			if (checkPaymentComboBox()) {
 				insertOrderToDB();
+				if (useStoreCreditCheckBox.isSelected())
+					updateUserStoreCredit();
+				if (User.getUserInstance().getType().equals(UserType.NEW_CUSTOMER))
+					updateUserTypeToCustomer();
 				ManageScreens.openPopupFXML(getClass().getResource("PaymentSuccessfulPopup.fxml"),
 						"Payment Successful!");
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private boolean checkCheckoutFields() {
-		if (InputChecker.isPaymentFieldsEmpty(firstNameField.getText(), lastNameField.getText(),
-				cardNumberField.getText(), monthField.getText(), yearField.getText(), vccField.getText(),
-				idField.getText())) {
-			showMessage("* Please fill all the fields!");
-			return false;
-		} else if (!InputChecker.checkPaymentInput(firstNameField.getText(), lastNameField.getText(),
-				cardNumberField.getText(), monthField.getText(), yearField.getText(), vccField.getText(),
-				idField.getText())) {
-			showMessage("* Please check the input!");
+	private void updateUserTypeToCustomer() {
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.UPDATE_USER_TYPE_TO_CUSTOMER);
+		message.put("idUser", User.getUserInstance().getIdUser());
+		Object response = ClientFormController.client.accept(message);
+		if (response.equals("update user type to customer successful")) {
+			System.out.println("yayy!! updated user " + User.getUserInstance().getIdUser() + " type to customer!");
+			User.getUserInstance().setType("CUSTOMER");
+		} else
+			System.out.println("of pufff, update user type to customer failed!");
+	}
+
+	private void updateUserStoreCredit() {
+		HashMap<String, Object> message = new HashMap<>();
+		double newStoreCredit = User.getUserInstance().getStoreCredit() - usedStoreCredit;
+		message.put("command", Commands.UPDATE_USER_STORE_CREDIT);
+		message.put("store credit", newStoreCredit);
+		message.put("idUser", User.getUserInstance().getIdUser());
+		Object response = ClientFormController.client.accept(message);
+		if (response.equals("update user store credit successful")) {
+			System.out.println("yayy!! user store credit updated successfully in the db to "
+					+ (User.getUserInstance().getStoreCredit() - usedStoreCredit) + "!");
+			 User.getUserInstance().setStoreCredit(newStoreCredit);
+		}
+		else
+			System.out.println("of pufff, update user store credit failed!");
+	}
+
+	private boolean checkPaymentComboBox() {
+		if (InputChecker.isNull(paymentMethodComboBox.getValue())) {
+			showMessage("* Please select a payment method!");
 			return false;
 		}
 		return true;
 	}
 
-	private void insertPaymentDetailsToDB() {
-		String fullName = String.format("%s %s", firstNameField.getText(), lastNameField.getText());
-		String cardNumber = cardNumberField.getText();
-		String cardDate = String.format("%s/%s", monthField.getText(), yearField.getText());
-		String cardVCC = vccField.getText();
-		AccountPayment accountPayment = new AccountPayment(fullName, cardNumber, cardDate, cardVCC,
-				User.getUserInstance());
-
-		HashMap<String, Object> message = new HashMap<>();
-		message.put("command", Commands.INSERT_ACCOUNT_PAYMENT);
-		message.put("account payment", accountPayment);
-		Object response = ClientFormController.client.accept(message);
-		if (response.equals("insert account payment successful"))
-			System.out.println("yayy!! account payment added to the db");
-		else
-			System.out.println("of pufff, insert failed!");
-	}
-
 	private void insertOrderToDB() {
-		double totalPrice = Cart.getInstance().getTotalPrice();
 		String greetingCard = SingletonOrder.getInstance().getGreetingCard();
 		String dOrder = ""; // TODO: for now, we need to insert new text area for dOrder
-		Branch branch = SingletonOrder.getInstance().getBranch();
+		boolean isPickup = SingletonOrder.getInstance().getIsPickup();
+		Branch branch = isPickup ? SingletonOrder.getInstance().getPickupBranch()
+				: SingletonOrder.getInstance().getBranch();
 		String status = "Waiting for approval"; // TODO: const class or enum for order status
-		String paymentMethod = "credit card"; // TODO: talk with everyone about this field in the db.
+		String paymentMethod = "credit card";
 		User user = User.getUserInstance();
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.INSERT_ORDER);
 		message.put("order", new Order(totalPrice, greetingCard, dOrder, branch, status, paymentMethod, user));
 		Object response = ClientFormController.client.accept(message);
 		Integer orderId = (Integer) response;
-		if (orderId != -1) {
-			System.out.println("yayy!! order added to the db");
-			if(products.size() > 0)
+		if (orderId != -1) { // if successful
+			System.out.println("yayy!! order " + orderId + " added to the db!");
+			if (products.size() > 0)
 				insertOrderProductsToDB(orderId);
-			if(items.size() > 0)
+			if (items.size() > 0)
 				insertOrderItemsToDB(orderId);
-			if(customProducts.size() > 0)
+			if (customProducts.size() > 0)
 				insertCustomProductsData(orderId);
-			if (SingletonOrder.getInstance().getDelivery() != null)
-				insertDelivery(orderId);
+			insertDelivery(orderId);
 		} else
-			System.out.println("of pufff, insert failed!");
+			System.out.println("of pufff, order insert failed!");
 
 	}
 
 	private void insertCustomProductsData(Integer orderId) {
 		insertCustomProductsToDB();
-		if(isCustomProductProducts())
+		if (isCustomProductProducts())
 			insertCustomProductProductsToDB();
-		if(isCustomProductItems())
+		if (isCustomProductItems())
 			insertCustomProductItemsToDB();
 		insertOrderCustomProductsToDB(orderId);
 	}
 
 	private boolean isCustomProductItems() {
-		for(CustomProduct customProduct : customProducts)
-			if(customProduct.getItems().size() > 0)
+		for (CustomProduct customProduct : customProducts)
+			if (customProduct.getItems().size() > 0)
 				return true;
 		return false;
 	}
 
 	private boolean isCustomProductProducts() {
-		for(CustomProduct customProduct : customProducts)
-			if(customProduct.getProducts().size() > 0)
+		for (CustomProduct customProduct : customProducts)
+			if (customProduct.getProducts().size() > 0)
 				return true;
 		return false;
 	}
@@ -230,8 +350,8 @@ public class CheckoutController implements Initializable {
 		ArrayList<OrderItem> orderItemsList = new ArrayList<>();
 		message.put("command", Commands.INSERT_ORDERS_ITEMS);
 		for (Item currentItem : items)
-			orderItemsList.add(new OrderItem(idOrder, (Item) currentItem,
-					Cart.getInstance().getCart().get(currentItem)));
+			orderItemsList
+					.add(new OrderItem(idOrder, (Item) currentItem, Cart.getInstance().getCart().get(currentItem)));
 		message.put("list order items", orderItemsList);
 		Object response = ClientFormController.client.accept(message);
 		if (response.equals("insert order items successful"))
@@ -240,29 +360,18 @@ public class CheckoutController implements Initializable {
 			System.out.println("of pufff, insert failed!");
 	}
 
-	
 	private void insertDelivery(int idOrder) {
 		// first - insert the delivery into the db
 		HashMap<String, Object> message = new HashMap<>();
-		message.put("command", Commands.INSERT_DELIVERY);
-		message.put("delivery", SingletonOrder.getInstance().getDelivery());
+		boolean isPickup = SingletonOrder.getInstance().getIsPickup();
+		message.put("command", isPickup ? Commands.INSERT_PICKUP : Commands.INSERT_DELIVERY);
+		message.put("delivery",
+				isPickup ? SingletonOrder.getInstance().getPickup() : SingletonOrder.getInstance().getDelivery());
+		message.put("idOrder", idOrder);
 		Object response = ClientFormController.client.accept(message);
-		if ((Integer) response != -1) {
+		if ((Integer) response != -1)
 			System.out.println("yayy!! delivery added to the db");
-			insertDeliveriesOrders(idOrder, (Integer) response);
-		}
-	}
 
-	private void insertDeliveriesOrders(int idOrder, int idDelivery) {
-		// second - insert the delivery order into the db
-		HashMap<String, Object> message = new HashMap<>();
-		message.put("command", Commands.INSERT_DELIVERY_ORDER);
-		message.put("delivery order", new DeliveriesOrders(idOrder, idDelivery));
-		Object response = ClientFormController.client.accept(message);
-		if (response.equals("insert delivery order successful"))
-			System.out.println("yayy!! delivery order added to the db");
-		else
-			System.out.println("of pufff, insert failed!");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -271,7 +380,7 @@ public class CheckoutController implements Initializable {
 		message.put("command", Commands.INSERT_CUSTOM_PRODUCTS);
 		message.put("custom products", customProducts);
 		Object response = ClientFormController.client.accept(message);
-		customProducts = (ArrayList<CustomProduct>) response;  // will update the ids of the custom products
+		customProducts = (ArrayList<CustomProduct>) response; // will update the ids of the custom products
 	}
 
 	private void insertCustomProductProductsToDB() {
@@ -294,21 +403,27 @@ public class CheckoutController implements Initializable {
 			System.out.println("yayy!! custom product items added to the db");
 		else
 			System.out.println("pufff of, insert custom product items failed!");
-		
+
 	}
 
 	private void insertOrderCustomProductsToDB(Integer orderId) {
 		HashMap<String, Object> message = new HashMap<>();
+		ArrayList<OrderCustomProduct> orderCustomProductsList = new ArrayList<>();
 		message.put("command", Commands.INSERT_ORDER_CUSTOM_PRODUCTS);
-		message.put("custom products", customProducts);
-		message.put("idOrder", orderId);
+		for (int i = 0 ; i < customProducts.size() ; i++) {
+			CustomProduct currentCustomProduct = customProducts.get(i);
+			ProductsBase currentCustomProductBase = customProductsBase.get(i);
+			orderCustomProductsList.add(new OrderCustomProduct(orderId, currentCustomProduct,
+					Cart.getInstance().getCart().get(currentCustomProductBase)));
+		}
+		message.put("list order custom products", orderCustomProductsList);
 		Object response = ClientFormController.client.accept(message);
 		if (response.equals("insert order custom products successful"))
 			System.out.println("yayy!! order custom products added to the db");
 		else
-			System.out.println("pufff of, insert order custom products failed!");		
+			System.out.println("pufff of, insert order custom products failed!");
 	}
-	
+
 	private void showMessage(String textToShow) {
 		messageLabel.setText(textToShow);
 		PauseTransition pause = new PauseTransition(Duration.seconds(3));
@@ -319,5 +434,39 @@ public class CheckoutController implements Initializable {
 	@FXML
 	void changeToHome(MouseEvent event) {
 		ManageScreens.home();
+	}
+
+	@FXML
+	void useStoreCreditClicked(MouseEvent event) {
+		if (useStoreCreditCheckBox.isSelected()) {
+			calculateUsedStoreCredit();
+		} else
+			setUsedStoreCreditToZero();
+	}
+
+	private void setUsedStoreCreditToZero() {
+		usedStoreCredit = 0;
+		totalPrice = totalPriceBeforeCredit;
+
+		storeCreditUsedLabel.setText(InputChecker.price(usedStoreCredit));
+		totalLabel.setText(InputChecker.price(totalPrice));
+	}
+
+	private void calculateUsedStoreCredit() {
+		usedStoreCredit = User.getUserInstance().getStoreCredit() > totalPriceBeforeCredit ? totalPriceBeforeCredit
+				: User.getUserInstance().getStoreCredit();
+		totalPrice = totalPriceBeforeCredit - usedStoreCredit;
+
+		storeCreditUsedLabel.setText(InputChecker.price(-usedStoreCredit));
+		totalLabel.setText(InputChecker.price(totalPrice));
+	}
+
+	// for getting all account payment methods for the account payment ComboBox
+	private void fetchAccountPayments() {
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.FETCH_ACCOUNT_PAYMENTS);
+		message.put("idUser", User.getUserInstance().getIdUser());
+		Object response = ClientFormController.client.accept(message);
+		accountPayments = (ObservableList<AccountPayment>) response;
 	}
 }

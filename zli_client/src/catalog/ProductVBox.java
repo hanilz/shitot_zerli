@@ -1,5 +1,6 @@
 package catalog;
 
+import entities.Product;
 import entities.ProductsBase;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -31,7 +32,7 @@ public class ProductVBox extends VBox {
 		this.setPrefHeight(USE_COMPUTED_SIZE);
 		this.setAlignment(Pos.TOP_CENTER);
 		this.setPadding(new Insets(15, 15, 30, 15));
-		
+
 		// set page title
 		Label productName;
 		productName = new Label("Product Details\n" + product.getName());
@@ -40,9 +41,9 @@ public class ProductVBox extends VBox {
 		this.getChildren().add(productName);
 
 		initImageProduct();
-		
+
 		this.getChildren().add(image);
-		
+
 		initGrid();
 		initCellsInGrid();
 
@@ -71,23 +72,26 @@ public class ProductVBox extends VBox {
 		cell.setFont(new Font("-fx-font-weight: bold", 23));
 		mainGrid.add(cell, 1, 0);
 
-//		// set product flower type
-//		cell = new Label("Flower Type:");
-//		cell.setFont(new Font("-fx-font-weight: bold", 23));
-//		mainGrid.add(cell, 0, 1);
-//		cell = new Label(product.getFlowerType());
-//		cell.setFont(new Font("-fx-font-weight: bold", 23));
-//		mainGrid.add(cell, 1, 1);
-//
-//		// set product Description
-//		cell = new Label("Description:");
-//		cell.setFont(new Font("-fx-font-weight: bold", 23));
-//		mainGrid.add(cell, 0, 2);
-//		cell = new Label(product.getProductDescription());
-//		cell.setWrapText(true);
-//		cell.setFont(new Font("-fx-font-weight: bold", 23));
-//		mainGrid.add(cell, 1, 2);
+		if (product instanceof Product) {
+			Product currentProduct = (Product) product;
+			
+			// set product flower type
+			cell = new Label("Flower Type:");
+			cell.setFont(new Font("-fx-font-weight: bold", 23));
+			mainGrid.add(cell, 0, 1);
+			cell = new Label(currentProduct.getFlowerType());
+			cell.setFont(new Font("-fx-font-weight: bold", 23));
+			mainGrid.add(cell, 1, 1);
 
+			// set product Description
+			cell = new Label("Description:");
+			cell.setFont(new Font("-fx-font-weight: bold", 23));
+			mainGrid.add(cell, 0, 2);
+			cell = new Label(currentProduct.getProductDescription());
+			cell.setWrapText(true);
+			cell.setFont(new Font("-fx-font-weight: bold", 23));
+			mainGrid.add(cell, 1, 2);
+		}
 		// set product Price
 		cell = new Label("Price:");
 		cell.setFont(new Font("-fx-font-weight: bold", 23));

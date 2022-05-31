@@ -3,9 +3,15 @@ package catalog;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import cart.CartController;
 import entities.Cart;
 import entities.User;
 import home.LoginScreenController;
+import inputs.InputChecker;
+import javafx.animation.PauseTransition;
+import javafx.animation.ScaleTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -18,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import util.ManageData;
 import util.ManageScreens;
 import util.Screens;
@@ -114,7 +121,7 @@ public class CatalogController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		instance = this;
-		setTotalAmountCartLabel();
+		initTotalAmountCartLabel();
 		catalogGrid = ManageData.catalogGrid;
 		catalogScrollPane.setContent(catalogGrid);
 		if (User.getUserInstance().isUserLoggedIn()) {
@@ -126,5 +133,25 @@ public class CatalogController implements Initializable {
 			loginVBox.setPrefWidth(100);
 			loginIcon.setImage(new Image("resources/home/logout.png"));
 		}
+	}
+
+	private void initTotalAmountCartLabel() {
+		setTotalAmountCartLabel();
+		totalAmountCartLabel.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				ScaleTransition transition = new ScaleTransition(Duration.seconds(0.5), totalAmountCartLabel);
+				transition.setToX(1.4);
+				transition.setToY(1.4);
+				transition.play();
+				PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
+				pause.setOnFinished(e -> {	
+					transition.setToX(1);
+					transition.setToY(1);
+					transition.play();
+				});
+				pause.play();
+			}
+		});
 	}
 }

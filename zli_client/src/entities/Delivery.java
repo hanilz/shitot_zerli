@@ -8,30 +8,41 @@ public class Delivery implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private int idDelivery; //PK
+
+	private int idDelivery; // PK
 	private String address;
 	private String receiverName;
 	private String phoneNumber;
 	private String deliveryDate;
-	private String status; //we will change it later to enum
-	
+	private String status; // we will change it later to enum
+	private String type;
+
 	public Delivery(int idDelivery, String address, String receiverName, String phoneNumber, String deliveryDate,
-			String status) {
+			String status, String type) {
 		this.idDelivery = idDelivery;
 		this.address = address;
 		this.receiverName = receiverName;
 		this.phoneNumber = phoneNumber;
 		this.deliveryDate = deliveryDate;
 		this.status = status;
+		this.type = type;
 	}
-	
-	public Delivery(String address, String receiverName, String phoneNumber, String deliveryDate, String status) {
+
+	public Delivery(String address, String receiverName, String phoneNumber, String deliveryDate, String status,
+			String type) {
 		this.address = address;
 		this.receiverName = receiverName;
 		this.phoneNumber = phoneNumber;
 		this.deliveryDate = deliveryDate;
 		this.status = status;
+		this.type = type;
+	}
+	
+	// for pickup
+	public Delivery(String deliveryDate, String status, String type) {
+		this.deliveryDate = deliveryDate;
+		this.status = status;
+		this.type = type;
 	}
 
 	public int getIdDelivery() {
@@ -81,5 +92,12 @@ public class Delivery implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 }
