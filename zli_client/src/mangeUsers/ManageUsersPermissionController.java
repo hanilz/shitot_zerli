@@ -81,6 +81,7 @@ public class ManageUsersPermissionController implements Initializable {
 			setTextForUser();
 			getUserHomeScreen();
 		}
+		showMessage("User can have Up to 6 Screens", "blue");
 	}
 
 	public void clickSaveScreen() {
@@ -142,7 +143,7 @@ public class ManageUsersPermissionController implements Initializable {
 			showMessage("ERROR! PLEASE SELECT A USER FIRST!", "red");
 		} else {
 			if (AddScreensController.getUser() != null)
-				userScreens = AddScreensController.setScreens();
+				userScreens = AddScreensController.setScreens();//get screens
 			else {
 				userScreens = getScreensFromDB();
 				setInitUserScreen();
@@ -198,7 +199,6 @@ public class ManageUsersPermissionController implements Initializable {
 	public void enableSave() {
 		if (!userScreens.equals(initUserScreens) && !userScreens.isEmpty()) {
 			saveScreenButton.setDisable(false);
-			((Labeled) saveScreenButton.getChildren().get(0)).setUnderline(true);
 			saveScreenButton.setStyle("-fx-background-radius: 20; -fx-background-color: AAC6BD;");// AAC6BC
 			showMessage("Please Save Before Switching ID", "red");
 		} else
@@ -226,13 +226,18 @@ public class ManageUsersPermissionController implements Initializable {
 	}
 
 	private void enableAddButton() {
-		addScreenButton.setStyle("-fx-background-radius: 20; -fx-background-color: AAC6BC;");
-		addScreenButton.setDisable(false);
+		if (userScreens.size() == 6) {
+			addScreenButton.setStyle("-fx-background-radius: 20; -fx-background-color: E4C2C2;");
+			addScreenButton.setDisable(true);
+			showMessage("Can only have up to 6 screens", "red");
+		} else {
+			addScreenButton.setStyle("-fx-background-radius: 20; -fx-background-color: AAC6BC;");
+			addScreenButton.setDisable(false);
+		}
 	}
 
 	public void disableSave() {
 		saveScreenButton.setDisable(true);
-		((Labeled) saveScreenButton.getChildren().get(0)).setUnderline(false);
 		saveScreenButton.setStyle("-fx-background-radius: 20; -fx-background-color: E4C2C2;");
 	}
 

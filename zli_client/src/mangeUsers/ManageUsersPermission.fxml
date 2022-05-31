@@ -110,6 +110,26 @@
             </HBox>
             <HBox alignment="CENTER" spacing="50.0">
                <children>
+                  <HBox fx:id="saveScreenButton" disable="true" onMouseClicked="#clickSaveScreen" style="-fx-background-color: E4C2C2; -fx-background-radius: 20;">
+                     <children>
+                        <Button mnemonicParsing="false" onMouseClicked="#clickSaveScreen" style="-fx-background-color: transparent;" text="SAVE User Screens" textFill="#1f219a">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#clickSaveScreen" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/manageHome/save.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </HBox>
                   <HBox fx:id="defaultScreenButton" disable="true" onMouseClicked="#setDefaultScreens" style="-fx-background-color: E4C2C2; -fx-background-radius: 20;">
                      <children>
                         <Button mnemonicParsing="false" onMouseClicked="#setDefaultScreens" style="-fx-background-color: transparent;" text="Use DEFAULT Screens">
@@ -143,26 +163,6 @@
                         <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#addScreens" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../resources/manageHome/add.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </HBox>
-                  <HBox fx:id="saveScreenButton" disable="true" onMouseClicked="#clickSaveScreen" style="-fx-background-color: E4C2C2; -fx-background-radius: 20;">
-                     <children>
-                        <Button mnemonicParsing="false" onMouseClicked="#clickSaveScreen" style="-fx-background-color: transparent;" text="SAVE User Screens" textFill="#1f219a">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Button>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#clickSaveScreen" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../resources/manageHome/save.png" />
                            </image>
                         </ImageView>
                      </children>

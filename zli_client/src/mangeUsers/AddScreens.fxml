@@ -42,90 +42,128 @@
                   </ImageView>
                </children>
             </HBox>
-            <HBox alignment="CENTER" GridPane.columnIndex="1">
+            <VBox alignment="CENTER" prefHeight="77.0" prefWidth="317.0" GridPane.columnIndex="1">
                <children>
                   <Label text="Add User Screens" textAlignment="JUSTIFY" wrapText="true">
                      <font>
                         <Font name="Arial" size="45.0" />
                      </font>
                   </Label>
+                  <HBox alignment="CENTER" spacing="20.0">
+                     <children>
+                        <HBox alignment="CENTER" spacing="10.0" />
+                        <HBox alignment="CENTER" spacing="10.0">
+                           <children>
+                              <Label text="name:">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="usernameLable" text="please select user" textFill="#2600ff">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets right="20.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER" spacing="10.0">
+                           <children>
+                              <Label text="use type:">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="userTypeLable" text="premission" textFill="#2600ff">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets right="20.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER" spacing="25.0" />
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
-            <HBox alignment="CENTER" GridPane.columnIndex="2" />
+            </VBox>
+            <HBox alignment="CENTER" GridPane.columnIndex="2">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="68.0" prefWidth="360.0" />
+               </children></HBox>
          </children>
       </GridPane>
       <VBox spacing="10.0">
          <children>
-            <HBox alignment="CENTER" spacing="20.0">
-               <children>
-                  <HBox alignment="CENTER" spacing="10.0" />
-                  <HBox alignment="CENTER" spacing="10.0">
-                     <children>
-                        <Label text="name:">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="usernameLable" text="please select user" textFill="#2600ff">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                     </children>
-                     <padding>
-                        <Insets right="20.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER" spacing="10.0">
-                     <children>
-                        <Label text="use type:">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="userTypeLable" text="premission" textFill="#2600ff">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                     </children>
-                     <padding>
-                        <Insets right="20.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER" spacing="25.0" />
-               </children>
-            </HBox>
-            <GridPane>
+            <GridPane prefWidth="1276.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="914.0" minWidth="10.0" prefWidth="908.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="407.0" minWidth="10.0" prefWidth="372.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="935.0" minWidth="10.0" prefWidth="935.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="502.0" minWidth="10.0" prefWidth="345.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <HBox alignment="CENTER_RIGHT">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="72.0" prefWidth="817.0">
                      <children>
-                        <Label fx:id="errorLable" prefWidth="497.0" text="To Save New Screens Go Back To Mange User Screens" textFill="#ae0e0e">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
+                        <VBox alignment="CENTER" prefHeight="72.0" prefWidth="587.0">
+                           <children>
+                              <HBox alignment="CENTER" />
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <ImageView fitHeight="38.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/manageHome/userScreen.png" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <Label fx:id="amoutOfScreensLable" style="-fx-background-color: DBE1F0; -fx-background-radius: 10;" text="0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font></Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                              <Label fx:id="limitLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="468.0" text="Can Have Up To 6 Screens" textAlignment="JUSTIFY" textFill="#a80000">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="4.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="31.0" prefWidth="42.0" GridPane.columnIndex="1">
+                  <VBox alignment="CENTER" prefHeight="93.0" prefWidth="372.0" GridPane.columnIndex="1">
                      <children>
-                        <Button mnemonicParsing="false" onMouseClicked="#backToManageUser" prefHeight="31.0" prefWidth="237.0" style="-fx-background-radius: 20; -fx-background-color: AAC6BC;" text="Back to Manage User Screens">
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="497.0" text="*Go Back To be Able To Save" textFill="#6f0d0d">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Button mnemonicParsing="false" onMouseClicked="#backToManageUser" prefHeight="7.0" prefWidth="237.0" style="-fx-background-radius: 20; -fx-background-color: AAC6BC;" text="Back to Manage User Screens">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
                            <font>
                               <Font size="15.0" />
                            </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
                         </Button>
                      </children>
-                  </HBox>
+                  </VBox>
                </children>
             </GridPane>
          </children>
