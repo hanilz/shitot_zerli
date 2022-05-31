@@ -12,7 +12,6 @@ import java.util.List;
  *
  */
 public class DataBaseController {
-	// TODO: make singleton
 	private static Connection conn = null;
 
 	/**
@@ -24,12 +23,17 @@ public class DataBaseController {
 	 * status of the connection of the database
 	 */
 	public static boolean isConnected = false;
-	
 
+	private DataBaseController() {
+	}
 
-	// private static PreparedStatement ps = null;
-
-	// private static ResultSet rs = null;
+	public static Connection getConn() {
+		if (conn == null) {
+			configDriver();
+			connect();
+		}
+		return conn;
+	}
 
 	/**
 	 * Clearing the current args from the list and adding the new information
@@ -87,18 +91,6 @@ public class DataBaseController {
 	public static boolean Disconnect() {// not looking only for SQLException
 		if (!isConnected)
 			return true;// server was not connected to begin with
-//		if (rs != null) {
-//			try {
-//				rs.close();//closing ResultSet
-//			} catch (Exception e) {
-//				}
-//		}
-//		if (ps != null) {
-//			try {
-//				ps.close();//closing PreparedStatement
-//			} catch (Exception e) {
-//				}
-//		}
 		if (conn != null) {
 			try {
 				conn.close();// closing database connection
@@ -107,12 +99,6 @@ public class DataBaseController {
 		}
 		isConnected = false;
 		return true;
-	}
-
-
-
-	public static Connection getConn() {
-		return conn;
 	}
 
 }

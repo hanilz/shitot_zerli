@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -15,19 +16,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="5.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.ReportsController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="5.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.ReportsController">
    <children>
       <GridPane prefHeight="99.0" prefWidth="980.0">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="100.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1066.0" minWidth="10.0" prefWidth="1060.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.0" minWidth="0.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="100.0" prefWidth="172.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1066.0" minWidth="10.0" prefWidth="900.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="155.0" minWidth="0.0" prefWidth="155.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="100.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="761.0" GridPane.columnIndex="1">
+            <VBox alignment="TOP_CENTER" prefHeight="101.0" prefWidth="994.0" GridPane.columnIndex="1">
                <children>
                   <Label text="Reports">
                      <font>
@@ -41,11 +42,18 @@
                   </Label>
                </children>
             </VBox>
-            <ImageView fx:id="homeImage" fitHeight="100.0" fitWidth="100.0" onMousePressed="#returnHome" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../resources/catalog/home.png" />
-               </image>
-            </ImageView>
+            <VBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="74.0">
+               <children>
+                  <ImageView fx:id="homeImage" fitHeight="80.0" fitWidth="74.0" onMousePressed="#returnHome" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/catalog/home.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </children>
+            </VBox>
          </children>
       </GridPane>
       <VBox alignment="CENTER" prefHeight="72.0" prefWidth="1220.0" spacing="11.0">
@@ -56,18 +64,30 @@
                      <font>
                         <Font size="16.0" />
                      </font></Label>
-                  <ComboBox fx:id="branchComboBox" prefHeight="25.0" prefWidth="222.0" promptText="Select Branch" />
+                  <ComboBox fx:id="branchComboBox" prefHeight="25.0" prefWidth="222.0" promptText="Select Branch">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ComboBox>
                   <Label text="Year:">
                      <font>
                         <Font size="16.0" />
                      </font></Label>
-                  <ComboBox fx:id="yearComboBox" prefWidth="150.0" promptText="Select Year" />
+                  <ComboBox fx:id="yearComboBox" prefWidth="150.0" promptText="Select Year">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ComboBox>
                   <Label text="Quarter:">
                      <font>
                         <Font size="16.0" />
                      </font></Label>
-                  <ComboBox fx:id="quraterComboBox" prefWidth="150.0" promptText="Select Quarter" />
-                  <Button fx:id="searchButton" mnemonicParsing="false" onMouseClicked="#searchReportsButton" text="Search Reports" />
+                  <ComboBox fx:id="quraterComboBox" prefWidth="150.0" promptText="Select Quarter">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ComboBox>
+                  <Button fx:id="searchButton" mnemonicParsing="false" onMouseClicked="#searchReportsButton" text="Search Reports">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
                </children>
             </HBox>
             <Label fx:id="noReportsLabel" text="No report found" textFill="#eb1b1b" visible="false" />
