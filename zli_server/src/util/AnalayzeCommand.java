@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import deliveryCoordination.DeliveryCoordinatorView;
 import entities.AccountPayment;
 import entities.Branch;
 import entities.Complaint;
@@ -1541,4 +1542,62 @@ public class AnalayzeCommand {
 		}
 		return totalRefund;
 	}
+	
+	
+	public static ArrayList<DeliveryCoordinatorView> fetchOrdersForDeliveryCoordinator() {
+		ArrayList<DeliveryCoordinatorView> dcv= new ArrayList<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			String query ="SELECT o.idOrder,ud.firstName,ud.lastName ,d.address,d.deliveryDate ,u.idUser,d.type,TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP,d.deliveryDate) as timeTillDelivery,ud.id FROM (((zli.deliveries d INNER JOIN zli.orders o ON o.idOrder=d.idOrder) INNER JOIN zli.users u ON o.idUser=u.idUser) INNER JOIN zli.user_details ud ON u.idAccount=ud.idAccount) WHERE d.status='Awaiting Delivery';";
+			ResultSet rs = selectStmt.executeQuery(query);
+			while (rs.next()) {
+				dcv.add(new DeliveryCoordinatorView(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getInt(6),rs.getString(7),rs.getInt(8),rs.getString(9)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return dcv;
+	}
+
+	public static boolean markOrderAsDelivered(int idOrder) {
+		Connection conn = DataBaseController.getConn();
+		String query = "UPDATE orders SET status = 'Delivered',lastModified = CURRENT_TIMESTAMP WHERE idOrder = ? ;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idOrder);
+			preparedStmt.executeUpdate();
+			query = "UPDATE deliveries SET status = 'Delivered' WHERE idOrder = ? ;";
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idOrder);
+			preparedStmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Failed to deliver order");
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static boolean refundUserForLateDelivery(int idUser,int idOrder) {
+		Connection conn = DataBaseController.getConn();
+		String query = "UPDATE orders SET refund = price, status = 'Delivered-Refunded' WHERE idOrder = ? ;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idOrder);
+			preparedStmt.executeUpdate();
+			query = "UPDATE users SET storeCredit = storeCredit + (SELECT price FROM orders WHERE idOrder = ?)  WHERE idUser = ? ;";
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, idOrder);
+			preparedStmt.setInt(2, idUser);
+			preparedStmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Failed to refund user");
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 }

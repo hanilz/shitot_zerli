@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import deliveryCoordination.DeliveryCoordinatorView;
 import entities.AccountPayment;
 import entities.Branch;
 import entities.Complaint;
@@ -338,6 +339,18 @@ public class ServerMessageController {
 		case GET_TOTAL_REFUNDS:
 			Integer totalRefunds = AnalayzeCommand.getTotalRefunds((Report)message.get("selected report"));
 			message.put("response", totalRefunds);
+			break;
+		case FETCH_ORDERS_DELIVERY_COORDINATOR:
+			ArrayList<DeliveryCoordinatorView> ordersReadyForDelivery = AnalayzeCommand.fetchOrdersForDeliveryCoordinator();
+			message.put("response", ordersReadyForDelivery);
+			break;
+		case CONFIRM_DELIVERY:
+			boolean delivered = AnalayzeCommand.markOrderAsDelivered((Integer)message.get("idOrder"));
+			message.put("response", delivered);
+			break;
+		case REFUND_USER_FOR_LATE_DELIVERY:
+			boolean refunded = AnalayzeCommand.refundUserForLateDelivery((Integer)message.get("idUser"),(Integer)message.get("idOrder"));
+			message.put("response", refunded);
 			break;
 		default:
 			break;
