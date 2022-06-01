@@ -110,7 +110,7 @@ public class newProductBuilderController implements Initializable {
 			return;
 		}
 		Product newProduct = new Product(0, nameField.getText(), colorField.getText(), price,
-				productTypeTextField.getText(), null, 0, flowerTypeTextField.getText(),
+				productTypeTextField.getText(), "/resources/catalog/product.png", 0, flowerTypeTextField.getText(),
 				descriptionTextArea.getText(), productItems);
 		
 		HashMap<String, Object> message = new HashMap<>();
@@ -131,7 +131,7 @@ public class newProductBuilderController implements Initializable {
 			pause.play();
 			return;
 		}
-		Item newItem = new Item(0,nameField.getText() , colorField.getText(), price, productTypeTextField.getText(), null, 0);
+		Item newItem = new Item(0,nameField.getText() , colorField.getText(), price, productTypeTextField.getText(), "/resources/catalog/flower.png", 0);
 		
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.INSERT_NEW_ITEM);

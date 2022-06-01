@@ -1678,13 +1678,14 @@ public class AnalayzeCommand {
 	public static int insertNewItemToDB(Item item) {
 		Connection conn = DataBaseController.getConn();
 		ResultSet rs;
-		String query = "INSERT INTO items (itemName, itemColor, itemPrice, itemType) VALUES (?, ?, ?, ?);";
+		String query = "INSERT INTO items (itemName, itemColor, itemPrice, itemType,imagePath) VALUES (?, ?, ?, ?, ?);";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 			preparedStmt.setString(1, item.getItemName());
 			preparedStmt.setString(2, item.getColor());
 			preparedStmt.setDouble(3, item.getPrice());
 			preparedStmt.setString(4, item.getType());
+			preparedStmt.setString(5, item.getImagePath());
 			preparedStmt.executeUpdate();
 			rs = preparedStmt.getGeneratedKeys();
 			if (rs.next())
@@ -1699,7 +1700,7 @@ public class AnalayzeCommand {
 		Connection conn = DataBaseController.getConn();
 		ResultSet rs;
 		int idInserted = -1;
-		String query = "INSERT INTO products (productName, flowerType, productColor, productPrice, productType, productDescription) VALUES (?, ?, ?, ?, ?, ?);";
+		String query = "INSERT INTO products (productName, flowerType, productColor, productPrice, productType, productDescription,imagePath) VALUES (?, ?, ?, ?, ?, ?, ?);";
 		try {
 			PreparedStatement preparedStmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 			preparedStmt.setString(1, product.getName());
@@ -1708,6 +1709,7 @@ public class AnalayzeCommand {
 			preparedStmt.setDouble(4, product.getPrice());
 			preparedStmt.setString(5, product.getType());
 			preparedStmt.setString(6, product.getProductDescription());
+			preparedStmt.setString(7, product.getImagePath());
 			preparedStmt.executeUpdate();
 			rs = preparedStmt.getGeneratedKeys();
 			if (rs.next())

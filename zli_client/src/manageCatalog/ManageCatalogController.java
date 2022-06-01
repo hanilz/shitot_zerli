@@ -54,8 +54,6 @@ public class ManageCatalogController implements Initializable {// might extends
 
     @FXML
     private TilePane manageTile;
-    
-	private GridPane manageGrid;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -63,8 +61,7 @@ public class ManageCatalogController implements Initializable {// might extends
 //		manageGrid.add(addNewProduct(), 0, 0);
 //		//manageScrollPane.setContent(manageGrid);
 		manageTile.getChildren().add(addNewProduct());
-		manageTile.getChildren().addAll( ManageData.manageVBoxList);
-	
+		manageTile.getChildren().addAll(ManageData.getManageVBoxList());
 	}
 
 	private VBox addNewProduct() {

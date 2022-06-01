@@ -11,11 +11,14 @@
 
 <HBox alignment="CENTER" minHeight="100.0" minWidth="200.0" prefHeight="100.0" prefWidth="890.0" spacing="99.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CartController">
    <children>
-      <ImageView fitHeight="80.0" fitWidth="103.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+      <VBox alignment="CENTER" maxHeight="90.0" maxWidth="100.0" minHeight="90.0" minWidth="100.0" prefHeight="90.0" prefWidth="100.0">
          <HBox.margin>
-            <Insets left="10.0" top="10.0" />
+            <Insets left="10.0" />
          </HBox.margin>
-      </ImageView>
+         <children>
+            <ImageView fitHeight="90.0" fitWidth="100.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </VBox>
       <Label alignment="CENTER" layoutX="47.0" minWidth="200.0" prefHeight="50.0" prefWidth="204.0" text="name" textAlignment="CENTER">
          <font>
             <Font size="30.0" />

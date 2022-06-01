@@ -28,7 +28,6 @@ public class ManageData {
 	public static ObservableList<Product> products = FXCollections.observableArrayList();
 	public static ObservableList<Item> items = FXCollections.observableArrayList();
 	public static GridPane catalogGrid = new GridPane();
-	public static GridPane manageGrid = new GridPane();
 	public static TilePane manageTile = new TilePane();
 	public static VBox customSelectorVBox = new VBox();
 
@@ -36,9 +35,18 @@ public class ManageData {
 	private static final int NUMBER_OF_COLUMNS = 3;
 
 	private static ArrayList<CatalogVBox> catalogVBoxList = new ArrayList<>();
-	public static ArrayList<ManageCatalogVBox> manageVBoxList = new ArrayList<>();
+	private static ArrayList<ManageCatalogVBox> manageVBoxList = new ArrayList<>();
 	private static ArrayList<CustomProductHBox> customProductsCheckBox = new ArrayList<>();
+	
+	/**
+	 * @return the manageVBoxList
+	 */
+	public static ArrayList<ManageCatalogVBox> getManageVBoxList() {
+		return manageVBoxList;
+	}
 
+
+	@SuppressWarnings("unchecked")
 	public static void fetchAllProducts() {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.FETCH_PRODUCTS);
@@ -46,6 +54,7 @@ public class ManageData {
 		products = (ObservableList<Product>) response;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static void fetchAllItems() {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.FETCH_ITEMS);
@@ -59,7 +68,7 @@ public class ManageData {
 		catalogGrid = initCellsInGrid((int) Math.ceil((products.size() + items.size() + 1) / ((float) NUMBER_OF_COLUMNS)));
 		initCatalogVBoxListToGrid(catalogGrid);
 		initCustomProductInCatalog();
-		initManageCatalog();
+		initManageItemVBoxes();
 	}
 
 	private static GridPane initCellsInGrid(int numberOfRows) {
@@ -78,30 +87,18 @@ public class ManageData {
 			grid.add(catalogVBoxList.get(i), (i + 1) % NUMBER_OF_COLUMNS, (i + 1) / NUMBER_OF_COLUMNS);
 		}
 	}
-	
-	private static void initManageVBoxListToGrid(GridPane grid) {
-		for (int i = 0; i < manageVBoxList.size(); i++) {
-			grid.add(manageVBoxList.get(i), (i + 1) % NUMBER_OF_COLUMNS, (i + 1) / NUMBER_OF_COLUMNS);
-		}
-	}
 
 	private static void initManageItemVBoxes() {
-		for (int i = 0; i < ManageData.products.size(); i++) {
-			ManageCatalogVBox catalogProductVBox = new ManageCatalogVBox(ManageData.products.get(i));
+		for (int i = 0; i < products.size(); i++) {
+			ManageCatalogVBox catalogProductVBox = new ManageCatalogVBox(products.get(i));
 			catalogProductVBox.initVBox();
 			manageVBoxList.add(catalogProductVBox);
 		}
-		for (int i = 0; i < ManageData.items.size(); i++) {
-			ManageCatalogVBox catalogItemVBox = new ManageCatalogVBox(ManageData.items.get(i));
+		for (int i = 0; i < items.size(); i++) {
+			ManageCatalogVBox catalogItemVBox = new ManageCatalogVBox(items.get(i));
 			catalogItemVBox.initVBox();
 			manageVBoxList.add(catalogItemVBox);
 		}
-	}
-
-	public static void initManageCatalog() {
-		initManageItemVBoxes();
-		manageGrid = initCellsInGrid((int) Math.ceil((products.size() + items.size()) / 3.0));
-		initManageVBoxListToGrid(manageGrid);
 	}
 
 	private static void initCustomProductInCatalog() {
