@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressIndicator?>
-<?import javafx.scene.effect.SepiaTone?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -18,11 +17,11 @@
                   <Font name="System Bold" size="80.0" />
                </font>
             </Label>
-            <ProgressIndicator minHeight="-Infinity" minWidth="-Infinity" prefHeight="205.0" prefWidth="76.0">
-               <effect>
-                  <SepiaTone />
-               </effect>
-            </ProgressIndicator>
+            <ImageView fx:id="zerliIconImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/icon.png" />
+               </image>
+            </ImageView>
          </children>
       </VBox>
    </children>

@@ -62,7 +62,6 @@ public class SurveyAnalysisViewHomeController implements Initializable {
 				});
 				reportList.getChildren().add(btn);				
 			}
-			
 		}
 		
 		else

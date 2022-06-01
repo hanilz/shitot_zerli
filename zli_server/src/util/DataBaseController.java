@@ -62,7 +62,7 @@ public class DataBaseController {
 		String dbUsername = args.get(2);
 		String dbPassword = args.get(3);
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://" + ip + "/" + dbName + "?serverTimezone=IST&useSSL=false",
+			conn = DriverManager.getConnection("jdbc:mysql://" + ip + "/" + dbName + "?sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false&serverTimezone=IST&useSSL=false",
 					dbUsername, dbPassword); // URL, Username, Password+changed url with message "&useSSL=false"
 			buff.append("\nDatabase connection succeeded!\n");
 			isConnected = true;
