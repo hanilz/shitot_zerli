@@ -23,6 +23,7 @@ import entities.OrderProduct;
 import entities.Product;
 import entities.ProductsBase;
 import entities.Report;
+import entities.SurveyAnalysisFile;
 import entities.SurveyQuestion;
 import entities.UserDetails;
 import ocsf.server.ConnectionToClient;
@@ -298,7 +299,7 @@ public class ServerMessageController {
 			message.put("response", uploaded);
 			break;
 		case FETCH_FILES:
-			ArrayList<File> files = AnalayzeCommand.retriveFileFromDB();
+			ArrayList<SurveyAnalysisFile> files = AnalayzeCommand.retrieveFileFromDB();
 			message.put("response", files);
 			break;
 		case GET_ITEMS_INCOME_REPORT:
