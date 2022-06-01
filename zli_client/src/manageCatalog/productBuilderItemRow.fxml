@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="rowHBox" alignment="CENTER_LEFT" maxHeight="100.0" maxWidth="615.0" minHeight="100.0" minWidth="615.0" prefHeight="100.0" prefWidth="615.0" spacing="10.0" style="-fx-background-radius: 40; -fx-background-color: ECE4DB;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="manageCatalog.ProductBuilderItemRowController">
+   <children>
+      <VBox alignment="CENTER" maxWidth="85.0" minWidth="85.0" prefWidth="85.0">
+         <children>
+            <ImageView fx:id="itemImage" fitHeight="85.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/catalog/newProduct.png" />
+               </image>
+            </ImageView>
+         </children>
+      </VBox>
+      <VBox alignment="CENTER_LEFT">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="273.0" spacing="5.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="92.0" text="Item Name:">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="itemNameLabel" maxHeight="50.0" maxWidth="182.0" prefHeight="50.0" prefWidth="182.0" text="nameLabel" wrapText="true">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="128.0" spacing="33.0">
+               <children>
+                  <Label text="Item ID:">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="itemIDLabel" text="idLabel">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <HBox alignment="CENTER" prefHeight="43.0" prefWidth="100.0">
+         <children>
+            <Label text="QTY:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="qtytextField" alignment="CENTER" disable="true" prefHeight="25.0" prefWidth="68.0" text="0" />
+         </children>
+      </HBox>
+      <CheckBox fx:id="includeCheckBox" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#addItemToProduct" text="Include">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </CheckBox>
+   </children>
+   <padding>
+      <Insets left="30.0" />
+   </padding>
+</HBox>

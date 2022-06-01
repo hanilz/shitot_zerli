@@ -20,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import manageCatalog.ManageCatalogVBox;
 
@@ -28,13 +29,14 @@ public class ManageData {
 	public static ObservableList<Item> items = FXCollections.observableArrayList();
 	public static GridPane catalogGrid = new GridPane();
 	public static GridPane manageGrid = new GridPane();
+	public static TilePane manageTile = new TilePane();
 	public static VBox customSelectorVBox = new VBox();
 
 	public static int customProductNumber = 1;
 	private static final int NUMBER_OF_COLUMNS = 3;
 
 	private static ArrayList<CatalogVBox> catalogVBoxList = new ArrayList<>();
-	private static ArrayList<ManageCatalogVBox> manageVBoxList = new ArrayList<>();
+	public static ArrayList<ManageCatalogVBox> manageVBoxList = new ArrayList<>();
 	private static ArrayList<CustomProductHBox> customProductsCheckBox = new ArrayList<>();
 
 	public static void fetchAllProducts() {
@@ -54,8 +56,7 @@ public class ManageData {
 	public static void initCatalogGrid() {
 		initCatalogProductVBoxes();
 		initCatalogItemVBoxes();
-		catalogGrid = initCellsInGrid(
-				(int) Math.ceil((products.size() + items.size() + 1) / ((float) NUMBER_OF_COLUMNS)));
+		catalogGrid = initCellsInGrid((int) Math.ceil((products.size() + items.size() + 1) / ((float) NUMBER_OF_COLUMNS)));
 		initCatalogVBoxListToGrid(catalogGrid);
 		initCustomProductInCatalog();
 		initManageCatalog();

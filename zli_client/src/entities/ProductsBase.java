@@ -12,7 +12,7 @@ public class ProductsBase implements Serializable {
 	private String color;
 	private double price;
 	private String type;
-	private String imagePath;
+	private String imagePath = "/resources/catalog/generic.png";
 	private double discount;
 	
 	public ProductsBase(int id, double price, double discount) {
@@ -27,7 +27,8 @@ public class ProductsBase implements Serializable {
 		this.color = color;
 		this.price = price;
 		this.type = type;
-		this.imagePath = imagePath;
+		if(imagePath!=null)
+			this.imagePath = imagePath;
 	}
 	
 	public ProductsBase(int id, String name, String color, double price, String type, String imagePath, double discount) {
@@ -36,9 +37,9 @@ public class ProductsBase implements Serializable {
 		this.color = color;
 		this.price = price;
 		this.type = type;
-		this.imagePath = imagePath;
 		this.discount = discount;
-	}
+		if(imagePath!=null)
+			this.imagePath = imagePath;	}
 	
 	/**
 	 * @return the id

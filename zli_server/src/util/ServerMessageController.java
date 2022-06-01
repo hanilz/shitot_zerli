@@ -91,9 +91,6 @@ public class ServerMessageController {
 					.selectBranchesPerManager((Integer) message.get("manager id"));
 			message.put("response", branchesPerManager);
 			break;
-		case FETCH_ORDERS:
-
-			break;
 		case FETCH_REPORTS:
 			ArrayList<Report> reports = AnalayzeCommand.selectAllReports();
 			message.put("response", reports);
@@ -296,7 +293,8 @@ public class ServerMessageController {
 			message.put("response", questions);
 			break;
 		case UPLOAD_FILE:
-			boolean uploaded = AnalayzeCommand.uploadFileToDB((File) message.get("FILE"));
+			//File saveFileToDB = FilesHandler.saveFile((SurveyAnalysisFile) message.get("FILE"));
+			boolean uploaded = AnalayzeCommand.uploadFileToDB((File) message.get("FILE")); //and then send saveFileToDB
 			message.put("response", uploaded);
 			break;
 		case FETCH_FILES:
@@ -400,6 +398,14 @@ public class ServerMessageController {
 			boolean refunded = AnalayzeCommand.refundUserForLateDelivery((Integer) message.get("idUser"),
 					(Integer) message.get("idOrder"));
 			message.put("response", refunded);
+			break;
+		case INSERT_NEW_ITEM:
+			int itemID = AnalayzeCommand.insertNewItemToDB((Item) message.get("item"));
+			message.put("response", itemID);
+			break;
+		case INSERT_NEW_PRODUCT:
+			int productID = AnalayzeCommand.insertNewProductToDB((Product) message.get("product"));
+			message.put("response", productID);
 			break;
 		default:
 			break;

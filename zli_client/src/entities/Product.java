@@ -15,7 +15,18 @@ public class Product extends ProductsBase implements Serializable {
 		this.productDescription = productDescription;
 	}
 
-	// constructor with items
+	/**constructor with items
+	 * @param id
+	 * @param name
+	 * @param color
+	 * @param price
+	 * @param type
+	 * @param imagePath
+	 * @param discount
+	 * @param flowerType
+	 * @param productDescription
+	 * @param items
+	 */
 	public Product(int id, String name, String color, double price, String type, String imagePath, double discount, String flowerType,
 			String productDescription, HashMap<Item, Integer> items) {
 		super(id, name, color, price, type, imagePath,discount);

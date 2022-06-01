@@ -130,10 +130,15 @@ public class InputChecker {
 		if (id.matches("[0-9]+") && id.length() == 9)
 			return true;
 		return false;
-
 	}
 
 
+	public static boolean isValidNubmer(String number) {
+		if (number.matches("[0-9]+") )
+			return true;
+		return false;
+	}
+	
 	public static boolean isDateBeforeNow3Hours(String dateTime) {
 		boolean response = false;
 	    Calendar calendar = Calendar.getInstance();
