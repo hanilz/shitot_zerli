@@ -17,7 +17,7 @@
                   <Font name="System Bold" size="80.0" />
                </font>
             </Label>
-            <ImageView fx:id="zerliIconImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="zerliIconImage" fitHeight="90.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../resources/icon.png" />
                </image>

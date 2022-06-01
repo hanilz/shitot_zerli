@@ -76,7 +76,7 @@ public class AnalayzeCommand {
 					items.put(currentItem, rs.getInt(10));
 					products_items.put(productId, items);
 				} else
-					products_items.get(productId).put(currentItem, rs.getInt(9));
+					products_items.get(productId).put(currentItem, rs.getInt(10));
 			}
 
 			for (Product product : products)
