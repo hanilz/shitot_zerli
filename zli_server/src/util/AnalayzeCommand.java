@@ -37,6 +37,7 @@ import entities.OrderProduct;
 import entities.Product;
 import entities.ProductsBase;
 import entities.Report;
+import entities.SurveyAnalysisFile;
 import entities.SurveyQuestion;
 import entities.UserDetails;
 import ordersView.CustomerOrderView;
@@ -78,7 +79,6 @@ public class AnalayzeCommand {
 				} else
 					products_items.get(productId).put(currentItem, rs.getInt(10));
 			}
-
 			for (Product product : products)
 				product.setItems(products_items.get(product.getId()));
 		} catch (SQLException e) {
@@ -1056,8 +1056,8 @@ public class AnalayzeCommand {
 	// as of right now this is just a big mess, the file downloads but its only 1 kb
 	// and it wont open because it was corrupted and im not sure if
 	// it happened in the encoding or decoding process
-	public static ArrayList<File> retriveFileFromDB() {
-		ArrayList<File> files = new ArrayList<>();
+	public static ArrayList<SurveyAnalysisFile> retrieveFileFromDB() {
+		ArrayList<SurveyAnalysisFile> files = new ArrayList<>();
 		InputStream input = null;
 		FileOutputStream output = null;
 		ResultSet rs = null;
@@ -1069,7 +1069,7 @@ public class AnalayzeCommand {
 
 			while (rs.next()) {
 				String fileName = rs.getString(1);
-				File ret = new File("D:\\" + fileName);
+				File ret = new File(System.getProperty("user.dir") + "\\tempFileDir\\" + fileName);
 				output = new FileOutputStream(ret);
 				System.out.println("Getting file please be patient..");
 
@@ -1077,7 +1077,8 @@ public class AnalayzeCommand {
 				int reader = 0;
 				while ((reader = input.read(buffer)) != -1)
 					output.write(buffer, 0, reader);
-				files.add(ret);
+				SurveyAnalysisFile newFile = SurveyAnalysisFile.createSurveyAnalysisFile(ret);
+				files.add(newFile);
 			}
 			System.out.println("File writing complete !");
 

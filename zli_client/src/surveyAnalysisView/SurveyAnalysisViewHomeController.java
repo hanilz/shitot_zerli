@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import client.ClientFormController;
+import entities.SurveyAnalysisFile;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,6 +23,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import util.Commands;
+import util.FilesHandler;
 import util.ManageScreens;
 
 public class SurveyAnalysisViewHomeController implements Initializable {
@@ -43,18 +45,17 @@ public class SurveyAnalysisViewHomeController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.FETCH_FILES);
-		ArrayList<File> files = (ArrayList<File>) ClientFormController.client.accept(message);
+		ArrayList<SurveyAnalysisFile> files = (ArrayList<SurveyAnalysisFile>) ClientFormController.client
+				.accept(message);
 		if (!files.isEmpty()) {
-			for (File file : files) {
-				Button btn = new Button(file.getName());
+			for (SurveyAnalysisFile file : files) {
+				File newFile = FilesHandler.saveFile(file);
+				Button btn = new Button(file.getFileName());
 				btn.setOnAction(new EventHandler<ActionEvent>() {
-
 					@Override
 					public void handle(ActionEvent event) {
-						// configureFileChooser(fileChooser);
-						// File file = fileChooser.showOpenDialog(ManageScreens.getStage());
-						if (file != null) {
-							openFile(file);
+						if (newFile != null) {
+							openFile(newFile);
 						}
 					}
 				});

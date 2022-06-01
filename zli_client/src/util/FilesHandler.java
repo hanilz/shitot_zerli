@@ -9,19 +9,18 @@ import entities.SurveyAnalysisFile;
 
 public class FilesHandler {
 	public static File saveFile(SurveyAnalysisFile surveyFile) {
-		String currentPath = new File("").getAbsolutePath();
-		String saveToPath = currentPath.substring(0, currentPath.length()-10);
-		String path = saveToPath+"/zli_client/src/resources/survey_analysis/" + surveyFile.getFileName();
-		File newFile = new File(path);
+		surveyFile.setFilePath(System.getProperty("user.dir") + "\\src\\resources\\files\\" + surveyFile.getFileName());
+		File newFile = new File(surveyFile.getFilePath());
+		
 		try {
-			SurveyAnalysisFile receivedFile = (SurveyAnalysisFile) surveyFile;
 			FileOutputStream fos = new FileOutputStream(newFile);
 			BufferedOutputStream bos = new BufferedOutputStream(fos);
-			bos.write(receivedFile.getBytesToArray(), 0, receivedFile.getSize());
+			bos.write(surveyFile.getBytesToArray(), 0, surveyFile.getSize());
 			bos.flush();
 			fos.flush();
 			bos.close();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return newFile;

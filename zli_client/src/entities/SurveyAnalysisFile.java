@@ -15,16 +15,18 @@ public class SurveyAnalysisFile implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String fileName;
 	private int size = 0;
-	public byte[] bytesToArray;
+	private String filePath;
+	private byte[] bytesToArray;
 
 	public SurveyAnalysisFile(String fileName) {
 		this.fileName = fileName;
 	}
 
-	public SurveyAnalysisFile(String fileName, int arraySize, int size) {
+	public SurveyAnalysisFile(String fileName, int arraySize, int size, String filePath) {
 		this.fileName = fileName;
 		initArray(arraySize);
 		setSize(size);
+		this.setFilePath(filePath);
 	}
 
 	public void initArray(int size) {
@@ -60,7 +62,7 @@ public class SurveyAnalysisFile implements Serializable {
 			this.bytesToArray[i] = bytesToArray[i];
 	}
 
-	public static SurveyAnalysisFile createPDFinResource(File savedFile) {
+	public static SurveyAnalysisFile createSurveyAnalysisFile(File savedFile) {
 		byte[] byteArray = new byte[(int) savedFile.length()];
 		FileInputStream fis = null;
 		try {
@@ -69,16 +71,26 @@ public class SurveyAnalysisFile implements Serializable {
 			e.printStackTrace();
 		}
 		BufferedInputStream bis = new BufferedInputStream(fis);
-		
+
 		String[] pathSpliter = savedFile.getPath().split("\\\\");
-		String filePath = pathSpliter[pathSpliter.length-1];
-		
-		SurveyAnalysisFile surveyAnaylsis = new SurveyAnalysisFile(filePath, byteArray.length, byteArray.length);
+		String fileName = pathSpliter[pathSpliter.length - 1];
+		String filePath = savedFile.getPath();
+
+		SurveyAnalysisFile surveyAnaylsis = new SurveyAnalysisFile(fileName, byteArray.length, byteArray.length,
+				filePath);
 		try {
-			bis.read(surveyAnaylsis.getBytesToArray(),0,byteArray.length);
+			bis.read(surveyAnaylsis.getBytesToArray(), 0, byteArray.length);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return surveyAnaylsis;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 }
