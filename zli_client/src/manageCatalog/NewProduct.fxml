@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -15,12 +16,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="catalogVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="15.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="manageCatalog.newProductBuilderController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="15.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="manageCatalog.newProductBuilderController">
    <children>
       <GridPane id="upperGrid" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="73.0" prefWidth="1258.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="258.0" minWidth="10.0" prefWidth="129.0" />
-          <ColumnConstraints fx:id="upperGrid" halignment="CENTER" hgrow="SOMETIMES" maxWidth="989.0" minWidth="10.0" prefWidth="978.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="989.0" minWidth="10.0" prefWidth="978.0" />
           <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="399.0" minWidth="0.0" prefWidth="131.0" />
         </columnConstraints>
         <rowConstraints>
@@ -32,53 +33,35 @@
                   <Insets />
                </GridPane.margin>
                <children>
-                  <Label alignment="TOP_CENTER" contentDisplay="CENTER" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="407.0" text="Manage Catalog" textAlignment="CENTER">
+                  <Label alignment="TOP_CENTER" contentDisplay="CENTER" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" text="New Product Builder" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="42.0" />
                      </font>
                   </Label>
-                  <Label text="Add New Product To Catalog">
+                  <Label text="Build a new product or Item for the catalog">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                </children>
             </VBox>
-            <HBox fx:id="loginHBox" alignment="CENTER" prefHeight="73.0" prefWidth="119.0">
-               <children>
-                  <VBox id="loginVBox" fx:id="loginVBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="73.0" prefWidth="63.0">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </VBox>
-               </children>
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor>
-            </HBox>
          </children>
       </GridPane>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="906.0" spacing="20.0">
+      <Label text="* All Fields Are Required!" textFill="#ff1f1f">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <HBox prefHeight="509.0" prefWidth="1220.0" spacing="10.0">
          <children>
-            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="439.0" spacing="40.0">
-               <children>
-                  <Label prefHeight="17.0" prefWidth="83.0" text="Select Type:" />
-                  <CheckBox fx:id="productCheckBox" mnemonicParsing="false" onMouseClicked="#productAdder" text="Product" />
-                  <CheckBox fx:id="itemCheckBox" mnemonicParsing="false" onMouseClicked="#itemAdder" text="Item" />
-               </children>
-            </HBox>
-            <Label text="* All Fields Are Required!" textFill="#ff1f1f">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Label>
-            <GridPane prefHeight="429.0" prefWidth="906.0">
+            <GridPane prefHeight="429.0" prefWidth="553.0">
               <columnConstraints>
-                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="448.0" minWidth="10.0" prefWidth="158.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="798.0" minWidth="10.0" prefWidth="748.0" />
+                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="448.0" minWidth="10.0" prefWidth="162.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="798.0" minWidth="10.0" prefWidth="391.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints />
+                  <RowConstraints minHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -88,66 +71,139 @@
                   <RowConstraints maxHeight="40.0" minHeight="50.0" prefHeight="0.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label alignment="BOTTOM_CENTER" text="Name:" GridPane.rowIndex="1">
+                  <Label alignment="BOTTOM_CENTER" text="Name:" GridPane.rowIndex="2">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="nameField" maxWidth="400.0" prefHeight="25.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="Flower Type:" GridPane.rowIndex="2">
+                  <TextField fx:id="nameField" maxWidth="400.0" prefHeight="25.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="Flower Type:" GridPane.rowIndex="3">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="flowerTypeComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label text="Color:" GridPane.rowIndex="3">
+                  <Label text="Color:" GridPane.rowIndex="4">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="colorField" maxWidth="150.0" minWidth="150.0" prefHeight="25.0" prefWidth="168.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label prefHeight="27.0" prefWidth="52.0" text="Price:" GridPane.rowIndex="4">
+                  <TextField fx:id="colorField" maxWidth="150.0" minWidth="150.0" prefHeight="25.0" prefWidth="168.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label prefHeight="27.0" prefWidth="52.0" text="Price:" GridPane.rowIndex="5">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="154.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="154.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <children>
                         <TextField fx:id="priceField" prefHeight="25.0" prefWidth="113.0" />
                         <Label text="ILS" />
                      </children>
                   </HBox>
-                  <Label text="Type:" GridPane.rowIndex="5">
+                  <Label fx:id="productTypeLabel" text="Product Type:" GridPane.rowIndex="6">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="typeComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Label text="Description:" GridPane.rowIndex="6">
+                  <Label text="Description:" GridPane.rowIndex="7">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="descriptionTextArea" prefHeight="100.0" prefWidth="296.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Label text="Browse for image:" GridPane.rowIndex="7">
+                  <TextArea fx:id="descriptionTextArea" prefHeight="100.0" prefWidth="296.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <Label disable="true" text="Browse for image:" GridPane.rowIndex="8">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Button fx:id="browseImageButton" mnemonicParsing="false" onAction="#openImageProwser" text="Open From File Explorer" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                     <children>
+                        <Button fx:id="browseImageButton" disable="true" mnemonicParsing="false" onAction="#openImageBrowser" text="Open From File Explorer" />
+                        <Label fx:id="fileNotSelectedLabel" disable="true" text="file not selected!" />
+                        <Label text="TBD" />
+                     </children>
+                  </HBox>
+                  <Label alignment="BOTTOM_CENTER" text="Type:" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <RadioButton fx:id="productRadioButton" mnemonicParsing="false" onAction="#setToProduct" selected="true" text="Product">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="typeSelector" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="ItemRadioButton" mnemonicParsing="false" onAction="#setToItem" text="Item" toggleGroup="$typeSelector">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <TextField fx:id="flowerTypeTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="productTypeTextField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                </children>
             </GridPane>
-            <HBox alignment="CENTER" prefHeight="31.0" prefWidth="906.0" spacing="650.0">
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <VBox alignment="TOP_CENTER" spacing="5.0">
                <children>
-                  <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#chanageToManageCatalogScreen" text="Back To Manage Catalog" />
-                  <Button fx:id="addButton" mnemonicParsing="false" onMouseClicked="#addToCatalog" text="Add To Catalog" />
+                  <Label text="Select Items you would like to add to the product">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <ScrollPane prefHeight="482.0" prefWidth="639.0">
+                     <content>
+                        <VBox fx:id="itemSelectorVBox" alignment="TOP_CENTER" prefHeight="472.0" prefWidth="620.0" spacing="8.0">
+                           <padding>
+                              <Insets left="5.0" top="10.0" />
+                           </padding>
+                           <children>
+                              <Label fx:id="loadingLabel" text="Loading Items...">
+                                 <font>
+                                    <Font name="System Bold" size="30.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
                </children>
-            </HBox>
+            </VBox>
          </children>
-         <VBox.margin>
-            <Insets top="13.0" />
-         </VBox.margin>
-      </VBox>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="31.0" prefWidth="906.0" spacing="50.0">
+         <children>
+            <Button fx:id="discardButton" mnemonicParsing="false" onAction="#chanageToManageCatalogScreen" text="Discard">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <VBox>
+               <children>
+                  <Label fx:id="addItemsErrorLabel" text="Please select at least one item to create a new Product!" textFill="RED" visible="false">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="fillFieldsErrorLabel" text="*Please fill all the fields before adding to the catalog" textFill="RED" visible="false">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <Button fx:id="addButton" mnemonicParsing="false" onAction="#addNewProductToCatalog" text="Add To Catalog">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
    </children>
    <padding>
       <Insets left="30.0" right="30.0" top="20.0" />

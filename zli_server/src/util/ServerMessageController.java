@@ -399,6 +399,14 @@ public class ServerMessageController {
 					(Integer) message.get("idOrder"));
 			message.put("response", refunded);
 			break;
+		case INSERT_NEW_ITEM:
+			int itemID = AnalayzeCommand.insertNewItemToDB((Item) message.get("item"));
+			message.put("response", itemID);
+			break;
+		case INSERT_NEW_PRODUCT:
+			int productID = AnalayzeCommand.insertNewProductToDB((Product) message.get("product"));
+			message.put("response", productID);
+			break;
 		default:
 			break;
 		}

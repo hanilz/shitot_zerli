@@ -1674,4 +1674,55 @@ public class AnalayzeCommand {
 		}
 		return false;
 	}
+
+	public static int insertNewItemToDB(Item item) {
+		Connection conn = DataBaseController.getConn();
+		ResultSet rs;
+		String query = "INSERT INTO items (itemName, itemColor, itemPrice, itemType) VALUES (?, ?, ?, ?);";
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			preparedStmt.setString(1, item.getItemName());
+			preparedStmt.setString(2, item.getColor());
+			preparedStmt.setDouble(3, item.getPrice());
+			preparedStmt.setString(4, item.getType());
+			preparedStmt.executeUpdate();
+			rs = preparedStmt.getGeneratedKeys();
+			if (rs.next())
+				return rs.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
+	public static int insertNewProductToDB(Product product) {
+		Connection conn = DataBaseController.getConn();
+		ResultSet rs;
+		int idInserted = -1;
+		String query = "INSERT INTO products (productName, flowerType, productColor, productPrice, productType, productDescription) VALUES (?, ?, ?, ?, ?, ?);";
+		try {
+			PreparedStatement preparedStmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			preparedStmt.setString(1, product.getName());
+			preparedStmt.setString(2, product.getFlowerType());
+			preparedStmt.setString(3, product.getColor());
+			preparedStmt.setDouble(4, product.getPrice());
+			preparedStmt.setString(5, product.getType());
+			preparedStmt.setString(6, product.getProductDescription());
+			preparedStmt.executeUpdate();
+			rs = preparedStmt.getGeneratedKeys();
+			if (rs.next())
+				idInserted = rs.getInt(1);
+			query = "INSERT INTO product_items (idItem, idProduct, quantity) VALUES (?, ?, ?);";
+			preparedStmt = conn.prepareStatement(query);
+			for (Item item : product.getItems().keySet()) {
+				preparedStmt.setInt(1, item.getId());
+				preparedStmt.setInt(2, idInserted);
+				preparedStmt.setInt(3, product.getItems().get(item));
+				preparedStmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return idInserted;
+	}
 }

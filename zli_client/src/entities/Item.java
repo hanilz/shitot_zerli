@@ -23,5 +23,16 @@ public class Item extends ProductsBase implements Serializable{
 		super(id,price, discount);
 	}
 	
-
+	public String getItemName() {
+		return super.getName();
+	}
+	
+	public Double getItemPrice() {
+		return super.getPrice();
+	}
+	
+	public String getImagePath() {
+		return super.getImagePath();
+	}
+	
 }

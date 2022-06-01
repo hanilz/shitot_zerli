@@ -28,7 +28,12 @@ public class ManageCatalogVBox extends VBox {
 		nameLabel.setText(product.getName());
 		this.getChildren().add(nameLabel);
 		initImageProduct();
-		this.getChildren().add(image);
+		VBox imageFrame = new VBox();
+		imageFrame.setPrefHeight(130);
+		imageFrame.setPrefWidth(130);
+		imageFrame.setAlignment(Pos.CENTER);
+		imageFrame.getChildren().add(image);
+		this.getChildren().add(imageFrame);
 		amountLabel.setText("" + InputChecker.price(((double) product.getPrice())));//int->double
 		if(product.getDiscount() != 0) {
 			double discount = product.getPrice() - (product.getPrice()*(product.getDiscount()/100));
@@ -49,8 +54,8 @@ public class ManageCatalogVBox extends VBox {
 	}
 
 	protected void setImageProp() {
-		image.setFitHeight(120);
-		image.setFitWidth(200);
+		image.setFitHeight(130);
+		image.setFitWidth(130);
 		image.setPreserveRatio(true);
 		image.setCursor(Cursor.HAND);
 	}
