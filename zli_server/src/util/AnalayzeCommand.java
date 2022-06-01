@@ -1034,26 +1034,19 @@ public class AnalayzeCommand {
 		return reports;
 	}
 
-	// might not work correctly - probably doesn't
 	public static boolean uploadFileToDB(File file) {
 		Connection conn = DataBaseController.getConn();
-		byte[] fileBytes = new byte[(int) file.length()];
 		PreparedStatement psmt;
 		try {
 			FileInputStream fis = new FileInputStream(file);
-//			Blob fileBlob = conn.createBlob();
-//			fileBlob.setBytes(1, fileBytes);
 			psmt = conn.prepareStatement("INSERT INTO blob_file_table (idblobFile, blobFile) VALUES  (?,?)");
-			psmt.setString(1, file.getName());
-			// psmnt.setBlob(2, fileBlob);
-//			psmnt.setBinaryStream(2, (InputStream) io, (int) file.length());
+			psmt.setString(1, file.getName()); //to use SurveyAnalysisFile, change to -> file.getPath()
 			psmt.setBlob(2, fis);
 			if (psmt.executeUpdate() == 0)
 				return false;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return true;
@@ -1065,69 +1058,30 @@ public class AnalayzeCommand {
 	// it happened in the encoding or decoding process
 	public static ArrayList<File> retriveFileFromDB() {
 		ArrayList<File> files = new ArrayList<>();
-//		try {
-//			Statement stmt = DataBaseController.getConn().createStatement();
-//			ResultSet rs = stmt.executeQuery("SELECT * FROM blob_file_table;");
-//			while (rs.next()) {
-//				Blob blobFile = rs.getBlob(2);
-//				byte[] byteFile = blobFile.getBytes(blobFile.length(),1);
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return files;
-
-		Connection conn = null;
-		PreparedStatement stmt = null;
 		InputStream input = null;
 		FileOutputStream output = null;
 		ResultSet rs = null;
-		String fileName = "";
-		File ret = null;
+		byte[] buffer = new byte[4096];
 		try {
-
-			Class.forName("com.mysql.jdbc.Driver");
-			System.out.println("Connecting...");
-
-			conn = DataBaseController.getConn();
-			System.out.println("Connection successful..\nNow creating query...");
-
-			stmt = conn.prepareStatement("SELECT * FROM blob_file_table;");
+			Connection conn = DataBaseController.getConn();
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM blob_file_table;");
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				fileName = rs.getString(1);
-				ret = new File("D:\\" + fileName);
+				String fileName = rs.getString(1);
+				File ret = new File("D:\\" + fileName);
 				output = new FileOutputStream(ret);
 				System.out.println("Getting file please be patient..");
 
-				input = rs.getBinaryStream("idblobFile"); // get it from col name
-				int r = 0;
-
-				/*
-				 * there I've tried with array but nothing changed..Like this : byte[] buffer =
-				 * new byte[2048]; int r = 0; while((r = input.read(buffer)) != -1){
-				 * out.write(buffer,0,r);}
-				 */
-
-				while ((r = input.read()) != -1) {
-					output.write(r);
-				}
+				input = rs.getBinaryStream("blobFile"); // get it from col name
+				int reader = 0;
+				while ((reader = input.read(buffer)) != -1)
+					output.write(buffer, 0, reader);
 				files.add(ret);
 			}
 			System.out.println("File writing complete !");
 
-		} catch (ClassNotFoundException e) {
-			System.err.println("Class not found!");
-			e.printStackTrace();
-		} catch (SQLException e) {
-			System.err.println("Connection failed!");
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			System.err.println("File not found!");
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.err.println("File writing error..!");
+		} catch (SQLException | IOException e) {
 			e.printStackTrace();
 		} finally {
 			if (rs != null) {
@@ -1136,14 +1090,12 @@ public class AnalayzeCommand {
 					output.flush();
 					output.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
 			}
 
 		}
-		// return new File("D:\\" + fileName);
 		return files;
 	}
 
