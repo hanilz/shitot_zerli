@@ -69,7 +69,7 @@ public class AnalayzeCommand {
 					String productType = rs.getString(6);
 					String productDesc = rs.getString(7);
 					String imagePath = rs.getString(8);
-					int discount = rs.getInt(9);
+					double discount = rs.getDouble(9);
 					Product productResult = new Product(productId, productName, productColor, productPrice, productType,
 							imagePath, discount, flowerType, productDesc);
 					products.add(productResult);
@@ -94,7 +94,7 @@ public class AnalayzeCommand {
 		double itemPrice = rs.getDouble(14);
 		String itemType = rs.getString(15);
 		String imagePath = rs.getString(16);
-		int discount = rs.getInt(17);
+		double discount = rs.getDouble(17);
 		Item itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath, discount);
 
 		return itemResult;

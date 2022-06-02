@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="productVBox" alignment="TOP_CENTER" prefHeight="175.0" prefWidth="260.0" style="-fx-background-color: FAE1DD; -fx-background-radius: 30;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.CatalogDiscountVBox">
+   <children>
+      <Label fx:id="productNameLabel" alignment="CENTER" maxWidth="240.0" minWidth="240.0" prefHeight="31.0" prefWidth="240.0" text="Product Name" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <HBox prefHeight="150.0" prefWidth="240.0">
+         <children>
+            <VBox alignment="CENTER" minHeight="139.0" minWidth="150.0" prefHeight="139.0" prefWidth="150.0">
+               <children>
+                  <ImageView fx:id="productImage" fitHeight="143.0" fitWidth="129.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icon.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" spacing="10.0">
+               <children>
+                  <VBox alignment="CENTER" spacing="2.0">
+                     <children>
+                        <Label id="discountBeforeLabel" fx:id="beforeDiscountLabel" alignment="CENTER" styleClass="discountBeforeLabel" stylesheets="@../resources/css/CatalogScreen.css" text="100 $">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="afterDiscountLabel" alignment="CENTER" text="75 $" textFill="RED">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <Button fx:id="addToCartButton" mnemonicParsing="false" onAction="#openProductEditor" prefHeight="31.0" prefWidth="90.0" style="-fx-background-radius: 20;" text="Add To Cart">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+   </padding>
+</VBox>

@@ -1,6 +1,7 @@
 package util;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import catalog.CatalogItemVBox;
@@ -21,35 +22,24 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 
 public class ManageData {
-//	public static ObservableList<Product> products = FXCollections.observableArrayList();
-//	public static ObservableList<Item> items = FXCollections.observableArrayList();
 	public static ArrayList<Product> products;
 	public static ArrayList<Item> items;
 	public static GridPane catalogGrid = new GridPane();
-//	public static TilePane manageTile = new TilePane();
 	public static VBox customSelectorVBox = new VBox();
 
 	public static int customProductNumber = 1;
 	private static final int NUMBER_OF_COLUMNS = 3;
 
 	private static ArrayList<CatalogVBox> catalogVBoxList = new ArrayList<>();
-//	private static ArrayList<ManageCatalogVBox> manageVBoxList = new ArrayList<>();
-//	public static HashMap<ProductsBase,ManageCatalogVBox> manageVBoxMap = new HashMap<>();
 	private static ArrayList<CustomProductHBox> customProductsCheckBox = new ArrayList<>();
 
-//	/**
-//	 * @return the manageVBoxList
-//	 */
-//	public static ArrayList<ManageCatalogVBox> getManageVBoxList() {
-//		return manageVBoxList;
-//	}
 
 	@SuppressWarnings("unchecked")
 	public static void fetchAllProducts() {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.FETCH_PRODUCTS);
 		Object response = ClientFormController.client.accept(message);
-		products = (ArrayList<Product>) response; // (ObservableList<Product>) response;
+		products = (ArrayList<Product>) response;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -85,32 +75,6 @@ public class ManageData {
 			grid.add(catalogVBoxList.get(i), (i + 1) % NUMBER_OF_COLUMNS, (i + 1) / NUMBER_OF_COLUMNS);
 		}
 	}
-
-//	public static void initManageItemVBoxes(ManageCatalogController manageCatalogController) {
-//		for (int i = 0; i < products.size(); i++) {
-//			ManageCatalogVBox catalogProductVBox = new ManageCatalogVBox(products.get(i),manageCatalogController);
-//			catalogProductVBox.initVBox();
-//			manageVBoxList.add(catalogProductVBox);
-//		}
-//		for (int i = 0; i < items.size(); i++) {
-//			ManageCatalogVBox catalogItemVBox = new ManageCatalogVBox(items.get(i),manageCatalogController);
-//			catalogItemVBox.initVBox();
-//			manageVBoxList.add(catalogItemVBox);
-//		}
-//	}
-
-//	public static void initManageItemVBoxesMap(ManageCatalogController manageCatalogController) {
-//		for (int i = 0; i < products.size(); i++) {
-//			ManageCatalogVBox catalogProductVBox = new ManageCatalogVBox(products.get(i),manageCatalogController);
-//			catalogProductVBox.initVBox();
-//			manageVBoxMap.put(products.get(i),catalogProductVBox);
-//		}
-//		for (int i = 0; i < items.size(); i++) {
-//			ManageCatalogVBox catalogItemVBox = new ManageCatalogVBox(items.get(i),manageCatalogController);
-//			catalogItemVBox.initVBox();
-//			manageVBoxMap.put(items.get(i),catalogItemVBox);
-//		}
-//	}
 
 	private static void initCustomProductInCatalog() {
 		VBox customProductVBox = new VBox();
@@ -152,6 +116,11 @@ public class ManageData {
 			catalogProductVBox.setId("catalogCard");
 			catalogVBoxList.add(catalogProductVBox);
 		}
+		products.sort(new Comparator<Product>() {
+			public int compare(Product a, Product b) {
+				return a.compareTo(b);
+			}
+		});
 	}
 
 	public static void initCustomProductItemHBoxes() {

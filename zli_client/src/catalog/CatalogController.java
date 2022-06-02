@@ -1,5 +1,6 @@
 package catalog;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -13,6 +14,7 @@ import javafx.animation.ScaleTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,8 +25,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import manageCatalog.ProductVBoxController;
 import util.ManageData;
 import util.ManageScreens;
 import util.Screens;
@@ -58,6 +62,15 @@ public class CatalogController implements Initializable {
 	@FXML
 	private HBox loginHBox;
 
+    @FXML
+    private Pane discountPane1;
+
+    @FXML
+    private Pane discountPane2;
+
+    @FXML
+    private Pane discountPane3;
+	
 	@FXML
 	private TextField searchBar;
 
@@ -133,6 +146,29 @@ public class CatalogController implements Initializable {
 			loginVBox.setPrefWidth(100);
 			loginIcon.setImage(new Image("resources/home/logout.png"));
 		}
+		initDiscountPanes();
+	}
+
+	private void initDiscountPanes() {
+		VBox discount1 = initDiscountVBox(0);
+		VBox discount2 = initDiscountVBox(1);
+		VBox discount3 = initDiscountVBox(2);
+		
+		discountPane1.getChildren().add(discount1);
+		discountPane2.getChildren().add(discount2);
+		discountPane3.getChildren().add(discount3);
+	}
+
+	private VBox initDiscountVBox(int index) {
+		VBox discountVBox = null;
+		try {
+			FXMLLoader loader = new FXMLLoader(CatalogDiscountVBox.class.getResource("CatalogDiscountVBox.fxml"));
+			discountVBox = (VBox) loader.load();
+			((CatalogDiscountVBox) loader.getController()).initVBox(ManageData.products.get(index));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return discountVBox;
 	}
 
 	private void initTotalAmountCartLabel() {

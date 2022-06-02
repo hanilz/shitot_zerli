@@ -3,7 +3,9 @@ package catalog;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -12,6 +14,7 @@ public class CatalogVBox extends VBox implements ICatalogVBox{
 	protected Label nameLabel = new Label();  // will show the product name
 	protected VBox nameVBox = new VBox();
 	protected ImageView image;
+	protected VBox imageVBox = new VBox();
 	protected Label priceLabel = new Label("Price:");
 	protected Label amountLabel = new Label();  // will show the price
 	protected Label discountLabel = new Label("");
@@ -31,7 +34,7 @@ public class CatalogVBox extends VBox implements ICatalogVBox{
 		priceLabel.setId("priceLabel");
 		amountLabel.setId("priceLabel");
 		this.getChildren().add(nameLabel);
-		this.getChildren().add(image);
+		this.getChildren().add(imageVBox);
 		this.getChildren().add(priceHBox);
 		this.setAlignment(Pos.CENTER);
 	}
@@ -45,9 +48,17 @@ public class CatalogVBox extends VBox implements ICatalogVBox{
 	}
 
 	protected void setImageProp() {
+		imageVBox.getChildren().add(image);
 		image.setFitHeight(140);
 		image.setFitWidth(200);
 		image.setPreserveRatio(true);
 		image.setCursor(Cursor.HAND);
+		imageVBox.setPrefHeight(140);
+		imageVBox.setPrefWidth(200);
+		imageVBox.setMinHeight(Control.USE_PREF_SIZE);
+		imageVBox.setMinWidth(Control.USE_PREF_SIZE);
+		imageVBox.setMaxHeight(Control.USE_PREF_SIZE);
+		imageVBox.setMaxWidth(Control.USE_PREF_SIZE);
+		imageVBox.setAlignment(Pos.CENTER);
 	}
 }

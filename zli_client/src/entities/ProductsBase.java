@@ -2,7 +2,7 @@ package entities;
 
 import java.io.Serializable;
 
-public class ProductsBase implements Serializable {
+public class ProductsBase implements Serializable, Comparable<ProductsBase> {
 	/**
 	 * 
 	 */
@@ -13,7 +13,7 @@ public class ProductsBase implements Serializable {
 	private double price;
 	private String type;
 	private String imagePath;
-	private double discount;
+	protected double discount;
 
 	public ProductsBase(int id, double price, double discount) {
 		this.id = id;
@@ -131,5 +131,10 @@ public class ProductsBase implements Serializable {
 
 	public void setDiscount(double discount) {
 		this.discount = discount;
+	}
+	
+	@Override
+	public int compareTo(ProductsBase o) {
+		return (int)(o.getDiscount() - discount);
 	}
 }
