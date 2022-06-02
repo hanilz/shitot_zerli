@@ -36,7 +36,6 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 			amountLabel.setText(InputChecker.price(discount));
 		}
 			
-
 		initPriceHBox();
 
 		initAddToCartButton();

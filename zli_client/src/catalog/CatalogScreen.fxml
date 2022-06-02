@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -109,11 +110,11 @@
             </HBox>
          </children>
       </GridPane>
-      <HBox alignment="TOP_CENTER" prefHeight="590.0" prefWidth="1220.0" spacing="10.0">
+      <HBox alignment="TOP_CENTER" prefHeight="603.0" prefWidth="1247.0" spacing="10.0">
          <children>
             <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="150.0" spacing="5.0">
                <children>
-                  <VBox prefWidth="140.0" spacing="3.0">
+                  <VBox prefWidth="140.0" spacing="3.0" style="-fx-background-color: FBF3F1;">
                      <children>
                         <Label prefHeight="8.0" prefWidth="130.0" text="Filtering options">
                            <font>
@@ -204,7 +205,7 @@
                   <Insets left="10.0" />
                </padding>
             </VBox>
-            <VBox maxWidth="-Infinity" prefHeight="590.0" prefWidth="808.0" spacing="7.0" HBox.hgrow="ALWAYS">
+            <VBox maxWidth="-Infinity" prefHeight="590.0" prefWidth="791.0" spacing="7.0" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
@@ -234,11 +235,11 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="573.0" prefWidth="217.0" spacing="3.0">
+            <VBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="587.0" prefWidth="255.0" spacing="3.0">
                <children>
                   <HBox alignment="CENTER">
                      <children>
-                        <Label prefHeight="27.0" prefWidth="146.0" text="Special Discounts">
+                        <Label prefHeight="27.0" prefWidth="156.0" text="Promoted Products">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -246,16 +247,15 @@
                      </children>
                   </HBox>
                   <Separator prefWidth="200.0" />
-                  <HBox prefHeight="140.0" prefWidth="239.0" style="-fx-border-color: black;" />
-                  <HBox prefHeight="140.0" prefWidth="239.0" style="-fx-border-color: black;" />
-                  <HBox prefHeight="140.0" prefWidth="239.0" style="-fx-border-color: black;" />
-                  <HBox prefHeight="140.0" prefWidth="239.0" style="-fx-border-color: black;" />
+                  <Pane fx:id="discountPane1" prefHeight="185.0" prefWidth="217.0" />
+                  <Pane fx:id="discountPane2" prefHeight="185.0" prefWidth="217.0" />
+                  <Pane fx:id="discountPane3" prefHeight="185.0" prefWidth="217.0" />
                </children>
             </VBox>
          </children>
       </HBox>
    </children>
    <padding>
-      <Insets bottom="20.0" left="30.0" right="30.0" top="10.0" />
+      <Insets bottom="20.0" top="10.0" />
    </padding>
 </VBox>
