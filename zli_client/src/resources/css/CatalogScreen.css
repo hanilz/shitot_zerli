@@ -1,5 +1,6 @@
 #catalogVBox {
 	-fx-background: #FBF3F1;
+	-fx-background-image: url("../connectWallpaper.png");
 }
 
 #catalogBtn, #filterBtn, #searchBtn {
@@ -38,6 +39,7 @@
 
 #catalogScrollPane {
 	-fx-background-insets: 2;
+	-fx-background-color: transparent;
 }
 
 .scroll-bar:horizontal, .scroll-bar:vertical {
@@ -75,7 +77,7 @@
 	-fx-Vgap: 40;
 	-fx-PrefHeight: 438;
 	-fx-PrefWidth: 600;
-	-fx-padding: 0 0 0 13;
+	-fx-padding: 5 0 40 13;
 	-fx-PrefHeight: 438;
 }
 
