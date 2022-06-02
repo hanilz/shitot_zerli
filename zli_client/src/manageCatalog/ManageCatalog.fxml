@@ -103,8 +103,8 @@
                                     </Label>
                                     <VBox spacing="10.0">
                                        <children>
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
+                                          <CheckBox mnemonicParsing="false" text="Item" />
+                                          <CheckBox mnemonicParsing="false" text="Product" />
                                        </children>
                                        <padding>
                                           <Insets left="10.0" />
@@ -121,12 +121,12 @@
                                     </Label>
                                     <VBox spacing="10.0">
                                        <children>
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
+                                          <CheckBox mnemonicParsing="false" text="Rose" />
+                                          <CheckBox mnemonicParsing="false" text="Lily" />
+                                          <CheckBox mnemonicParsing="false" text="Peony" />
+                                          <CheckBox mnemonicParsing="false" text="Carantion" />
+                                          <CheckBox mnemonicParsing="false" text="Gerbera" />
+                                          <CheckBox mnemonicParsing="false" text="Orchid" />
                                        </children>
                                        <padding>
                                           <Insets left="10.0" />
@@ -143,10 +143,10 @@
                                     </Label>
                                     <VBox spacing="10.0">
                                        <children>
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
+                                          <CheckBox mnemonicParsing="false" text="Red" />
+                                          <CheckBox mnemonicParsing="false" text="Pink" />
+                                          <CheckBox mnemonicParsing="false" text="White" />
+                                          <CheckBox mnemonicParsing="false" text="Purple" />
                                        </children>
                                        <padding>
                                           <Insets left="10.0" />
