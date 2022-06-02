@@ -11,9 +11,6 @@ import customProduct.CustomProductHBox;
 import customProduct.SelectorHBox;
 import entities.Item;
 import entities.Product;
-import entities.ProductsBase;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -21,10 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import manageCatalog.ManageCatalogController;
-import manageCatalog.ManageCatalogVBox;
 
 public class ManageData {
 //	public static ObservableList<Product> products = FXCollections.observableArrayList();
@@ -42,7 +36,7 @@ public class ManageData {
 //	private static ArrayList<ManageCatalogVBox> manageVBoxList = new ArrayList<>();
 //	public static HashMap<ProductsBase,ManageCatalogVBox> manageVBoxMap = new HashMap<>();
 	private static ArrayList<CustomProductHBox> customProductsCheckBox = new ArrayList<>();
-	
+
 //	/**
 //	 * @return the manageVBoxList
 //	 */
@@ -50,13 +44,12 @@ public class ManageData {
 //		return manageVBoxList;
 //	}
 
-
 	@SuppressWarnings("unchecked")
 	public static void fetchAllProducts() {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.FETCH_PRODUCTS);
 		Object response = ClientFormController.client.accept(message);
-		products =(ArrayList<Product>) response; //(ObservableList<Product>) response;
+		products = (ArrayList<Product>) response; // (ObservableList<Product>) response;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -70,7 +63,8 @@ public class ManageData {
 	public static void initCatalogGrid() {
 		initCatalogProductVBoxes();
 		initCatalogItemVBoxes();
-		catalogGrid = initCellsInGrid((int) Math.ceil((products.size() + items.size() + 1) / ((float) NUMBER_OF_COLUMNS)));
+		catalogGrid = initCellsInGrid(
+				(int) Math.ceil((products.size() + items.size() + 1) / ((float) NUMBER_OF_COLUMNS)));
 		initCatalogVBoxListToGrid(catalogGrid);
 		initCustomProductInCatalog();
 	}
@@ -85,7 +79,7 @@ public class ManageData {
 		grid.setVgap(20);
 		return grid;
 	}
-	
+
 	private static void initCatalogVBoxListToGrid(GridPane grid) {
 		for (int i = 0; i < catalogVBoxList.size(); i++) {
 			grid.add(catalogVBoxList.get(i), (i + 1) % NUMBER_OF_COLUMNS, (i + 1) / NUMBER_OF_COLUMNS);
@@ -104,7 +98,7 @@ public class ManageData {
 //			manageVBoxList.add(catalogItemVBox);
 //		}
 //	}
-	
+
 //	public static void initManageItemVBoxesMap(ManageCatalogController manageCatalogController) {
 //		for (int i = 0; i < products.size(); i++) {
 //			ManageCatalogVBox catalogProductVBox = new ManageCatalogVBox(products.get(i),manageCatalogController);

@@ -61,7 +61,7 @@ public class ProductEditorController implements Initializable {
 	
 	private static ManageCatalogController manageCatalogController;
 	private static ProductVBoxController productVBoxController;
-	
+
 	private void setLabelOnPopup() {
 		productImageView.setImage(new Image(product.getImagePath()));
 		productNameLabel.setText(product.getName());
@@ -126,6 +126,8 @@ public class ProductEditorController implements Initializable {
 		if (isUpdated()) {
 			ManageScreens.displayAlert("Product Editor", "Product updated successfully!");
 			calculateDiscount();
+			product.setPrice(Double.parseDouble(basePriceField.getText()));
+			productVBoxController.initProduct(product);
 		} else
 			ManageScreens.displayAlert("Product Editor", "Can't update product");
 	}
@@ -169,6 +171,7 @@ public class ProductEditorController implements Initializable {
 			priceDiscountLabel.setText(InputChecker.price(priceAfterDiscount));
 		}
 	}
+	
 
 	private void calculateDiscount() {
 		if (Double.parseDouble(discountField.getText()) != 0) {
