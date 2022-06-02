@@ -51,19 +51,20 @@ public class ClientMessageController {
 			returnServerListRespond(new ArrayList<Branch>());
 			break;
 		case FETCH_BRANCHES_PER_MANAGER:
+			
 			returnServerListRespond(new ArrayList<Branch>());
 			break;
-		case FETCH_ITEMS:
-			returnServerListRespond(new ArrayList<Item>());
-			break;
+//		case FETCH_ITEMS:
+//			returnServerListRespond(new ArrayList<Item>());
+//			break;
 		case FETCH_REPORTS:
 			returnServerListRespond(new ArrayList<Report>());
 			break;
 		case FETCH_ORDERS:
 			break;
-		case FETCH_PRODUCTS:
-			returnServerListRespond(new ArrayList<Product>());
-			break;
+//		case FETCH_PRODUCTS:
+//			returnServerListRespond(new ArrayList<Product>());
+//			break;
 		case FETCH_ACCOUNT_PAYMENTS:
 			returnServerListRespond(new ArrayList<AccountPayment>());
 			break;

@@ -11,6 +11,7 @@ import customProduct.CustomProductHBox;
 import customProduct.SelectorHBox;
 import entities.Item;
 import entities.Product;
+import entities.ProductsBase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -22,28 +23,32 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import manageCatalog.ManageCatalogController;
 import manageCatalog.ManageCatalogVBox;
 
 public class ManageData {
-	public static ObservableList<Product> products = FXCollections.observableArrayList();
-	public static ObservableList<Item> items = FXCollections.observableArrayList();
+//	public static ObservableList<Product> products = FXCollections.observableArrayList();
+//	public static ObservableList<Item> items = FXCollections.observableArrayList();
+	public static ArrayList<Product> products;
+	public static ArrayList<Item> items;
 	public static GridPane catalogGrid = new GridPane();
-	public static TilePane manageTile = new TilePane();
+//	public static TilePane manageTile = new TilePane();
 	public static VBox customSelectorVBox = new VBox();
 
 	public static int customProductNumber = 1;
 	private static final int NUMBER_OF_COLUMNS = 3;
 
 	private static ArrayList<CatalogVBox> catalogVBoxList = new ArrayList<>();
-	private static ArrayList<ManageCatalogVBox> manageVBoxList = new ArrayList<>();
+//	private static ArrayList<ManageCatalogVBox> manageVBoxList = new ArrayList<>();
+//	public static HashMap<ProductsBase,ManageCatalogVBox> manageVBoxMap = new HashMap<>();
 	private static ArrayList<CustomProductHBox> customProductsCheckBox = new ArrayList<>();
 	
-	/**
-	 * @return the manageVBoxList
-	 */
-	public static ArrayList<ManageCatalogVBox> getManageVBoxList() {
-		return manageVBoxList;
-	}
+//	/**
+//	 * @return the manageVBoxList
+//	 */
+//	public static ArrayList<ManageCatalogVBox> getManageVBoxList() {
+//		return manageVBoxList;
+//	}
 
 
 	@SuppressWarnings("unchecked")
@@ -51,7 +56,7 @@ public class ManageData {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.FETCH_PRODUCTS);
 		Object response = ClientFormController.client.accept(message);
-		products = (ObservableList<Product>) response;
+		products =(ArrayList<Product>) response; //(ObservableList<Product>) response;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -59,7 +64,7 @@ public class ManageData {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.FETCH_ITEMS);
 		Object response = ClientFormController.client.accept(message);
-		items = (ObservableList<Item>) response;
+		items = (ArrayList<Item>) response;
 	}
 
 	public static void initCatalogGrid() {
@@ -68,7 +73,6 @@ public class ManageData {
 		catalogGrid = initCellsInGrid((int) Math.ceil((products.size() + items.size() + 1) / ((float) NUMBER_OF_COLUMNS)));
 		initCatalogVBoxListToGrid(catalogGrid);
 		initCustomProductInCatalog();
-		initManageItemVBoxes();
 	}
 
 	private static GridPane initCellsInGrid(int numberOfRows) {
@@ -88,18 +92,31 @@ public class ManageData {
 		}
 	}
 
-	private static void initManageItemVBoxes() {
-		for (int i = 0; i < products.size(); i++) {
-			ManageCatalogVBox catalogProductVBox = new ManageCatalogVBox(products.get(i));
-			catalogProductVBox.initVBox();
-			manageVBoxList.add(catalogProductVBox);
-		}
-		for (int i = 0; i < items.size(); i++) {
-			ManageCatalogVBox catalogItemVBox = new ManageCatalogVBox(items.get(i));
-			catalogItemVBox.initVBox();
-			manageVBoxList.add(catalogItemVBox);
-		}
-	}
+//	public static void initManageItemVBoxes(ManageCatalogController manageCatalogController) {
+//		for (int i = 0; i < products.size(); i++) {
+//			ManageCatalogVBox catalogProductVBox = new ManageCatalogVBox(products.get(i),manageCatalogController);
+//			catalogProductVBox.initVBox();
+//			manageVBoxList.add(catalogProductVBox);
+//		}
+//		for (int i = 0; i < items.size(); i++) {
+//			ManageCatalogVBox catalogItemVBox = new ManageCatalogVBox(items.get(i),manageCatalogController);
+//			catalogItemVBox.initVBox();
+//			manageVBoxList.add(catalogItemVBox);
+//		}
+//	}
+	
+//	public static void initManageItemVBoxesMap(ManageCatalogController manageCatalogController) {
+//		for (int i = 0; i < products.size(); i++) {
+//			ManageCatalogVBox catalogProductVBox = new ManageCatalogVBox(products.get(i),manageCatalogController);
+//			catalogProductVBox.initVBox();
+//			manageVBoxMap.put(products.get(i),catalogProductVBox);
+//		}
+//		for (int i = 0; i < items.size(); i++) {
+//			ManageCatalogVBox catalogItemVBox = new ManageCatalogVBox(items.get(i),manageCatalogController);
+//			catalogItemVBox.initVBox();
+//			manageVBoxMap.put(items.get(i),catalogItemVBox);
+//		}
+//	}
 
 	private static void initCustomProductInCatalog() {
 		VBox customProductVBox = new VBox();
