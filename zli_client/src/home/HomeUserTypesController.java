@@ -64,8 +64,14 @@ public class HomeUserTypesController implements Initializable {
 		ManageScreens.changeScreenTo(Screens.GUEST_HOME);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		HashMap<String, Object> message = new HashMap<>();
+		message.put("command", Commands.GET_USER_SCREENS);
+		message.put("id", User.getUserInstance().getIdUser());
+		message.put("userType",  User.getUserInstance().getType());
+		User.getUserInstance().setUserScreens((ArrayList<Screens>) ClientFormController.client.accept(message));
 		ArrayList<Screens> userScreens = User.getUserInstance().getUserHomeScreens();
 		setScreen(userScreens);//
 		userNameLabel.setText(User.getUserInstance().getUsername());
