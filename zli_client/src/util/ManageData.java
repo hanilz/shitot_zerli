@@ -33,6 +33,7 @@ public class ManageData {
 	private static ArrayList<CatalogVBox> catalogVBoxList = new ArrayList<>();
 	private static ArrayList<CustomProductHBox> customProductsCheckBox = new ArrayList<>();
 
+
 	@SuppressWarnings("unchecked")
 	public static void fetchAllProducts() {
 		HashMap<String, Object> message = new HashMap<>();
