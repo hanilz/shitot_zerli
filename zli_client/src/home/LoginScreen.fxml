@@ -62,7 +62,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                <font>
-                  <Font size="20.0" />
+                  <Font name="System Bold" size="19.0" />
                </font>
             </Button>
             <Button fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#back" prefHeight="25.0" prefWidth="77.0" style="-fx-background-radius: 10;" text="Back">

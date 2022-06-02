@@ -156,7 +156,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                            <font>
-                              <Font size="15.0" />
+                              <Font name="System Bold Italic" size="15.0" />
                            </font>
                            <VBox.margin>
                               <Insets />

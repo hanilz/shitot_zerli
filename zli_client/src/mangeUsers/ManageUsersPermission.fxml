@@ -117,7 +117,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                            <font>
-                              <Font size="15.0" />
+                              <Font name="System Bold Italic" size="15.0" />
                            </font>
                         </Button>
                         <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#clickSaveScreen" pickOnBounds="true" preserveRatio="true">
@@ -137,7 +137,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                            <font>
-                              <Font size="15.0" />
+                              <Font name="System Bold Italic" size="15.0" />
                            </font>
                         </Button>
                         <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#setDefaultScreens" pickOnBounds="true" preserveRatio="true">
@@ -157,7 +157,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                            <font>
-                              <Font size="15.0" />
+                              <Font name="System Bold Italic" size="15.0" />
                            </font>
                         </Button>
                         <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#addScreens" pickOnBounds="true" preserveRatio="true">
