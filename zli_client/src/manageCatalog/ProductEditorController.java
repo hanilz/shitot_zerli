@@ -58,11 +58,10 @@ public class ProductEditorController implements Initializable {
 	private Button saveButton;
 
 	private static ProductsBase product;
-
-	public static void setProductEditorController(ProductsBase product) {
-		ProductEditorController.product = product;
-	}
-
+	
+	private static ManageCatalogController manageCatalogController;
+	private static ProductVBoxController productVBoxController;
+	
 	private void setLabelOnPopup() {
 		productImageView.setImage(new Image(product.getImagePath()));
 		productNameLabel.setText(product.getName());
@@ -106,6 +105,7 @@ public class ProductEditorController implements Initializable {
 				((Stage) removeButton.getScene().getWindow()).close();
 			} else
 				ManageScreens.displayAlert("Product Editor", "Can't remove product");
+			manageCatalogController.removeProduct(productVBoxController);
 		}
 	}
 
@@ -136,7 +136,7 @@ public class ProductEditorController implements Initializable {
 		if (product instanceof Product) {
 			message.put("type", "product");
 			message.put("unit", new Product(product.getId(), Double.parseDouble(basePriceField.getText()),
-					Integer.parseInt(discountField.getText()), editDesTextArea.getText()));
+					Double.parseDouble(discountField.getText()), editDesTextArea.getText()));
 		} else if (product instanceof Item) {
 			message.put("type", "item");
 			message.put("unit", new Item(product.getId(), Double.parseDouble(basePriceField.getText()),
@@ -185,6 +185,18 @@ public class ProductEditorController implements Initializable {
 			editDesTextArea.setText(((Product) product).getProductDescription());
 		basePriceField.setText(product.getPrice() + "");
 		discountField.setText(0 + "");
+	}
+
+	public static void setProductEditorProduct(ProductsBase product2) {
+		product = product2;
+	}
+
+	public static void setManageCatalogController(ManageCatalogController manageCatalogController2) {
+		manageCatalogController =manageCatalogController2;
+	}
+
+	public static void setProductVBox(ProductVBoxController productVBoxController2) {
+		productVBoxController = productVBoxController2;
 	}
 
 }

@@ -19,9 +19,11 @@ public class ManageCatalogVBox extends VBox {
 	protected Label amountLabel = new Label(); // will show the price
 	protected HBox priceHBox = new HBox();
 	private ProductsBase product; // will be used to get the data from
+	private ManageCatalogController manageCatalogController;
 
-	public ManageCatalogVBox(ProductsBase product) {
+	public ManageCatalogVBox(ProductsBase product, ManageCatalogController manageCatalogController) {
 		this.product = product;
+		this.manageCatalogController= manageCatalogController;
 	}
 
 	public void initVBox() {
@@ -66,7 +68,8 @@ public class ManageCatalogVBox extends VBox {
 		image.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				ProductEditorController.setProductEditorController(product);
+				ProductEditorController.setProductEditorProduct(product);
+				ProductEditorController.setManageCatalogController(manageCatalogController);
 				try {
 					ManageScreens.openPopupFXML(ProductEditorController.class.getResource("ProductEditorPopup.fxml"),
 							"Product Editor");

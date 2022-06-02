@@ -2,6 +2,7 @@ package manageCatalog;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -28,7 +29,7 @@ import util.ManageData;
 import util.ManageScreens;
 
 public class newProductBuilderController implements Initializable {
-	private ObservableList<Item> avaiableItems;
+	private ArrayList<Item> avaiableItems;//private ObservableList<Item> avaiableItems;
 	private HashMap<Item, Integer> productItems = new HashMap<>();
 	private newProductBuilderController npbc;
 	private double price;
@@ -168,7 +169,8 @@ public class newProductBuilderController implements Initializable {
 
 	@FXML
 	void chanageToManageCatalogScreen(ActionEvent event) {
-		ManageScreens.previousScreen();
+		if(ManageScreens.getYesNoDecisionAlert("Discard Product\\ Item","Are you sure you want to discard the Product\\ Item you just created?", null))
+			ManageScreens.previousScreen();
 	}
 
 	@FXML
@@ -226,10 +228,11 @@ public class newProductBuilderController implements Initializable {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
-						HashMap<String, Object> message = new HashMap<>();
-						message.put("command", Commands.FETCH_ITEMS);
-						Object response = ClientFormController.client.accept(message);
-						avaiableItems = (ObservableList<Item>) response;
+//						HashMap<String, Object> message = new HashMap<>();
+//						message.put("command", Commands.FETCH_ITEMS);
+//						Object response = ClientFormController.client.accept(message);
+//						avaiableItems = (ObservableList<Item>) response;
+						avaiableItems = ManageData.items;
 						for (Item item : avaiableItems) {
 							try {
 								itemSelectorVBox.getChildren().add(loadItemRow(item));

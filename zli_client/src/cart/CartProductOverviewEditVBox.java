@@ -38,7 +38,7 @@ public class CartProductOverviewEditVBox extends CartProductOverviewVBox {
 		super.initTotalPriceHBox();
 
 		productImage.setFitHeight(100); // custom product image isn't that important
-
+		
 		initEditButtonsHBox();
 
 		this.getChildren().add(editButtonsHBox);

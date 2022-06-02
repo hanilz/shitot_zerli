@@ -182,27 +182,24 @@
                         <Button id="searchBtn" fx:id="searchButton" mnemonicParsing="false" onMouseClicked="#search" prefHeight="29.0" prefWidth="61.0" text="Search" />
                      </children>
                   </HBox>
-                  <HBox spacing="20.0">
+                  <VBox>
                      <children>
-                        <VBox>
-                           <children>
-                              <ScrollPane fx:id="manageScrollPane" maxWidth="-Infinity" pannable="true" prefHeight="539.0" prefWidth="1060.0" style="-fx-border-color: transparent;">
-                                 <content>
-                                    <TilePane fx:id="manageTile" hgap="20.0" maxWidth="1040.0" minWidth="1040.0" prefColumns="4" prefHeight="530.0" prefRows="2" prefWidth="1040.0" vgap="20.0">
-                                       <padding>
-                                          <Insets left="10.0" top="10.0" />
-                                       </padding>
-                                    </TilePane>
-                                 </content>
-                              </ScrollPane>
-                              <Label text="* Clicking on an image opens the product details to edit">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font></Label>
-                           </children>
-                        </VBox>
+                        <ScrollPane fx:id="manageScrollPane" maxWidth="-Infinity" pannable="true" prefHeight="539.0" prefWidth="1060.0" style="-fx-border-color: transparent;">
+                           <content>
+                              <TilePane fx:id="manageTile" hgap="20.0" maxWidth="1040.0" minWidth="1040.0" prefColumns="4" prefHeight="530.0" prefRows="2" prefTileHeight="300.0" prefTileWidth="240.0" prefWidth="1040.0" vgap="20.0">
+                                 <padding>
+                                    <Insets left="10.0" top="10.0" />
+                                 </padding>
+                              </TilePane>
+                           </content>
+                        </ScrollPane>
+                        <Label text="* Clicking on an image opens the product details to edit">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
                      </children>
-                  </HBox>
+                  </VBox>
                </children>
             </VBox>
          </children>
