@@ -90,8 +90,8 @@ public class ServerController extends AbstractServer implements Runnable {
 	@SuppressWarnings("deprecation")
 	public void disconnectServer() {
 		try {
+			AnalayzeCommand.disconnectAllUser();
 			HashMap<String, Object> message = new HashMap<>();
-
 			message.put("command", Commands.SERVER_DISCONNEDTED);
 			sendToAllClients(message); // make all clients go back to main client screen
 			complaints.stop();

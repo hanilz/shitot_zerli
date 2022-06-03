@@ -1671,7 +1671,7 @@ public class AnalayzeCommand {
 		}
 	}
 
-	public static boolean refundUserForLateDelivery(int idUser, int idOrder) {
+    	public static boolean refundUserForLateDelivery(int idUser, int idOrder) {
 		Connection conn = DataBaseController.getConn();
 		String query = "UPDATE orders SET refund = price, status = 'Delivered-Refunded' WHERE idOrder = ? ;";
 		PreparedStatement preparedStmt;
@@ -1789,5 +1789,16 @@ public class AnalayzeCommand {
 		return idInserted;
 	}
 
-
+	public static void disconnectAllUser() {
+		Connection conn = DataBaseController.getConn();
+		String query = "UPDATE users SET isLogin=0;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.executeUpdate();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
