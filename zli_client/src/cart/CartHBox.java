@@ -43,10 +43,12 @@ public class CartHBox extends HBox {
 	private Label amountLabel;
 	private Button removeButton = new Button("X");
 	private Button viewContentsButton = new Button("View Contents");
+	private double price;
 
 	public CartHBox(ProductsBase product, int quantity) {
 		this.product = product;
 		this.quantity = quantity;
+		price = product.isDiscount() ? product.calculateDiscount(): product.getPrice();
 	}
 
 	public void initHBox() {
@@ -102,9 +104,11 @@ public class CartHBox extends HBox {
 
 	private void initPriceDetailsVBox() {
 		priceLabel.setFont(new Font(20));
-		totalSumPrice = product.getPrice() * quantity;
+		totalSumPrice = price * quantity;
 		amountLabel = new Label(InputChecker.price(totalSumPrice));
 		amountLabel.setFont(new Font(20));
+		if(product.isDiscount())
+			amountLabel.setStyle("-fx-text-fill: red;");
 
 		priceVBox.setAlignment(Pos.CENTER);
 		priceVBox.setPrefWidth(180);
@@ -118,6 +122,7 @@ public class CartHBox extends HBox {
 		quantityField.setAlignment(Pos.CENTER);
 		quantityField.setMinWidth(50);
 		quantityField.setPrefWidth(50);
+		
 		// force the field to be numeric only
 		quantityField.textProperty().addListener(new ChangeListener<String>() {
 			@Override
@@ -130,7 +135,7 @@ public class CartHBox extends HBox {
 					return;
 				newQuantity = Integer.parseInt(quantityField.getText());
 				cart.addToCart(product, newQuantity, false);
-				totalSumPrice = product.getPrice() * newQuantity;
+				totalSumPrice = price * newQuantity;
 				System.out.println("new price is " + totalSumPrice);
 				amountLabel.setText(InputChecker.price(totalSumPrice));
 				quantity = newQuantity;

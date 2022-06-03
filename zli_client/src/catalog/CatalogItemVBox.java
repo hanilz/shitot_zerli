@@ -79,6 +79,13 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 		});
 
 		initPriceHBox();
+		
+		if(item.isDiscount()) {
+			discountLabel.setText(InputChecker.price(item.calculateDiscount()));
+			priceHBox.getChildren().add(discountLabel);
+			amountLabel.setId("priceAfterDiscountLabel");;
+		}
+		
 		initQuantityHBox();
 
 		initAddToCartButton();
@@ -117,7 +124,7 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 				int quantity = Integer.valueOf(quantityString);
 				if (quantity < 1)
 					return;
-				Cart.getInstance().addToCart(item, quantity, true);
+				Cart.getInstance().addToCart(item, quantity, false);
 				System.out.println("Cart is: " + Cart.getInstance().getCart());
 				System.out.println(item.getName() + " added to cart woohoooo");
 				CatalogController.refreshTotalAmountInCart();

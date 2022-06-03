@@ -137,4 +137,10 @@ public class ProductsBase implements Serializable, Comparable<ProductsBase> {
 	public int compareTo(ProductsBase o) {
 		return (int)(o.getDiscount() - discount);
 	}
+	
+    public double calculateDiscount() {
+    	return price - price*discount/100;
+    }
+    
+    public boolean isDiscount() {return discount > 0;}
 }

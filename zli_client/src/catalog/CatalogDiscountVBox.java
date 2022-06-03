@@ -23,48 +23,40 @@ import util.ManageScreens;
 
 public class CatalogDiscountVBox {
 	private Product product;
-	
-    @FXML
-    private Button addToCartButton;
 
-    @FXML
-    private Label afterDiscountLabel;
+	@FXML
+	private Button addToCartButton;
 
-    @FXML
-    private Label beforeDiscountLabel;
+	@FXML
+	private Label afterDiscountLabel;
 
-    @FXML
-    private ImageView productImage;
+	@FXML
+	private Label beforeDiscountLabel;
 
-    @FXML
-    private Label productNameLabel;
+	@FXML
+	private ImageView productImage;
 
-    @FXML
-    private VBox productVBox;
+	@FXML
+	private Label productNameLabel;
 
-    @FXML
-    void openProductEditor(ActionEvent event) {
+	@FXML
+	private VBox productVBox;
 
-    }
-
-    public void initVBox(Product product) {
-    	this.product = product;
-    	beforeDiscountLabel.setText(InputChecker.price(product.getPrice()));
-    	afterDiscountLabel.setText(InputChecker.price(calculateDiscount(product.getPrice(), product.getDiscount())));
-    	initImageProduct();
-    	productNameLabel.setText(product.getName());
-    	initAddToCartButton();
-    	beforeDiscountLabel.setTooltip(new Tooltip("hello"));
-    }
-    
-    private double calculateDiscount(double price, double discount) {
-    	return price - price*discount/100;
-    }
+	public void initVBox(Product product) {
+		this.product = product;
+		beforeDiscountLabel.setText(InputChecker.price(product.getPrice()));
+		afterDiscountLabel
+				.setText(InputChecker.price(product.calculateDiscount()));
+		initImageProduct();
+		productNameLabel.setText(product.getName());
+		initAddToCartButton();
+		beforeDiscountLabel.setTooltip(new Tooltip("hello"));
+	}
 
 	public ProductsBase getProduct() {
 		return product;
 	}
-	
+
 	private void initImageProduct() { // same function but not with the event so we will call super.
 		productImage.setImage(new Image(product.getImagePath()));
 

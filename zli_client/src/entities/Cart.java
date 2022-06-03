@@ -39,17 +39,18 @@ public class Cart {
 		ProductsBase foundProduct = findByID(product);
 		if (quantity == 0)
 			removeFromCart(foundProduct);
+		else if (foundProduct == null) {
+			cart.put(product, quantity);
+			deltaQuantity = quantity;
+		}
 		else if (add) {
-			if (foundProduct == null)
-				cart.put(product, quantity);
-			else
-				cart.put(foundProduct, cart.get(foundProduct) + quantity);
+			cart.put(foundProduct, cart.get(foundProduct) + quantity);
 			deltaQuantity = quantity;
 		} else {
 			deltaQuantity = quantity - cart.get(foundProduct);
 			cart.put(foundProduct, quantity);
 		}
-		calculateTotalPrice(deltaQuantity * product.getPrice());
+		calculateTotalPrice(deltaQuantity * product.calculateDiscount());
 		return true;
 	}
 
@@ -81,7 +82,7 @@ public class Cart {
 			foundProduct = findByID(product);
 		if (!cart.containsKey(foundProduct))
 			return false;
-		calculateTotalPrice(-(cart.get(foundProduct)) * product.getPrice());
+		calculateTotalPrice(-(cart.get(foundProduct)) * product.calculateDiscount());
 		cart.remove(foundProduct);
 		return true;
 	}

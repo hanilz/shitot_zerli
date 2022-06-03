@@ -24,6 +24,7 @@ import javafx.scene.layout.VBox;
 public class ManageData {
 	public static ArrayList<Product> products;
 	public static ArrayList<Item> items;
+	public static boolean isLoaded = false;
 	public static GridPane catalogGrid = new GridPane();
 	public static VBox customSelectorVBox = new VBox();
 
@@ -33,13 +34,25 @@ public class ManageData {
 	private static ArrayList<CatalogVBox> catalogVBoxList = new ArrayList<>();
 	private static ArrayList<CustomProductHBox> customProductsCheckBox = new ArrayList<>();
 
-
 	@SuppressWarnings("unchecked")
 	public static void fetchAllProducts() {
+		if(isLoaded)
+			clearAllData();
+		isLoaded = true;
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.FETCH_PRODUCTS);
 		Object response = ClientFormController.client.accept(message);
 		products = (ArrayList<Product>) response;
+	}
+
+	private static void clearAllData() {
+		products.clear();
+		items.clear();
+		catalogVBoxList.clear();
+		customProductsCheckBox.clear();
+		customSelectorVBox.getChildren().clear();
+		catalogGrid.getChildren().clear();
+		customProductNumber = 1;
 	}
 
 	@SuppressWarnings("unchecked")

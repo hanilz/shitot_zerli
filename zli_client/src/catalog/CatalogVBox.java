@@ -15,9 +15,8 @@ public class CatalogVBox extends VBox implements ICatalogVBox{
 	protected VBox nameVBox = new VBox();
 	protected ImageView image;
 	protected VBox imageVBox = new VBox();
-	protected Label priceLabel = new Label("Price:");
 	protected Label amountLabel = new Label();  // will show the price
-	protected Label discountLabel = new Label("");
+	protected Label discountLabel = new Label();
 	protected HBox priceHBox = new HBox();
 	protected Button addToCartButton = new Button("Add To Cart");
 
@@ -31,8 +30,8 @@ public class CatalogVBox extends VBox implements ICatalogVBox{
 		nameLabel.setAlignment(Pos.BOTTOM_CENTER);
 		addToCartButton.setId("catalogBtn");
 		nameLabel.setId("productsLabel");
-		priceLabel.setId("priceLabel");
 		amountLabel.setId("priceLabel");
+		discountLabel.setId("discountLabel");
 		this.getChildren().add(nameLabel);
 		this.getChildren().add(imageVBox);
 		this.getChildren().add(priceHBox);
@@ -40,9 +39,7 @@ public class CatalogVBox extends VBox implements ICatalogVBox{
 	}
 	
 	protected void initPriceHBox() {
-		priceHBox.getChildren().add(priceLabel);
 		priceHBox.getChildren().add(amountLabel);
-		priceHBox.getChildren().add(discountLabel);
 		priceHBox.setAlignment(Pos.CENTER);
 		priceHBox.setSpacing(25);
 	}
