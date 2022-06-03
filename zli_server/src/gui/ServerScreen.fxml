@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ServerFormController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ServerFormController">
    <children>
       <ImageView fitHeight="600.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -84,6 +84,7 @@
                   </HBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
+                        <Button fx:id="importButton" mnemonicParsing="false" onMouseClicked="#importUsersToZliAction" prefHeight="25.0" prefWidth="149.0" text="Import Users To Zli" />
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="53.0">
                            <children>
                               <Button fx:id="connectButton" mnemonicParsing="false" onMousePressed="#clickOnConnect" text="Connect" />

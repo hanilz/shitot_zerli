@@ -6,7 +6,6 @@ public enum UserType {
 
 	public static UserType get(String type) {
 		String upperCaseType = type.toUpperCase();
-		System.out.println(upperCaseType);
 		switch (upperCaseType) {
 		case "CUSTOMER":
 			return CUSTOMER;

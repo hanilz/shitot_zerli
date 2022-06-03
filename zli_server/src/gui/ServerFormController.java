@@ -18,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import server.ServerController;
 import util.ClientDetails;
 import util.DataBaseController;
+import util.ImportUsers;
 
 
 /**
@@ -35,7 +36,9 @@ public class ServerFormController implements Initializable {
 	 */
 	@FXML
 	private TextField DBNameField;
-
+	
+    @FXML
+    private Button importButton;
 
 	/**
 	 * contains database password name in gui
@@ -104,6 +107,8 @@ public class ServerFormController implements Initializable {
 	private ServerController sv;
 	
 	private static ServerFormController sfc;
+	
+	private boolean isImported = false;
 
 	/**
 	 * By clicking on "Connect" button initialize connecting to Database and then to
@@ -112,24 +117,23 @@ public class ServerFormController implements Initializable {
 	@FXML
 	void clickOnConnect(MouseEvent event) {
 		//String port = portTextField.getText();
-		String ip = IPTextField.getText();
-		String dbName = DBNameField.getText();
-		String dbUsername = DBUserTextField.getText();
-		String dbPassword = DBPasswordTextField.getText();
-		String[] stringArray = new String[] { ip, dbName, dbUsername, dbPassword };
 		String result = "";
-
-		if (!checkParameters())
+		if(!getConnectionFieldsAndConnect() || DBNameField.getText().contains("external")) {
+			consoleField.setText("Can't connect to externalDB.\n Use externalDB only to import users. \n");
 			return;
-		List<String> connectionArray = Arrays.asList(stringArray);
-
-		DataBaseController.setConnection(connectionArray);
+		}
 		sv = ServerController.getServerController();
-		sv.setIp(ip);
+		sv.setIp(IPTextField.getText());
 		StringBuffer buff = new StringBuffer();
 		buff.append(sv.connectToDB());
 		if (DataBaseController.isConnected) {
 			try {
+				if(isImported) {
+					String messageInsert = ImportUsers.insertIntoZliDB();
+					buff.append(messageInsert);
+					if(messageInsert.contains("Users already"))
+						importButton.setDisable(true);
+				}
 				result = sv.runServer();
 				buff.append(result);
 				if (result.contains("Server listening for connections on port")) {
@@ -148,6 +152,21 @@ public class ServerFormController implements Initializable {
 		consoleField.setText(buff.toString());
 
 		// connectionTable.getItems().addAll(ServerController.clients);
+	}
+	
+	private boolean getConnectionFieldsAndConnect() {
+		String ip = IPTextField.getText();
+		String dbName = DBNameField.getText();
+		String dbUsername = DBUserTextField.getText();
+		String dbPassword = DBPasswordTextField.getText();
+		String[] stringArray = new String[] { ip, dbName, dbUsername, dbPassword };
+
+		if (!checkParameters())
+			return false;
+		List<String> connectionArray = Arrays.asList(stringArray);
+
+		DataBaseController.setConnection(connectionArray);
+		return true;
 	}
 
 	/**
@@ -213,6 +232,20 @@ public class ServerFormController implements Initializable {
 
 		connectionTable.setItems(ServerController.clients);
 	}
+	
+    @FXML
+    void importUsersToZliAction(MouseEvent event) {
+    	if(!getConnectionFieldsAndConnect() || DBNameField.getText().contains("zli")) {
+    		consoleField.setText("\n Can't import zli db! \n Use only externalDB! \n");
+    		return;
+    	}
+    	String importMessage = ImportUsers.importExternalDB();
+    	consoleField.setText(importMessage);
+    	if(importMessage.contains("Successfully")) {
+    		isImported = true;
+    		importButton.setDisable(true);
+    	}
+    }
 	
 	/**
 	 * Refresh clients table after client connection/disconnection

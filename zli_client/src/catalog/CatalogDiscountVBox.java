@@ -12,11 +12,11 @@ import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import util.ManageScreens;
@@ -27,8 +27,8 @@ public class CatalogDiscountVBox {
 	@FXML
 	private Button addToCartButton;
 
-	@FXML
-	private Label afterDiscountLabel;
+  @FXML
+  private Text beforeDiscountLabel;
 
 	@FXML
 	private Label beforeDiscountLabel;
@@ -41,16 +41,19 @@ public class CatalogDiscountVBox {
 
 	@FXML
 	private VBox productVBox;
+    
+    private double calculateDiscount(double price, double discount) {
+    	return price - price*discount/100;
+    }
 
 	public void initVBox(Product product) {
 		this.product = product;
 		beforeDiscountLabel.setText(InputChecker.price(product.getPrice()));
-		afterDiscountLabel
-				.setText(InputChecker.price(product.calculateDiscount()));
+    beforeDiscountLabel.setStrikethrough(true);
+    afterDiscountLabel.setText(InputChecker.price(calculateDiscount(product.getPrice(), product.getDiscount())));
 		initImageProduct();
 		productNameLabel.setText(product.getName());
 		initAddToCartButton();
-		beforeDiscountLabel.setTooltip(new Tooltip("hello"));
 	}
 
 	public ProductsBase getProduct() {

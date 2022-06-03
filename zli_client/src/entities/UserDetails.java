@@ -9,6 +9,7 @@ public class UserDetails implements Serializable{
 	private static final long serialVersionUID = 7153997594908851279L;
 	private int idAccount;
 	private String firstName, lastName, id, email, phoneNumber, status;
+	private String branches;
 	
 	public UserDetails(int idAccount, String firstName, String lastName, String id, String email, String phoneNumber,
 			String status) {
@@ -19,6 +20,23 @@ public class UserDetails implements Serializable{
 		this.email = email;
 		this.phoneNumber = phoneNumber;
 		this.status = status;
+	}
+	
+	public UserDetails(int idAccount, String firstName, String lastName, String id, String email, String phoneNumber) {
+		this.idAccount = idAccount;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.id = id;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getBranches() {
+		return branches;
+	}
+
+	public void setBranches(String branches) {
+		this.branches = branches;
 	}
 
 	/**

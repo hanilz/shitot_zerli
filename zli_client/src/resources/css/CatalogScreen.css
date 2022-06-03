@@ -96,6 +96,10 @@
 	-fx-border-width: 2px;
 }
 
+#discountBeforeLabel {
+
+}
+
 #cartHBox, #homeVBox, #loginHBox {
 	-fx-background-color: #FEE1DC;
 	-fx-background-radius: 15;

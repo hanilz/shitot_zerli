@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <VBox fx:id="productVBox" alignment="TOP_CENTER" prefHeight="175.0" prefWidth="260.0" style="-fx-background-color: FFD7BA; -fx-background-radius: 30;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.CatalogDiscountVBox">
    <children>
@@ -29,13 +30,13 @@
             </VBox>
             <VBox alignment="CENTER" spacing="10.0">
                <children>
+                  <Text fx:id="beforeDiscountLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="100$" textAlignment="CENTER" wrappingWidth="89.875">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
                   <VBox alignment="CENTER" spacing="2.0">
                      <children>
-                        <Label id="discountBeforeLabel" fx:id="beforeDiscountLabel" alignment="CENTER" styleClass="discountBeforeLabel" stylesheets="@../resources/css/CatalogScreen.css" text="100 $">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
                         <Label fx:id="afterDiscountLabel" alignment="CENTER" text="75 $" textFill="RED">
                            <font>
                               <Font name="System Bold" size="22.0" />
