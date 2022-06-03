@@ -83,6 +83,10 @@ public class ServerMessageController {
 			ArrayList<ManageUsers> users = AnalayzeCommand.selectAllUsers();
 			message.put("response", users);
 			break;
+		case FETCH_ALL_EMPLOYEES:
+			ArrayList<ManageUsers> employees = AnalayzeCommand.selectAllEmployee();
+			message.put("response", employees);
+			break;
 		case FETCH_BRANCHES:
 			ArrayList<Branch> branches = AnalayzeCommand.selectAllBranches();
 			message.put("response", branches);
@@ -408,6 +412,7 @@ public class ServerMessageController {
 			int productID = AnalayzeCommand.insertNewProductToDB((Product) message.get("product"));
 			message.put("response", productID);
 			break;
+
 		default:
 			break;
 		}

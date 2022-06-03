@@ -288,6 +288,29 @@ public class AnalayzeCommand {
 		System.out.println("returned users");
 		return users;
 	}
+	public static ArrayList<ManageUsers> selectAllEmployee() {
+		System.out.println("getting all employee");
+		ArrayList<ManageUsers> users = new ArrayList<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt.executeQuery(
+					"SELECT U.idUser, UD.firstName, UD.lastName, UD.id,U.userType, U.status FROM users U, user_details UD where U.idAccount = UD.idAccount AND U.userType!='CUSTOMER' AND U.userType!='NEW_CUSTOMER';");
+			while (rs.next()) {
+				int idUser = rs.getInt(1);
+				String firstName = rs.getString(2);
+				String lastName = rs.getString(3);
+				String id = rs.getString(4);
+				String userType = rs.getString(5);
+				System.out.println(userType);
+				String status = rs.getString(6);
+				ManageUsers resultOrder = new ManageUsers(idUser, firstName, lastName, id, userType, status);
+				users.add(resultOrder);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
 
 	// this methods gets an Account id and changes the status of the user
 	public static String changeUserStatus(Object object) {
