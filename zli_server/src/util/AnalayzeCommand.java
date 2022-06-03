@@ -271,7 +271,7 @@ public class AnalayzeCommand {
 		try {
 			Statement selectStmt = DataBaseController.getConn().createStatement();
 			ResultSet rs = selectStmt.executeQuery(
-					"SELECT U.idUser, UD.firstName, UD.lastName, UD.id,U.userType, U.status FROM users U, user_details UD where U.idAccount = UD.idAccount;");
+					"SELECT U.idUser, UD.firstName, UD.lastName, UD.id,U.userType, U.status FROM users U, user_details UD where U.idAccount = UD.idAccount AND (U.userType = 'CUSTOMER' OR U.userType = 'NEW_CUSTOMER' );");
 			while (rs.next()) {
 				int idUser = rs.getInt(1);
 				String firstName = rs.getString(2);
@@ -504,6 +504,23 @@ public class AnalayzeCommand {
 		try {
 			Statement selectStmt = DataBaseController.getConn().createStatement();
 			ResultSet rs = selectStmt.executeQuery("SELECT s.idSurvey,s.surveyName FROM surveys s;");
+			while (rs.next()) {
+				int idSurvey = rs.getInt(1);
+				String surveyName = rs.getString(2);
+				surveys.put(idSurvey, surveyName);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("returned surveys");
+		return surveys;
+	}
+	
+	public static HashMap<Integer, String> selectAnalyzedSurveys() {
+		HashMap<Integer, String> surveys = new HashMap<>();
+		try {
+			Statement selectStmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = selectStmt.executeQuery("SELECT s.idSurvey,s.surveyName FROM surveys s INNER JOIN blob_file_table bft ON bft.idSurvey = s.idSurvey;");
 			while (rs.next()) {
 				int idSurvey = rs.getInt(1);
 				String surveyName = rs.getString(2);
@@ -1034,14 +1051,15 @@ public class AnalayzeCommand {
 		return reports;
 	}
 
-	public static boolean uploadFileToDB(File file) {
+	public static boolean uploadFileToDB(File file,int idSurvey) {
 		Connection conn = DataBaseController.getConn();
 		PreparedStatement psmt;
 		try {
 			FileInputStream fis = new FileInputStream(file);
-			psmt = conn.prepareStatement("INSERT INTO blob_file_table (idblobFile, blobFile) VALUES  (?,?)");
-			psmt.setString(1, file.getName()); //to use SurveyAnalysisFile, change to -> file.getPath()
-			psmt.setBlob(2, fis);
+			psmt = conn.prepareStatement("REPLACE INTO blob_file_table (idSurvey,idblobFile, blobFile) VALUES  (?,?,?);");
+			psmt.setInt(1, idSurvey);
+			psmt.setString(2, file.getName()); //to use SurveyAnalysisFile, change to -> file.getPath()
+			psmt.setBlob(3, fis);
 			if (psmt.executeUpdate() == 0)
 				return false;
 		} catch (SQLException e) {
@@ -1056,7 +1074,7 @@ public class AnalayzeCommand {
 	// as of right now this is just a big mess, the file downloads but its only 1 kb
 	// and it wont open because it was corrupted and im not sure if
 	// it happened in the encoding or decoding process
-	public static ArrayList<SurveyAnalysisFile> retrieveFileFromDB() {
+	public static ArrayList<SurveyAnalysisFile> retrieveAllFilesFromDB() {
 		ArrayList<SurveyAnalysisFile> files = new ArrayList<>();
 		InputStream input = null;
 		FileOutputStream output = null;
@@ -1068,7 +1086,7 @@ public class AnalayzeCommand {
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				String fileName = rs.getString(1);
+				String fileName = rs.getString(2);
 				File ret = new File(System.getProperty("user.dir") + "\\tempFileDir\\" + fileName);
 				output = new FileOutputStream(ret);
 				System.out.println("Getting file please be patient..");
@@ -1098,6 +1116,48 @@ public class AnalayzeCommand {
 
 		}
 		return files;
+	}
+	
+	public static SurveyAnalysisFile retrieveFileFromDB(int surveyID) {
+		SurveyAnalysisFile newFile = null;
+		InputStream input = null;
+		FileOutputStream output = null;
+		ResultSet rs = null;
+		byte[] buffer = new byte[4096];
+		try {
+			Connection conn = DataBaseController.getConn();
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM blob_file_table where idSurvey = ?;");
+			stmt.setInt(1, surveyID);
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				String fileName = rs.getString(2);
+				File ret = new File(System.getProperty("user.dir") + "\\tempFileDir\\" + fileName);
+				output = new FileOutputStream(ret);
+				System.out.println("Getting file please be patient..");
+
+				input = rs.getBinaryStream("blobFile"); // get it from col name
+				int reader = 0;
+				while ((reader = input.read(buffer)) != -1)
+					output.write(buffer, 0, reader);
+				newFile = SurveyAnalysisFile.createSurveyAnalysisFile(ret);
+			}
+			System.out.println("File writing complete !");
+
+		} catch (SQLException | IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					input.close();
+					output.flush();
+					output.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return newFile;
 	}
 
 	public static Map<String, Integer> getItemsIncomeReport(Report report) {
@@ -1728,4 +1788,6 @@ public class AnalayzeCommand {
 		}
 		return idInserted;
 	}
+
+
 }

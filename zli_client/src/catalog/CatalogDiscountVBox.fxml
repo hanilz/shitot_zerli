@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="productVBox" alignment="TOP_CENTER" prefHeight="175.0" prefWidth="260.0" style="-fx-background-color: FAE1DD; -fx-background-radius: 30;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.CatalogDiscountVBox">
+<VBox fx:id="productVBox" alignment="TOP_CENTER" prefHeight="175.0" prefWidth="260.0" style="-fx-background-color: FFD7BA; -fx-background-radius: 30;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.CatalogDiscountVBox">
    <children>
       <Label fx:id="productNameLabel" alignment="CENTER" maxWidth="240.0" minWidth="240.0" prefHeight="31.0" prefWidth="240.0" text="Product Name" textAlignment="CENTER" wrapText="true">
          <font>
