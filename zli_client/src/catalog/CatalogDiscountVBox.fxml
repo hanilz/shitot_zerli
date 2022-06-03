@@ -43,7 +43,7 @@
                         </Label>
                      </children>
                   </VBox>
-                  <Button fx:id="addToCartButton" mnemonicParsing="false" onAction="#openProductEditor" prefHeight="31.0" prefWidth="90.0" style="-fx-background-radius: 20;" text="Add To Cart">
+                  <Button fx:id="addToCartButton" mnemonicParsing="false" prefHeight="31.0" prefWidth="90.0" style="-fx-background-radius: 20;" text="Add To Cart">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
