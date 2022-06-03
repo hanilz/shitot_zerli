@@ -1040,7 +1040,7 @@ public class AnalayzeCommand {
 		try {
 			FileInputStream fis = new FileInputStream(file);
 			psmt = conn.prepareStatement("INSERT INTO blob_file_table (idblobFile, blobFile) VALUES  (?,?)");
-			psmt.setString(1, file.getName()); //to use SurveyAnalysisFile, change to -> file.getPath()
+			psmt.setString(1, file.getName()); // to use SurveyAnalysisFile, change to -> file.getPath()
 			psmt.setBlob(2, fis);
 			if (psmt.executeUpdate() == 0)
 				return false;
@@ -1611,7 +1611,7 @@ public class AnalayzeCommand {
 		}
 	}
 
-	public static boolean refundUserForLateDelivery(int idUser, int idOrder) {
+    	public static boolean refundUserForLateDelivery(int idUser, int idOrder) {
 		Connection conn = DataBaseController.getConn();
 		String query = "UPDATE orders SET refund = price, status = 'Delivered-Refunded' WHERE idOrder = ? ;";
 		PreparedStatement preparedStmt;
@@ -1727,5 +1727,18 @@ public class AnalayzeCommand {
 			e.printStackTrace();
 		}
 		return idInserted;
+	}
+
+	public static void disconnectAllUser() {
+		Connection conn = DataBaseController.getConn();
+		String query = "UPDATE users SET isLogin=0;";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.executeUpdate();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
