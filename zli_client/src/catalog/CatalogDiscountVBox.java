@@ -27,11 +27,11 @@ public class CatalogDiscountVBox {
 	@FXML
 	private Button addToCartButton;
 
-  @FXML
-  private Text beforeDiscountLabel;
+	@FXML
+	private Text beforeDiscountLabel;
 
 	@FXML
-	private Label beforeDiscountLabel;
+	private Label afterDiscountLabel;
 
 	@FXML
 	private ImageView productImage;
@@ -41,16 +41,16 @@ public class CatalogDiscountVBox {
 
 	@FXML
 	private VBox productVBox;
-    
-    private double calculateDiscount(double price, double discount) {
-    	return price - price*discount/100;
-    }
+
+	private double calculateDiscount(double price, double discount) {
+		return price - price * discount / 100;
+	}
 
 	public void initVBox(Product product) {
 		this.product = product;
 		beforeDiscountLabel.setText(InputChecker.price(product.getPrice()));
-    beforeDiscountLabel.setStrikethrough(true);
-    afterDiscountLabel.setText(InputChecker.price(calculateDiscount(product.getPrice(), product.getDiscount())));
+		beforeDiscountLabel.setStrikethrough(true);
+		afterDiscountLabel.setText(InputChecker.price(calculateDiscount(product.getPrice(), product.getDiscount())));
 		initImageProduct();
 		productNameLabel.setText(product.getName());
 		initAddToCartButton();
