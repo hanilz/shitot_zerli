@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -12,41 +13,40 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="938.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.PopupReportController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="938.0" spacing="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.PopupReportController">
    <children>
-      <GridPane>
+      <GridPane prefHeight="84.0" prefWidth="878.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="465.0" minWidth="10.0" prefWidth="160.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="853.0" minWidth="10.0" prefWidth="633.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="853.0" minWidth="10.0" prefWidth="158.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="465.0" minWidth="10.0" prefWidth="93.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="853.0" minWidth="10.0" prefWidth="695.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="853.0" minWidth="10.0" prefWidth="93.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <HBox alignment="CENTER" prefHeight="48.0" prefWidth="107.0" spacing="118.0" GridPane.columnIndex="1">
+            <HBox alignment="CENTER" prefHeight="84.0" prefWidth="704.0" spacing="118.0" GridPane.columnIndex="1">
                <children>
-                  <Label text="View Report">
+                  <Label text="Zer-Li Company">
                      <font>
-                        <Font size="30.0" />
+                        <Font name="System Bold" size="37.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="48.0" prefWidth="107.0" spacing="118.0">
                <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" style="-fx-background-color: transparent;" />
+                  <ImageView fitHeight="87.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icon.png" />
+                     </image>
+                  </ImageView>
                </children>
             </HBox>
          </children>
       </GridPane>
-      <VBox alignment="TOP_CENTER" prefHeight="88.0" prefWidth="878.0" spacing="10.0">
+      <VBox alignment="TOP_CENTER" prefWidth="878.0" spacing="10.0">
          <children>
-            <Label text="Zer-Li Company">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
             <HBox alignment="TOP_CENTER" prefHeight="32.0" prefWidth="878.0" spacing="35.0">
                <children>
                   <Label fx:id="reportTypeLabel" text="Income Report">
@@ -68,124 +68,195 @@
                   </Label>
                </children>
             </HBox>
-            <Separator prefWidth="200.0" />
          </children>
       </VBox>
       <ScrollPane prefHeight="408.0" prefWidth="878.0">
          <content>
-            <VBox prefHeight="387.0" prefWidth="862.0" spacing="6.0">
+            <VBox fx:id="mainVBox" prefWidth="862.0" spacing="6.0">
                <children>
-                  <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="853.0">
+                  <HBox alignment="TOP_CENTER" prefWidth="862.0" spacing="5.0">
                      <children>
-                        <Label fx:id="reportTypeItemsLabel" alignment="CENTER" prefHeight="20.0" prefWidth="326.0" text="Income of items per item type" textAlignment="CENTER">
+                        <VBox alignment="TOP_CENTER" prefWidth="420.0">
+                           <children>
+                              <Label fx:id="reportTypeItemsLabel" alignment="CENTER" text="Income of items per item type" textAlignment="CENTER" underline="true">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Separator prefHeight="0.0" prefWidth="862.0" />
+                              <HBox fx:id="itemsHBox" alignment="TOP_CENTER" spacing="5.0" VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <VBox fx:id="itemTypeVBox" minHeight="120.0" minWidth="125.0">
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="88.0" text="Item Type" underline="true">
+                                             <font>
+                                                <Font name="System Bold" size="16.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets top="10.0" />
+                                       </padding>
+                                    </VBox>
+                                    <Separator orientation="VERTICAL" />
+                                    <VBox fx:id="totalItemsVBox" minHeight="120.0" minWidth="60.0">
+                                       <children>
+                                          <Label text="Total" underline="true">
+                                             <font>
+                                                <Font name="System Bold" size="16.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets top="10.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <Separator orientation="VERTICAL" />
+                        <VBox alignment="TOP_CENTER" prefWidth="420.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label fx:id="reportTypeProductsLabel" text="Income of products per product type" textAlignment="CENTER" underline="true">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Separator prefHeight="0.0" prefWidth="862.0" />
+                              <HBox fx:id="productsHBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="100.0" minWidth="-Infinity" prefWidth="266.0" spacing="5.0">
+                                 <children>
+                                    <VBox fx:id="productTypeVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="120.0" minWidth="160.0">
+                                       <children>
+                                          <Label text="Product Type" underline="true">
+                                             <font>
+                                                <Font name="System Bold" size="16.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets top="10.0" />
+                                       </padding>
+                                    </VBox>
+                                    <Separator orientation="VERTICAL" />
+                                    <VBox fx:id="totalProductsVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="120.0" minWidth="90.0">
+                                       <children>
+                                          <Label text="Total" underline="true">
+                                             <font>
+                                                <Font name="System Bold" size="16.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets top="10.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <Separator prefHeight="0.0" prefWidth="862.0" />
+                  <HBox fx:id="totalReportTypeCustom" alignment="CENTER_LEFT">
+                     <children>
+                        <Label fx:id="totalReportTpeCustomLabel" minWidth="500.0" text="Total income of custom products:">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="totalCustomLabel" text="0">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets left="150.0" />
+                     </padding>
+                  </HBox>
+                  <Separator prefHeight="0.0" prefWidth="862.0" />
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Label fx:id="totalReportTypeProductsLabel" minWidth="500.0" text="Total income of products:">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="totalProductsLabel" text="0">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets left="150.0" />
+                     </padding>
+                  </HBox>
+                  <Separator prefHeight="0.0" prefWidth="862.0" />
+                  <HBox alignment="CENTER_LEFT" cacheShape="false">
+                     <children>
+                        <Label fx:id="totalReportTypeItemsLabel" minWidth="500.0" text="Total income of items:">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="totalItemsLabel" text="0">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets left="150.0" />
+                     </padding>
+                  </HBox>
+                  <Separator prefHeight="0.0" prefWidth="862.0" />
+                  <HBox fx:id="refundHbox" alignment="CENTER_LEFT" cacheShape="false">
+                     <children>
+                        <Label fx:id="totalRefundsLabel" minWidth="500.0" text="Total refunds:">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
                            </font></Label>
+                        <Label fx:id="refundsLabel" text="0">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
                      </children>
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
                      <padding>
-                        <Insets right="-42.0" />
+                        <Insets left="150.0" />
                      </padding>
                   </HBox>
-                  <Separator prefHeight="0.0" prefWidth="862.0" />
-                  <HBox fx:id="itemsHBox" alignment="TOP_CENTER" prefHeight="82.0" prefWidth="862.0" spacing="15.0">
+                  <Separator fx:id="refundSeperator" prefHeight="0.0" prefWidth="862.0" />
+                  <HBox alignment="CENTER_LEFT" cacheShape="false">
                      <children>
-                        <VBox fx:id="itemTypeVBox" alignment="CENTER" prefHeight="70.0" prefWidth="104.0" />
-                        <VBox fx:id="totalItemsVBox" alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="59.0" />
-                     </children>
-                  </HBox>
-                  <Separator prefHeight="0.0" prefWidth="862.0" />
-                  <HBox alignment="CENTER">
-                     <children>
-                        <Label fx:id="reportTypeProductsLabel" text="Income of products per product type" textAlignment="CENTER">
+                        <Label fx:id="totalIncomeLabel" minWidth="500.0" text="Net Income:">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                     </children>
-                  </HBox>
-                  <Separator prefHeight="0.0" prefWidth="862.0" />
-                  <HBox fx:id="productsHBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="88.0" prefWidth="862.0" spacing="15.0">
-                     <children>
-                        <VBox fx:id="productTypeVBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="101.0" prefWidth="179.0" />
-                        <VBox fx:id="totalProductsVBox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="88.0" prefWidth="92.0" />
-                     </children>
-                  </HBox>
-                  <Separator prefHeight="0.0" prefWidth="862.0" />
-                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="862.0">
-                     <children>
-                        <HBox fx:id="totalReportTypeCustom">
-                           <children>
-                              <Label fx:id="totalReportTpeCustomLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="686.0" text="total income of custom products:">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="totalCustomLabel" prefHeight="20.0" prefWidth="98.0" text="0">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                     </children>
-                  </HBox>
-                  <Separator prefHeight="0.0" prefWidth="862.0" />
-                  <HBox alignment="CENTER" prefHeight="33.0" prefWidth="862.0">
-                     <children>
-                        <HBox>
-                           <children>
-                              <Label fx:id="totalReportTypeProductsLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="671.0" text="total income of products:">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font></Label>
-                              <Label fx:id="totalProductsLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="87.0" text="0">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font></Label>
-                           </children>
-                        </HBox>
-                     </children>
-                  </HBox>
-                  <Separator prefHeight="0.0" prefWidth="862.0" />
-                  <HBox alignment="CENTER" cacheShape="false" prefHeight="37.0" prefWidth="862.0">
-                     <children>
-                        <Label fx:id="totalReportTypeItemsLabel" prefHeight="26.0" prefWidth="682.0" text="total income of items:">
+                        <Label fx:id="totalIncomeQuantityLabel" text="0">
                            <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="totalItemsLabel" prefHeight="20.0" prefWidth="100.0" text="0">
-                           <font>
-                              <Font size="14.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Label>
                      </children>
-                  </HBox>
-                  <Separator prefHeight="0.0" prefWidth="862.0" />
-                  <HBox alignment="CENTER" cacheShape="false" prefHeight="37.0" prefWidth="862.0">
-                     <children>
-                        <Label fx:id="totalRefundsLabel" prefHeight="26.0" prefWidth="682.0" text="total refunds:">
-                           <font>
-                              <Font size="14.0" />
-                           </font></Label>
-                        <Label fx:id="refundsLabel" prefHeight="20.0" prefWidth="100.0" text="0">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                     </children>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
+                     <padding>
+                        <Insets left="150.0" />
+                     </padding>
                   </HBox>
                </children>
                <padding>
@@ -199,6 +270,6 @@
       </ScrollPane>
    </children>
    <padding>
-      <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+      <Insets bottom="30.0" left="30.0" right="30.0" top="15.0" />
    </padding>
 </VBox>

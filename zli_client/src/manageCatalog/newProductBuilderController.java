@@ -92,7 +92,6 @@ public class newProductBuilderController implements Initializable {
 		} else if (productRadioButton.isSelected()) {
 			addProductToCatalog();
 		}
-		ManageScreens.previousScreen();
 	}
 
 	private void addProductToCatalog() {
@@ -122,6 +121,7 @@ public class newProductBuilderController implements Initializable {
 		if(added!=-1) {
 			ManageScreens.displayAlert("Added Successfully", "Your product has been added successfully");
 		}
+		ManageScreens.previousScreen();
 	}
 
 	private void addItemToCataog() {
@@ -142,6 +142,7 @@ public class newProductBuilderController implements Initializable {
 		if(added!=-1) {
 			ManageScreens.displayAlert("Added Successfully", "Your item has been added successfully");
 		}
+		ManageScreens.previousScreen();
 	}
 
 	private boolean checkFieldsItem() {
@@ -160,11 +161,11 @@ public class newProductBuilderController implements Initializable {
 	}
 
 	private boolean isEmpty(TextArea ta) {
-		return ta.getText().length() == 0;
+		return ta.getText().isEmpty();
 	}
 
 	private boolean isEmpty(TextField tf) {
-		return tf.getText().length() == 0;
+		return tf.getText().isEmpty();
 	}
 
 	@FXML

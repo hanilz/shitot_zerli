@@ -114,11 +114,11 @@
          <children>
             <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="150.0" spacing="5.0">
                <children>
-                  <VBox prefWidth="140.0" spacing="3.0" style="-fx-background-color: FBF3F1;">
+                  <VBox spacing="3.0" style="-fx-background-color: FBF3F1;">
                      <children>
-                        <Label prefHeight="8.0" prefWidth="130.0" text="Filtering options">
+                        <Label prefHeight="27.0" prefWidth="149.0" text="Filtering options">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
                         <Separator prefWidth="200.0" />
@@ -137,8 +137,8 @@
                                     </Label>
                                     <VBox spacing="10.0">
                                        <children>
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
+                                          <CheckBox mnemonicParsing="false" text="Product" />
+                                          <CheckBox mnemonicParsing="false" text="Item" />
                                        </children>
                                        <padding>
                                           <Insets left="10.0" />
@@ -155,12 +155,12 @@
                                     </Label>
                                     <VBox spacing="10.0">
                                        <children>
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
+                                          <CheckBox mnemonicParsing="false" text="Rose" />
+                                          <CheckBox mnemonicParsing="false" text="Tulip" />
+                                          <CheckBox mnemonicParsing="false" text="Gerbera" />
+                                          <CheckBox mnemonicParsing="false" text="Peony" />
+                                          <CheckBox mnemonicParsing="false" text="Lily" />
+                                          <CheckBox mnemonicParsing="false" text="Daffadoil" />
                                        </children>
                                        <padding>
                                           <Insets left="10.0" />
@@ -177,10 +177,12 @@
                                     </Label>
                                     <VBox spacing="10.0">
                                        <children>
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
-                                          <CheckBox mnemonicParsing="false" text="CheckBox" />
+                                          <CheckBox mnemonicParsing="false" text="Pink" />
+                                          <CheckBox mnemonicParsing="false" text="Red" />
+                                          <CheckBox mnemonicParsing="false" text="Yellow" />
+                                          <CheckBox mnemonicParsing="false" text="White" />
+                                          <CheckBox mnemonicParsing="false" text="Purple" />
+                                          <CheckBox mnemonicParsing="false" text="Blue" />
                                        </children>
                                        <padding>
                                           <Insets left="10.0" />
@@ -197,7 +199,14 @@
                   </ScrollPane>
                   <VBox alignment="CENTER">
                      <children>
-                        <Button id="filterBtn" fx:id="filterButton" mnemonicParsing="false" onMouseClicked="#search" text="Filter" />
+                        <Button id="filterBtn" fx:id="filterButton" contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#search" text="Filter">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/icons/filterIcon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
                      </children>
                   </VBox>
                </children>
@@ -213,7 +222,14 @@
                   <HBox alignment="CENTER" prefHeight="28.0" prefWidth="785.0" spacing="15.0">
                      <children>
                         <TextField fx:id="searchBar" prefHeight="25.0" prefWidth="645.0" promptText="Search product by name, color..." />
-                        <Button id="searchBtn" fx:id="searchButton" mnemonicParsing="false" onMouseClicked="#search" prefHeight="29.0" prefWidth="61.0" text="Search" />
+                        <Button id="searchBtn" fx:id="searchButton" contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#search" prefHeight="29.0" text="Search">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/icons/searchIcon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
                      </children>
                   </HBox>
                   <HBox spacing="20.0">
@@ -237,11 +253,11 @@
             </VBox>
             <VBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="587.0" prefWidth="255.0" spacing="3.0">
                <children>
-                  <HBox alignment="CENTER">
+                  <HBox alignment="CENTER" style="-fx-background-color: FBF3F1;">
                      <children>
-                        <Label prefHeight="27.0" prefWidth="156.0" text="Promoted Products">
+                        <Label prefHeight="27.0" text="Promoted Products">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
                      </children>

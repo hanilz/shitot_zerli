@@ -57,18 +57,35 @@
       </HBox>
       <VBox alignment="CENTER" spacing="5.0">
          <children>
-            <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMousePressed="#loginUserIntoSystem" prefHeight="42.0" prefWidth="215.0" style="-fx-background-radius: 15; -fx-background-color: a1c349;" text="Login" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="loginButton" alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" mnemonicParsing="false" onMousePressed="#loginUserIntoSystem" prefHeight="42.0" prefWidth="215.0" style="-fx-background-radius: 15; -fx-background-color: a1c349;" text="Login" textAlignment="CENTER" wrapText="true">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
                <font>
                   <Font name="System Bold" size="19.0" />
                </font>
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/loginIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </Button>
-            <Button fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#back" prefHeight="25.0" prefWidth="77.0" style="-fx-background-radius: 10;" text="Back">
+            <Button fx:id="backButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#back" prefHeight="25.0" prefWidth="77.0" style="-fx-background-radius: 10;" text="Back">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/backIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
          </children>
          <VBox.margin>

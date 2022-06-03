@@ -125,7 +125,7 @@
                   <TextArea fx:id="greetingCardTextArea" prefHeight="196.0" prefWidth="527.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>
-            <HBox alignment="BOTTOM_CENTER" prefHeight="76.0" prefWidth="878.0" spacing="59.0">
+            <HBox alignment="BOTTOM_CENTER" prefHeight="76.0" prefWidth="878.0" spacing="600.0">
                <children>
                   <Button fx:id="backToCart" mnemonicParsing="false" onMousePressed="#changeToCartScreen" text="Back To Cart">
                      <cursor>
@@ -133,14 +133,28 @@
                      </cursor>
                      <font>
                         <Font size="18.0" />
-                     </font></Button>
-                  <Button fx:id="deliveryButton" mnemonicParsing="false" onMousePressed="#changeToDeliveryScreen" text="Continue To Delivery">
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/icons/backIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                  <Button fx:id="deliveryButton" contentDisplay="RIGHT" mnemonicParsing="false" onMousePressed="#changeToDeliveryScreen" text="Continue To Delivery">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                      <font>
                         <Font size="18.0" />
-                     </font></Button>
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/icons/shippingIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
                </children>
             </HBox>
          </children>

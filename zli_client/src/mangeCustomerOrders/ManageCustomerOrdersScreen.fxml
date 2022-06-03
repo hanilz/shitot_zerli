@@ -75,8 +75,22 @@
                         </TableView>
                         <HBox alignment="CENTER" prefHeight="47.0" prefWidth="980.0" spacing="200.0">
                            <children>
-                              <Button fx:id="approveOrderButton" mnemonicParsing="false" onAction="#approveOrder" text="Approve Order" />
-                              <Button fx:id="cancelOrderButton" mnemonicParsing="false" onAction="#cancelOrder" text="Cancel Order" />
+                              <Button fx:id="approveOrderButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#approveOrder" text="Approve Order">
+                                 <graphic>
+                                    <ImageView fitHeight="45.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/icons/approveIcon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
+                              <Button fx:id="cancelOrderButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#cancelOrder" text="Cancel Order">
+                                 <graphic>
+                                    <ImageView fitHeight="45.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/icons/cancelIcon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
                            </children>
                         </HBox>
                      </children>
@@ -103,8 +117,22 @@
                         </TableView>
                         <HBox alignment="CENTER" prefHeight="42.0" prefWidth="980.0" spacing="100.0">
                            <children>
-                              <Button fx:id="approveCancelButton" mnemonicParsing="false" onAction="#approveCancelRequest" text="Approve Cancel Request" />
-                              <Button fx:id="denyCancelButton" mnemonicParsing="false" onAction="#denyCancelRequest" text="Deny Cancel Request" />
+                              <Button fx:id="approveCancelButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#approveCancelRequest" text="Approve Cancel Request">
+                                 <graphic>
+                                    <ImageView fitHeight="45.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/icons/approveIcon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
+                              <Button fx:id="denyCancelButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#denyCancelRequest" text="Deny Cancel Request">
+                                 <graphic>
+                                    <ImageView fitHeight="45.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/icons/cancelIcon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
                            </children>
                         </HBox>
                      </children>

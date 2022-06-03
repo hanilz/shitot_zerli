@@ -166,6 +166,8 @@ public class ManageCustomerOrdersController implements Initializable{
     		displayError(messageDelay);
     		return;
     	}
+    	if(!ManageScreens.getYesNoDecisionAlert("Approve Order", "Are you sure you want to approve order number " + mov.getIdOrder()+" ?", null))
+    		return;
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.APPROVE_ORDER);
 		message.put("order id", mov.getIdOrder());
@@ -188,6 +190,8 @@ public class ManageCustomerOrdersController implements Initializable{
     		displayError(messageDelay);
     		return;
     	}
+    	if(!ManageScreens.getYesNoDecisionAlert("Cancel Order", "Are you sure you want to cancel order number " + mov.getIdOrder()+" ?", null))
+    		return;
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.CANCEL_ORDER);
 		message.put("order id", mov.getIdOrder());
@@ -221,6 +225,8 @@ public class ManageCustomerOrdersController implements Initializable{
     		displayError(messageDelay);
     		return;
     	}
+    	if(!ManageScreens.getYesNoDecisionAlert("Cancel Order", "Are you sure you want to approve the cancellation request for order number " + mov.getIdOrder()+" ?", null))
+    		return;
     	double refund = calculateRefund(mov);
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.CANCEL_ORDER);
@@ -244,9 +250,12 @@ public class ManageCustomerOrdersController implements Initializable{
     		displayError(messageDelay);
     		return;
     	}
+    	if(!ManageScreens.getYesNoDecisionAlert("Deny Cancel Request", "Are you sure you want to deny the cancel request for order number " + mov.getIdOrder()+" ?", null))
+    		return;
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.APPROVE_ORDER);
 		message.put("order id", mov.getIdOrder());
+		message.put("orderType", mov.getDeliveryType());
 		Object response = ClientFormController.client.accept(message);
 		if((boolean)response) {
 			ManageScreens.displayAlert("Cancel Request Not Approved","Cancel Request Not Approved!\nOrder "+ mov.getIdOrder()+" returned to status Approved");

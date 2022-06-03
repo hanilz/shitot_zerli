@@ -10,12 +10,13 @@ import inputs.InputChecker;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class PopupReportController implements Initializable {
 
-    @FXML
+	@FXML
     private Label branchLabel;
 
     @FXML
@@ -25,6 +26,9 @@ public class PopupReportController implements Initializable {
     private HBox itemsHBox;
 
     @FXML
+    private VBox mainVBox;
+
+    @FXML
     private VBox productTypeVBox;
 
     @FXML
@@ -32,6 +36,12 @@ public class PopupReportController implements Initializable {
 
     @FXML
     private Label quraterLabel;
+
+    @FXML
+    private HBox refundHbox;
+
+    @FXML
+    private Separator refundSeperator;
 
     @FXML
     private Label refundsLabel;
@@ -47,6 +57,12 @@ public class PopupReportController implements Initializable {
 
     @FXML
     private Label totalCustomLabel;
+
+    @FXML
+    private Label totalIncomeLabel;
+
+    @FXML
+    private Label totalIncomeQuantityLabel;
 
     @FXML
     private Label totalItemsLabel;
@@ -75,14 +91,15 @@ public class PopupReportController implements Initializable {
     @FXML
     private Label totalReportTypeProductsLabel;
 
+
 	private static Map<String, Integer> itemsLabels = new HashMap<>();
 
 	private static Map<String, Integer> productsLabels = new HashMap<>();
 
 	private static Report selectedReport;
-	
+
 	private static Integer totalCustom;
-	
+
 	private static Integer totalRefunds;
 
 	@Override
@@ -90,25 +107,26 @@ public class PopupReportController implements Initializable {
 		switch (selectedReport.getType()) {
 		case "income":
 			reportTypeLabel.setText("Income Report");
-			reportTypeItemsLabel.setText("Income of items per item type:");
-			reportTypeProductsLabel.setText("Income of products per product type:");
-			totalReportTypeProductsLabel.setText("Total income of products:");
-			totalReportTypeItemsLabel.setText("Total income of items:");
-			totalReportTpeCustomLabel.setText("Total income of custom products:");
+			reportTypeItemsLabel.setText("Income from items per item type:");
+			reportTypeProductsLabel.setText("Income from products per product type:");
+			totalReportTypeProductsLabel.setText("Total income from products:");
+			totalReportTypeItemsLabel.setText("Total income from items:");
+			totalReportTpeCustomLabel.setText("Total income from custom products:");
+			totalIncomeLabel.setText("Net Income:");
 			refundsLabel.setText(InputChecker.price(totalRefunds));
 			break;
 		case "orders":
 			reportTypeLabel.setText("Orders Report");
-			reportTypeItemsLabel.setText("Quantity of items per item type in orders:");
-			reportTypeProductsLabel.setText("Quantity of products per product type in orders:");
+			reportTypeItemsLabel.setText("Quantity of items per item type:");
+			reportTypeProductsLabel.setText("Quantity of products per product type:");
 			totalReportTypeProductsLabel.setText("Total quantity of products per order:");
 			totalReportTypeItemsLabel.setText("Total quantity of items per order:");
 			totalReportTpeCustomLabel.setText("Total quantity of custom products:");
-			totalRefundsLabel.setVisible(false);
-			refundsLabel.setVisible(false);
+			totalIncomeLabel.setText("Net Sales:");
+			mainVBox.getChildren().remove(refundSeperator);
+			mainVBox.getChildren().remove(refundHbox);
 			break;
 		}
-		
 		initProductsAndItemsTypesVBox();
 	}
 
@@ -125,7 +143,7 @@ public class PopupReportController implements Initializable {
 		// init total sum of items
 		for (Integer currentItemSum : itemsLabels.values()) {
 			HBox itemSumHBox = new HBox();
-			if(isIncome)
+			if (isIncome)
 				itemSumHBox.getChildren().add(new Label(InputChecker.price(currentItemSum)));
 			else
 				itemSumHBox.getChildren().add(new Label(currentItemSum + ""));
@@ -142,7 +160,7 @@ public class PopupReportController implements Initializable {
 		// init total sum of products
 		for (Integer currentProductSum : productsLabels.values()) {
 			HBox productSumHBox = new HBox();
-			if(isIncome)
+			if (isIncome)
 				productSumHBox.getChildren().add(new Label(InputChecker.price(currentProductSum)));
 			else
 				productSumHBox.getChildren().add(new Label(currentProductSum + ""));
@@ -150,19 +168,20 @@ public class PopupReportController implements Initializable {
 			totalProducts += currentProductSum;
 		}
 
-		if(isIncome) {
+		if (isIncome) {
 			totalProductsLabel.setText(InputChecker.price(totalItems));
 			totalItemsLabel.setText(InputChecker.price(totalProducts));
 			totalCustomLabel.setText(InputChecker.price(totalCustom));
-		}
-		else {
+			totalIncomeQuantityLabel.setText(InputChecker.price(totalItems + totalProducts + totalCustom - totalRefunds));
+		} else {
 			totalProductsLabel.setText(totalItems + "");
 			totalItemsLabel.setText(totalProducts + "");
-			totalCustomLabel.setText(totalCustom+"");
+			totalCustomLabel.setText(totalCustom + "");
+			totalIncomeQuantityLabel.setText(totalItems + totalProducts + totalCustom + "");
 		}
 		branchLabel.setText(selectedReport.getBranch().toString());
-		quraterLabel.setText("Q" + selectedReport.getQuarter() + "");
-		
+		quraterLabel.setText("Q" + selectedReport.getQuarter() + " " + selectedReport.getYear());
+
 	}
 
 	public static void setItemsLabels(Map<String, Integer> itemsLabels) {

@@ -67,7 +67,7 @@
                      <children>
                         <Label text="Name:">
                            <font>
-                              <Font size="15.0" />
+                              <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
                         <Label fx:id="usernameLable" text="Please Select User" textFill="#2600ff">
@@ -84,7 +84,7 @@
                      <children>
                         <Label text="Use Type:">
                            <font>
-                              <Font size="15.0" />
+                              <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
                         <Label fx:id="userTypeLable" text="Premission" textFill="#2600ff">
@@ -129,6 +129,9 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
                   </HBox>
                   <HBox fx:id="defaultScreenButton" disable="true" onMouseClicked="#setDefaultScreens" style="-fx-background-color: E4C2C2; -fx-background-radius: 20;">
                      <children>
@@ -149,6 +152,9 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
                   </HBox>
                   <HBox fx:id="addScreenButton" disable="true" onMouseClicked="#addScreens" style="-fx-background-radius: 20; -fx-background-color: E4C2C2;">
                      <children>
@@ -169,21 +175,27 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <padding>
+                        <Insets right="5.0" />
+                     </padding>
                   </HBox>
                </children>
             </HBox>
          </children>
       </VBox>
-      <ScrollPane>
+      <ScrollPane prefHeight="483.0" prefWidth="1280.0">
          <VBox.margin>
             <Insets />
          </VBox.margin>
          <content>
-            <TilePane fx:id="userHomeScreens" alignment="CENTER" hgap="10.0" prefHeight="557.0" prefRows="3" prefWidth="1277.0" style="-fx-background-color: FDFFFD;" vgap="10.0" />
+            <TilePane fx:id="userHomeScreens" alignment="CENTER" hgap="10.0" prefHeight="463.0" prefRows="3" prefWidth="1263.0" style="-fx-background-color: FDFFFD;" vgap="10.0">
+               <padding>
+                  <Insets bottom="20.0" top="20.0" />
+               </padding></TilePane>
          </content>
       </ScrollPane>
    </children>
    <padding>
-      <Insets top="20.0" />
+      <Insets top="10.0" />
    </padding>
 </VBox>

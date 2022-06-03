@@ -44,10 +44,17 @@
                         </Label>
                      </children>
                   </VBox>
-                  <Button fx:id="addToCartButton" mnemonicParsing="false" prefHeight="31.0" prefWidth="90.0" style="-fx-background-radius: 20;" text="Add To Cart">
+                  <Button fx:id="addToCartButton" contentDisplay="BOTTOM" mnemonicParsing="false" prefHeight="31.0" prefWidth="90.0" style="-fx-background-radius: 20;" text="Add To Cart">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/icons/addToCartIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
                </children>
             </VBox>
