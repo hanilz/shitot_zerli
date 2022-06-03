@@ -72,7 +72,7 @@ public class AnalyzeAnswersController implements Initializable {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.UPLOAD_FILE);
 		message.put("FILE", savedFile2);
-//		message.put("FILE", surveyPDFFile);
+		message.put("surveyID", surveyID);
 		Object response = ClientFormController.client.accept(message);
 		return (boolean)response;
 	}

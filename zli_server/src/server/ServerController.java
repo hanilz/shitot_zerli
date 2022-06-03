@@ -27,7 +27,8 @@ import util.ServerMessageController;
  * overriding the functions for our server-client project (zli)
  */
 public class ServerController extends AbstractServer implements Runnable {
-
+	Thread complaints;
+	Thread reportsThread;
 	/**
 	 * The default port to listen on.
 	 */
@@ -86,12 +87,15 @@ public class ServerController extends AbstractServer implements Runnable {
 	/**
 	 * Disconnect server from the connection and disconnecting all the clients.
 	 */
+	@SuppressWarnings("deprecation")
 	public void disconnectServer() {
 		try {
 			AnalayzeCommand.disconnectAllUser();
 			HashMap<String, Object> message = new HashMap<>();
 			message.put("command", Commands.SERVER_DISCONNEDTED);
 			sendToAllClients(message); // make all clients go back to main client screen
+			complaints.stop();
+			reportsThread.stop();
 			close();
 			disconnectAllClients();
 			System.out.println("disconnected server");
@@ -123,7 +127,7 @@ public class ServerController extends AbstractServer implements Runnable {
 	}
 
 	private synchronized void runComplaintsThread() {
-		Thread complaints = new Thread(new Runnable() {
+		complaints = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				ArrayList<Complaint> complaintList;
@@ -152,7 +156,7 @@ public class ServerController extends AbstractServer implements Runnable {
 	}
 
 	private synchronized void generateReports() {
-		Thread reportsThread = new Thread(new Runnable() {
+		reportsThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				while (true) {
