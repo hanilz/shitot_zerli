@@ -112,7 +112,7 @@ public class ManageUsersPermissionController implements Initializable {
 	@SuppressWarnings("unchecked")
 	private ObservableList<ManageUsers> getUsersFromDB() {
 		HashMap<String, Object> message = new HashMap<>();
-		message.put("command", Commands.FETCH_ALL_USERS_DETAILS);// might change
+		message.put("command", Commands.FETCH_ALL_EMPLOYEES);// might change
 		Object response = ClientFormController.client.accept(message);
 		return (ObservableList<ManageUsers>) response;
 	}
