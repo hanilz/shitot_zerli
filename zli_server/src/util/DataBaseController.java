@@ -94,6 +94,7 @@ public class DataBaseController {
 		if (conn != null) {
 			try {
 				conn.close();// closing database connection
+				conn = null;
 			} catch (Exception e) {
 			}
 		}

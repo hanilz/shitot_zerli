@@ -18,6 +18,7 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int idUser = -1;
 	private String username = "guest";
+	private String password;
 	private int idAccount = -1;
 	private UserType userType = UserType.UNDEFINED;
 	private ArrayList<Screens> userHomeScreens=new ArrayList<>();
@@ -27,7 +28,7 @@ public class User implements Serializable {
 
 	private User() {
 	}
-	
+
 	public ArrayList<Screens> getUserHomeScreens()
 	{
 		return userHomeScreens;
@@ -60,6 +61,15 @@ public class User implements Serializable {
 			isLogged = true;
 		}
 	}
+	
+	public User(String username, String password, UserType userType, double storeCredit) {
+			this.username = username;
+			this.password = password;;
+			this.userType = userType;
+			isLogged = false;
+			this.storeCredit = storeCredit;
+	}
+
 
 	public void logout()  {
 		if (isLogged) {
@@ -117,6 +127,14 @@ public class User implements Serializable {
 
 	public double getStoreCredit() {
 		return storeCredit;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public void setStoreCredit(double storeCredit) {

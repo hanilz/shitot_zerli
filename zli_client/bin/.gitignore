@@ -1,12 +1,10 @@
 /cart/
-/cartTest/
 /catalog/
 /client/
 /customProduct/
 /customerComplaint/
 /deliveryCoordination/
 /entities/
-/gui/
 /home/
 /inputs/
 /manageCatalog/
@@ -17,8 +15,9 @@
 /ordersView/
 /registerUser/
 /report/
-/resources/
+/cartTest/
 /survey/
 /surveyAnalysis/
 /surveyAnalysisView/
 /util/
+/resources/
