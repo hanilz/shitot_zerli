@@ -47,11 +47,13 @@ public class ClientMessageController {
 		case FETCH_ALL_USERS_DETAILS:
 			returnServerListRespond(new ArrayList<ManageUsers>());
 			break;
+		case FETCH_ALL_EMPLOYEES:
+			returnServerListRespond(new ArrayList<ManageUsers>());
+			break;
 		case FETCH_BRANCHES:
 			returnServerListRespond(new ArrayList<Branch>());
 			break;
 		case FETCH_BRANCHES_PER_MANAGER:
-			
 			returnServerListRespond(new ArrayList<Branch>());
 			break;
 //		case FETCH_ITEMS:
