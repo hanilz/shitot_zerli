@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -34,10 +35,17 @@
             </Label>
          </children>
       </HBox>
-      <Button fx:id="editProductButton" mnemonicParsing="false" onAction="#openProductEditor" prefHeight="14.0" prefWidth="130.0" style="-fx-background-radius: 20;" text="Edit Product">
+      <Button fx:id="editProductButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#openProductEditor" prefHeight="14.0" prefWidth="130.0" style="-fx-background-radius: 20;" text="Edit Product">
          <font>
             <Font name="System Bold" size="12.0" />
-         </font></Button>
+         </font>
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/icons/editPencilIcon.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
    </children>
    <padding>
       <Insets top="10.0" />

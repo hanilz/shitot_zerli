@@ -163,7 +163,14 @@
                   </ScrollPane>
                   <VBox alignment="CENTER">
                      <children>
-                        <Button id="filterBtn" fx:id="filterButton" mnemonicParsing="false" onMouseClicked="#search" text="Filter" />
+                        <Button id="filterBtn" fx:id="filterButton" contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#search" text="Filter">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/icons/filterIcon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
                      </children>
                   </VBox>
                </children>
@@ -179,7 +186,14 @@
                   <HBox alignment="CENTER" prefHeight="28.0" prefWidth="785.0" spacing="15.0">
                      <children>
                         <TextField fx:id="searchBar" prefHeight="25.0" prefWidth="645.0" promptText="Search product by name, color..." />
-                        <Button id="searchBtn" fx:id="searchButton" mnemonicParsing="false" onMouseClicked="#search" prefHeight="29.0" prefWidth="61.0" text="Search" />
+                        <Button id="searchBtn" fx:id="searchButton" contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#search" prefHeight="29.0" text="Search">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/icons/searchIcon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
                      </children>
                   </HBox>
                   <VBox>

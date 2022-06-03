@@ -119,7 +119,6 @@ public class ImportUsers {
 			buffer.delete(buffer.toString().length()-2, buffer.toString().length());
 			buffer.append(";");
 			stmt = DataBaseController.getConn().createStatement();
-			System.out.println(buffer.toString());
 			stmt.executeUpdate(buffer.toString());
 		} catch (SQLException e) {
 			e.printStackTrace();

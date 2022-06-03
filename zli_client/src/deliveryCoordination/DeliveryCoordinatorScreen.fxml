@@ -52,7 +52,7 @@
       </GridPane>
       <ScrollPane prefHeight="575.0" prefWidth="1220.0">
          <content>
-            <VBox fx:id="orderVBox" prefHeight="548.0" prefWidth="1205.0">
+            <VBox fx:id="orderVBox" prefHeight="548.0" prefWidth="1205.0" spacing="10.0">
                <padding>
                   <Insets left="10.0" top="10.0" />
                </padding>

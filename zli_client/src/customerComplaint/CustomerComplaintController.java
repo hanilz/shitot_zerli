@@ -67,14 +67,16 @@ public class CustomerComplaintController implements Initializable {
 
 	@FXML
 	void discardComplaint(ActionEvent event) {
-		ManageScreens.changeScreenTo(Screens.COMPLAINT_HOME);
+		if(ManageScreens.getYesNoDecisionAlert("Discard Complaint", "Are you sure you want to cancel this complaint?", null))
+			ManageScreens.changeScreenTo(Screens.COMPLAINT_HOME);
 	}
 
 	@FXML
 	void saveComplaint(ActionEvent event) {
 		if (!checkInput())
 			return;
-
+		if(!ManageScreens.getYesNoDecisionAlert("Submit Complaint", "Are you sure you want submit this complaint?", null))
+			return;
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.SUBMIT_COMPLAINT);
 		

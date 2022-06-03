@@ -46,7 +46,8 @@ public class SurveyController implements Initializable{
 
     @FXML
     void discardSurveyAnswer(ActionEvent event) {
-    	ManageScreens.changeScreenTo(Screens.SURVEY_HOME);
+    	if(ManageScreens.getYesNoDecisionAlert("Discard Answer", "Are you sure you want to discard your answers?", null))
+    		ManageScreens.changeScreenTo(Screens.SURVEY_HOME);
     }
 
     @FXML
@@ -60,23 +61,20 @@ public class SurveyController implements Initializable{
     		}
     		answers.put(survey.getQuestion(i),ans);
 		}
+    	if(!ManageScreens.getYesNoDecisionAlert("Save Answer", "Are you sure you want to submit your answer?", null))
+    		return;
     	HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.SUBMIT_SURVEY);
 		message.put("answers", answers);
 		Object response = ClientFormController.client.accept(message);
-		System.out.println((String)response);
     	ManageScreens.changeScreenTo(Screens.SURVEY_HOME);
-    	ManageScreens.displayAlert("Survey Saved", "Thank you for filling our survey!\nyour opinion really matters to us!");
+    	ManageScreens.displayAlert("Survey Saved", "Thank you for filling our survey!\nYour opinion really matters to us!");
     }
 
     
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		if(survey==null)
-			System.out.println("null survey");
-		
-		surveyTitleLabel.setText(survey.getSurveyName());
-		
+		surveyTitleLabel.setText(survey.getSurveyName());		
 		for (int i = 0; i < survey.getQuestions().size(); i++) {
 			questionHBox question = new questionHBox(survey.getQuestion(i));
 			questionVbox.getChildren().add(question);

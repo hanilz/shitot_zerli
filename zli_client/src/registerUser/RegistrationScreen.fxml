@@ -59,7 +59,7 @@
                <children>
                   <Label alignment="CENTER" prefHeight="17.0" prefWidth="484.0" text="Customer Details">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
                   <Separator prefWidth="200.0" />
@@ -141,7 +141,7 @@
                <children>
                   <Label alignment="CENTER" prefHeight="17.0" prefWidth="484.0" text="Customer Login Credentials">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
                   <Separator prefWidth="200.0" />
@@ -171,7 +171,7 @@
                   </GridPane>
                   <Label alignment="CENTER" prefHeight="17.0" prefWidth="484.0" text="Default Payment Method">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
                   <Separator prefWidth="200.0" />
@@ -225,8 +225,28 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="66.0" prefWidth="1260.0" spacing="170.0">
          <children>
-            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#returnHomebtn" text="Close and Cancel" />
-            <Button fx:id="completeRegistrationButton" mnemonicParsing="false" onAction="#createNewCustomerComplaint" text="Complete Registration" />
+            <Button fx:id="closeButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#returnHomebtn" text="Close and Cancel">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/deleteIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="completeRegistrationButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#createNewCustomerComplaint" text="Complete Registration">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/registerIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
          </children>
       </HBox>
       <Label fx:id="errorLabel" text="*Please fill all the fields before submitting" textFill="RED" visible="false">

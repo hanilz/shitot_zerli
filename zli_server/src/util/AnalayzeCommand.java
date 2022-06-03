@@ -875,7 +875,7 @@ public class AnalayzeCommand {
 	public static ArrayList<Notification> getNotification(int idUser) {
 		ArrayList<Notification> notification = new ArrayList<>();
 		Connection conn = DataBaseController.getConn();
-		String query = "SELECT * FROM notifications WHERE idUser = ?;";
+		String query = "SELECT * FROM notifications WHERE idUser = ? ORDER BY idNotification DESC;";
 		try {
 			// Statement selectStmt = DataBaseController.getConn().createStatement(); why???
 			PreparedStatement preparedStmt = conn.prepareStatement(query);

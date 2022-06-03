@@ -74,6 +74,13 @@
                      <font>
                         <Font size="18.0" />
                      </font>
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/icons/pickupIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </RadioButton>
                   <RadioButton fx:id="deliveryRadioButton" mnemonicParsing="false" onMouseClicked="#selectDeliveryEvent" selected="true" text="Delivery" toggleGroup="$delivery">
                      <cursor>
@@ -81,7 +88,14 @@
                      </cursor>
                      <font>
                         <Font size="18.0" />
-                     </font></RadioButton>
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/icons/shippingIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></RadioButton>
                </children>
             </VBox>
             <VBox alignment="TOP_CENTER" prefHeight="97.0" prefWidth="775.0">
@@ -311,13 +325,20 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/icons/megaExpressDeliveryIcon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </CheckBox>
                         <Label text="* An express delivery will be prepared and sent to the reciever 3 hours after the order has been approved - it's lightning fast!" textFill="#2e3add" />
                      </children>
                   </VBox>
                </children>
             </VBox>
-            <HBox alignment="CENTER" prefHeight="76.0" prefWidth="1052.0" spacing="59.0">
+            <HBox alignment="CENTER" prefHeight="76.0" prefWidth="1052.0" spacing="236.0">
                <children>
                   <Button fx:id="backButton" mnemonicParsing="false" onMousePressed="#changeToGreetingCardScreen" text="Back To Greeting Card">
                      <cursor>
@@ -325,7 +346,14 @@
                      </cursor>
                      <font>
                         <Font size="18.0" />
-                     </font></Button>
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/icons/backIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
                   <VBox alignment="CENTER" prefHeight="65.0" prefWidth="117.0">
                      <children>
                         <Label text="Delivery Fee:">
@@ -340,13 +368,20 @@
                         </Label>
                      </children>
                   </VBox>
-                  <Button fx:id="checkoutButton" mnemonicParsing="false" onMousePressed="#changeToCheckoutScreen" text="Proceed To Checkout">
+                  <Button fx:id="checkoutButton" contentDisplay="RIGHT" mnemonicParsing="false" onMousePressed="#changeToCheckoutScreen" text="Proceed To Checkout">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                      <font>
                         <Font size="18.0" />
-                     </font></Button>
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/icons/paymentIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
                </children>
             </HBox>
          </children>

@@ -14,9 +14,13 @@
 
 <HBox fx:id="hbox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: fefdff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.HomeUserTypesController">
    <children>
-      <VBox alignment="CENTER" prefHeight="500.0" prefWidth="294.0" spacing="30.0">
+      <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="294.0" spacing="30.0">
          <children>
-            <Label text="Label" />
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/icon.png" />
+               </image>
+            </ImageView>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="276.0" text="Welcome To Zer-Li">
                <font>
                   <Font name="System Bold" size="30.0" />
@@ -60,38 +64,37 @@
          <HBox.margin>
             <Insets />
          </HBox.margin>
+         <padding>
+            <Insets top="100.0" />
+         </padding>
       </VBox>
       <Separator orientation="VERTICAL" prefHeight="200.0" />
-      <VBox alignment="CENTER" prefHeight="720.0" prefWidth="979.0">
+      <TilePane fx:id="gridOptions" alignment="CENTER" hgap="40.0" prefColumns="3" prefHeight="567.0" prefRows="2" prefTileHeight="230.0" prefTileWidth="200.0" prefWidth="979.0" vgap="40.0">
          <children>
-            <TilePane fx:id="gridOptions" alignment="CENTER" hgap="40.0" prefColumns="3" prefHeight="567.0" prefRows="2" prefTileHeight="230.0" prefTileWidth="200.0" prefWidth="979.0" vgap="40.0">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" style="-fx-background-color: LAVENDER; -fx-background-radius: 20;">
                <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" style="-fx-background-color: LAVENDER; -fx-background-radius: 20;">
-                     <children>
-                        <Button fx:id="exitButton" mnemonicParsing="false" onMouseClicked="#exitHomeScreen" onMousePressed="#exitHomeScreen" text="Exit" textFill="#7c0000" />
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../resources/home/exit.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="294.0" prefWidth="234.0" spacing="10.0" style="-fx-background-color: LAVENDER; -fx-background-radius: 20;">
-                     <children>
-                        <Button fx:id="logoutButton" mnemonicParsing="false" onMouseClicked="#logoutFromUser" text="Logout" />
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../resources/home/logout.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </VBox>
+                  <Button fx:id="exitButton" mnemonicParsing="false" onMouseClicked="#exitHomeScreen" onMousePressed="#exitHomeScreen" text="Exit" textFill="#7c0000" />
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/home/exit.png" />
+                     </image>
+                  </ImageView>
                </children>
-               <padding>
-                  <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
-               </padding>
-            </TilePane>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="294.0" prefWidth="234.0" spacing="10.0" style="-fx-background-color: LAVENDER; -fx-background-radius: 20;">
+               <children>
+                  <Button fx:id="logoutButton" mnemonicParsing="false" onMouseClicked="#logoutFromUser" text="Logout" />
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/home/logout.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
          </children>
-      </VBox>
+         <padding>
+            <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+         </padding>
+      </TilePane>
    </children>
 </HBox>

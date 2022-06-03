@@ -9,6 +9,8 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -178,10 +180,17 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="31.0" prefWidth="906.0" spacing="50.0">
          <children>
-            <Button fx:id="discardButton" mnemonicParsing="false" onAction="#chanageToManageCatalogScreen" text="Discard">
+            <Button fx:id="discardButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#chanageToManageCatalogScreen" text="Discard">
                <font>
                   <Font size="14.0" />
                </font>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/cancelIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
             <VBox>
                <children>
@@ -197,10 +206,17 @@
                   </Label>
                </children>
             </VBox>
-            <Button fx:id="addButton" mnemonicParsing="false" onAction="#addNewProductToCatalog" text="Add To Catalog">
+            <Button fx:id="addButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#addNewProductToCatalog" text="Add To Catalog">
                <font>
                   <Font size="14.0" />
                </font>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/plusIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
          </children>
       </HBox>

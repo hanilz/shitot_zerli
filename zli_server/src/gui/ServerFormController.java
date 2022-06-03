@@ -2,9 +2,11 @@ package gui;
 
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -87,6 +89,9 @@ public class ServerFormController implements Initializable {
 	 */
 	@FXML
 	private TextArea consoleField;
+	
+    @FXML
+    private Button generateReportsButton;
 
 	/**
 	 * table containing all connections
@@ -257,4 +262,10 @@ public class ServerFormController implements Initializable {
 	public void refreshClientsTable() {
 		connectionTable.refresh();
 	}
+	
+
+    @FXML
+    void generateReports(ActionEvent event) {
+    	sv.genrateReportCommand(new Date());
+    }
 }

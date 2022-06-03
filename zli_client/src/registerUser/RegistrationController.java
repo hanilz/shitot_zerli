@@ -185,7 +185,8 @@ public class RegistrationController {
 
     @FXML
     void returnHomebtn(ActionEvent event) {
-    	ManageScreens.home();
+    	if(ManageScreens.getYesNoDecisionAlert("User Registration", "Are you sure you want to exit?", null))
+    		ManageScreens.home();
     }
 
 	// this method is used to check if all fields were filled in this form

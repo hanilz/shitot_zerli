@@ -63,7 +63,14 @@
       </TableView>
       <HBox alignment="CENTER" prefHeight="66.0" prefWidth="980.0">
          <children>
-            <Button fx:id="newCustomerComplaintButton" mnemonicParsing="false" onAction="#createNewCustomerComplaint" text="New Cutomer Complaint" />
+            <Button fx:id="newCustomerComplaintButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#createNewCustomerComplaint" text="New Cutomer Complaint">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/plusIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
          </children>
       </HBox>
    </children>

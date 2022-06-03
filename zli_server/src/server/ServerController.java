@@ -164,23 +164,22 @@ public class ServerController extends AbstractServer implements Runnable {
 					calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DATE));
 					Date lastDayOfMonth = calendar.getTime();
 					Date currentDate = new Date();
-					if (!lastDayOfMonth.toString().equals(currentDate.toString()))
-						sleepForOneDay(calendar);
-					else {
-						//generate new reports
+					if (lastDayOfMonth.toString().equals(currentDate.toString()))
 						if(!isGenerated(currentDate)) {
-							ArrayList<String> reportsType = new ArrayList<String>(Arrays.asList("income", "orders", "complaints", "income histogram"));
-							ArrayList<Branch> branches = AnalayzeCommand.selectAllBranches();
-							AnalayzeCommand.generateNewReports(reportsType, branches, currentDate);
-							sleepForOneDay(calendar);
+							genrateReportCommand(currentDate);
 						}
-						else
-							sleepForOneDay(calendar);
-					}
+					sleepForOneDay(calendar);
 				}
 			}
+
 		});
 		reportsThread.start();
+	}
+
+	public void genrateReportCommand(Date currentDate) {
+		ArrayList<String> reportsType = new ArrayList<String>(Arrays.asList("income", "orders", "complaints", "income histogram"));
+		ArrayList<Branch> branches = AnalayzeCommand.selectAllBranches();
+		AnalayzeCommand.generateNewReports(reportsType, branches, currentDate);
 	}
 
 	private void sleepForOneDay(Calendar calendar) {

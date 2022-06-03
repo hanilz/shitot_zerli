@@ -62,6 +62,13 @@
                <HBox.margin>
                   <Insets />
                </HBox.margin>
+               <graphic>
+                  <ImageView fitHeight="45.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/backIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
          </children>
          <VBox.margin>

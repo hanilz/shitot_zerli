@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -37,8 +39,22 @@
       </ScrollPane>
       <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="580.0" spacing="150.0">
          <children>
-            <Button fx:id="discardButton" mnemonicParsing="false" onAction="#discardSurveyAnswer" text="Discard And Close" />
-            <Button fx:id="submitButton" mnemonicParsing="false" onAction="#saveSurveyAnswer" text="Submit Answer" />
+            <Button fx:id="discardButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#discardSurveyAnswer" text="Discard And Close">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/deleteIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="submitButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#saveSurveyAnswer" text="Submit Answer">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/saveIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
          </children>
          <VBox.margin>
             <Insets />
