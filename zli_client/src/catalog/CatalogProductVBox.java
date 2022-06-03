@@ -10,6 +10,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import util.ManageScreens;
@@ -29,18 +30,19 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 		initImageProduct();
 
 		amountLabel.setText(InputChecker.price(product.getPrice()));
-		if(product.getDiscount() != 0) {
-			double discount = product.getPrice() - (product.getPrice()*(product.getDiscount()/100));
-			amountLabel.setId("discount");
-			amountLabel.setStyle("-fx-text-fill: #F70000;");
-			amountLabel.setText(InputChecker.price(discount));
-		}
 			
 		initPriceHBox();
 
 		initAddToCartButton();
 
 		super.initVBox();
+		
+		if(product.isDiscount()) {
+			discountLabel.setText(InputChecker.price(product.calculateDiscount()));
+			priceHBox.getChildren().add(discountLabel);
+			amountLabel.setId("priceAfterDiscountLabel");;
+		}
+		
 		this.getChildren().add(addToCartButton);
 	}
 

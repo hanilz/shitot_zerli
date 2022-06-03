@@ -83,6 +83,10 @@ public class ServerMessageController {
 			ArrayList<ManageUsers> users = AnalayzeCommand.selectAllUsers();
 			message.put("response", users);
 			break;
+		case FETCH_ALL_EMPLOYEES:
+			ArrayList<ManageUsers> employees = AnalayzeCommand.selectAllEmployee();
+			message.put("response", employees);
+			break;
 		case FETCH_BRANCHES:
 			ArrayList<Branch> branches = AnalayzeCommand.selectAllBranches();
 			message.put("response", branches);
@@ -103,6 +107,10 @@ public class ServerMessageController {
 		case FETCH_SURVEYS:
 			HashMap<Integer, String> surveys = AnalayzeCommand.selectSurveys();
 			message.put("response", surveys);
+			break;
+		case FETCH_ANALYZED_SURVEYS:
+			HashMap<Integer, String> analyzedSurveys = AnalayzeCommand.selectAnalyzedSurveys();
+			message.put("response", analyzedSurveys);
 			break;
 		case FETCH_ACCOUNT_PAYMENTS:
 			int idUserAccountPayment = (int) message.get("idUser");
@@ -294,13 +302,16 @@ public class ServerMessageController {
 			message.put("response", questions);
 			break;
 		case UPLOAD_FILE:
-			//File saveFileToDB = FilesHandler.saveFile((SurveyAnalysisFile) message.get("FILE"));
-			boolean uploaded = AnalayzeCommand.uploadFileToDB((File) message.get("FILE")); //and then send saveFileToDB
+			boolean uploaded = AnalayzeCommand.uploadFileToDB((File) message.get("FILE"),(Integer) message.get("surveyID")); //and then send saveFileToDB
 			message.put("response", uploaded);
 			break;
 		case FETCH_FILES:
-			ArrayList<SurveyAnalysisFile> files = AnalayzeCommand.retrieveFileFromDB();
+			ArrayList<SurveyAnalysisFile> files = AnalayzeCommand.retrieveAllFilesFromDB();
 			message.put("response", files);
+			break;
+		case FETCH_FILE:
+			SurveyAnalysisFile file = AnalayzeCommand.retrieveFileFromDB((Integer) message.get("idSurvey"));
+			message.put("response", file);
 			break;
 		case GET_ITEMS_INCOME_REPORT:
 			Map<String, Integer> itemsIncomeLabels = AnalayzeCommand
@@ -408,6 +419,7 @@ public class ServerMessageController {
 			int productID = AnalayzeCommand.insertNewProductToDB((Product) message.get("product"));
 			message.put("response", productID);
 			break;
+
 		default:
 			break;
 		}

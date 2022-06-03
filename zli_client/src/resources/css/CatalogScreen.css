@@ -57,9 +57,19 @@
 	-fx-text-alignment: center;
 }
 
-#priceLabel, #discount {
+#priceLabel {
 	-fx-font-weight: bold;
-	-fx-font-size: 16px;
+	-fx-font-size: 18px;
+}
+
+#priceAfterDiscountLabel {
+	-fx-font-size: 14px;
+}
+
+#discountLabel {
+	-fx-text-fill: red;
+	-fx-font-weight: bold;	
+	-fx-font-size: 18px;
 }
 
 #catalogCard, #customProductCard {
