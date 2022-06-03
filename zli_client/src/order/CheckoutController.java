@@ -193,7 +193,7 @@ public class CheckoutController implements Initializable {
 						"Payment Successful!");
 				ManageScreens.getPopupStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
 			          public void handle(WindowEvent we) {
-			        	  PaymentSuccessfulController.returnToCatalog();
+			        	  PaymentSuccessfulController.restAndReturn();
 			          }
 			      });        
 

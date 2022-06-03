@@ -21,11 +21,11 @@ public class PaymentSuccessfulController{
 
     @FXML
     void changeToCatalog(MouseEvent event) {
-    	returnToCatalog();
+    	restAndReturn();
     }
 
 
-	public static void returnToCatalog() {
+	public static void restAndReturn() {
 		if(ManageScreens. getPopupStage() != null)
     		ManageScreens. getPopupStage().close();
     	//Empty the cart and the singletonOrder after we inserted the order into db
@@ -39,6 +39,7 @@ public class PaymentSuccessfulController{
     void openViewOrdersScreen(ActionEvent event) {
 		if(ManageScreens. getPopupStage() != null)
     		ManageScreens. getPopupStage().close();
+		restAndReturn();
     	ManageScreens.changeScreenTo(Screens.VIEW_ORDERS_CUSTOMER);
     }
   
