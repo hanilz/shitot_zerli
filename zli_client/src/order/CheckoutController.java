@@ -102,9 +102,6 @@ public class CheckoutController implements Initializable {
 
 	private ObservableList<AccountPayment> accountPayments;
 
-	private VBox greetingCardVBox = new VBox();
-	private VBox deliveryDetailsVBox = new VBox();
-
 	private double deliveryFee;
 	private double cartTotal;
 	private double totalPriceBeforeCredit;

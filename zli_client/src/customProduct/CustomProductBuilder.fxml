@@ -41,7 +41,7 @@
             </ImageView>
             <VBox alignment="CENTER" prefHeight="100.0" prefWidth="667.0" GridPane.columnIndex="1">
                <children>
-                  <Label fx:id="catalogLbl" alignment="TOP_CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="97.0" prefWidth="325.0" text="Custom Product Builder" textAlignment="CENTER">
+                  <Label fx:id="catalogLbl" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="97.0" prefWidth="325.0" text="Custom Product Builder" textAlignment="CENTER">
                      <font>
                         <Font size="49.0" />
                      </font>
@@ -210,19 +210,33 @@
             <HBox alignment="CENTER_RIGHT" spacing="20.0" GridPane.columnIndex="1">
                <children>
                   <Label fx:id="warningLabel" textFill="RED" />
-                  <Button fx:id="addToCartButton" mnemonicParsing="false" prefHeight="39.0" prefWidth="120.0" text="Add To Cart" textAlignment="CENTER" wrapText="true">
+                  <Button fx:id="addToCartButton" contentDisplay="RIGHT" mnemonicParsing="false" text="Add To Cart" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="18.0" />
                      </font>
+                     <graphic>
+                        <ImageView fx:id="addToCartImage" fitHeight="26.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/icons/addToCartIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
                </children>
             </HBox>
             <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="backToCatalogButton" mnemonicParsing="false" prefHeight="39.0" prefWidth="161.0" text="Back To Catalog" textAlignment="CENTER" wrapText="true">
+                  <Button fx:id="backToCatalogButton" mnemonicParsing="false" text="Back To Catalog" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="18.0" />
                      </font>
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/icons/backIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
                </children>
             </VBox>

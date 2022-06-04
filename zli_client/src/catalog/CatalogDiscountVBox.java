@@ -66,15 +66,21 @@ public class CatalogDiscountVBox {
 		productImage.setOnMouseReleased(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				ProductVBox popup = new ProductVBox(product);
-				popup.initProductVBox();
-				Scene scene = new Scene(popup);
-				Stage stage = new Stage();
-				stage.setTitle("Product Details - " + product.getName());
-				stage.setScene(scene);
-				ManageScreens.addPopup(stage);
-				stage.showAndWait();
-				ManageScreens.removePopup(stage);
+//				ProductVBox popup = new ProductVBox(product);
+//				popup.initProductVBox();
+//				Scene scene = new Scene(popup);
+//				Stage stage = new Stage();
+//				stage.setTitle("Product Details - " + product.getName());
+//				stage.setScene(scene);
+//				ManageScreens.addPopup(stage);
+//				stage.showAndWait();
+//				ManageScreens.removePopup(stage);
+				try {
+					ProductDetailsController.setProduct(product);
+					ManageScreens.openPopupFXML(ProductDetailsController.class.getResource("ProductDetailsPopup.fxml"), product.getName());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 	}

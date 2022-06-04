@@ -12,7 +12,7 @@ import util.ManageScreens;
 import util.Screens;
 
 public class CartProductOverviewNoEditVBox extends CartProductOverviewVBox {
-	private Button editCustomProductInBuilderButton = new Button("Edit In Builder");
+	private Button editCustomProductInBuilderButton = new Button("Edit Product");
 	private HBox editButtonsHBox = new HBox();
 	
 	public CartProductOverviewNoEditVBox(Product product) {

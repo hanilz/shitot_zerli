@@ -82,7 +82,7 @@
                         </ImageView>
                      </graphic>
                   </RadioButton>
-                  <RadioButton fx:id="deliveryRadioButton" mnemonicParsing="false" onMouseClicked="#selectDeliveryEvent" selected="true" text="Delivery" toggleGroup="$delivery">
+                  <RadioButton fx:id="deliveryRadioButton" mnemonicParsing="false" onMouseClicked="#selectDeliveryEvent" selected="true" text="Delivery (+15₪)" toggleGroup="$delivery">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -318,7 +318,7 @@
                   </GridPane>
                   <VBox>
                      <children>
-                        <CheckBox fx:id="expressDeliveryCheckBox" mnemonicParsing="false" onMouseClicked="#selectExpressEvent" text="Express Delivery">
+                        <CheckBox fx:id="expressDeliveryCheckBox" mnemonicParsing="false" onMouseClicked="#selectExpressEvent" text="Express Delivery (+15₪)">
                            <font>
                               <Font size="18.0" />
                            </font>
