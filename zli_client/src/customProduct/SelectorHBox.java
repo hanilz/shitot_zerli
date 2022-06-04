@@ -16,9 +16,11 @@ public class SelectorHBox extends CustomProductHBox implements ICustomProductHBo
 
 	@Override
 	public void initHBox() {
+		this.setId("selectorHBox");
 		setCheckBoxEvent();
 		this.getChildren().add(selected);
 		super.initHBox();
+		super.initPriceHBox();
 	}
 
 	private void setCheckBoxEvent() {

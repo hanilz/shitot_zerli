@@ -44,22 +44,21 @@ public class CustomProductHBox extends HBox implements ICustomProductHBox {
 		this.setMinHeight(20);
 
 		initImageProduct();
-		initPriceHBox();
 		initProductDetailsVBox();
 
 		this.getChildren().add(imageVBox);
 		this.getChildren().add(idNameVBox);
-		this.getChildren().add(priceHBox);
 	}
 
-	private void initPriceHBox() {
+	protected void initPriceHBox() {
 		amountLabel = new Label(InputChecker.price(product.getPrice()));
 		amountLabel.setFont(new Font(23));
 		priceVBox.getChildren().add(priceLabel);
 		priceVBox.getChildren().add(amountLabel);
-		priceVBox.setSpacing(5);
+		priceVBox.setSpacing(7);
 		priceHBox.setAlignment(Pos.CENTER_RIGHT);
 		priceHBox.getChildren().add(priceVBox);
+		this.getChildren().add(priceHBox);
 	}
 
 	private void initProductDetailsVBox() {
@@ -68,7 +67,7 @@ public class CustomProductHBox extends HBox implements ICustomProductHBox {
 		nameLabel = new Label(product.getName());
 		nameLabel.setFont(new Font(20));
 		nameLabel.setMinWidth(Control.USE_PREF_SIZE);
-		nameLabel.setPrefWidth(200);
+		nameLabel.setPrefWidth(230);
 
 		idNameVBox.getChildren().add(idLabel);
 		idNameVBox.getChildren().add(nameLabel);
