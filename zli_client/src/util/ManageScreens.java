@@ -1,5 +1,7 @@
 package util;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +21,7 @@ import home.HomeGuestController;
 import home.HomeUserTypesController;
 import home.LoginScreenController;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,6 +31,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import manageCatalog.ManageCatalogController;
 import mangeCustomerOrders.ManageCustomerOrdersController;
 import mangeUsers.AddScreensController;
@@ -45,7 +49,11 @@ import surveyAnalysis.AnalyzeAnswersController;
 import surveyAnalysis.SurveyAnswersHomeController;
 import surveyAnalysisView.SurveyAnalysisViewHomeController;
 
-public class ManageScreens {
+public class ManageScreens implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9183350856829427451L;
 	private static Stage stage;
 	private static Screens previousScreen, currentScreen;
 	private static Stage popupStage;
@@ -87,21 +95,24 @@ public class ManageScreens {
 		style += "css";
 		scene.getStylesheets().add("resources/css/" + style);
 	}
-	
-	
-	/**add a title for the alert and the text do display it
+
+	/**
+	 * add a title for the alert and the text do display it
+	 * 
 	 * @param title
 	 * @param text
 	 */
 	public static void displayAlert(String title, String text) {
-		Alert a = new Alert(AlertType.NONE,title,ButtonType.CLOSE);
+		Alert a = new Alert(AlertType.NONE, title, ButtonType.CLOSE);
 		a.setTitle(title);
 		a.setContentText(text);
-		setIconApplication((Stage)a.getDialogPane().getScene().getWindow());
+		setIconApplication((Stage) a.getDialogPane().getScene().getWindow());
 		a.show();
 	}
-	
-	/**display Alert with a yes no question
+
+	/**
+	 * display Alert with a yes no question
+	 * 
 	 * @param title
 	 * @param header
 	 * @param content
@@ -120,6 +131,39 @@ public class ManageScreens {
 
 	public static void openPopupFXML(URL url, String title) throws Exception {
 		// setIconApplication();
+		Scene scene = setPopup(url);
+		Platform.runLater(new Runnable() { // this thread will help us change between scenes and avoid exceptions
+			@Override
+			public void run() {
+		addPopup(popupStage);
+		popupStage.setTitle(title);
+		popupStage.setScene(scene);
+		if (popupStage.getModality() == Modality.NONE)
+			popupStage.initModality(Modality.APPLICATION_MODAL);
+		if (!popupStage.isShowing())
+			popupStage.showAndWait();
+		removePopup(popupStage);
+			}
+		});
+	}
+	public static void openPopupUnlimitedFXML(URL url, String title) throws Exception {
+		// setIconApplication();
+		Scene scene = setPopup(url);
+		Platform.runLater(new Runnable() { // this thread will help us change between scenes and avoid exceptions
+			@Override
+			public void run() {
+		addPopup(popupStage);
+		popupStage.setTitle(title);
+		popupStage.setScene(scene);
+		popupStage.initModality(Modality.NONE);
+		if (!popupStage.isShowing())
+			popupStage.showAndWait();
+		removePopup(popupStage);
+			}
+		});
+	}
+
+	private static Scene setPopup(URL url) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
 		try {
 			loader = new FXMLLoader(url);
@@ -129,21 +173,10 @@ public class ManageScreens {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		popupStage = new Stage();
-		addPopup(popupStage);
 		setIconApplication(popupStage);
-		Platform.runLater(new Runnable() { // this thread will help us change between scenes and avoid exceptions
-			@Override
-			public void run() {
-				popupStage.setTitle(title);
-				popupStage.setScene(scene);
-				if (popupStage.getModality() == Modality.NONE)
-					popupStage.initModality(Modality.APPLICATION_MODAL);
-				if(!popupStage.isShowing())
-					popupStage.showAndWait();
-				removePopup(popupStage);
-			}
-		});
+		return scene;
 	}
+
 
 	public static void setPreviousScreen(Screens lastScreen)// added
 	{
@@ -154,8 +187,8 @@ public class ManageScreens {
 		stage.getIcons().add(new Image("/resources/icon.png"));
 	}
 
-	public static void addPopup(Stage popup) {
-		openedPopups.add(popup);
+	public static void addPopup(Stage window) {
+		openedPopups.add(window);
 	}
 
 	public static void removePopup(Stage popup) {
@@ -163,8 +196,16 @@ public class ManageScreens {
 	}
 
 	public static void closeAllPopups() {
-		for (int i = 0; i < openedPopups.size(); i++)
-			openedPopups.get(i).close();
+		for (Stage popup : openedPopups) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					if (popup.isShowing()) {
+						popup.close();
+					}
+				}
+			});	
+		}
 		openedPopups.clear();
 	}
 
@@ -181,7 +222,6 @@ public class ManageScreens {
 		return popupStage;
 	}
 
-	@SuppressWarnings("unchecked")
 	public static void changeScreenTo(Screens screen) {
 		setPreviousScreen(currentScreen);// saved one become last one
 		try {
@@ -282,24 +322,25 @@ public class ManageScreens {
 						"Survey Answers");
 				break;
 			case VIEW_REPORTS:
-				ManageScreens.changeScene(ReportsController.class.getResource("reportsScreen.fxml"),
-						"View Reports");
+				ManageScreens.changeScene(ReportsController.class.getResource("reportsScreen.fxml"), "View Reports");
 				break;
 			case VIEW_SURVEY_ANALYSIS_RESULTS:
-				ManageScreens.changeScene(SurveyAnalysisViewHomeController.class.getResource("SurveyReportsHomeScreen.fxml"),
+				ManageScreens.changeScene(
+						SurveyAnalysisViewHomeController.class.getResource("SurveyReportsHomeScreen.fxml"),
 						"View Reports");
 				break;
 			case DELIVER_ORDERS:
-				ManageScreens.changeScene(DeliveryCoordinatorController.class.getResource("DeliveryCoordinatorScreen.fxml"),
+				ManageScreens.changeScene(
+						DeliveryCoordinatorController.class.getResource("DeliveryCoordinatorScreen.fxml"),
 						"Delivery Coordinator");
 				break;
 			case USER_PREMISSION:
-				ManageScreens.changeScene(ManageUsersPermissionController.class.getResource("ManageUsersPermission.fxml"),
+				ManageScreens.changeScene(
+						ManageUsersPermissionController.class.getResource("ManageUsersPermission.fxml"),
 						"Users Premission");
 				break;
 			case ADD_SCREENS:
-				ManageScreens.changeScene(AddScreensController.class.getResource("AddScreens.fxml"),
-						"Add Screens");
+				ManageScreens.changeScene(AddScreensController.class.getResource("AddScreens.fxml"), "Add Screens");
 				break;
 			case CREATE_NEW_PRODUCT:
 				ManageScreens.changeScene(ManageCatalogController.class.getResource("NewProduct.fxml"),

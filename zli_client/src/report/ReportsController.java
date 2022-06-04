@@ -211,28 +211,28 @@ public class ReportsController implements Initializable {
 		case "income":
 			getIncomeReport(selectedReport);
 			try {
-				ManageScreens.openPopupFXML(PopupReportController.class.getResource("PopupReport.fxml"),
+				ManageScreens.openPopupUnlimitedFXML(PopupReportController.class.getResource("PopupReport.fxml"),
 						"Income Report");
 			} catch (Exception e) {}
 			break;
 		case "orders":
 			getOrdersReport(selectedReport);
 			try {
-				ManageScreens.openPopupFXML(PopupReportController.class.getResource("PopupReport.fxml"),
+				ManageScreens.openPopupUnlimitedFXML(PopupReportController.class.getResource("PopupReport.fxml"),
 						"Orders Report");
 			} catch (Exception e) {}
 			break;
 		case "complaints":
 			getComplaintsReportPerBranch(selectedReport);
 			try {
-				ManageScreens.openPopupFXML(HistogramReportController.class.getResource("HistogramReport.fxml"),
+				ManageScreens.openPopupUnlimitedFXML(HistogramReportController.class.getResource("HistogramReport.fxml"),
 						"Complaints Report");
 			} catch (Exception e) {}
 			break;
 		case "income histogram":
 			getIncomeHistogramReportPerBranch(selectedReport);
 			try {
-				ManageScreens.openPopupFXML(HistogramReportController.class.getResource("HistogramReport.fxml"),
+				ManageScreens.openPopupUnlimitedFXML(HistogramReportController.class.getResource("HistogramReport.fxml"),
 						"Income Histogram Report");
 			} catch (Exception e) {}
 			break;
