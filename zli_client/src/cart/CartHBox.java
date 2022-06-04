@@ -85,6 +85,7 @@ public class CartHBox extends HBox {
 		this.getChildren().add(quantityVBox);
 		this.getChildren().add(priceVBox);
 		this.getChildren().add(removeButton);
+		this.setId("cartHbox");
 	}
 
 	private boolean isItem() {

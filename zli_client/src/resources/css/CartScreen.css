@@ -1,0 +1,58 @@
+#cartVBox {
+	-fx-background: #FBF3F1;
+	-fx-background-image: url("../connectWallpaper.png");
+}
+
+#homeVBox {
+	-fx-background-color: #FEE1DC;
+	-fx-background-radius: 15;
+	-fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 5.0, 0.0, 0.0,
+		5.0);
+}
+
+#backBtn, #emptyBtn {
+	-fx-background-color: #F4F4F4;
+	-fx-background-radius: 30;
+	-fx-background-insets: 0, 1, 1;
+	-fx-text-fill: black;
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
+	-fx-font-weight: bold;
+	-fx-padding: 5 10 5 10;
+	-fx-font-size: 18;
+}
+
+#buyBtn {
+	-fx-background-radius: 30;
+	-fx-background-insets: 0, 1, 1;
+	-fx-text-fill: black;
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
+	-fx-font-weight: bold;
+	-fx-padding: 5 10 5 10;
+	-fx-font-size: 24;
+}
+
+#backBtn:hover, #emptyBtn:hover {
+	-fx-background-color: #FFE0F0;
+	-fx-cursor: hand;
+	-fx-font-weight: bold;
+	-fx-font-size: 18;
+}
+
+#backBtn:pressed, #emptyBtn:pressed {
+	-fx-background-color: #FFD0FF;
+	-fx-cursor: hand;
+	-fx-font-weight: bold;
+	-fx-font-size: 18;
+}
+
+#buyBtn:hover {
+	-fx-font-size: 24;
+	-fx-font-weight: bold;
+}
+
+#cartHbox {
+	-fx-background-radius: 20;
+	-fx-background-color: #FEE1DC;
+	-fx-padding: 0 10 0 20;
+	-fx-MinHeight: 90;
+}

@@ -129,7 +129,7 @@ public class CartController implements Initializable {
 			buyButton.setDisable(true);
 			emptyCartButton.setVisible(false);
 		} else {
-			buyButton.setStyle("-fx-background-color: green");
+			buyButton.setStyle("-fx-background-color: #55a630");
 			buyButton.setDisable(false);
 		}
 	}
