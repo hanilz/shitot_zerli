@@ -50,29 +50,4 @@ public class SurveyAnalysisViewHomeController implements Initializable {
 		((AnalysisViewRowController) loader.getController()).initRow(surveyID,surveyTitle);
 		return orderRow;
 	}
-
-//	private static void configureFileChooser(final FileChooser fileChooser) {
-//		fileChooser.setTitle("View Files");
-//		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-//		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PDF", "*.pdf"));
-//	}
-
 }
-//		if (!files.isEmpty()) {
-//			for (SurveyAnalysisFile file : files) {
-//				File newFile = FilesHandler.saveFile(file);
-//				Button btn = new Button(file.getFileName());
-//				btn.setOnAction(new EventHandler<ActionEvent>() {
-//					@Override
-//					public void handle(ActionEvent event) {
-//						if (newFile != null) {
-//							openFile(newFile);
-//						}
-//					}
-//				});
-//				reportList.getChildren().add(btn);
-//			}
-//		}
-//
-//		else
-//			reportList.getChildren().add(new Label("failed to fetch"));

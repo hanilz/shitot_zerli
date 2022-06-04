@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -38,11 +39,11 @@ public class CartHBox extends HBox {
 	private Label quantityLabel = new Label("Quantity");
 	private TextField quantityField = new TextField();
 
+	private HBox imageHBox = new HBox();
 	private VBox priceVBox = new VBox();
-	private Label priceLabel = new Label("Price");
 	private Label amountLabel;
+	private Label discountLabel;
 	private Button removeButton = new Button("X");
-	private Button viewContentsButton = new Button("View Contents");
 	private double price;
 
 	public CartHBox(ProductsBase product, int quantity) {
@@ -55,13 +56,14 @@ public class CartHBox extends HBox {
 		this.setAlignment(Pos.CENTER);
 		this.setSpacing(20);
 		this.setPadding(new Insets(0, 0, 10, 0));
+		this.setPrefHeight(100);
+		this.setMinHeight(100);
 
 		initImageProduct();
 
 		initProductDetailsVBox();
 
-		if(!isItem())
-			initViewContentsButton();
+		initViewContentsButton();
 		
 		initQuantityVBox();
 
@@ -78,10 +80,8 @@ public class CartHBox extends HBox {
 			}
 		});
 
-		this.getChildren().add(image);
+		this.getChildren().add(imageHBox);
 		this.getChildren().add(idNameVBox);
-		if(!isItem())
-			this.getChildren().add(viewContentsButton);
 		this.getChildren().add(quantityVBox);
 		this.getChildren().add(priceVBox);
 		this.getChildren().add(removeButton);
@@ -99,24 +99,35 @@ public class CartHBox extends HBox {
 		nameLabel.setFont(new Font(26));
 		nameLabel.setMinWidth(360);
 		nameLabel.setPrefWidth(360);
+		nameLabel.setPrefHeight(80);
+		nameLabel.setMinHeight(80);
+		nameLabel.setAlignment(Pos.TOP_LEFT);
+		nameLabel.setWrapText(true);
+		idNameVBox.setPrefHeight(90);
+		idNameVBox.setMinHeight(90);
 
 		idNameVBox.getChildren().add(idLabel);
 		idNameVBox.getChildren().add(nameLabel);
 	}
 
 	private void initPriceDetailsVBox() {
-		priceLabel.setFont(new Font(20));
 		totalSumPrice = price * quantity;
-		amountLabel = new Label(InputChecker.price(totalSumPrice));
+		amountLabel = new Label(InputChecker.price(quantity * product.getPrice()));
 		amountLabel.setFont(new Font(20));
-		if(product.isDiscount())
-			amountLabel.setStyle("-fx-text-fill: red;");
-
+		amountLabel.setStyle("-fx-font-weight: bold;");
 		priceVBox.setAlignment(Pos.CENTER);
-		priceVBox.setPrefWidth(180);
-		
-		priceVBox.getChildren().add(priceLabel);
+		priceVBox.setSpacing(10);
 		priceVBox.getChildren().add(amountLabel);
+		if(product.isDiscount()) {
+			amountLabel.setStyle("");
+			discountLabel = new Label(InputChecker.price(totalSumPrice));
+			discountLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+			amountLabel.setFont(new Font(14));
+			discountLabel.setFont(new Font(20));
+			priceVBox.getChildren().add(discountLabel);
+		}
+
+		priceVBox.setPrefWidth(180);
 	}
 
 	private void initQuantityVBox() {
@@ -161,27 +172,21 @@ public class CartHBox extends HBox {
 		image.setFitHeight(80);
 		image.setFitWidth(100);
 		image.setPreserveRatio(true);
+		
+		imageHBox.getChildren().add(image);
+		imageHBox.setAlignment(Pos.CENTER);
+		imageHBox.setMinWidth(50);
+		imageHBox.setPrefHeight(50);
 	}
 
 	private void initViewContentsButton() {
-		viewContentsButton.setOnAction(new EventHandler<ActionEvent>() {
+		this.setCursor(Cursor.HAND);
+		this.setOnMouseReleased(new EventHandler<MouseEvent>() {
 			@Override
-			public void handle(ActionEvent e) {
-				CartProductOverviewVBox overviewVBox;
-				if(product instanceof CustomProduct) {
-					CustomProduct customProduct = (CustomProduct) product;
-					overviewVBox = new CartProductOverviewEditVBox(customProduct);
-				}
-				else {
-					Product currentProduct = (Product) product;
-					overviewVBox = new CartProductOverviewNoEditVBox(currentProduct);
-				}
-				overviewVBox.initVBox();
-				
-				CartController.setOverviewVBox(overviewVBox);
+			public void handle(MouseEvent e) {
+				CartController.createOverviewVBox(product);
 			}
 		});
-		
 	}
 	
 	public double getTotalSumPrice() {
@@ -190,5 +195,13 @@ public class CartHBox extends HBox {
 	
 	public TextField getQuantityField() {
 		return quantityField;
+	}
+
+	public ProductsBase getProduct() {
+		return product;
+	}
+
+	public void setProduct(ProductsBase product) {
+		this.product = product;
 	}
 }

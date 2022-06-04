@@ -44,6 +44,8 @@ public class CartProductOverviewEditVBox extends CartProductOverviewVBox {
 		this.getChildren().add(editButtonsHBox);
 	}
 
+	
+	
 	private void initEditButtonsHBox() {
 		editButtonsHBox.getChildren().add(editCustomProductButton);
 		editCustomProductButton.setOnAction(new EventHandler<ActionEvent>() {

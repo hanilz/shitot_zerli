@@ -1,10 +1,15 @@
 package cart;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import catalog.CatalogDiscountVBox;
 import entities.Cart;
+import entities.CustomProduct;
+import entities.Item;
+import entities.Product;
 import entities.ProductsBase;
 import entities.User;
 import home.LoginScreenController;
@@ -12,6 +17,7 @@ import inputs.InputChecker;
 import javafx.animation.PauseTransition;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -20,6 +26,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import util.ManageData;
 import util.ManageScreens;
 import util.Screens;
 
@@ -120,6 +127,40 @@ public class CartController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		System.out.println(cart);
 		initCart();
+		if(!cartItemVBox.getChildren().isEmpty()) {
+			CartHBox hbox = (CartHBox) cartItemVBox.getChildren().get(0);
+			createOverviewVBox(hbox.getProduct());
+		}
+	}
+
+	public static void createOverviewVBox(ProductsBase product) {
+		if(product instanceof CustomProduct) {
+			CartProductOverviewVBox overviewVBox = null;
+			CustomProduct customProduct = (CustomProduct) product;
+			overviewVBox = new CartProductOverviewEditVBox(customProduct);
+			overviewVBox.initVBox();
+			setOverviewVBox(overviewVBox);
+		}
+		else if(product instanceof Product) {
+			CartProductOverviewVBox overviewVBox = null;
+			Product currentProduct = (Product) product;
+			overviewVBox = new CartProductOverviewNoEditVBox(currentProduct);
+			overviewVBox.initVBox();
+			setOverviewVBox(overviewVBox);
+		}
+		else {  // Item
+			Item currentItem = (Item) product;
+			VBox overviewVBox = null;
+			try {
+				FXMLLoader loader = new FXMLLoader(CartProductOverviewItemVBox.class.getResource("CartProductOverviewItemVBox.fxml"));
+				overviewVBox = (VBox) loader.load();
+				((CartProductOverviewItemVBox) loader.getController()).initVBox(currentItem);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			setOverviewVBox(overviewVBox);
+		}
+		
 	}
 
 	public void refreshTotalPrice() {
@@ -146,6 +187,7 @@ public class CartController implements Initializable {
 	@FXML
 	void emptyCart(MouseEvent event) {
 		cart.emptyCart();
+		overviewPane.getChildren().clear();
 		connectionWithCartHBox("refresh cart");
 		overviewPane.getChildren().clear();
 	}
