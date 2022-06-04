@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="400.0" spacing="5.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cart.CartProductOverviewItemVBox">
+   <children>
+      <Label fx:id="itemNameTopLabel" alignment="CENTER" prefHeight="30.0" prefWidth="409.0" text="Gerbil - Brown" />
+      <ImageView fx:id="itemImage" fitHeight="120.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/catalog/flower.png" />
+         </image>
+      </ImageView>
+      <GridPane prefHeight="123.0" prefWidth="400.0">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Item Name:" />
+            <Label text="Item Color:" GridPane.rowIndex="1" />
+            <Label text="Item Type:" GridPane.rowIndex="2" />
+            <Label fx:id="itemNameLabel" text="Gerbil" GridPane.columnIndex="1" />
+            <Label fx:id="itemColorLabel" text="Brown" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="itemTypeLabel" text="Flower" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+      <HBox fx:id="priceHBox" alignment="BOTTOM_CENTER" prefHeight="53.0" prefWidth="400.0" spacing="10.0">
+         <children>
+            <Label text="Price:" />
+            <Label fx:id="priceLabel" text="10 $" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

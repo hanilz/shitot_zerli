@@ -8,7 +8,7 @@ public class Product extends ProductsBase implements Serializable {
 
 	private String flowerType;
 	private String productDescription;
-	private HashMap<Item, Integer> items;
+	protected HashMap<Item, Integer> items;
 	
 	public Product(int id, double price, double discount, String productDescription) {
 		super(id, price, discount);

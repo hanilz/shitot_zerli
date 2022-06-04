@@ -10,6 +10,8 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 public class ProductOverviewEditHBox extends CustomProductHBox {
 	private int quantity = 1;
@@ -47,7 +49,7 @@ public class ProductOverviewEditHBox extends CustomProductHBox {
 		priceHBox.getChildren().add(removeButton);
 		amountLabel.setText(InputChecker.price(getPrice()));
 	}
-
+	
 	private void initQuantityVBox() {
 		quantityLabel = new Label("" + quantity);
 		addQuantity.setOnAction(new EventHandler<ActionEvent>() {
