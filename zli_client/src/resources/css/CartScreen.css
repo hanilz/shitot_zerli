@@ -50,19 +50,19 @@
 	-fx-font-weight: bold;
 }
 
-.button{
+.button {
 	-fx-background-color: #F4F4F4;
 	-fx-background-radius: 30.0;
 	-fx-background-insets: 0.0, 1.0, 1.0;
 	-fx-text-fill: black;
-	-fx-effect: dropshadow(three-pass-box, rgba(0.0, 0.0, 0.0, 0.6), 3.0, 0.0, 0.0, 1.0);
+	-fx-effect: dropshadow(three-pass-box, rgba(0.0, 0.0, 0.0, 0.6), 3.0,
+		0.0, 0.0, 1.0);
 	-fx-font-weight: bold;
 	-fx-padding: 5.0 10.0 5.0 10.0;
 	-fx-font-size: 18.0;
 }
 
-#cartHbox,#cartHbox:pressed{
-	-fx-text-size: 20px;
+#cartHbox, #cartHbox:pressed {
 	-fx-background-radius: 20;
 	-fx-background-color: #FEE1DC;
 	-fx-padding: 0 10 0 20;
@@ -70,8 +70,18 @@
 	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
 }
 
-#discountLabel,#discountLabel:pressed{
+#originalPriceTxt, #totalOriginalPriceTxt {
+	-fx-strikethrough: true;
+	-fx-font-size: 16px;
+}
+
+#totalPriceLabel, #priceLabel {
+	-fx-font-size: 20px;
+	-fx-font-weight: bold;
+}
+
+#discountLabel, #discountLabel:pressed, #totalPriceDiscountLabel {
 	-fx-text-fill: red;
 	-fx-font-weight: bold;
-	-fx-text-size: 20px;
+	-fx-font-size: 20px;
 }

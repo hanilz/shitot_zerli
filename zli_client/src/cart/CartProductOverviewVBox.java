@@ -9,6 +9,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 public class CartProductOverviewVBox extends VBox {
 	protected Product product;
@@ -19,6 +20,7 @@ public class CartProductOverviewVBox extends VBox {
 	private HBox totalPriceHBox = new HBox(totalPriceLabel);
 	protected Label TotalPriceAmountLabel;
 	protected Label TotalPriceDiscountLabel;
+	private Text originalPriceTxt;
 	protected VBox itemsProductsVBox = new VBox();
 	protected ScrollPane itemsProductsScrollPane = new ScrollPane(itemsProductsVBox);
 
@@ -28,6 +30,8 @@ public class CartProductOverviewVBox extends VBox {
 	}
 
 	public void initVBox() {
+		totalPriceLabel.setId("totalPriceLabel");
+		
 		this.setAlignment(Pos.TOP_CENTER);
 		this.setPrefHeight(340);
 		this.setMaxWidth(Control.USE_PREF_SIZE);
@@ -50,10 +54,17 @@ public class CartProductOverviewVBox extends VBox {
 		totalPriceHBox.setAlignment(Pos.CENTER);
 		totalPriceHBox.setSpacing(20);
 		TotalPriceAmountLabel = new Label(InputChecker.price(product.getPrice()));
+		TotalPriceAmountLabel.setId("totalPriceAmountLabel");
+		TotalPriceAmountLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 20px;");
 		totalPriceHBox.getChildren().add(TotalPriceAmountLabel);
 		if(product.isDiscount()) {
+			originalPriceTxt = new Text(InputChecker.price(product.getPrice()));
+			originalPriceTxt.setId("totalOriginalPriceTxt");
 			TotalPriceDiscountLabel = new Label(InputChecker.price(product.calculateDiscount()));
+			TotalPriceDiscountLabel.setId("totalPriceDiscountLabel");
 			TotalPriceDiscountLabel.setStyle("-fx-text-fill: red;");
+			totalPriceHBox.getChildren().remove(TotalPriceAmountLabel);
+			totalPriceHBox.getChildren().add(originalPriceTxt);
 			totalPriceHBox.getChildren().add(TotalPriceDiscountLabel);
 		}
 		this.getChildren().add(totalPriceHBox);

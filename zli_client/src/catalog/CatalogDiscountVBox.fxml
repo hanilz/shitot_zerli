@@ -34,7 +34,7 @@
             </VBox>
             <VBox alignment="CENTER" spacing="10.0">
                <children>
-                  <Text fx:id="beforeDiscountLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="100$" textAlignment="CENTER" wrappingWidth="89.875">
+                  <Text fx:id="beforeDiscountTxt" strokeType="OUTSIDE" strokeWidth="0.0" text="100$" textAlignment="CENTER" wrappingWidth="89.875">
                      <font>
                         <Font size="15.0" />
                      </font>

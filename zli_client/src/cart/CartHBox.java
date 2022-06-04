@@ -1,9 +1,7 @@
 package cart;
 
 import entities.Cart;
-import entities.CustomProduct;
 import entities.Item;
-import entities.Product;
 import entities.ProductsBase;
 import inputs.InputChecker;
 import javafx.beans.value.ChangeListener;
@@ -21,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class CartHBox extends HBox {
 	private Cart cart = Cart.getInstance();
@@ -42,6 +41,7 @@ public class CartHBox extends HBox {
 	private HBox imageHBox = new HBox();
 	private VBox priceVBox = new VBox();
 	private Label amountLabel;
+	private Text originalPriceText;
 	private Label discountLabel;
 	private Button removeButton = new Button("X");
 	private double price;
@@ -113,18 +113,23 @@ public class CartHBox extends HBox {
 	private void initPriceDetailsVBox() {
 		totalSumPrice = price * quantity;
 		amountLabel = new Label(InputChecker.price(quantity * product.getPrice()));
-		amountLabel.setFont(new Font(20));
-		amountLabel.setStyle("-fx-font-weight: bold;");
+		//amountLabel.setFont(new Font(20));
+		//amountLabel.setStyle("-fx-font-weight: bold;");
+		amountLabel.setId("priceLabel");
 		priceVBox.setAlignment(Pos.CENTER);
 		priceVBox.setSpacing(10);
 		priceVBox.getChildren().add(amountLabel);
 		if(product.isDiscount()) {
-			amountLabel.setStyle("");
+			//amountLabel.setStyle("");
+			originalPriceText = new Text(InputChecker.price(quantity * product.getPrice()));
+			originalPriceText.setId("originalPriceTxt");
 			discountLabel = new Label(InputChecker.price(totalSumPrice));
+			//amountLabel.setFont(new Font(16));
+			//amountLabel.setStyle("-fx-font-weight: bold;");
 			discountLabel.setId("discountLabel");
-			amountLabel.setFont(new Font(16));
-			discountLabel.setFont(new Font(20));
+			priceVBox.getChildren().add(originalPriceText);
 			priceVBox.getChildren().add(discountLabel);
+			priceVBox.getChildren().remove(amountLabel);
 		}
 
 		priceVBox.setPrefWidth(180);

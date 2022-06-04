@@ -28,7 +28,7 @@ public class CatalogDiscountVBox {
 	private Button addToCartButton;
 
 	@FXML
-	private Text beforeDiscountLabel;
+	private Text beforeDiscountTxt;
 
 	@FXML
 	private Label afterDiscountLabel;
@@ -48,8 +48,8 @@ public class CatalogDiscountVBox {
 
 	public void initVBox(Product product) {
 		this.product = product;
-		beforeDiscountLabel.setText(InputChecker.price(product.getPrice()));
-		beforeDiscountLabel.setStrikethrough(true);
+		beforeDiscountTxt.setText(InputChecker.price(product.getPrice()));
+		beforeDiscountTxt.setStrikethrough(true);
 		afterDiscountLabel.setText(InputChecker.price(calculateDiscount(product.getPrice(), product.getDiscount())));
 		initImageProduct();
 		productNameLabel.setText(product.getName());
