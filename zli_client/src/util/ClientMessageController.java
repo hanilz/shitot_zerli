@@ -77,6 +77,7 @@ public class ClientMessageController {
 			ClientController.setResponse((boolean) message.get("logout"));
 			break;
 		case SERVER_DISCONNEDTED:
+			ManageScreens.closeAllPopups();;
 			System.out.println("disconnected from server, back to client main.");
 			ManageScreens.changeScreenTo(Screens.CLIENT);
 			break;

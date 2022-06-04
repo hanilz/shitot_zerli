@@ -19,6 +19,7 @@ import util.AnalayzeCommand;
 import util.ClientDetails;
 import util.Commands;
 import util.DataBaseController;
+import util.ManageScreens;
 import util.NotificationType;
 import util.ServerMessageController;
 
@@ -94,14 +95,14 @@ public class ServerController extends AbstractServer implements Runnable {
 			HashMap<String, Object> message = new HashMap<>();
 			message.put("command", Commands.SERVER_DISCONNEDTED);
 			sendToAllClients(message); // make all clients go back to main client screen
+			System.out.println("disconnected server");
 			complaints.stop();
 			reportsThread.stop();
 			close();
-			disconnectAllClients();
-			System.out.println("disconnected server");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		disconnectAllClients();
 	}
 
 	/**
