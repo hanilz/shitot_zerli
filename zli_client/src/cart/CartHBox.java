@@ -121,8 +121,8 @@ public class CartHBox extends HBox {
 		if(product.isDiscount()) {
 			amountLabel.setStyle("");
 			discountLabel = new Label(InputChecker.price(totalSumPrice));
-			discountLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
-			amountLabel.setFont(new Font(14));
+			discountLabel.setId("discountLabel");
+			amountLabel.setFont(new Font(16));
 			discountLabel.setFont(new Font(20));
 			priceVBox.getChildren().add(discountLabel);
 		}

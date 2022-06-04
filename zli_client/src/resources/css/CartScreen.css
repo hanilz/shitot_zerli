@@ -50,9 +50,28 @@
 	-fx-font-weight: bold;
 }
 
-#cartHbox {
+.button{
+	-fx-background-color: #F4F4F4;
+	-fx-background-radius: 30.0;
+	-fx-background-insets: 0.0, 1.0, 1.0;
+	-fx-text-fill: black;
+	-fx-effect: dropshadow(three-pass-box, rgba(0.0, 0.0, 0.0, 0.6), 3.0, 0.0, 0.0, 1.0);
+	-fx-font-weight: bold;
+	-fx-padding: 5.0 10.0 5.0 10.0;
+	-fx-font-size: 18.0;
+}
+
+#cartHbox,#cartHbox:pressed{
+	-fx-text-size: 20px;
 	-fx-background-radius: 20;
 	-fx-background-color: #FEE1DC;
 	-fx-padding: 0 10 0 20;
 	-fx-MinHeight: 90;
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
+}
+
+#discountLabel,#discountLabel:pressed{
+	-fx-text-fill: red;
+	-fx-font-weight: bold;
+	-fx-text-size: 20px;
 }

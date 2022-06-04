@@ -27,7 +27,6 @@
 	-fx-background-color: #FEE1DC;
 	-fx-padding: 0 10 5 20;
 	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
-	
 }
 
 #selectedHBox{
@@ -37,6 +36,10 @@
 	-fx-background-color: #FEE1DC;
 	-fx-padding: 0 10 5 20;
 	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
+}
+
+#priceVBox{
+	-fx-alignment: center;
 }
 
 #overViewVBox{
@@ -70,32 +73,10 @@
 	-fx-font-weight: bold
 }
 
-#cartTotal{
-	-fx-background-color: #FBF3F1;
-	-fx-border-color:#e0beb8;
-	-fx-border-radius:4.0px; 
-}
-
-#summaryScroll{
-	-fx-border-color:#e0beb8;
-	-fx-border-radius:4.0px; 
-}
-
 .separator *.line {
     -fx-border-style: solid;
     -fx-border-width: 0 0.7 0.7 0; /* its make really one-pixel-border */
     -fx-border-color: #e0beb8;
-}
-
-#detailsButton {
-	-fx-background-color: #F4F4F4;
-	-fx-background-radius: 10.0;
-	-fx-background-insets: 0.0, 1.0, 1.0;
-	-fx-text-fill: black;
-	-fx-effect: dropshadow(three-pass-box, rgba(0.0, 0.0, 0.0, 0.6), 3.0, 0.0, 0.0, 1.0);
-	-fx-font-weight: bold;
-	-fx-padding: 5.0 10.0 5.0 10.0;
-	-fx-font-size: 18.0;
 }
 
 .scroll-bar:horizontal, .scroll-bar:vertical {

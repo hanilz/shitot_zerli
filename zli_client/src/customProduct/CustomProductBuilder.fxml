@@ -148,7 +148,7 @@
                   </VBox>
                   <VBox spacing="5.0">
                      <children>
-                        <ScrollPane fx:id="customProductScrollPane" maxWidth="-Infinity" pannable="true" prefHeight="485.0" prefWidth="484.0" style="-fx-border-color: transparent;" VBox.vgrow="ALWAYS" />
+                        <ScrollPane fx:id="customProductScrollPane" maxWidth="-Infinity" pannable="true" prefHeight="475.0" prefWidth="481.0" style="-fx-border-color: transparent;" VBox.vgrow="ALWAYS" />
                         <HBox prefHeight="2.0" prefWidth="783.0" VBox.vgrow="NEVER">
                            <children>
                               <Label text="* Clicking on an image opens the product details window" textFill="#4170d0" />

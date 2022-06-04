@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="catalogVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="15.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.CatalogController">
+<VBox fx:id="catalogVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="15.0" stylesheets="@../resources/css/CatalogScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.CatalogController">
    <children>
       <GridPane id="upperGrid" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="73.0" prefWidth="1172.0">
         <columnConstraints>
@@ -45,13 +45,16 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <VBox alignment="TOP_CENTER">
+                  <VBox alignment="CENTER">
                      <children>
-                        <Label fx:id="totalAmountCartLabel" alignment="CENTER" prefHeight="20.0" prefWidth="28.0" style="-fx-background-color: #FEFDFC; -fx-background-radius: 30;" text="0" />
+                        <Label fx:id="totalAmountCartLabel" alignment="CENTER" minWidth="25.0" style="-fx-background-color: #FEFDFC; -fx-background-radius: 30;" text="0">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding></Label>
                      </children>
-                     <padding>
-                        <Insets top="17.0" />
-                     </padding>
                   </VBox>
                </children>
             </HBox>
@@ -113,11 +116,11 @@
       </GridPane>
       <HBox alignment="TOP_CENTER" prefHeight="603.0" prefWidth="1247.0" spacing="10.0">
          <children>
-            <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="150.0" spacing="5.0">
+            <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="165.0" spacing="5.0">
                <children>
-                  <VBox spacing="3.0" style="-fx-background-color: faf2f2;">
+                  <VBox alignment="CENTER" spacing="3.0" style="-fx-background-color: #fcf7f5;">
                      <children>
-                        <Label prefHeight="27.0" prefWidth="149.0" text="Filtering options">
+                        <Label prefHeight="27.0" prefWidth="149.0" text="Filtering options" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
@@ -133,7 +136,7 @@
                                  <children>
                                     <Label text="Product Type">
                                        <font>
-                                          <Font size="14.0" />
+                                          <Font name="System Bold" size="16.0" />
                                        </font>
                                     </Label>
                                     <VBox spacing="10.0">
@@ -151,7 +154,7 @@
                                  <children>
                                     <Label text="Flower Type">
                                        <font>
-                                          <Font size="14.0" />
+                                          <Font name="System Bold" size="16.0" />
                                        </font>
                                     </Label>
                                     <VBox spacing="10.0">
@@ -173,7 +176,7 @@
                                  <children>
                                     <Label text="Color">
                                        <font>
-                                          <Font size="14.0" />
+                                          <Font name="System Bold" size="16.0" />
                                        </font>
                                     </Label>
                                     <VBox spacing="10.0">
@@ -254,7 +257,7 @@
             </VBox>
             <VBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="587.0" prefWidth="255.0" spacing="3.0">
                <children>
-                  <HBox alignment="CENTER" style="-fx-background-color: faf2f2;">
+                  <HBox alignment="CENTER">
                      <children>
                         <Label prefHeight="27.0" text="SALES!!!" textFill="#ff0054">
                            <font>
