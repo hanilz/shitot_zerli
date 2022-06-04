@@ -8,6 +8,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -18,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="catalogVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="15.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.CatalogController">
+<VBox fx:id="catalogVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="15.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.CatalogController">
    <children>
       <GridPane id="upperGrid" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="73.0" prefWidth="1172.0">
         <columnConstraints>
@@ -114,7 +115,7 @@
          <children>
             <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="150.0" spacing="5.0">
                <children>
-                  <VBox spacing="3.0" style="-fx-background-color: FBF3F1;">
+                  <VBox spacing="3.0" style="-fx-background-color: faf2f2;">
                      <children>
                         <Label prefHeight="27.0" prefWidth="149.0" text="Filtering options">
                            <font>
@@ -234,9 +235,9 @@
                   </HBox>
                   <HBox spacing="20.0">
                      <children>
-                        <VBox>
+                        <VBox id="scrollVBox">
                            <children>
-                              <ScrollPane fx:id="catalogScrollPane" maxWidth="-Infinity" pannable="true" prefHeight="570.0" prefWidth="800.0" style="-fx-border-color: transparent;">
+                              <ScrollPane fx:id="catalogScrollPane" maxWidth="-Infinity" pannable="true" prefHeight="570.0" prefWidth="800.0" style="-fx-border-color: #faf2f2;">
                                  <padding>
                                     <Insets bottom="15.0" left="15.0" />
                                  </padding>
@@ -253,12 +254,15 @@
             </VBox>
             <VBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="587.0" prefWidth="255.0" spacing="3.0">
                <children>
-                  <HBox alignment="CENTER" style="-fx-background-color: FBF3F1;">
+                  <HBox alignment="CENTER" style="-fx-background-color: faf2f2;">
                      <children>
-                        <Label prefHeight="27.0" text="Promoted Products">
+                        <Label prefHeight="27.0" text="SALES!!!" textFill="#ff0054">
                            <font>
-                              <Font name="System Bold" size="18.0" />
+                              <Font name="System Bold" size="25.0" />
                            </font>
+                           <effect>
+                              <Glow />
+                           </effect>
                         </Label>
                      </children>
                   </HBox>

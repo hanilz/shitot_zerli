@@ -53,7 +53,7 @@ public class LoginScreenController implements Initializable {
 			return;
 		HashMap<String, Object> message = setRespondToServer(username, password);
 		response = (HashMap<String, Object>) ClientFormController.client.accept(message);
-		responseAction(event, username, response);
+		responseAction(username, response);
 	}
 
 	private HashMap<String, Object> setRespondToServer(String username, String password) {
@@ -76,17 +76,17 @@ public class LoginScreenController implements Initializable {
 		return isInputValid;
 	}
 
-	private void responseAction(Event event, String username, HashMap<String, Object> response) {
+	private void responseAction(String username, HashMap<String, Object> response) {
 		switch ((Status) (response).get("response")) {
 		case NEW_LOG_IN:
 			loginUser(username);
 			if (isCart) {
-				cartFlow(event);
+				cartFlow();
 			} else if (isCatalog)
-				catalogFlow(event);
+				catalogFlow();
 			else {
 				ManageScreens.home();
-				CloseWindow(event);
+				CloseWindow();
 			}
 			break;
 		case ALREADY_LOGGED_IN:
@@ -102,7 +102,7 @@ public class LoginScreenController implements Initializable {
 
 	}
 
-	private void cartFlow(Event event) {
+	private void cartFlow() {
 		if (User.getUserInstance().getType() != UserType.CUSTOMER
 				&& User.getUserInstance().getType() != UserType.NEW_CUSTOMER) {
 			setError("Only Customers can buy from catalog");
@@ -110,7 +110,7 @@ public class LoginScreenController implements Initializable {
 			User.getUserInstance().logout();
 		} else {
 			CartController.changeToGreatingCard();
-			CloseWindow(event);
+			CloseWindow();
 		}
 	}
 
@@ -128,8 +128,8 @@ public class LoginScreenController implements Initializable {
 	}
 
 	@FXML
-	private void back(MouseEvent event) {
-		CloseWindow(event);
+	private void back() {
+		ManageScreens.getPopupStage().close();
 	}
 
 	public static void resetLogin() {
@@ -137,7 +137,6 @@ public class LoginScreenController implements Initializable {
 		isCatalog = false;
 	}
 
-	@SuppressWarnings("unchecked")
 	private void loginUser(String username) {
 		int idUser = (Integer) response.get("idUser");
 		int idAccount = (Integer) response.get("idAccount");
@@ -146,14 +145,14 @@ public class LoginScreenController implements Initializable {
 		User.getUserInstance().login(idUser, username, idAccount, userType, storeCredit); // creating running user
 	}
 
-	private void catalogFlow(Event event) {
+	private void catalogFlow() {
 		if (User.getUserInstance().getType() == UserType.CUSTOMER) {
 			ManageScreens.changeScreenTo(Screens.CATALOG);
-			CloseWindow(event);
+			CloseWindow();
 		} else
 			ManageScreens.home();
 		isCatalog = false;
-		CloseWindow(event);
+		CloseWindow();
 	}
 
 	@Override
@@ -167,11 +166,9 @@ public class LoginScreenController implements Initializable {
 		}
 	}
 
-	private void CloseWindow(Event event) {
+	private void CloseWindow() {
 		resetLogin();
-		Node n = ((Node) (event.getSource()));
-		Stage s = ((Stage) n.getScene().getWindow());
-		s.close();
+		ManageScreens.getPopupStage().close();
 	}
 
 	private void setTextBehaviour(TextField txt) {

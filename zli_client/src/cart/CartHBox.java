@@ -76,6 +76,7 @@ public class CartHBox extends HBox {
 			public void handle(ActionEvent e) {
 				cart.removeFromCart(product);
 				CartController.connectionWithCartHBox("refresh cart");
+				CartController.instance.clearCartOverview(product);
 			}
 		});
 
@@ -84,6 +85,7 @@ public class CartHBox extends HBox {
 		this.getChildren().add(quantityVBox);
 		this.getChildren().add(priceVBox);
 		this.getChildren().add(removeButton);
+		this.setId("cartHbox");
 	}
 
 	private boolean isItem() {

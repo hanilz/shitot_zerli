@@ -21,6 +21,7 @@ public class ProductOverviewNoEditHBox extends CustomProductHBox {
 
 	public void initHBox() {
 		super.initHBox();
+		
 		priceHBox.getChildren().remove(priceVBox);
 		nameLabel.setPrefWidth(190);
 

@@ -4,10 +4,8 @@ import entities.Cart;
 import entities.SingletonOrder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.WindowEvent;
 import util.ManageScreens;
 import util.Screens;
 

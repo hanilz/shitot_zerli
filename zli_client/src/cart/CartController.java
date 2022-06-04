@@ -54,7 +54,7 @@ public class CartController implements Initializable {
 	@FXML
 	private Button emptyCartButton;
 
-	private static CartController instance;
+	public static CartController instance;
 
 	public void initCart() {
 		instance = this;
@@ -170,7 +170,7 @@ public class CartController implements Initializable {
 			buyButton.setDisable(true);
 			emptyCartButton.setVisible(false);
 		} else {
-			buyButton.setStyle("-fx-background-color: green");
+			buyButton.setStyle("-fx-background-color: #55a630");
 			buyButton.setDisable(false);
 		}
 	}
@@ -189,6 +189,7 @@ public class CartController implements Initializable {
 		cart.emptyCart();
 		overviewPane.getChildren().clear();
 		connectionWithCartHBox("refresh cart");
+		overviewPane.getChildren().clear();
 	}
 
 	public static void setOverviewVBox(VBox vBox) {
@@ -206,5 +207,14 @@ public class CartController implements Initializable {
 	 */
 	private void resetCart() {
 		cartItemVBox.getChildren().clear();
+	}
+
+	public void clearCartOverview(ProductsBase product) {
+		if(overviewPane.getChildren().isEmpty())
+			return;
+		VBox productOverview =(VBox)overviewPane.getChildren().get(0);
+		String title = ((Label)productOverview.getChildren().get(0)).getText();
+		if(product.getName().equals(title))
+			overviewPane.getChildren().clear();
 	}
 }

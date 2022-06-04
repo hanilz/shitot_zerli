@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import report.PopupReportController;
 import util.ManageScreens;
 
 public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
@@ -70,15 +71,21 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 		image.setOnMouseReleased(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				ProductVBox popup = new ProductVBox(product);
-				popup.initProductVBox();
-				Scene scene = new Scene(popup);
-				Stage stage = new Stage();
-				stage.setTitle("Product Details - " + product.getName());
-				stage.setScene(scene);
-				ManageScreens.addPopup(stage);
-				stage.showAndWait();
-				ManageScreens.removePopup(stage);
+//				ProductVBox popup = new ProductVBox(product);
+//				popup.initProductVBox();
+//				Scene scene = new Scene(popup);
+//				Stage stage = new Stage();
+//				stage.setTitle("Product Details - " + product.getName());
+//				stage.setScene(scene);
+//				ManageScreens.addPopup(stage);
+//				stage.showAndWait();
+//				ManageScreens.removePopup(stage);
+				try {
+					ProductDetailsController.setProduct(product);
+					ManageScreens.openPopupFXML(ProductDetailsController.class.getResource("ProductDetailsPopup.fxml"), product.getName());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 	}

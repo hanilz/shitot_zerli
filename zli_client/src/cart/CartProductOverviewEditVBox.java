@@ -18,8 +18,8 @@ import util.ManageScreens;
 import util.Screens;
 
 public class CartProductOverviewEditVBox extends CartProductOverviewVBox {
-	private Button editCustomProductButton = new Button("Edit Custom Product");
-	private Button editCustomProductInBuilderButton = new Button("Edit In Builder");
+	private Button editCustomProductButton = new Button("Save Changes");
+	private Button editCustomProductInBuilderButton = new Button("Edit Product");
 	private HBox editButtonsHBox = new HBox();
 	private double price;
 
