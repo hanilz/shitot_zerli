@@ -19,19 +19,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.DeliveryController">
+<VBox id="mainDeliveryVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../resources/css/DeliveryDetailsScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.DeliveryController">
    <children>
       <GridPane prefHeight="100.0" prefWidth="1220.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="465.0" minWidth="10.0" prefWidth="160.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="853.0" minWidth="10.0" prefWidth="650.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="853.0" minWidth="10.0" prefWidth="160.0" />
+          <ColumnConstraints hgrow="NEVER" maxWidth="465.0" minWidth="10.0" prefWidth="368.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="889.0" minWidth="10.0" prefWidth="482.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="853.0" minWidth="10.0" prefWidth="370.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox alignment="TOP_CENTER" GridPane.columnIndex="1">
+            <VBox alignment="TOP_CENTER" prefHeight="84.0" prefWidth="733.0" GridPane.columnIndex="1">
                <children>
                   <Label text="Delivery Details">
                      <font>
@@ -45,9 +45,9 @@
                   </Label>
                </children>
             </VBox>
-            <HBox alignment="CENTER" prefHeight="72.0" prefWidth="244.0" spacing="118.0">
+            <HBox id="homeHBox" alignment="CENTER" maxWidth="80.0" minWidth="80.0" prefHeight="80.0" prefWidth="133.0">
                <children>
-                  <ImageView fx:id="homeButton" fitHeight="100.0" onMousePressed="#changeToHomeScreen" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="homeButton" fitHeight="80.0" fitWidth="80.0" onMousePressed="#changeToHomeScreen" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/catalog/home.png" />
                      </image>
@@ -60,9 +60,9 @@
          </children>
       </GridPane>
       <HBox prefHeight="44.0" prefWidth="940.0" />
-      <VBox alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="552.0" prefWidth="1052.0">
+      <VBox id="addressFields" maxWidth="-Infinity" prefHeight="552.0" prefWidth="1052.0">
          <children>
-            <VBox prefHeight="51.0" prefWidth="775.0" spacing="10.0">
+            <VBox prefHeight="32.0" prefWidth="1042.0" spacing="10.0">
                <children>
                   <RadioButton fx:id="pickUpRadioButton" mnemonicParsing="false" onMouseClicked="#selectPickupEvent" selected="true" text="In-Store Pickup">
                      <toggleGroup>
@@ -72,7 +72,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="20.0" />
                      </font>
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
@@ -82,23 +82,9 @@
                         </ImageView>
                      </graphic>
                   </RadioButton>
-                  <RadioButton fx:id="deliveryRadioButton" mnemonicParsing="false" onMouseClicked="#selectDeliveryEvent" selected="true" text="Delivery (+15₪)" toggleGroup="$delivery">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../resources/icons/shippingIcon.png" />
-                           </image>
-                        </ImageView>
-                     </graphic></RadioButton>
                </children>
             </VBox>
-            <VBox alignment="TOP_CENTER" prefHeight="97.0" prefWidth="775.0">
+            <VBox alignment="TOP_CENTER" prefHeight="73.0" prefWidth="1042.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="22.0" prefWidth="775.0">
                      <children>
@@ -121,14 +107,14 @@
                                  <children>
                                     <HBox alignment="CENTER" prefHeight="62.0" prefWidth="104.0" spacing="3.0">
                                        <children>
-                                          <Label text="*" textFill="#ff1b1b">
+                                          <Label id="stars" text="*" textFill="RED">
                                              <font>
-                                                <Font size="18.0" />
+                                                <Font name="System Bold" size="18.0" />
                                              </font>
                                           </Label>
                                           <Label text="Choose Branch For Pickup:">
                                              <font>
-                                                <Font size="18.0" />
+                                                <Font name="System Bold" size="18.0" />
                                              </font>
                                           </Label>
                                        </children>
@@ -140,14 +126,14 @@
                                  <children>
                                     <HBox alignment="TOP_CENTER" prefHeight="83.0" prefWidth="400.0" spacing="3.0">
                                        <children>
-                                          <Label text="*" textFill="#ff1b1b">
+                                          <Label id="stars" text="*" textFill="RED">
                                              <font>
-                                                <Font size="18.0" />
+                                                <Font name="System Bold" size="18.0" />
                                              </font>
                                           </Label>
                                           <Label text="Pickup Time:">
                                              <font>
-                                                <Font size="18.0" />
+                                                <Font name="System Bold" size="18.0" />
                                              </font>
                                           </Label>
                                        </children>
@@ -161,7 +147,7 @@
                                           </ComboBox>
                                           <Label alignment="TOP_CENTER" text=":">
                                              <font>
-                                                <Font size="22.0" />
+                                                <Font name="System Bold" size="22.0" />
                                              </font>
                                              <padding>
                                                 <Insets bottom="5.0" />
@@ -180,14 +166,14 @@
                                  <children>
                                     <HBox alignment="CENTER" prefHeight="40.0" prefWidth="364.0" spacing="3.0">
                                        <children>
-                                          <Label text="*" textFill="#ff1b1b">
+                                          <Label id="stars" text="*" textFill="RED">
                                              <font>
-                                                <Font size="18.0" />
+                                                <Font name="System Bold" size="18.0" />
                                              </font>
                                           </Label>
                                           <Label text="Pickup Date:">
                                              <font>
-                                                <Font size="18.0" />
+                                                <Font name="System Bold" size="18.0" />
                                              </font>
                                           </Label>
                                        </children>
@@ -201,6 +187,21 @@
                   </HBox>
                </children>
             </VBox>
+            <RadioButton fx:id="deliveryRadioButton" alignment="BOTTOM_LEFT" mnemonicParsing="false" onMouseClicked="#selectDeliveryEvent" prefHeight="55.0" prefWidth="197.0" selected="true" text="Delivery (15₪)" toggleGroup="$delivery">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/shippingIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </RadioButton>
             <VBox fx:id="deliveryVBox" alignment="BOTTOM_CENTER" prefHeight="284.0" prefWidth="1052.0" spacing="6.0">
                <children>
                   <HBox prefHeight="22.0" prefWidth="775.0">
@@ -222,7 +223,7 @@
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
@@ -230,14 +231,14 @@
                            <children>
                               <Label text="Delivery Date:">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
                            </children>
                         </HBox>
                         <Label text="Address:">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
                         <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="252.0" spacing="37.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -249,7 +250,7 @@
                            <children>
                               <Label text="Reciever Name:">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
                            </children>
@@ -280,7 +281,7 @@
                            <children>
                               <Label text="Delivery Time:">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
                            </children>
@@ -289,7 +290,7 @@
                            <children>
                               <Label text="Reciever Phone:">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
                            </children>
@@ -305,7 +306,7 @@
                            <children>
                               <Label text="Branch:">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
                            </children>
@@ -318,9 +319,9 @@
                   </GridPane>
                   <VBox>
                      <children>
-                        <CheckBox fx:id="expressDeliveryCheckBox" mnemonicParsing="false" onMouseClicked="#selectExpressEvent" text="Express Delivery (+15₪)">
+                        <CheckBox fx:id="expressDeliveryCheckBox" mnemonicParsing="false" onMouseClicked="#selectExpressEvent" text="Express Delivery (30₪)">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                            <cursor>
                               <Cursor fx:constant="HAND" />
@@ -338,9 +339,9 @@
                   </VBox>
                </children>
             </VBox>
-            <HBox alignment="CENTER" prefHeight="76.0" prefWidth="1052.0" spacing="236.0">
+            <HBox alignment="CENTER" prefHeight="76.0" prefWidth="1052.0" spacing="219.0">
                <children>
-                  <Button fx:id="backButton" mnemonicParsing="false" onMousePressed="#changeToGreetingCardScreen" text="Back To Greeting Card">
+                  <Button id="backBtn" fx:id="backButton" mnemonicParsing="false" onMousePressed="#changeToGreetingCardScreen" text="Back To Greeting Card">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -358,17 +359,17 @@
                      <children>
                         <Label text="Delivery Fee:">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
                         <Label fx:id="deliveryFeeLabel" text="15.0 $">
                            <font>
-                              <Font size="24.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
                      </children>
                   </VBox>
-                  <Button fx:id="checkoutButton" contentDisplay="RIGHT" mnemonicParsing="false" onMousePressed="#changeToCheckoutScreen" text="Proceed To Checkout">
+                  <Button id="continueButton" fx:id="checkoutButton" contentDisplay="RIGHT" mnemonicParsing="false" onMousePressed="#changeToCheckoutScreen" text="Proceed To Checkout">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -385,9 +386,12 @@
                </children>
             </HBox>
          </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
       </VBox>
    </children>
    <padding>
-      <Insets bottom="40.0" left="30.0" right="30.0" top="40.0" />
+      <Insets bottom="40.0" left="20.0" right="20.0" top="20.0" />
    </padding>
 </VBox>

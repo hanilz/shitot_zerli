@@ -35,6 +35,7 @@ public class OrderSummaryHBox extends HBox {
 	}
 
 	public void initHBox() {
+		this.setId("productSummaryHBox");
 		this.setAlignment(Pos.CENTER);
 		this.setSpacing(15);
 

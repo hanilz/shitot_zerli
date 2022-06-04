@@ -26,6 +26,7 @@ public class SelectedHBox extends CustomProductHBox implements ICustomProductHBo
 
 	@Override
 	public void initHBox() {
+		this.setId("selectedHBox");
 		selectedProduct = this;
 		initQuantityVBox();
 		removeButton.setCursor(Cursor.HAND);
@@ -37,9 +38,9 @@ public class SelectedHBox extends CustomProductHBox implements ICustomProductHBo
 			}
 		});
 		super.initHBox();
-		this.setMinWidth(610);
 		priceHBox.setSpacing(5);
 		priceHBox.getChildren().add(quantityHBox);
+		super.initPriceHBox();
 		priceHBox.getChildren().add(removeButton);
 		amountLabel.setText(InputChecker.price(getPrice()));
 	}

@@ -170,9 +170,9 @@ public class CustomProductBuilderController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		overViewVBox.setId("overViewVBox");
 		setAddToCartButton();
 		setBackToCatalogButton();
-		overViewVBox.setMinWidth(610);
 		setCheckBoxToFalse();
 		customProductScrollPane.setContent(ManageData.customSelectorVBox);
 		customControllerInstance = this;
@@ -249,7 +249,6 @@ public class CustomProductBuilderController implements Initializable {
 			addToCartButton.setText("Edit Product");
 			addToCartImage.setImage(new Image("/resources/icons/addToCartIcon.png"));
 		}
-		//addToCartButton.setPrefWidth(200);
 		addToCartButton.setOnAction(new EventHandler<>() {
 			@Override
 			public void handle(ActionEvent event) {

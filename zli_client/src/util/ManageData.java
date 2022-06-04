@@ -138,7 +138,7 @@ public class ManageData {
 	}
 
 	public static void initCustomProductItemHBoxes() {
-		customSelectorVBox.setPrefWidth(400);
+		customSelectorVBox.setId("customSelectorVBox");
 		for (int i = 0; i < items.size(); i++) {
 			CustomProductHBox customProductItemHBox = new SelectorHBox(items.get(i));
 			customProductItemHBox.initHBox();
