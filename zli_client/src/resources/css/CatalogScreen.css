@@ -3,7 +3,7 @@
 	-fx-background-image: url("../connectWallpaper.png");
 }
 
-#catalogBtn, #filterBtn, #searchBtn {
+#catalogBtn, #filterBtn, #searchBtn, #discountCartBtn {
 	-fx-background-color: #F4F4F4;
 	-fx-background-radius: 30;
 	-fx-background-insets: 0, 1, 1;
@@ -13,27 +13,16 @@
 	-fx-padding: 5 10 5 10;
 }
 
-#catalogBtn:hover {
+#discountVBox {
+	-fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 8.0, 0.0,
+		0.0, 8.0);
+}
+
+#catalogBtn:hover, #filterBtn:hover, #searchBtn:hover, #discountCartBtn:hover {
 	-fx-background-color: #FFE0F0;
 }
 
-#catalogBtn:pressed {
-	-fx-background-color: #FFD0FF;
-}
-
-#filterBtn:hover {
-	-fx-background-color: #FFE0F0;
-}
-
-#filterBtn:pressed {
-	-fx-background-color: #FFD0FF;
-}
-
-#searchBtn:hover {
-	-fx-background-color: #FFE0F0;
-}
-
-#searchBtn:pressed {
+#catalogBtn:pressed, #filterBtn:pressed, #searchBtn:pressed, #discountCartBtn:pressed {
 	-fx-background-color: #FFD0FF;
 }
 
@@ -68,7 +57,7 @@
 
 #discountLabel {
 	-fx-text-fill: red;
-	-fx-font-weight: bold;	
+	-fx-font-weight: bold;
 	-fx-font-size: 18px;
 }
 
@@ -97,7 +86,7 @@
 }
 
 #discountBeforeLabel {
-
+	
 }
 
 #cartHBox, #homeVBox, #loginHBox {
