@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -25,6 +26,7 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 	private Button subtractQuantityButton = new Button("-");
 	private TextField quantityField = new TextField("0");
 	private Button addQuantityButton = new Button("+");
+	private Text originalPriceTxt;
 
 	public CatalogItemVBox(Item item) {
 		this.item = item;
@@ -82,7 +84,13 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 		
 		if(item.isDiscount()) {
 			discountLabel.setText(InputChecker.price(item.calculateDiscount()));
+			originalPriceTxt = new Text(InputChecker.price(item.getPrice()));
+			originalPriceTxt.setStrikethrough(true);
+			originalPriceTxt.setStyle("-fx-font-size: 16px;");
+			priceHBox.getChildren().remove(amountLabel);
+			priceHBox.getChildren().add(originalPriceTxt);
 			priceHBox.getChildren().add(discountLabel);
+			
 			amountLabel.setId("priceAfterDiscountLabel");;
 		}
 		

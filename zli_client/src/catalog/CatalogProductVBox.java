@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import report.PopupReportController;
@@ -18,6 +19,7 @@ import util.ManageScreens;
 
 public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 	private Product product; // will be used to get the data from
+	private Text originalPriceTxt;
 
 	public CatalogProductVBox(Product product) {
 		this.product = product;
@@ -40,6 +42,11 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 		
 		if(product.isDiscount()) {
 			discountLabel.setText(InputChecker.price(product.calculateDiscount()));
+			originalPriceTxt = new Text(InputChecker.price(product.getPrice()));
+			originalPriceTxt.setStrikethrough(true);
+			originalPriceTxt.setStyle("-fx-font-size: 16px;");
+			priceHBox.getChildren().remove(amountLabel);
+			priceHBox.getChildren().add(originalPriceTxt);
 			priceHBox.getChildren().add(discountLabel);
 			amountLabel.setId("priceAfterDiscountLabel");;
 		}
