@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -12,128 +14,120 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="595.0" prefWidth="456.0" spacing="6.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" spacing="6.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.ProductDetailsController">
    <padding>
-      <Insets bottom="30.0" left="30.0" right="30.0" top="15.0" />
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
    </padding>
    <children>
-      <VBox alignment="CENTER" prefHeight="61.0" prefWidth="396.0">
+      <Label text="Product Details">
+         <font>
+            <Font name="System Bold" size="31.0" />
+         </font>
+      </Label>
+      <HBox prefHeight="469.0" prefWidth="740.0">
          <children>
-            <Label text="Product Details">
-               <font>
-                  <Font size="31.0" />
-               </font></Label>
-         </children>
-      </VBox>
-      <VBox alignment="CENTER" prefHeight="385.0" prefWidth="396.0">
-         <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../resources/products/1.png" />
-               </image>
-            </ImageView>
-            <GridPane prefHeight="246.0" prefWidth="396.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="33.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="106.0" minHeight="10.0" prefHeight="98.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+            <VBox alignment="TOP_CENTER" prefHeight="464.0" prefWidth="379.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                  <ImageView fx:id="productImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/products/1.png" />
+                     </image>
+                  </ImageView>
+                  <GridPane prefHeight="322.0" prefWidth="379.0">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="185.0" minWidth="10.0" prefWidth="124.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="265.0" minWidth="10.0" prefWidth="255.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="92.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="62.0" valignment="TOP" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="175.0" minHeight="10.0" prefHeight="110.0" valignment="TOP" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="106.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
                      <children>
                         <Label text="Name:">
                            <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="productNameLabel" prefHeight="63.0" prefWidth="265.0" text="Tulips" wrapText="true" GridPane.columnIndex="1">
+                           <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
-                     <children>
-                        <Label text="Tulips">
+                        <Label text="Flower Type:" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="flowerTypeLabel" alignment="TOP_LEFT" prefHeight="63.0" prefWidth="264.0" text="Tulips" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label text="Type:" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="productTypeLabel" prefHeight="60.0" prefWidth="265.0" text="Bouquet" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="26.0" prefWidth="114.0" text="Description:" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="productDescriptionlabel" alignment="TOP_LEFT" contentDisplay="CENTER" prefHeight="123.0" prefWidth="265.0" text="A beautiful bouquet of pink tulips." wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label text="Price:" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="productPriceLabel" text="200 ILS" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
                      </children>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
-                     <children>
-                        <Label text="Flower Type:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <children>
-                        <Label text="Tulips">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
-                     <children>
-                        <Label text="Type:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <children>
-                        <Label text="Bouquet">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
-                     <children>
-                        <Label text="Description:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <children>
-                        <Label text="A beautiful bouquet of pink tulips." wrapText="true">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
+                  </GridPane>
                </children>
-            </GridPane>
-         </children>
-      </VBox>
-      <HBox alignment="CENTER" prefHeight="64.0" prefWidth="396.0" spacing="60.0">
-         <children>
-            <Label text="Price:">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label text="200 ILS">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
+            </VBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <VBox alignment="TOP_CENTER">
+               <children>
+                  <Label text="Product Content" underline="true">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                  </Label>
+                  <ScrollPane prefHeight="469.0" prefWidth="388.0">
+                     <content>
+                        <VBox fx:id="productContentVBox" prefWidth="371.0" spacing="10.0">
+                           <padding>
+                              <Insets left="5.0" top="5.0" />
+                           </padding>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
          </children>
       </HBox>
-      <Button mnemonicParsing="false" text="Close" />
+      <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closePopup" text="Close">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/icons/backIcon.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
    </children>
 </VBox>

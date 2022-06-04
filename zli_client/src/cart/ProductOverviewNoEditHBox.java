@@ -20,7 +20,7 @@ public class ProductOverviewNoEditHBox extends CustomProductHBox {
 
 	public void initHBox() {
 		super.initHBox();
-		nameLabel.setPrefWidth(190);
+		nameLabel.setPrefWidth(170);
 
 		initQuantityVBox();
 		priceHBox.setSpacing(5);

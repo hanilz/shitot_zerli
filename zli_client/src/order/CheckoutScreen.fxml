@@ -84,7 +84,7 @@
                         </HBox>
                         <ScrollPane prefHeight="436.0" prefWidth="237.0">
                            <content>
-                              <VBox fx:id="cartSummaryVBox" prefHeight="96.0" prefWidth="250.0">
+                              <VBox fx:id="cartSummaryVBox" prefHeight="96.0" prefWidth="250.0" spacing="5.0">
                                  <padding>
                                     <Insets top="5.0" />
                                  </padding>

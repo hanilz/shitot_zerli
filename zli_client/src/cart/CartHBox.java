@@ -74,6 +74,7 @@ public class CartHBox extends HBox {
 			public void handle(ActionEvent e) {
 				cart.removeFromCart(product);
 				CartController.connectionWithCartHBox("refresh cart");
+				CartController.instance.clearCartOverview(product);
 			}
 		});
 

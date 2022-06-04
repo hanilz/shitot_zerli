@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -89,6 +90,9 @@ public class CustomProductBuilderController implements Initializable {
 
 	@FXML
 	private CheckBox yellowFilterCheckBox;
+	
+    @FXML
+    private ImageView addToCartImage;
 
 	private static CustomProductBuilderController customControllerInstance;
 
@@ -237,11 +241,15 @@ public class CustomProductBuilderController implements Initializable {
 	}
 
 	private void changeAddToCartButtonEvent() {
-		if (productToEdit instanceof CustomProduct)
-			addToCartButton.setText("Edit Custom Product");
-		else
+		if (productToEdit instanceof CustomProduct) {
+			addToCartButton.setText("Save Changes");
+			addToCartImage.setImage(new Image("/resources/icons/saveIcon.png"));
+		}
+		else {
 			addToCartButton.setText("Edit Product");
-		addToCartButton.setPrefWidth(200);
+			addToCartImage.setImage(new Image("/resources/icons/addToCartIcon.png"));
+		}
+		//addToCartButton.setPrefWidth(200);
 		addToCartButton.setOnAction(new EventHandler<>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -256,7 +264,7 @@ public class CustomProductBuilderController implements Initializable {
 				else
 					name = "Edited " + productToEdit.getName();
 				CustomProduct editedCustomProduct = new CustomProduct(0, name, "Custom", getTotalPriceFromOverview(),
-						"Custom", "/resources/catalog/customProductImage.png", items, products);
+						"Your favorite assortment of beatiful flowers", "/resources/catalog/customProductImage.png", items, products);
 
 				Cart.getInstance().removeFromCart(Cart.getInstance().getProductToEdit());
 				Cart.getInstance().addToCart(editedCustomProduct, 1, true);

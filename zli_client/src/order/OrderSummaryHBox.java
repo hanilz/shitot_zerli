@@ -1,6 +1,9 @@
 package order;
 
+import catalog.ProductDetailsController;
 import catalog.ProductVBox;
+import entities.CustomProduct;
+import entities.Product;
 import entities.ProductsBase;
 import inputs.InputChecker;
 import javafx.event.EventHandler;
@@ -13,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import util.ManageScreens;
 
 public class OrderSummaryHBox extends HBox {
 	private ImageView image;
@@ -60,13 +64,27 @@ public class OrderSummaryHBox extends HBox {
 		image.setOnMouseReleased(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				ProductVBox popup = new ProductVBox(product);
-				popup.initProductVBox();
-				Scene scene = new Scene(popup);
-				Stage stage = new Stage();
-				stage.setTitle("Product Details - " + product.getName());
-				stage.setScene(scene);
-				stage.showAndWait();
+
+				if(product instanceof Product)
+					try {
+						ProductDetailsController.setProduct((Product)product);
+						if(product instanceof CustomProduct)
+							ProductDetailsController.setCustomProduct(((CustomProduct)product).getProducts());
+						ManageScreens.openPopupFXML(ProductDetailsController.class.getResource("ProductDetailsPopup.fxml"), product.getName());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				else {
+					ProductVBox popup = new ProductVBox(product);
+					popup.initProductVBox();
+					Scene scene = new Scene(popup);
+					Stage stage = new Stage();
+					stage.setTitle("Product Details - " + product.getName());
+					stage.setScene(scene);
+					ManageScreens.addPopup(stage);
+					stage.showAndWait();
+					ManageScreens.removePopup(stage);
+				}
 			}
 		});
 	}

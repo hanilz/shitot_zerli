@@ -10,7 +10,7 @@ public class CustomProduct extends Product {
 
 	public CustomProduct(int id, String name, String color, double price, String type, String imagePath,
 			HashMap<Item, Integer> items, HashMap<Product, Integer> products) {
-		super(id, name, color, price, type, imagePath, "Custom", "Custom", items);
+		super(id, name, color, price, type, imagePath, "Beautiful assortment of flowers", "An assortment of items and products", items);
 
 		this.products = products;
 	}
