@@ -1,19 +1,21 @@
-#homeHBox {
-	-fx-background-color: FFF2F2;
+/*FFF2F2 */
+#tilePane {
+	-fx-background-color: linear-gradient(from 000px 000px to 300px 000px, #FFE3FD, #FAE9F0);
 
 }
-
+/*#FF9999,#FFC8C8*/
 #sideCard{
-	 -fx-background-color: linear-gradient(from 000px 000px to 300px 000px, #FF9999, #FFC8C8);
-	
+	 -fx-background-color: linear-gradient(from 000px 000px to 300px 000px, #EFD2D2, #FFE3FD);
 }
-
-#buttonCard{
+/* FFA1A7*/
+#buttonCard,#bellHBOX{
 	-fx-background-radius:20;
-	-fx-background-color:  FFA1A7;
+	-fx-background-color: linear-gradient(from 0px 200px to 100px 0px, #F3F7E6, #FFC5C2);
 	-fx-effect: dropShadow(three-pass-box, rgba(0.2, 0, 0, 0.3), 5.0, 0.0, 0.0,5.0);
 }
-
+#buttonCard:hover,#bellHBOX:hover{
+	-fx-background-color: linear-gradient(from 0px 200px to 100px 0px, #FFC5C2, #F3F7E6);
+}
 #bellCounter{
 	-fx-background-radius:30;
 	-fx-background-color: #FaD6D6;
@@ -22,13 +24,14 @@
 	-fx-border-color: #FF9999;
 }
 
+/* 
 #bellHBOX{
 	-fx-background-radius:30;
-	-fx-background-color: FFF2F2;
+	-fx-background-color: linear-gradient(from 000px 000px to 100px 000px,#FFE3FD , #FAE9F0);
 	-fx-border-width: 3px;
 	-fx-border-radius: 28;
 	-fx-border-color: #FF9999;
-}
+}*/
 
 .separator *.line {
     -fx-border-style: solid;
