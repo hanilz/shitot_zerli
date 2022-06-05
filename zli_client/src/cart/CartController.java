@@ -169,6 +169,8 @@ public class CartController implements Initializable {
 
 	public void refreshTotalPrice() {
 		priceLabel.setText(InputChecker.price(cart.getTotalPrice()));
+		priceLabel.setId("originalPriceLabel");
+		discountLabel.setId("discountLabel");
 		discountLabel.setText(InputChecker.price(cart.getTotalDiscountPrice()));
 		if (cart.isCartEmpty()) {
 			buyButton.setStyle("-fx-background-color: red");

@@ -54,9 +54,11 @@ public class CartProductOverviewVBox extends VBox {
 		totalPriceHBox.setSpacing(20);
 		originalPriceTxt = new Text(InputChecker.price(product.getPrice()));
 		originalPriceTxt.setId("totalPriceAmountLabel");
+		originalPriceTxt.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 		totalPriceHBox.getChildren().add(originalPriceTxt);
 		if(product.isDiscount()) {
 			originalPriceTxt.setId("totalOriginalPriceTxt");
+			originalPriceTxt.setStyle("-fx-font-size: 16px;");
 			TotalPriceDiscountLabel = new Label(InputChecker.price(product.calculateDiscount()));
 			TotalPriceDiscountLabel.setId("totalPriceDiscountLabel");
 			TotalPriceDiscountLabel.setStyle("-fx-text-fill: red;");

@@ -115,8 +115,8 @@ public class CartHBox extends HBox {
 		priceVBox.setSpacing(10);
 		priceVBox.getChildren().add(originalPriceText);
 		if(product.isDiscount()) {
-			originalPriceText.setId("originalPriceTxt");
 			discountLabel.setText(InputChecker.price(totalSumDiscountPrice));
+			originalPriceText.setId("originalPriceTxt");
 			discountLabel.setId("discountLabel");
 			priceVBox.getChildren().add(discountLabel);
 		}
@@ -144,8 +144,6 @@ public class CartHBox extends HBox {
 				cart.addToCart(product, newQuantity, false);
 				totalSumPrice = product.getPrice() * newQuantity;
 				totalSumDiscountPrice = product.calculateDiscount() * newQuantity;
-				System.out.println("new price is " + totalSumPrice);
-				System.out.println("new discount price is " + totalSumDiscountPrice);
 				originalPriceText.setText(InputChecker.price(totalSumPrice));
 				discountLabel.setText(InputChecker.price(totalSumDiscountPrice));
 				quantity = newQuantity;
