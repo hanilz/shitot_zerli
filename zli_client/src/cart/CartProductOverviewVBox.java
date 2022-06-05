@@ -18,7 +18,7 @@ public class CartProductOverviewVBox extends VBox {
 	protected ImageView productImage;
 	protected Label totalPriceLabel = new Label();
 	private HBox totalPriceHBox = new HBox(totalPriceLabel);
-	protected Label TotalPriceDiscountLabel;
+	protected Label TotalPriceDiscountLabel = new Label();
 	protected Text originalPriceTxt;
 	protected VBox itemsProductsVBox = new VBox();
 	protected ScrollPane itemsProductsScrollPane = new ScrollPane(itemsProductsVBox);
@@ -59,7 +59,7 @@ public class CartProductOverviewVBox extends VBox {
 		if(product.isDiscount()) {
 			originalPriceTxt.setId("totalOriginalPriceTxt");
 			originalPriceTxt.setStyle("-fx-font-size: 16px;");
-			TotalPriceDiscountLabel = new Label(InputChecker.price(product.calculateDiscount()));
+			TotalPriceDiscountLabel.setText(InputChecker.price(product.calculateDiscount()));
 			TotalPriceDiscountLabel.setId("totalPriceDiscountLabel");
 			TotalPriceDiscountLabel.setStyle("-fx-text-fill: red;");
 			totalPriceHBox.getChildren().add(TotalPriceDiscountLabel);
