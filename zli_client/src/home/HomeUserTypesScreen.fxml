@@ -14,17 +14,17 @@
    <children>
       <VBox id="sideCard" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="294.0" spacing="30.0">
          <children>
-            <ImageView fitHeight="178.0" fitWidth="203.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="flower" fitHeight="178.0" fitWidth="203.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../resources/icon.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="276.0" text="Welcome To Zer-Li">
+            <Label id="welcom" alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="276.0" text="Welcome To Zer-Li">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
             </Label>
-            <Label fx:id="userNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="196.0">
+            <Label id="userName" fx:id="userNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="196.0">
                <font>
                   <Font size="22.0" />
                </font>

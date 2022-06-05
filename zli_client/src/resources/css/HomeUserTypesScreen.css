@@ -1,4 +1,6 @@
-/*FFF2F2 */
+/*{
+	-fx-background-color: linear-gradient(from 000px 000px to 2000px 000px , #FFC5C2,#FFF7E8, #f2f5f5);
+} */
 /*	-fx-background-color: linear-gradient(from 000px 000px to 300px 000px, #FFE3FD, #FAE9F0);*/
 #tilePane {
 	-fx-background-color: linear-gradient(from 000px 000px to 300px 000px, #FFF7E8, #f2f5f5);
@@ -11,16 +13,29 @@
 /* FFA1A7*/
 #buttonCard, #bellHBOX {
 	-fx-background-radius: 20;
-	-fx-background-color: linear-gradient(from 0px 200px to 100px 0px, #F3F7E6, #FFC5C2);
+	-fx-background-color: #f7ddd3;
+	/*-fx-background-color: linear-gradient(from 0px 200px to 100px 0px, #EEE8D7);*/
 	-fx-effect: dropShadow(three-pass-box, rgba(0.2, 0, 0, 0.3), 5.0, 0.0,
 		0.0, 5.0);
 }
 
 #buttonCard:hover, #bellHBOX:hover {
-	-fx-background-color: linear-gradient(from 0px 200px to 100px 0px, #e7ebd8, #f0b5b1);
+	/*-fx-background-color: linear-gradient(from 0px 200px to 100px 0px, #e7ebd8, #f0b5b1);*/
+	-fx-background-color: #DCE9C7;
 	-fx-cursor: hand;
 }
-
+/* -fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 5.0, 0.0, 0.0,
+		5.0);*/
+#flower,#welcom,#userName
+{
+		-fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 5.0, 0.0, 0.0,
+		5.0);
+}
+#userName
+{
+	-fx-font-size: 36;
+	-fx-font-weight: bold;
+}
 #bellCounter {
 	-fx-background-radius: 30;
 	-fx-background-color: #FaD6D6;

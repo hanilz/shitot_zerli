@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mangeUsers.ManageUsersController">
+<VBox id="mainVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" stylesheets="@../resources/css/ManageUsers.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="manageUsers.ManageUsersController">
    <children>
       <GridPane prefWidth="980.0">
          <columnConstraints>
@@ -35,7 +35,7 @@
                   </Label>
                   <Label text="In this screen you will be able to manage users that are related to your branch">
                      <font>
-                        <Font size="17.0" />
+                        <Font name="System Bold" size="17.0" />
                      </font>
                   </Label>
                </children>
@@ -47,13 +47,13 @@
             </ImageView>
          </children>
       </GridPane>
-      <TableView fx:id="userTable" prefHeight="538.0" prefWidth="1220.0">
+      <TableView fx:id="userTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="485.0" prefWidth="1043.0">
         <columns>
-          <TableColumn fx:id="firstName" prefWidth="123.0" text="First Name" />
-            <TableColumn fx:id="lastName" prefWidth="115.0" text="Last Name" />
-            <TableColumn fx:id="userType" prefWidth="159.0" text="User Type" />
-            <TableColumn fx:id="id" prefWidth="118.0" text="Personal ID" />
-            <TableColumn fx:id="status" prefWidth="119.0" text="Status" />
+          <TableColumn fx:id="firstName" prefWidth="172.0" text="First Name" />
+            <TableColumn fx:id="lastName" prefWidth="158.0" text="Last Name" />
+            <TableColumn fx:id="userType" prefWidth="171.0" text="User Type" />
+            <TableColumn fx:id="id" prefWidth="196.0" text="Personal ID" />
+            <TableColumn fx:id="status" prefWidth="212.0" text="Status" />
         </columns>
       </TableView>
       <HBox prefHeight="27.0" prefWidth="980.0">

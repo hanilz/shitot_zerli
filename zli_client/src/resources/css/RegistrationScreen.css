@@ -1,0 +1,37 @@
+#VBox
+{
+	-fx-background-color: linear-gradient(from 000px 000px to 2000px 000px , #FFC5C2,#FFF7E8, #f2f5f5);
+}
+.button ,.button:hover,#home
+{
+	-fx-background-color: #F4F4F4;
+	-fx-background-radius: 30;
+	-fx-background-insets: 0, 1, 1;
+	-fx-text-fill: black;
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
+	-fx-font-weight: bold;
+	-fx-font-size: 14px;
+	-fx-cursor: hand;
+	
+}
+#CustomerDetailsVBox
+{
+	-fx-background-color: linear-gradient(from 000px 000px to 2000px 000px , #FCEEEE,#dde3f3, #f6e9ec);
+	-fx-background-radius: 30;
+	-fx-text-fill: black;
+	-fx-border-width: 2px;
+	-fx-border-radius:30;
+	-fx-border-color:BABABA;
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 60, 0.0, 0, 1);
+	
+	}
+#title
+{
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 3, 0.0, 0, 1);
+	-fx-font-weight: bold;
+}
+.separator *.line {
+    -fx-border-style: solid;
+    -fx-border-width: 0 0.7 0.7 0; /* its make really one-pixel-border */
+    -fx-border-color: #898989;
+}

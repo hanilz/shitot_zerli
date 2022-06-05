@@ -1,4 +1,4 @@
-package mangeUsers;
+package manageUsers;
 
 import entities.User;
 import javafx.fxml.FXML;

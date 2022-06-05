@@ -1,4 +1,4 @@
-package mangeUsers;
+package manageUsers;
 
 import java.net.URL;
 import java.util.HashMap;

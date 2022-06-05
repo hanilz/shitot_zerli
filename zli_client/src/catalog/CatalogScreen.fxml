@@ -32,12 +32,12 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <HBox id="cartHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="128.0" GridPane.columnIndex="3">
+            <HBox id="cartHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#changeToCartScreen" prefHeight="55.0" prefWidth="128.0" GridPane.columnIndex="3">
                <GridPane.margin>
                   <Insets left="50.0" />
                </GridPane.margin>
                <children>
-                  <ImageView fx:id="cartImage" fitHeight="80.0" fitWidth="80.0" onMousePressed="#changeToCartScreen" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="cartImage" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/catalog/cart.png" />
                      </image>
@@ -55,8 +55,14 @@
                               <Insets left="5.0" right="5.0" />
                            </padding></Label>
                      </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </VBox>
                </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </HBox>
             <VBox alignment="TOP_CENTER" prefHeight="73.0" prefWidth="1053.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
                <GridPane.margin>
@@ -113,6 +119,9 @@
                </cursor>
             </HBox>
          </children>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
       </GridPane>
       <HBox alignment="TOP_CENTER" prefHeight="603.0" prefWidth="1247.0" spacing="10.0">
          <children>

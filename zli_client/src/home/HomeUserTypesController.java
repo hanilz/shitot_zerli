@@ -67,7 +67,8 @@ public class HomeUserTypesController implements Initializable {
 		ArrayList<Screens> userScreens = User.getUserInstance().getUserHomeScreens();
 		setScreen(userScreens);//
 		userNameLabel.setText(User.getUserInstance().getUsername());
-
+		userNameLabel.setId("userName");
+		
 		getNotifications();
 		// update notifications every 10 seconds
 		notificationThread = new Timeline(new KeyFrame(Duration.seconds(10.0), e -> {

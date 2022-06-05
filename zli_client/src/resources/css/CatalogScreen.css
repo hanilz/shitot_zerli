@@ -98,11 +98,13 @@
 	-fx-background-radius: 15;
 	-fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 5.0, 0.0, 0.0,
 		5.0);
+	-fx-cursor: hand;	
 }
 
 #loginVBox {
 	-fx-PrefHeight: 73;
 	-fx-PrefWidth: 63;
+	-fx-cursor: default;
 }
 
 #upperGrid {

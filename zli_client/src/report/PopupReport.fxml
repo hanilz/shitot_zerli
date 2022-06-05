@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="938.0" spacing="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.PopupReportController">
+<VBox id="vbox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="938.0" spacing="10.0" stylesheets="@../resources/css/PopupReport.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.PopupReportController">
    <children>
       <GridPane prefHeight="84.0" prefWidth="878.0">
         <columnConstraints>
@@ -27,7 +27,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="84.0" prefWidth="704.0" spacing="118.0" GridPane.columnIndex="1">
                <children>
-                  <Label text="Zer-Li Company">
+                  <Label id="title" text="Zer-Li Company">
                      <font>
                         <Font name="System Bold" size="37.0" />
                      </font>
@@ -36,7 +36,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="48.0" prefWidth="107.0" spacing="118.0">
                <children>
-                  <ImageView fitHeight="87.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView id="flower" fitHeight="87.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/icon.png" />
                      </image>
@@ -49,19 +49,19 @@
          <children>
             <HBox alignment="TOP_CENTER" prefHeight="32.0" prefWidth="878.0" spacing="35.0">
                <children>
-                  <Label fx:id="reportTypeLabel" text="Income Report">
+                  <Label id="title" fx:id="reportTypeLabel" text="Income Report">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <Label fx:id="branchLabel" text="Branch Name">
+                  <Label id="title" fx:id="branchLabel" text="Branch Name">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <Label fx:id="quraterLabel" text="Q1">
+                  <Label id="title" fx:id="quraterLabel" text="Q1">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -70,7 +70,7 @@
             </HBox>
          </children>
       </VBox>
-      <ScrollPane prefHeight="408.0" prefWidth="878.0">
+      <ScrollPane id="ScrollPane" prefHeight="408.0" prefWidth="878.0">
          <content>
             <VBox fx:id="mainVBox" prefWidth="862.0" spacing="6.0">
                <children>

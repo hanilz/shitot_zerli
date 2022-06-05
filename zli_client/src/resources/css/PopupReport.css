@@ -1,0 +1,23 @@
+#vbox{
+	-fx-background-color: linear-gradient(from 0.0px 0.0px to 2000.0px 0.0px , #FFC5C2,#ffc9c6, #ffcdca);
+}
+#ScrollPane
+{
+	/*-fx-background: linear-gradient(from 0.0px 0.0px to 2000.0px 0.0px , #ffeceb,#ffd8d6, #ffeceb);*/
+	-fx-background: #ffeceb;
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 15, 0.0, 0, 1);
+}
+#title
+{
+	-fx-effect: dropshadow(three-pass-box, rgba(0.0, 0.0, 0.0, 0.3), 3.0, 0.0, 0.0, 1.0);
+	-fx-font-weight: bold;
+}
+#flower
+{
+	-fx-effect: dropShadow(three-pass-box, rgba(0.0, 0.0, 0.0, 0.1), 5.0, 0.0, 0.0,5.0);
+}
+.separator *.line {
+    -fx-border-style: solid;
+    -fx-border-width: 0 0.7 0.7 0; /* its make really one-pixel-border */
+    -fx-border-color: #898989;
+}

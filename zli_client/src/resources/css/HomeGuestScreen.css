@@ -31,7 +31,16 @@
     -fx-border-color: #FF9999;
 }
 
-
+#flower,#welcom,#guest
+{
+		-fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 5.0, 0.0, 0.0,
+		5.0);
+}
+#guest /* */
+{
+	-fx-font-size: 36;
+	-fx-font-weight: bold;
+}
 #cardLabel{
 	-fx-font-size:20;
 	-fx-font-weight:bold;
