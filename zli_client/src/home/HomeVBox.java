@@ -11,6 +11,10 @@ import javafx.scene.layout.VBox;
 import util.ManageScreens;
 import util.Screens;
 
+/**
+ * @author dolev
+ *User Button and Icon that Shows On User Home
+ */
 public class HomeVBox extends VBox {
 	private ImageView image;
 	private Button button;
@@ -26,6 +30,9 @@ public class HomeVBox extends VBox {
 		init();
 	}
 
+	/**
+	 * Setting Buttons and Icon
+	 */
 	public void init() {
 		this.setStyle("-fx-background-color : LAVENDER; -fx-background-radius :20");
 		this.setPadding(new Insets(10));
@@ -49,9 +56,4 @@ public class HomeVBox extends VBox {
 		});
 		this.setAlignment(Pos.CENTER);
 	}
-
-	public String toString() {
-		return ManageScreens.getName(changeToScreen);
-	}
-
 }
