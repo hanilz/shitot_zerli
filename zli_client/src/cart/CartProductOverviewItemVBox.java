@@ -43,7 +43,9 @@ public class CartProductOverviewItemVBox {
     	itemTypeLabel.setText(item.getType());
     	priceLabel.setText(InputChecker.price(item.getPrice()));
     	if(item.isDiscount()) {
+    		priceLabel.setId("originalPriceLabel");
     		discountLabel = new Label(InputChecker.price(item.calculateDiscount()));
+    		discountLabel.setId("discountLabel");
     		priceHBox.getChildren().add(discountLabel);
     	}
     }

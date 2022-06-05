@@ -93,6 +93,12 @@
 	-fx-background: #fcf7f5;
 }
 
+#filterOptionsLabel {
+	-fx-border-color: #FEE1DC;
+	-fx-border-width: 2px;
+	-fx-background: #fcf7f5;
+}
+
 #cartHBox, #homeVBox, #loginHBox {
 	-fx-background-color: #FEE1DC;
 	-fx-background-radius: 15;
@@ -114,15 +120,16 @@
 	-fx-font-size: 14px;
 }
 
-.check-box{
+.check-box {
 	-fx-background-radius: 10.0;
-	-fx-effect: dropshadow(three-pass-box, rgba(0.0, 0.0, 0.0, 0.1), 3.0, 0.0, 0.0, 1.0);
+	-fx-effect: dropshadow(three-pass-box, rgba(0.0, 0.0, 0.0, 0.1), 3.0,
+		0.0, 0.0, 1.0);
 	-fx-font-weight: bold;
 	-fx-font-size: 14.0;
 }
 
 .check-box .box {
 	-fx-background-color: #F4F4F4;
-	-fx-border-color:grey;
-	-fx-border-radius:3.0px; 
+	-fx-border-color: grey;
+	-fx-border-radius: 3.0px;
 }

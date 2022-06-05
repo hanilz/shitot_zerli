@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox id="cartVBox" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" stylesheets="@../resources/css/CartScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cart.CartController">
+<VBox id="cartVBox" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" stylesheets="@../resources/css/CartScreen.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cart.CartController">
    <children>
       <GridPane prefHeight="76.0" prefWidth="1260.0">
         <columnConstraints>
@@ -147,7 +147,7 @@
                <children>
                   <Label text="Total Price:">
                      <font>
-                        <Font name="System Bold" size="36.0" />
+                        <Font name="System Bold" size="28.0" />
                      </font>
                   </Label>
                   <VBox fx:id="totalPriceVBox" alignment="CENTER">
