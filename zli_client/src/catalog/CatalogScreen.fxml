@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="catalogVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="15.0" stylesheets="@../resources/css/CatalogScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.CatalogController">
+<VBox fx:id="catalogVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="15.0" stylesheets="@../resources/css/CatalogScreen.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.CatalogController">
    <children>
       <GridPane id="upperGrid" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="73.0" prefWidth="1172.0">
         <columnConstraints>
@@ -118,7 +118,7 @@
          <children>
             <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="165.0" spacing="5.0">
                <children>
-                  <VBox alignment="CENTER" spacing="3.0" style="-fx-background-color: #fcf7f5;">
+                  <VBox id="filterOptionsLabel" alignment="CENTER" spacing="3.0" style="-fx-background-color: #fcf7f5;">
                      <children>
                         <Label prefHeight="27.0" prefWidth="149.0" text="Filtering options" textAlignment="CENTER">
                            <font>

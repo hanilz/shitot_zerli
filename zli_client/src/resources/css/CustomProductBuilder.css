@@ -76,6 +76,8 @@
 }
 
 #labels{
+	-fx-border-color: #FEE1DC;
+	-fx-border-width: 2px;
 	-fx-background-color: #FBF3F1;
 }
 
