@@ -18,7 +18,7 @@
 
 <VBox id="greetingVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" stylesheets="@../resources/css/GreetingCardScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.GreetingCardController">
    <children>
-      <GridPane prefHeight="158.0" prefWidth="1220.0">
+      <GridPane prefHeight="104.0" prefWidth="1220.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="465.0" minWidth="10.0" prefWidth="87.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="1073.0" minWidth="10.0" prefWidth="1067.0" />
@@ -28,7 +28,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="84.0" prefWidth="1027.0" GridPane.columnIndex="1">
+            <VBox alignment="TOP_CENTER" prefHeight="86.0" prefWidth="1067.0" GridPane.columnIndex="1">
                <children>
                   <Label text="Greeting Card">
                      <font>
@@ -56,8 +56,7 @@
             </HBox>
          </children>
       </GridPane>
-      <HBox prefHeight="100.0" prefWidth="200.0" />
-      <VBox alignment="CENTER" prefHeight="592.0" prefWidth="1220.0" spacing="20.0">
+      <VBox alignment="TOP_CENTER" prefHeight="592.0" prefWidth="1220.0">
          <children>
             <HBox maxWidth="-Infinity" prefHeight="55.0" prefWidth="901.0">
                <children>
@@ -71,7 +70,7 @@
                   </CheckBox>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="36.0" prefWidth="935.0">
+            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="1220.0">
                <children>
                   <Label fx:id="isAllFilledLabel" textFill="RED" />
                </children>
@@ -79,10 +78,10 @@
                   <Insets right="295.0" />
                </padding>
             </HBox>
-            <GridPane hgap="15.0" maxWidth="-Infinity" prefHeight="329.0" prefWidth="905.0" vgap="25.0">
+            <GridPane hgap="15.0" maxWidth="-Infinity" prefHeight="329.0" prefWidth="905.0" vgap="15.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="10.0" prefWidth="157.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="733.0" minWidth="10.0" prefWidth="733.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="10.0" prefWidth="170.6" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="733.0" minWidth="10.0" prefWidth="720.6" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
@@ -125,7 +124,7 @@
                   <TextArea fx:id="greetingCardTextArea" prefHeight="196.0" prefWidth="527.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>
-            <HBox alignment="BOTTOM_CENTER" prefHeight="76.0" prefWidth="878.0" spacing="529.0">
+            <HBox alignment="BOTTOM_CENTER" prefHeight="90.0" prefWidth="1220.0" spacing="517.0">
                <children>
                   <Button id="backBtn" fx:id="backToCart" mnemonicParsing="false" onMousePressed="#changeToCartScreen" text="Back To Cart">
                      <cursor>
@@ -159,7 +158,7 @@
             </HBox>
          </children>
          <padding>
-            <Insets top="19.0" />
+            <Insets top="11.0" />
          </padding>
       </VBox>
    </children>

@@ -1,0 +1,63 @@
+#homeHBox {
+	-fx-background-color: FFF2F2;
+
+}
+
+#sideCard{
+	 -fx-background-color: linear-gradient(from 000px 000px to 300px 000px, #FF9999, #FFC8C8);
+	
+}
+
+#buttonCard{
+	-fx-background-radius:20;
+	-fx-background-color:  FFA1A7;
+	-fx-effect: dropShadow(three-pass-box, rgba(0.2, 0, 0, 0.3), 5.0, 0.0, 0.0,5.0);
+}
+
+#bellCounter{
+	-fx-background-radius:30;
+	-fx-background-color: #FaD6D6;
+	-fx-border-width: 1px;
+	-fx-border-radius: 30;
+	-fx-border-color: #FF9999;
+}
+
+#bellHBOX{
+	-fx-background-radius:30;
+	-fx-background-color: FFF2F2;
+	-fx-border-width: 3px;
+	-fx-border-radius: 28;
+	-fx-border-color: #FF9999;
+}
+
+.separator *.line {
+    -fx-border-style: solid;
+    -fx-border-width: 0 2 0.7 0; /* its make really one-pixel-border */
+    -fx-border-color: #FF9999;
+}
+
+
+.button:hover{
+	-fx-background-color: #FFE0F0;
+	-fx-cursor: hand;
+	-fx-font-weight: bold;
+	-fx-font-size: 12;
+}
+
+.button:pressed {
+	-fx-background-color: #FFD0FF;
+	-fx-cursor: hand;
+	-fx-font-weight: bold;
+	-fx-font-size: 12;
+}
+
+.button{
+	-fx-background-color: #F4F4F4;
+	-fx-background-radius: 30.0;
+	-fx-background-insets: 0.0, 1.0, 1.0;
+	-fx-text-fill: black;
+	-fx-effect: dropshadow(three-pass-box, rgba(0.0, 0.0, 0.0, 0.6), 3.0, 0.0, 0.0, 1.0);
+	-fx-font-weight: bold;
+	-fx-padding: 5.0 10.0 5.0 10.0;
+	-fx-font-size: 12.0;
+}
