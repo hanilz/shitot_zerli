@@ -53,7 +53,6 @@ public class CustomProductHBox extends HBox implements ICustomProductHBox {
 		priceVBox.setId("priceVBox");
 		amountLabel = new Label(InputChecker.price(product.getPrice()));
 		amountLabel.setId("ammountLabel");
-		priceVBox.getChildren().add(priceLabel);
 		priceVBox.getChildren().add(amountLabel);
 		priceVBox.setSpacing(7);
 		priceHBox.setAlignment(Pos.CENTER_RIGHT);
