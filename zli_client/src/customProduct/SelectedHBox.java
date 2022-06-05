@@ -18,6 +18,7 @@ public class SelectedHBox extends CustomProductHBox implements ICustomProductHBo
 	private Button removeQuantity = new Button("-");
 	private Button removeButton = new Button("X");
 	private SelectedHBox selectedProduct;
+	private Label discountLabel = new Label();
 
 	public SelectedHBox(ProductsBase product, int quantity) {
 		super(product);
@@ -43,8 +44,18 @@ public class SelectedHBox extends CustomProductHBox implements ICustomProductHBo
 		super.initPriceHBox();
 		priceHBox.getChildren().add(removeButton);
 		amountLabel.setText(InputChecker.price(getPrice()));
+		if(product.isDiscount())
+			initDiscount();
+		
 	}
 	
+	private void initDiscount() {
+		discountLabel.setText(InputChecker.price(product.calculateDiscount() * quantity));
+		amountLabel.setId("originalPriceTxt");
+		discountLabel.setId("discountLabel");
+		priceVBox.getChildren().add(discountLabel);		
+	}
+
 	private void initQuantityVBox() {
 		quantityLabel = new Label("" + quantity);
 		addQuantity.setOnAction(new EventHandler<ActionEvent>() {
@@ -54,7 +65,8 @@ public class SelectedHBox extends CustomProductHBox implements ICustomProductHBo
             	if(quantity > 1)
             		removeQuantity.setDisable(false);
                 quantityLabel.setText("" + quantity);
-                amountLabel.setText(InputChecker.price(quantity * product.getPrice()));
+                amountLabel.setText(InputChecker.price(quantity * product.getPrice()));		
+                discountLabel.setText(InputChecker.price(quantity * product.calculateDiscount()));
                 CustomProductBuilderController.updateTotalPriceLabel();
             }
         });
@@ -69,13 +81,16 @@ public class SelectedHBox extends CustomProductHBox implements ICustomProductHBo
             		removeQuantity.setDisable(true);
                 quantityLabel.setText("" + quantity);
                 amountLabel.setText(InputChecker.price(quantity * product.getPrice()));
+                discountLabel.setText(InputChecker.price(quantity * product.calculateDiscount()));
                 CustomProductBuilderController.updateTotalPriceLabel();
             }
         });
 		
+		quantityLabel.setId("quantityLabel");
+		
 		quantityHBox.setAlignment(Pos.CENTER);
 		quantityHBox.setSpacing(10);
-
+		
 		quantityHBox.getChildren().add(removeQuantity);
 		quantityHBox.getChildren().add(quantityLabel);
 		quantityHBox.getChildren().add(addQuantity);
@@ -87,5 +102,9 @@ public class SelectedHBox extends CustomProductHBox implements ICustomProductHBo
 	
 	public double getPrice() {
 		return product.getPrice() * quantity;
+	}
+	
+	public double getDiscountedPrice() {
+		return product.calculateDiscount() * quantity;
 	}
 }

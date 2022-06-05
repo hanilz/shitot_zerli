@@ -15,7 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import util.ManageScreens;
 
@@ -29,7 +29,7 @@ public class CustomProductHBox extends HBox implements ICustomProductHBox {
 	protected Label nameLabel;
 	protected HBox priceHBox = new HBox();
 	protected VBox priceVBox = new VBox();
-	protected Label amountLabel;
+	protected Text amountLabel;
 
 	public CustomProductHBox(ProductsBase product) {
 		this.product = product;
@@ -51,7 +51,7 @@ public class CustomProductHBox extends HBox implements ICustomProductHBox {
 
 	protected void initPriceHBox() {
 		priceVBox.setId("priceVBox");
-		amountLabel = new Label(InputChecker.price(product.getPrice()));
+		amountLabel = new Text(InputChecker.price(product.getPrice()));
 		amountLabel.setId("ammountLabel");
 		priceVBox.getChildren().add(amountLabel);
 		priceVBox.setSpacing(7);
