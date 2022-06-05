@@ -1,0 +1,31 @@
+#notificationRow{
+	-fx-background-radius: 50;
+	-fx-background-color: #FEE1DC;
+	-fx-padding: 5 10 5 20;
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
+}
+
+.button:hover{
+	-fx-background-color: #FFE0F0;
+	-fx-cursor: hand;
+	-fx-font-weight: bold;
+	-fx-font-size: 16;
+}
+
+.button:pressed {
+	-fx-background-color: #FFD0FF;
+	-fx-cursor: hand;
+	-fx-font-weight: bold;
+	-fx-font-size: 16;
+}
+
+.button{
+	-fx-background-color: #F4F4F4;
+	-fx-background-radius: 30.0;
+	-fx-background-insets: 0.0, 1.0, 1.0;
+	-fx-text-fill: black;
+	-fx-effect: dropshadow(three-pass-box, rgba(0.0, 0.0, 0.0, 0.6), 3.0, 0.0, 0.0, 1.0);
+	-fx-font-weight: bold;
+	-fx-padding: 5.0 10.0 5.0 10.0;
+	-fx-font-size: 16.0;
+}

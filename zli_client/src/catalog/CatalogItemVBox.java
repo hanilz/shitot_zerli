@@ -110,7 +110,7 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 		image.setOnMouseReleased(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				ProductVBox popup = new ProductVBox(item);
+				ItemDetailsVBox popup = new ItemDetailsVBox(item);
 				popup.initProductVBox();
 				Scene scene = new Scene(popup);
 				Stage stage = new Stage();
