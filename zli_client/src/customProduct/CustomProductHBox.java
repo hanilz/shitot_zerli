@@ -83,7 +83,7 @@ public class CustomProductHBox extends HBox implements ICustomProductHBox {
 		imageVBox.getChildren().add(image);
 
 		imageVBox.setPrefWidth(60);
-		imageVBox.setAlignment(Pos.CENTER_LEFT);
+		imageVBox.setAlignment(Pos.CENTER);
 		
 		
 		image.setOnMouseReleased(new EventHandler<MouseEvent>() {

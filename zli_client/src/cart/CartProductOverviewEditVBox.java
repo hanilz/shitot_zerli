@@ -22,10 +22,12 @@ public class CartProductOverviewEditVBox extends CartProductOverviewVBox {
 	private Button editCustomProductInBuilderButton = new Button("Edit Product");
 	private HBox editButtonsHBox = new HBox();
 	private double price;
+	private double discountPrice;
 
 	public CartProductOverviewEditVBox(Product product) {
 		super(product);
 		price = product.getPrice();
+		discountPrice = product.calculateDiscount();
 	}
 
 	public void initVBox() {
@@ -114,7 +116,8 @@ public class CartProductOverviewEditVBox extends CartProductOverviewVBox {
 			if (currentNode instanceof ProductOverviewEditHBox) {
 				ProductOverviewEditHBox currentProductOverviewHBox = (ProductOverviewEditHBox) currentNode;
 				if (currentProductOverviewHBox == productOverviewHBox) {
-					addToTotalPrice(-currentProductOverviewHBox.getPrice());
+					addToTotalPrice(-currentProductOverviewHBox.getProduct().getPrice() * currentProductOverviewHBox.getQuantity(),
+							-currentProductOverviewHBox.getProduct().calculateDiscount() * currentProductOverviewHBox.getQuantity());
 					itemsProductsVBox.getChildren().remove(currentProductOverviewHBox);
 					break;
 				}
@@ -122,8 +125,10 @@ public class CartProductOverviewEditVBox extends CartProductOverviewVBox {
 		}
 	}
 
-	public void addToTotalPrice(double delta) {
+	public void addToTotalPrice(double delta, double discountDelta) {
 		price += delta;
-		TotalPriceAmountLabel.setText(InputChecker.price(price));
+		originalPriceTxt.setText(InputChecker.price(price));
+		discountPrice += discountDelta;
+		TotalPriceDiscountLabel.setText(InputChecker.price(discountPrice));
 	}
 }

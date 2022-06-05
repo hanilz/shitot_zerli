@@ -10,6 +10,9 @@ public class Cart {
 
 	private double totalPrice = 0;
 	
+	private double totalDiscountPrice = 0;
+
+	
 	private Product productToEdit = null;
 
 	private Cart() {
@@ -29,16 +32,17 @@ public class Cart {
 	public boolean addToCart(ProductsBase product, int quantity, boolean add) {
 		if (product == null || quantity < 0)
 			return false;
+		ProductsBase foundProduct = null;
 		int deltaQuantity = 0;
 		if (product instanceof CustomProduct) {
-			cart.put(product, quantity);
-			
-			calculateTotalPrice(product.getPrice() * quantity);
-			return true;
+			foundProduct = findByName(product);
 		}
-		ProductsBase foundProduct = findByID(product);
-		if (quantity == 0)
+		else {
+			foundProduct = findByID(product);
+		}
+		if (quantity == 0) {
 			removeFromCart(foundProduct);
+		}
 		else if (foundProduct == null) {
 			cart.put(product, quantity);
 			deltaQuantity = quantity;
@@ -50,21 +54,31 @@ public class Cart {
 			deltaQuantity = quantity - cart.get(foundProduct);
 			cart.put(foundProduct, quantity);
 		}
-		calculateTotalPrice(deltaQuantity * product.calculateDiscount());
+		calculateTotalPrice(deltaQuantity * product.getPrice());
+		calculateTotalDiscountPrice(deltaQuantity * product.calculateDiscount());
 		return true;
 	}
 
 	public void emptyCart() {
 		cart.clear();
 		totalPrice = 0;
+		totalDiscountPrice = 0;
 	}
 
 	public double getTotalPrice() {
 		return totalPrice;
 	}
 
+	public double getTotalDiscountPrice() {
+		return totalDiscountPrice;
+	}
+	
 	private void calculateTotalPrice(double amount) {
 		totalPrice += amount;
+	}
+	
+	private void calculateTotalDiscountPrice(double amount) {
+		totalDiscountPrice += amount;
 	}
 
 	/**
@@ -82,7 +96,8 @@ public class Cart {
 			foundProduct = findByID(product);
 		if (!cart.containsKey(foundProduct))
 			return false;
-		calculateTotalPrice(-(cart.get(foundProduct)) * product.calculateDiscount());
+		calculateTotalPrice(-(cart.get(foundProduct)) * product.getPrice());
+		calculateTotalDiscountPrice(-(cart.get(foundProduct)) * product.calculateDiscount());
 		cart.remove(foundProduct);
 		return true;
 	}

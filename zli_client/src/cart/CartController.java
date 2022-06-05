@@ -25,6 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import util.ManageData;
 import util.ManageScreens;
@@ -45,14 +46,19 @@ public class CartController implements Initializable {
     @FXML
     private Label fillAllQuantitiesField;
 	
-	@FXML
-	private Label priceLabel;
+    @FXML
+    private Text priceLabel;
 	
 	@FXML
 	private Pane overviewPane;
+	
+    @FXML
+    private VBox totalPriceVBox;
 
 	@FXML
 	private Button emptyCartButton;
+	
+	private Label discountLabel = new Label("bla");
 
 	public static CartController instance;
 
@@ -163,13 +169,28 @@ public class CartController implements Initializable {
 
 	public void refreshTotalPrice() {
 		priceLabel.setText(InputChecker.price(cart.getTotalPrice()));
+		discountLabel.setText(InputChecker.price(cart.getTotalDiscountPrice()));
 		if (cart.isCartEmpty()) {
 			buyButton.setStyle("-fx-background-color: red");
 			buyButton.setDisable(true);
 			emptyCartButton.setVisible(false);
+			if(isDiscountInPrice())
+				totalPriceVBox.getChildren().remove(discountLabel);	
 		} else {
 			buyButton.setStyle("-fx-background-color: #55a630");
 			buyButton.setDisable(false);
+			initDiscountLabel();	
+		}
+	}
+
+	private void initDiscountLabel() {
+		if(isDiscount()) {
+			if(!isDiscountInPrice())
+				totalPriceVBox.getChildren().add(discountLabel);
+		}
+		else {
+			if(isDiscountInPrice())
+				totalPriceVBox.getChildren().remove(discountLabel);
 		}
 	}
 
@@ -212,7 +233,26 @@ public class CartController implements Initializable {
 			return;
 		VBox productOverview =(VBox)overviewPane.getChildren().get(0);
 		String title = ((Label)productOverview.getChildren().get(0)).getText();
-		if(product.getName().equals(title))
+		if(product instanceof Item) {
+			Item item = (Item) product;
+			if(item.toString().equals(title))
+				overviewPane.getChildren().clear();
+		}
+		else if(product.getName().equals(title))
 			overviewPane.getChildren().clear();
+	}
+	
+	private boolean isDiscount() {
+		for(Node node : cartItemVBox.getChildren()) 
+			if(node instanceof CartHBox) {
+				CartHBox cartHBox = (CartHBox)node;
+				if(cartHBox.getProduct().isDiscount())
+					return true;
+			}
+		return false;
+	}
+	
+	private boolean isDiscountInPrice() {
+		return totalPriceVBox.getChildren().contains(discountLabel);
 	}
 }

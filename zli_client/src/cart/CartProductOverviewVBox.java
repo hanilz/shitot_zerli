@@ -18,9 +18,8 @@ public class CartProductOverviewVBox extends VBox {
 	protected ImageView productImage;
 	protected Label totalPriceLabel = new Label();
 	private HBox totalPriceHBox = new HBox(totalPriceLabel);
-	protected Label TotalPriceAmountLabel;
 	protected Label TotalPriceDiscountLabel;
-	private Text originalPriceTxt;
+	protected Text originalPriceTxt;
 	protected VBox itemsProductsVBox = new VBox();
 	protected ScrollPane itemsProductsScrollPane = new ScrollPane(itemsProductsVBox);
 
@@ -35,7 +34,7 @@ public class CartProductOverviewVBox extends VBox {
 		this.setAlignment(Pos.TOP_CENTER);
 		this.setPrefHeight(340);
 		this.setMaxWidth(Control.USE_PREF_SIZE);
-		this.setPrefWidth(400);
+		this.setPrefWidth(450);
 		this.setMinWidth(Control.USE_PREF_SIZE);
 		this.setSpacing(10);
 		
@@ -53,18 +52,14 @@ public class CartProductOverviewVBox extends VBox {
 	protected void initTotalPriceHBox() {
 		totalPriceHBox.setAlignment(Pos.CENTER);
 		totalPriceHBox.setSpacing(20);
-		TotalPriceAmountLabel = new Label(InputChecker.price(product.getPrice()));
-		TotalPriceAmountLabel.setId("totalPriceAmountLabel");
-		TotalPriceAmountLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 20px;");
-		totalPriceHBox.getChildren().add(TotalPriceAmountLabel);
+		originalPriceTxt = new Text(InputChecker.price(product.getPrice()));
+		originalPriceTxt.setId("totalPriceAmountLabel");
+		totalPriceHBox.getChildren().add(originalPriceTxt);
 		if(product.isDiscount()) {
-			originalPriceTxt = new Text(InputChecker.price(product.getPrice()));
 			originalPriceTxt.setId("totalOriginalPriceTxt");
 			TotalPriceDiscountLabel = new Label(InputChecker.price(product.calculateDiscount()));
 			TotalPriceDiscountLabel.setId("totalPriceDiscountLabel");
 			TotalPriceDiscountLabel.setStyle("-fx-text-fill: red;");
-			totalPriceHBox.getChildren().remove(TotalPriceAmountLabel);
-			totalPriceHBox.getChildren().add(originalPriceTxt);
 			totalPriceHBox.getChildren().add(TotalPriceDiscountLabel);
 		}
 		this.getChildren().add(totalPriceHBox);

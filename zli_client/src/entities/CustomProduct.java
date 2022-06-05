@@ -27,9 +27,9 @@ public class CustomProduct extends Product {
 	public double calculateDiscount() {
 		double totalDiscountedPrice = 0;
 		for (Product product : products.keySet())
-			totalDiscountedPrice += product.calculateDiscount();
+			totalDiscountedPrice += product.calculateDiscount() * products.get(product);
 		for (Item item : items.keySet())
-			totalDiscountedPrice += item.calculateDiscount();
+			totalDiscountedPrice += item.calculateDiscount() * items.get(item);
 		 return totalDiscountedPrice;
 	}
 	

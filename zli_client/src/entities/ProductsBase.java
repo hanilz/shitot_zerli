@@ -8,8 +8,8 @@ public class ProductsBase implements Serializable, Comparable<ProductsBase> {
 	 */
 	private static final long serialVersionUID = 1L;
 	private int id;
-	private String name;
-	private String color;
+	protected String name;
+	protected String color;
 	private double price;
 	private String type;
 	private String imagePath;

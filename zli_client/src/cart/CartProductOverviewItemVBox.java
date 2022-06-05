@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 
 public class CartProductOverviewItemVBox {
 	private Item item;
@@ -31,7 +32,7 @@ public class CartProductOverviewItemVBox {
     private HBox priceHBox;
 
     @FXML
-    private Label priceLabel;
+    private Text priceLabel;
     
     public void initVBox(Item item) {
     	this.item = item;
@@ -40,6 +41,7 @@ public class CartProductOverviewItemVBox {
     	itemNameTopLabel.setText(item.getName() + " - " + item.getColor());
     	itemNameLabel.setText(item.getName());
     	itemTypeLabel.setText(item.getType());
+    	priceLabel.setText(InputChecker.price(item.getPrice()));
     	if(item.isDiscount()) {
     		discountLabel = new Label(InputChecker.price(item.calculateDiscount()));
     		priceHBox.getChildren().add(discountLabel);

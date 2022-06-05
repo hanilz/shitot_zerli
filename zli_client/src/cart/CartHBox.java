@@ -29,6 +29,7 @@ public class CartHBox extends HBox {
 	private int quantity;
 
 	private double totalSumPrice = 0;
+	private double totalSumDiscountPrice = 0;
 
 	private ImageView image;
 	private VBox idNameVBox = new VBox();
@@ -40,9 +41,8 @@ public class CartHBox extends HBox {
 
 	private HBox imageHBox = new HBox();
 	private VBox priceVBox = new VBox();
-	private Label amountLabel;
 	private Text originalPriceText;
-	private Label discountLabel;
+	private Label discountLabel = new Label();
 	private Button removeButton = new Button("X");
 	private double price;
 
@@ -88,10 +88,6 @@ public class CartHBox extends HBox {
 		this.setId("cartHbox");
 	}
 
-	private boolean isItem() {
-		return product instanceof Item;
-	}
-
 	private void initProductDetailsVBox() {
 		idLabel = new Label("CatID: " + product.getId());
 
@@ -111,25 +107,18 @@ public class CartHBox extends HBox {
 	}
 
 	private void initPriceDetailsVBox() {
-		totalSumPrice = price * quantity;
-		amountLabel = new Label(InputChecker.price(quantity * product.getPrice()));
-		//amountLabel.setFont(new Font(20));
-		//amountLabel.setStyle("-fx-font-weight: bold;");
-		amountLabel.setId("priceLabel");
+		totalSumPrice = product.getPrice() * quantity;
+		totalSumDiscountPrice = product.calculateDiscount() * quantity;
+		originalPriceText = new Text(InputChecker.price(totalSumPrice));
+		originalPriceText.setId("priceLabel");
 		priceVBox.setAlignment(Pos.CENTER);
 		priceVBox.setSpacing(10);
-		priceVBox.getChildren().add(amountLabel);
+		priceVBox.getChildren().add(originalPriceText);
 		if(product.isDiscount()) {
-			//amountLabel.setStyle("");
-			originalPriceText = new Text(InputChecker.price(quantity * product.getPrice()));
 			originalPriceText.setId("originalPriceTxt");
-			discountLabel = new Label(InputChecker.price(totalSumPrice));
-			//amountLabel.setFont(new Font(16));
-			//amountLabel.setStyle("-fx-font-weight: bold;");
+			discountLabel.setText(InputChecker.price(totalSumDiscountPrice));
 			discountLabel.setId("discountLabel");
-			priceVBox.getChildren().add(originalPriceText);
 			priceVBox.getChildren().add(discountLabel);
-			priceVBox.getChildren().remove(amountLabel);
 		}
 
 		priceVBox.setPrefWidth(180);
@@ -153,9 +142,12 @@ public class CartHBox extends HBox {
 					return;
 				newQuantity = Integer.parseInt(quantityField.getText());
 				cart.addToCart(product, newQuantity, false);
-				totalSumPrice = price * newQuantity;
+				totalSumPrice = product.getPrice() * newQuantity;
+				totalSumDiscountPrice = product.calculateDiscount() * newQuantity;
 				System.out.println("new price is " + totalSumPrice);
-				amountLabel.setText(InputChecker.price(totalSumPrice));
+				System.out.println("new discount price is " + totalSumDiscountPrice);
+				originalPriceText.setText(InputChecker.price(totalSumPrice));
+				discountLabel.setText(InputChecker.price(totalSumDiscountPrice));
 				quantity = newQuantity;
 				if (quantity == 0)
 					CartController.connectionWithCartHBox("refresh cart");
@@ -196,6 +188,10 @@ public class CartHBox extends HBox {
 	
 	public double getTotalSumPrice() {
 		return totalSumPrice;
+	}
+	
+	public double getTotalSumDiscountPrice() {
+		return totalSumDiscountPrice;
 	}
 	
 	public TextField getQuantityField() {

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.text.Text?>
 
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="400.0" spacing="5.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cart.CartProductOverviewItemVBox">
    <children>
@@ -40,7 +40,7 @@
       <HBox fx:id="priceHBox" alignment="BOTTOM_CENTER" prefHeight="53.0" prefWidth="400.0" spacing="10.0">
          <children>
             <Label text="Price:" />
-            <Label fx:id="priceLabel" text="10 $" />
+            <Text fx:id="priceLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
          </children>
       </HBox>
    </children>
