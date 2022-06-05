@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" spacing="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notifications.NotificationController">
+<VBox id="notificationVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" spacing="10.0" stylesheets="@../resources/css/NotificationMainScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notifications.NotificationController">
    <children>
       <Label text="Notification Center">
          <font>
@@ -23,7 +23,7 @@
                <content>
                   <ScrollPane prefHeight="200.0" prefWidth="200.0">
                      <content>
-                        <VBox fx:id="newNotificationsVBox" alignment="TOP_CENTER" prefHeight="405.0" prefWidth="940.0" spacing="10.0">
+                        <VBox fx:id="newNotificationsVBox" alignment="TOP_CENTER" prefHeight="398.0" prefWidth="940.0" spacing="10.0">
                            <padding>
                               <Insets top="10.0" />
                            </padding>

@@ -2,6 +2,7 @@ package catalog;
 
 import entities.Product;
 import entities.ProductsBase;
+import inputs.InputChecker;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -15,29 +16,34 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-public class ProductVBox extends VBox {
+public class ItemDetailsVBox extends VBox {
 	private ProductsBase product;
 
 	private ImageView image;
 	private GridPane mainGrid;
 	private Button closeBtn;
 
-	public ProductVBox(ProductsBase p) {
+	public ItemDetailsVBox(ProductsBase p) {
 		this.product = p;
 	}
 
 	public void initProductVBox() {
-		this.setMinHeight(600);
-		this.setMinWidth(450);
+		this.getStylesheets().add("/resources/css/ItemDetailsVBox.css");
+		this.setId("itemVBox");
+		this.setMinHeight(450);
+		this.setMinWidth(350);
 		this.setPrefHeight(USE_COMPUTED_SIZE);
 		this.setAlignment(Pos.TOP_CENTER);
 		this.setPadding(new Insets(15, 15, 30, 15));
 
 		// set page title
+		Label productDetails;
+		productDetails = new Label("Product Details");
+		productDetails.setId("productDetails");
+		this.getChildren().add(productDetails);
 		Label productName;
-		productName = new Label("Product Details\n" + product.getName());
-		productName.setTextAlignment(TextAlignment.CENTER);
-		productName.setFont(new Font("-fx-font-weight: bold", 35));
+		productName = new Label(product.toString());
+		productName.setId("productName");
 		this.getChildren().add(productName);
 
 		initImageProduct();
@@ -52,7 +58,6 @@ public class ProductVBox extends VBox {
 
 		// add close button to VBox
 		closeBtn = new Button("Close");
-		closeBtn.setCursor(Cursor.HAND);
 		closeBtn.setOnAction(e -> {
 			Stage stage = (Stage) closeBtn.getScene().getWindow();
 			// do what you have to do
@@ -64,48 +69,20 @@ public class ProductVBox extends VBox {
 
 	private void initCellsInGrid() {
 		Label cell;
-		// set product product type;
-		cell = new Label("Type:");
-		cell.setFont(new Font("-fx-font-weight: bold", 23));
-		mainGrid.add(cell, 0, 0);
-		cell = new Label(product.getType());
-		cell.setFont(new Font("-fx-font-weight: bold", 23));
-		mainGrid.add(cell, 1, 0);
-
-		if (product instanceof Product) {
-			Product currentProduct = (Product) product;
-			
-			// set product flower type
-			cell = new Label("Flower Type:");
-			cell.setFont(new Font("-fx-font-weight: bold", 23));
-			mainGrid.add(cell, 0, 1);
-			cell = new Label(currentProduct.getFlowerType());
-			cell.setFont(new Font("-fx-font-weight: bold", 23));
-			mainGrid.add(cell, 1, 1);
-
-			// set product Description
-			cell = new Label("Description:");
-			cell.setFont(new Font("-fx-font-weight: bold", 23));
-			mainGrid.add(cell, 0, 2);
-			cell = new Label(currentProduct.getProductDescription());
-			cell.setWrapText(true);
-			cell.setFont(new Font("-fx-font-weight: bold", 23));
-			mainGrid.add(cell, 1, 2);
-		}
-		// set product Price
-		cell = new Label("Price:");
-		cell.setFont(new Font("-fx-font-weight: bold", 23));
-		mainGrid.add(cell, 0, 3);
-		cell = new Label(product.getPrice() + " ILS");
-		cell.setWrapText(true);
-		cell.setFont(new Font("-fx-font-weight: bold", 23));
-		mainGrid.add(cell, 1, 3);
+		mainGrid.add(new Label("Name:"), 0, 0);
+		mainGrid.add(new Label(product.getName()), 1, 0);
+		mainGrid.add(new Label("Type:"), 0, 1);
+		mainGrid.add(new Label(product.getType()), 1, 1);
+		mainGrid.add(new Label("Color:"), 0, 2);
+		mainGrid.add(new Label(product.getColor()), 1, 2);
+		mainGrid.add(new Label("Price:"), 0, 3);
+		mainGrid.add(new Label(InputChecker.price(product.calculateDiscount())), 1, 3);
 	}
 
 	private void initGrid() {
 		mainGrid = new GridPane();
-		mainGrid.setMinWidth(400);
-		mainGrid.setPrefWidth(400);
+		mainGrid.setMinWidth(350);
+		mainGrid.setPrefWidth(350);
 		ColumnConstraints col = new ColumnConstraints(150);
 		// ColumnConstraints row = new ColumnConstraints(100);
 		mainGrid.getColumnConstraints().add(col);
@@ -119,7 +96,7 @@ public class ProductVBox extends VBox {
 		// set product image
 		image = new ImageView(product.getImagePath());
 		image.setFitHeight(200);
-		image.setFitWidth(400);
+		image.setFitWidth(350);
 		image.setPreserveRatio(true);
 	}
 }

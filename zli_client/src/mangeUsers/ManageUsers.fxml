@@ -14,9 +14,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mangeUsers.ManageUsersController">
+<VBox id="manageUsersVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="10.0" stylesheets="@../resources/css/ManageUsers.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mangeUsers.ManageUsersController">
    <children>
-      <GridPane prefWidth="980.0">
+      <GridPane prefHeight="74.0" prefWidth="1219.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="100.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="1072.0" minWidth="10.0" prefWidth="1059.0" />
@@ -26,7 +26,7 @@
             <RowConstraints minHeight="100.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="886.0" GridPane.columnIndex="1">
+            <VBox alignment="TOP_CENTER" prefHeight="89.0" prefWidth="886.0" GridPane.columnIndex="1">
                <children>
                   <Label text="Manage Users">
                      <font>
@@ -40,17 +40,21 @@
                   </Label>
                </children>
             </VBox>
-            <ImageView fx:id="homeImage" fitHeight="100.0" fitWidth="100.0" onMousePressed="#returnHome" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../resources/catalog/home.png" />
-               </image>
-            </ImageView>
+            <VBox id="homeHBox" alignment="CENTER">
+               <children>
+                  <ImageView fx:id="homeImage" fitHeight="96.0" fitWidth="100.0" onMousePressed="#returnHome" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/catalog/home.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
          </children>
       </GridPane>
-      <TableView fx:id="userTable" prefHeight="538.0" prefWidth="1220.0">
+      <TableView fx:id="userTable" prefHeight="531.0" prefWidth="1219.0">
         <columns>
-          <TableColumn fx:id="firstName" prefWidth="123.0" text="First Name" />
-            <TableColumn fx:id="lastName" prefWidth="115.0" text="Last Name" />
+          <TableColumn fx:id="firstName" prefWidth="200.0" text="First Name" />
+            <TableColumn fx:id="lastName" prefWidth="200.0" text="Last Name" />
             <TableColumn fx:id="userType" prefWidth="159.0" text="User Type" />
             <TableColumn fx:id="id" prefWidth="118.0" text="Personal ID" />
             <TableColumn fx:id="status" prefWidth="119.0" text="Status" />
@@ -58,7 +62,7 @@
       </TableView>
       <HBox prefHeight="27.0" prefWidth="980.0">
          <children>
-            <Button fx:id="backBtn" mnemonicParsing="false" onAction="#changeScreenToMain" text="Back">
+            <Button id="backBtn" fx:id="backBtn" mnemonicParsing="false" onAction="#changeScreenToMain" text="Back">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
