@@ -31,14 +31,14 @@
 	-fx-font-size: 24;
 }
 
-#backBtn:hover, #emptyBtn:hover {
+#backBtn:hover, #emptyBtn:hover ,.button:hover{
 	-fx-background-color: #FFE0F0;
 	-fx-cursor: hand;
 	-fx-font-weight: bold;
 	-fx-font-size: 18;
 }
 
-#backBtn:pressed, #emptyBtn:pressed {
+#backBtn:pressed, #emptyBtn:pressed, .button:pressed {
 	-fx-background-color: #FFD0FF;
 	-fx-cursor: hand;
 	-fx-font-weight: bold;
@@ -50,7 +50,12 @@
 	-fx-font-weight: bold;
 }
 
-.button {
+.text-field{
+	-fx-font-size: 16;
+	-fx-font-weight: bold;
+}
+
+.button{
 	-fx-background-color: #F4F4F4;
 	-fx-background-radius: 30.0;
 	-fx-background-insets: 0.0, 1.0, 1.0;
@@ -61,6 +66,7 @@
 	-fx-padding: 5.0 10.0 5.0 10.0;
 	-fx-font-size: 18.0;
 }
+
 
 #cartHbox, #cartHbox:pressed {
 	-fx-background-radius: 20;
@@ -84,4 +90,19 @@
 	-fx-text-fill: red;
 	-fx-font-weight: bold;
 	-fx-font-size: 20px;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical {
+	-fx-background-color: #FBF3F1;
+}
+
+.scroll-bar:horizontal .thumb, .scroll-bar:vertical .thumb {
+	-fx-background-color: #FEE1DC;
+	-fx-background-radius: 5em;
+}
+
+.separator *.line {
+    -fx-border-style: solid;
+    -fx-border-width: 0 0.7 0.7 0; /* its make really one-pixel-border */
+    -fx-border-color: #e0beb8;
 }

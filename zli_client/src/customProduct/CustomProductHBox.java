@@ -52,7 +52,8 @@ public class CustomProductHBox extends HBox implements ICustomProductHBox {
 	protected void initPriceHBox() {
 		priceVBox.setId("priceVBox");
 		amountLabel = new Label(InputChecker.price(product.getPrice()));
-		amountLabel.setFont(new Font(23));
+		amountLabel.setId("ammountLabel");
+		priceVBox.getChildren().add(priceLabel);
 		priceVBox.getChildren().add(amountLabel);
 		priceVBox.setSpacing(7);
 		priceHBox.setAlignment(Pos.CENTER_RIGHT);
@@ -62,11 +63,10 @@ public class CustomProductHBox extends HBox implements ICustomProductHBox {
 
 	private void initProductDetailsVBox() {
 		idLabel = new Label("CatID: " + product.getId());
-
 		nameLabel = new Label(product.getName());
-		nameLabel.setFont(new Font(20));
+		nameLabel.setId("nameLabel");
 		nameLabel.setMinWidth(Control.USE_PREF_SIZE);
-		nameLabel.setPrefWidth(230);
+		nameLabel.setPrefWidth(240);
 		nameLabel.setWrapText(true);
 		
 		idNameVBox.getChildren().add(idLabel);
