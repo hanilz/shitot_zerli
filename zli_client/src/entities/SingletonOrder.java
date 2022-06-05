@@ -1,6 +1,6 @@
 package entities;
 
-public class SingletonOrder extends Order{
+public class SingletonOrder extends Order {
 
 	/**
 	 * 
@@ -11,21 +11,20 @@ public class SingletonOrder extends Order{
 	private Delivery pickup = null;
 	private Branch pickupBranch = null;
 	private boolean isGreetingCard = true;
-	private String greetingCardTitle = "";
 	private String greetingCardFrom = "";
 	private String greetingCardTo = "";
 	private String greetingCardContent = "";
 	private boolean isPickup = false;
 	private boolean isExpress = false;
-	
+
 	public static SingletonOrder getInstance() {
-		return ((instance == null) ? instance = new SingletonOrder(): instance);
+		return ((instance == null) ? instance = new SingletonOrder() : instance);
 	}
-	
+
 	public SingletonOrder() {
 		super(0, 0.0, "", "", "", null, "", null, "");
 	}
-	
+
 	public Delivery getDelivery() {
 		return delivery;
 	}
@@ -33,21 +32,21 @@ public class SingletonOrder extends Order{
 	public void setDelivery(Delivery delivery) {
 		this.delivery = delivery;
 	}
-	
+
 	public void emptySingletonOrder() {
 		instance = null;
 	}
-	
+
 	public void formatGreetingCard() {
-		if(isGreetingCard)
-			greetingCard = String.format("Title: %s, From: %s, To: %s, Greeting Card: %s", greetingCardTitle,
-					greetingCardFrom, greetingCardTo, greetingCardContent);
-		else
+		if (isGreetingCard) {
+			greetingCardFrom = greetingCardFrom.isEmpty() ? "Anonymous": greetingCardFrom;
+			greetingCard = String.format("From: %s, To: %s, Greeting Card: %s", greetingCardFrom, greetingCardTo,
+					greetingCardContent);
+		} else
 			greetingCard = "";
 	}
-	
-	public void setGreetingCardFields(String title, String from, String to, String content) {
-		greetingCardTitle = title;
+
+	public void setGreetingCardFields(String from, String to, String content) {
 		greetingCardFrom = from;
 		greetingCardTo = to;
 		greetingCardContent = content;
@@ -61,14 +60,10 @@ public class SingletonOrder extends Order{
 		this.isGreetingCard = isGreetingCard;
 	}
 
-	public String getGreetingCardTitle() {
-		return greetingCardTitle;
-	}
-	
 	public String getGreetingCardTo() {
 		return greetingCardTo;
 	}
-	
+
 	public String getGreetingCardFrom() {
 		return greetingCardFrom;
 	}

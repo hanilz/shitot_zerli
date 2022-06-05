@@ -103,6 +103,12 @@ public class InputChecker {
 			return false;
 		return true;
 	}
+	
+	public static boolean isGreetingCardInputNotLong(String from, String to, String greetingCard) {
+		if (!(from.length() < 40) || !(to.length() < 40) || !(greetingCard.length() < 150))
+			return false;
+		return true;
+	}
 
 	public static boolean isDeliveryInputValid(String phoneNumber, String recieverName) {
 		if (!recieverName.matches("^[ A-Za-z]+$"))
@@ -132,18 +138,17 @@ public class InputChecker {
 		return false;
 	}
 
-
 	public static boolean isValidNubmer(String number) {
-		if (number.matches("[0-9]+") )
+		if (number.matches("[0-9]+"))
 			return true;
 		return false;
 	}
-	
+
 	public static boolean isDateBeforeNow3Hours(String dateTime) {
 		boolean response = false;
-	    Calendar calendar = Calendar.getInstance();
-	    calendar.setTime(new Date());
-	    calendar.add(Calendar.HOUR_OF_DAY, 3);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		calendar.add(Calendar.HOUR_OF_DAY, 3);
 		try {
 			response = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateTime).before(calendar.getTime());
 		} catch (ParseException e) {
@@ -156,9 +161,8 @@ public class InputChecker {
 		return (isNull(date) || isNull(hour) || isNull(minutes));
 	}
 
-	public static boolean areGreetingCardFieldsEmptyChecker(boolean selected, String text, String text2, String text3,
-			String text4) {
-		return selected ? (text.isEmpty() || text2.isEmpty() || text3.isEmpty() || text4.isEmpty()) : false;
+	public static boolean areGreetingCardFieldsEmptyChecker(boolean selected, String text, String text2) {
+		return selected ? (text.isEmpty() || text2.isEmpty()) : false;
 	}
 
 	public static boolean isInteger(String check) {

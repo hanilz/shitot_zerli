@@ -42,7 +42,6 @@ public class GreetingCardVBoxController implements Initializable {
 	}
 
 	private void setLabelsText() {
-		titleLabel.setText(SingletonOrder.getInstance().getGreetingCardTitle());
 		toLabel.setText(SingletonOrder.getInstance().getGreetingCardTo());
 		fromLabel.setText(SingletonOrder.getInstance().getGreetingCardFrom());
 		greetingCardLabel.setText(SingletonOrder.getInstance().getGreetingCardContent());

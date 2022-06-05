@@ -32,21 +32,11 @@
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="733.0" minWidth="10.0" prefWidth="155.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="78.0" minHeight="8.0" prefHeight="41.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label text="Title:">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <HBox GridPane.rowIndex="1">
+                  <HBox>
                      <children>
                         <Label text="From:">
                            <font>
@@ -55,7 +45,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox GridPane.rowIndex="2">
+                  <HBox GridPane.rowIndex="1">
                      <children>
                         <Label text="To:">
                            <font>
@@ -66,15 +56,6 @@
                   </HBox>
                   <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                      <children>
-                        <Label fx:id="titleLabel" text="alsokdnjfvlaksndklv asldvjk lasdk vklasj dkv jaskdjv  kasj dvkj askdvj aikj " wrapText="true">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <children>
                         <Label fx:id="fromLabel" text="alsvdfnlaskdf lkasldvknasldkv alsdk vlas kdvl askdlv kasldkv  " wrapText="true">
                            <font>
                               <Font size="14.0" />
@@ -82,7 +63,7 @@
                         </Label>
                      </children>
                   </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
                         <Label fx:id="toLabel" text="asdf;./.,gv,,nmasl./d/f,. bn,n, v.a,sdfv;, as;dlmfa;'s, dv;aslmdv;'aslm d;v, as;dvm;ml" wrapText="true">
                            <font>
