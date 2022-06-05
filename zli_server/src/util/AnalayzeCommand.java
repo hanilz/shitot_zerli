@@ -1374,9 +1374,8 @@ public class AnalayzeCommand {
 			preparedStmt.setInt(1, idOrder);
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
-				//String query2 = "SELECT * FROM zli.order_products op INNER JOIN zli.products p ON op.idProduct=p.productID WHERE op.idOrder=?;";
 				product.put(new Product(rs.getInt(4), rs.getString(5),rs.getString(7),rs.getDouble(8), rs.getString(9), 
-						rs.getString(11),rs.getDouble(12),rs.getString(6),rs.getString(10), getItems(rs.getInt(4))), rs.getInt(3));
+						rs.getString(11),rs.getDouble(12),rs.getString(6),rs.getString(10), getItemsForProduct(rs.getInt(4))), rs.getInt(3));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1384,8 +1383,7 @@ public class AnalayzeCommand {
 		return product;
 	}
 
-	private static HashMap<Item, Integer> getItems(int producID) {
-		//SELECT * FROM zli.items i JOIN product_items pi ON i.itemID=pi.idItem AND pi.idProduct = 5;
+	private static HashMap<Item, Integer> getItemsForProduct(int producID) {
 		HashMap<Item, Integer> items = new HashMap<>();
 		Connection conn = DataBaseController.getConn();
 		PreparedStatement preparedStmt;
@@ -1395,7 +1393,6 @@ public class AnalayzeCommand {
 			preparedStmt.setInt(1, producID);
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
-				//String query2 = "SELECT * FROM zli.order_products op INNER JOIN zli.products p ON op.idProduct=p.productID WHERE op.idOrder=?;";
 				items.put(new Item(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getDouble(4), rs.getString(5), 
 						rs.getString(6),rs.getDouble(7)), rs.getInt(10));
 			}
@@ -1427,7 +1424,6 @@ public class AnalayzeCommand {
 	}
 	
 	private static HashMap<Product, Integer> getCustomProductProducts(int producID) {
-		//SELECT * FROM zli.items i JOIN product_items pi ON i.itemID=pi.idItem AND pi.idProduct = 5;
 		HashMap<Product, Integer> products = new HashMap<>();
 		Connection conn = DataBaseController.getConn();
 		PreparedStatement preparedStmt;
@@ -1437,9 +1433,8 @@ public class AnalayzeCommand {
 			preparedStmt.setInt(1, producID);
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
-				//String query2 = "SELECT * FROM zli.order_products op INNER JOIN zli.products p ON op.idProduct=p.productID WHERE op.idOrder=?;";
 				products.put(new Product(rs.getInt(1), rs.getString(2),rs.getString(4),rs.getDouble(5), rs.getString(6), 
-						rs.getString(8),rs.getDouble(9),rs.getString(3),rs.getString(7), getItems(rs.getInt(1))), rs.getInt(12));
+						rs.getString(8),rs.getDouble(9),rs.getString(3),rs.getString(7), getItemsForProduct(rs.getInt(1))), rs.getInt(12));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

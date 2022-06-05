@@ -9,6 +9,7 @@ import entities.Item;
 import entities.Product;
 import inputs.InputChecker;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -16,12 +17,13 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.stage.WindowEvent;
 import util.ManageScreens;
 
 public class ProductDetailsController implements Initializable {
 	private static Product product;
 
-	private static HashMap<Product, Integer> products = null;
+	private static HashMap<Product, Integer> products = new HashMap<>();
 
 	@FXML
 	private Button closeButton;
@@ -48,9 +50,11 @@ public class ProductDetailsController implements Initializable {
 	private ImageView productImage;
 
 	@FXML
-	void closePopup(ActionEvent event) {
-		if (ManageScreens.getPopupStage() != null)
+	void closePopup() {
+		if (ManageScreens.getPopupStage() != null) {
+			products.clear();			
 			ManageScreens.getPopupStage().close();
+		}
 	}
 
 	public void initProduct() {
@@ -64,22 +68,23 @@ public class ProductDetailsController implements Initializable {
 	}
 
 	private void initItems() {
-		if (product.getItems().isEmpty())
-			productContentVBox.getChildren().add(new Label("No items to display"));
-		else {
+		if(products != null) {
+			for (Product productRow : products.keySet()) {
+				ProductOverviewNoEditHBox itemHBox = new ProductOverviewNoEditHBox(productRow, products.get(productRow));
+				itemHBox.initHBox();
+				productContentVBox.getChildren().add(itemHBox);
+			}
+			products.clear();
+		}
+//		if (product.getItems().isEmpty())
+//			productContentVBox.getChildren().add(new Label("No items to display"));
+//		else {
 			for (Item item : product.getItems().keySet()) {
 				ProductOverviewNoEditHBox itemHBox = new ProductOverviewNoEditHBox(item, product.getItems().get(item));
 				itemHBox.initHBox();
 				productContentVBox.getChildren().add(itemHBox);
 			}
-			if(products != null) {
-				for (Product productRow : products.keySet()) {
-					ProductOverviewNoEditHBox itemHBox = new ProductOverviewNoEditHBox(productRow, products.get(productRow));
-					itemHBox.initHBox();
-					productContentVBox.getChildren().add(itemHBox);
-				}
-			}
-		}
+//		}
 	}
 
 	public static void setProduct(Product product) {
@@ -87,11 +92,13 @@ public class ProductDetailsController implements Initializable {
 	}
 	
 	public static void setCustomProduct(HashMap<Product,Integer> products) {
-		ProductDetailsController.products = products;
+		ProductDetailsController.products.clear();
+		ProductDetailsController.products.putAll(products);
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initProduct();
+    
 	}
 }

@@ -358,9 +358,9 @@ public class ServerMessageController {
 			break;
 		case FETCH_ORDER_CONTENT:
 			HashMap<ProductsBase, Integer> productsInOrder = new HashMap<>();
+			productsInOrder.putAll(AnalayzeCommand.getOrderCustomProducts((Integer) message.get("orderID")));
 			productsInOrder.putAll( AnalayzeCommand.getOrderProducts((Integer) message.get("orderID")));
 			productsInOrder.putAll(AnalayzeCommand.getOrderItems((Integer) message.get("orderID")));
-			productsInOrder.putAll(AnalayzeCommand.getOrderCustomProducts((Integer) message.get("orderID")));
 			message.put("response", productsInOrder);
 			break;
 		case GET_USER_SCREENS:
