@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <VBox id="cartVBox" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" stylesheets="@../resources/css/CartScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cart.CartController">
    <children>
@@ -67,7 +68,7 @@
       </GridPane>
       <HBox spacing="10.0">
          <children>
-            <VBox alignment="TOP_CENTER" spacing="10.0">
+            <VBox alignment="TOP_CENTER" prefWidth="1193.0" spacing="10.0">
                <children>
                   <VBox alignment="TOP_CENTER">
                      <children>
@@ -79,14 +80,24 @@
                         <Separator maxWidth="-Infinity" prefHeight="4.0" prefWidth="166.0" />
                      </children>
                   </VBox>
-                  <ScrollPane prefHeight="458.0" prefWidth="1260.0">
-                     <content>
-                        <VBox fx:id="cartItemVBox" prefHeight="442.0" prefWidth="761.0" spacing="10.0">
-                           <padding>
-                              <Insets left="5.0" right="5.0" top="10.0" />
-                           </padding></VBox>
-                     </content>
-                  </ScrollPane>
+                  <VBox alignment="TOP_CENTER">
+                     <children>
+                        <Label text="* Click To Open Overview">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ScrollPane prefHeight="458.0" prefWidth="1260.0">
+                           <content>
+                              <VBox fx:id="cartItemVBox" prefHeight="353.0" prefWidth="728.0" spacing="10.0">
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" top="10.0" />
+                                 </padding>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
                </children>
             </VBox>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
@@ -109,9 +120,9 @@
       </HBox>
       <GridPane prefHeight="104.0" prefWidth="1220.0">
         <columnConstraints>
-          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="625.0" minWidth="10.0" prefWidth="192.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1100.0" minWidth="10.0" prefWidth="584.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1100.0" minWidth="10.0" prefWidth="450.0" />
+          <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="625.0" minWidth="10.0" prefWidth="215.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1100.0" minWidth="10.0" prefWidth="867.0" />
+            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="1100.0" minWidth="10.0" prefWidth="138.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -132,18 +143,18 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <HBox alignment="CENTER_RIGHT" prefHeight="192.0" prefWidth="1085.0" spacing="35.0" GridPane.columnIndex="1">
+            <HBox alignment="CENTER" prefHeight="192.0" prefWidth="1085.0" spacing="35.0" GridPane.columnIndex="1">
                <children>
                   <Label text="Total Price:">
                      <font>
                         <Font name="System Bold" size="36.0" />
                      </font>
                   </Label>
-                  <Label fx:id="priceLabel" text="59 $">
-                     <font>
-                        <Font name="System Bold" size="36.0" />
-                     </font>
-                  </Label>
+                  <VBox fx:id="totalPriceVBox" alignment="CENTER">
+                     <children>
+                        <Text fx:id="priceLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                     </children>
+                  </VBox>
                </children>
                <padding>
                   <Insets right="13.0" />

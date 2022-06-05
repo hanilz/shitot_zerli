@@ -6,6 +6,7 @@ import entities.Product;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import util.ManageScreens;
@@ -44,6 +45,7 @@ public class CartProductOverviewNoEditVBox extends CartProductOverviewVBox {
 	}
 	
 	private void initEditButtonsHBox() {
+		editCustomProductInBuilderButton.setCursor(Cursor.HAND);
 		editCustomProductInBuilderButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {

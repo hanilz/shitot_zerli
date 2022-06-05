@@ -35,4 +35,7 @@ public class Item extends ProductsBase implements Serializable{
 		return super.getImagePath();
 	}
 	
+	public String toString() {
+		return name + " - " + color;
+	}
 }

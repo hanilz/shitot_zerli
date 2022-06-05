@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 <?import javafx.scene.text.Font?>
 
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="400.0" spacing="5.0" stylesheets="@../resources/css/CartProductOverviewItemVBox.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cart.CartProductOverviewItemVBox">
@@ -60,14 +61,8 @@
       </GridPane>
       <HBox fx:id="priceHBox" alignment="CENTER" prefHeight="53.0" prefWidth="400.0" spacing="10.0">
          <children>
-            <Label text="Price:">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font></Label>
-            <Label fx:id="priceLabel" text="10 $">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font></Label>
+            <Label text="Price:" />
+            <Text fx:id="priceLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
          </children>
       </HBox>
    </children>
