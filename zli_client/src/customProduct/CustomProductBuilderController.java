@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import cart.CartHBox;
 import entities.Cart;
 import entities.CustomProduct;
 import entities.Item;
@@ -23,7 +24,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import util.ManageData;
 import util.ManageScreens;
@@ -63,7 +66,10 @@ public class CustomProductBuilderController implements Initializable {
 
 	@FXML
 	private ImageView homeImage;
-
+	
+    @FXML
+    private HBox totalPriceHBox;
+    
 	@FXML
 	private CheckBox lilyFilterCheckBox;
 
@@ -83,7 +89,7 @@ public class CustomProductBuilderController implements Initializable {
 	private CheckBox roseFilterCheckBox;
 
 	@FXML
-	private Label totalPriceLabel;
+	private Text totalPriceLabel;
 
 	@FXML
 	private CheckBox whiteFilterCheckBox;
@@ -93,6 +99,8 @@ public class CustomProductBuilderController implements Initializable {
 	
     @FXML
     private ImageView addToCartImage;
+    
+    private Label totalDiscountPriceLabel = new Label();
 
 	private static CustomProductBuilderController customControllerInstance;
 
@@ -170,6 +178,7 @@ public class CustomProductBuilderController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		totalPriceLabel.setText(InputChecker.price(0));
 		overViewVBox.setId("overViewVBox");
 		setAddToCartButton();
 		setBackToCatalogButton();
@@ -185,7 +194,7 @@ public class CustomProductBuilderController implements Initializable {
 		selectProductItems();
 		if (productToEdit instanceof CustomProduct)
 			selectCustomProductProducts();
-		totalPriceLabel.setText(InputChecker.price(productToEdit.getPrice()));
+		updateTotalPrice();
 		changeBackToCatalogButtonEvent();
 		changeAddToCartButtonEvent();
 	}
@@ -263,7 +272,7 @@ public class CustomProductBuilderController implements Initializable {
 				else
 					name = "Edited " + productToEdit.getName();
 				CustomProduct editedCustomProduct = new CustomProduct(0, name, "Custom", getTotalPriceFromOverview(),
-						"Your favorite assortment of beatiful flowers", "/resources/catalog/customProductImage.png", items, products);
+						"Your favorite assortment of beautiful flowers", "/resources/catalog/customProductImage.png", items, products);
 
 				Cart.getInstance().removeFromCart(Cart.getInstance().getProductToEdit());
 				Cart.getInstance().addToCart(editedCustomProduct, 1, true);
@@ -344,8 +353,18 @@ public class CustomProductBuilderController implements Initializable {
 
 	private void updateTotalPrice() {
 		double totalPrice = getTotalPriceFromOverview();
-
 		totalPriceLabel.setText(InputChecker.price(totalPrice));
+		
+		if(isDiscount()) {
+			double totalDiscountPrice = getTotalDiscountPriceFromOverview();
+			totalDiscountPriceLabel.setText(InputChecker.price(totalDiscountPrice));
+			if(!isDiscountInPrice())
+				totalPriceHBox.getChildren().add(totalDiscountPriceLabel);
+		}
+		else {
+			if(isDiscountInPrice())
+				totalPriceHBox.getChildren().remove(totalDiscountPriceLabel);
+		}
 	}
 
 	private double getTotalPriceFromOverview() {
@@ -358,5 +377,29 @@ public class CustomProductBuilderController implements Initializable {
 		}
 		return totalPrice;
 	}
-
+	
+	private double getTotalDiscountPriceFromOverview() {
+		double totalDiscountPrice = 0;
+		for (Node currentSelected : overViewVBox.getChildren()) {
+			if (currentSelected instanceof SelectedHBox) {
+				totalDiscountPrice += (((SelectedHBox) currentSelected).getQuantity())
+						* (((SelectedHBox) currentSelected).getProduct().calculateDiscount());
+			}
+		}
+		return totalDiscountPrice;
+	}
+	
+	private boolean isDiscount() {
+		for(Node node : overViewVBox.getChildren()) 
+			if(node instanceof SelectedHBox) {
+				SelectedHBox selectedHBox = (SelectedHBox)node;
+				if(selectedHBox.getProduct().isDiscount())
+					return true;
+			}
+		return false;
+	}
+	
+	private boolean isDiscountInPrice() {
+		return totalPriceHBox.getChildren().contains(totalDiscountPriceLabel);
+	}
 }

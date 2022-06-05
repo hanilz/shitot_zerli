@@ -54,7 +54,6 @@ public class ProductOverviewEditHBox extends CustomProductHBox {
 		
 		priceHBox.getChildren().add(removeButton);
 		amountLabel.setText(InputChecker.price(quantity * product.getPrice()));
-		amountLabel.setAlignment(Pos.CENTER);
 	}
 	
 	private void initDiscountLabel() {
