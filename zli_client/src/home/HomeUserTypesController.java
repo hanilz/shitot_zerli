@@ -27,6 +27,11 @@ import util.ManageClients;
 import util.ManageScreens;
 import util.Screens;
 
+/**
+ * @author dolev User Home Screen - Allowing to Exit,Logout and Use Given
+ *         Options
+ *
+ */
 public class HomeUserTypesController implements Initializable {
 	private ArrayList<Notification> newNotifications = new ArrayList<>();
 	private ArrayList<Notification> readNotifications = new ArrayList<>();
@@ -52,25 +57,16 @@ public class HomeUserTypesController implements Initializable {
 	@FXML
 	private Label userNameLabel;
 
-	public void exitHomeScreen(MouseEvent event) {
-		// release the client from the OCSF server + disconnect from the DB
-		ManageClients.exitClient();
-		// exit window
-		System.exit(0);
-	}
-
-	public void logoutFromUser(MouseEvent event) {
-		User.getUserInstance().logout();
-		ManageScreens.changeScreenTo(Screens.GUEST_HOME);
-	}
-
+	/**
+	 * Setting Needed User Information and Show
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.GET_USER_SCREENS);
 		message.put("id", User.getUserInstance().getIdUser());
-		message.put("userType",  User.getUserInstance().getType());
+		message.put("userType", User.getUserInstance().getType());
 		User.getUserInstance().setUserScreens((ArrayList<Screens>) ClientFormController.client.accept(message));
 		ArrayList<Screens> userScreens = User.getUserInstance().getUserHomeScreens();
 		setScreen(userScreens);//
@@ -87,6 +83,27 @@ public class HomeUserTypesController implements Initializable {
 		notificationThread.play();
 	}
 
+	/**
+	 * Clicking on Exit Disconnect from Server and Close The Screen
+	 */
+	public void exitHomeScreen(MouseEvent event) {
+		// release the client from the OCSF server + disconnect from the DB
+		ManageClients.exitClient();
+		// exit window
+		System.exit(0);
+	}
+
+	/**
+	 * Clicking On Logout Empty The User Instance and return to Guest Home
+	 */
+	public void logoutFromUser(MouseEvent event) {
+		User.getUserInstance().logout();
+		ManageScreens.changeScreenTo(Screens.GUEST_HOME);
+	}
+
+	/**
+	 * Setting User Notifications
+	 */
 	@SuppressWarnings("unchecked")
 	private void getNotifications() {
 		HashMap<String, Object> message = new HashMap<>();
@@ -94,16 +111,19 @@ public class HomeUserTypesController implements Initializable {
 		message.put("idUser", User.getUserInstance().getIdUser());
 		Object response = ClientFormController.client.accept(message);
 		newNotifications = (ArrayList<Notification>) response;
-		for(Notification notif:newNotifications)
-			if(notif.isRead())
+		for (Notification notif : newNotifications)
+			if (notif.isRead())
 				readNotifications.add(notif);
 		newNotifications.removeAll(readNotifications);
 		notificationLabel.setText("" + newNotifications.size());
 	}
 
+	/**
+	 * Setting Buttons for User Screen From DB
+	 */
 	private void setScreen(ArrayList<Screens> userScreens) {
 		if (userScreens != null) {
-			if(userScreens.size()>4) {
+			if (userScreens.size() > 4) {
 				gridOptions.setPadding(new Insets(0, 0, 0, 0));
 			}
 			for (Screens screen : userScreens) {
@@ -112,6 +132,9 @@ public class HomeUserTypesController implements Initializable {
 		}
 	}
 
+	/**
+	 * Clicking on Bell Shows Notifications
+	 */
 	@FXML
 	void showNotifications(MouseEvent event) {
 		try {

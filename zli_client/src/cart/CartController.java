@@ -101,11 +101,9 @@ public class CartController implements Initializable {
 			showFillAllQuantitiesLabel();
 			return;
 		}
-		LoginScreenController.resetLogin();
 		if (!User.getUserInstance().isUserLoggedIn())// guest tries to buy
 		{
-			LoginScreenController.enableCartPopup(true);// enable popup
-			ManageScreens.changeScreenTo(Screens.LOGIN);
+			LoginScreenController.loginFromCart();// enable popup
 		}
 		changeToGreatingCard();
 	}
