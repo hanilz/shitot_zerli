@@ -1,7 +1,7 @@
 package ordersView;
 
 import catalog.ProductDetailsController;
-import catalog.ProductVBox;
+import catalog.ItemDetailsVBox;
 import entities.CustomProduct;
 import entities.Product;
 import entities.ProductsBase;
@@ -66,7 +66,7 @@ public class OrderProductRowController{
 			}
     	}
 		else {
-			ProductVBox popup = new ProductVBox(product);
+			ItemDetailsVBox popup = new ItemDetailsVBox(product);
 			popup.initProductVBox();
 			Scene scene = new Scene(popup);
 			Stage stage = new Stage();

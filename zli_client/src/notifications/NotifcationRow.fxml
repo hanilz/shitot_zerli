@@ -7,17 +7,17 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="notificationRow" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="920.0" spacing="20.0" style="-fx-background-radius: 50; -fx-background-color: #FEE1DC;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notifications.NotificationRowController">
+<HBox id="notificationRow" fx:id="notificationRow" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="920.0" spacing="20.0" stylesheets="@../resources/css/NotificationRow.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notifications.NotificationRowController">
    <padding>
       <Insets left="30.0" right="30.0" />
    </padding>
    <children>
-      <Label fx:id="notificationText" prefHeight="98.0" prefWidth="720.0" text="This is the title of the notification" wrapText="true">
+      <Label fx:id="notificationText" prefHeight="66.0" prefWidth="735.0" text="This is the title of the notification" wrapText="true">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="markReadButton" mnemonicParsing="false" onAction="#notificationAction" prefHeight="34.0" prefWidth="121.0" style="-fx-background-radius: 20;" text="Mark As Read">
+      <Button fx:id="markReadButton" minWidth="125.0" mnemonicParsing="false" onAction="#notificationAction" style="-fx-background-radius: 20;" text="Mark As Read">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>

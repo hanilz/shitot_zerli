@@ -126,3 +126,29 @@
 	-fx-border-color:grey;
 	-fx-border-radius:3.0px; 
 }
+
+.button:hover{
+	-fx-background-color: #FFE0F0;
+	-fx-cursor: hand;
+	-fx-font-weight: bold;
+	-fx-font-size: 13;
+}
+
+.button:pressed {
+	-fx-background-color: #FFD0FF;
+	-fx-cursor: hand;
+	-fx-font-weight: bold;
+	-fx-font-size: 13;
+}
+
+.button{
+	-fx-min-width: 32;
+	-fx-background-color: #F4F4F4;
+	-fx-background-radius: 10.0;
+	-fx-background-insets: 0.0, 1.0, 1.0;
+	-fx-text-fill: black;
+	-fx-effect: dropshadow(three-pass-box, rgba(0.0, 0.0, 0.0, 0.6), 3.0, 0.0, 0.0, 1.0);
+	-fx-padding: 5.0 10.0 5.0 10.0;
+	-fx-font-size: 13.0;
+	-fx-font-weight: bold;
+}

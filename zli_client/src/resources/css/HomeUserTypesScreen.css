@@ -1,32 +1,47 @@
 /*FFF2F2 */
 /*	-fx-background-color: linear-gradient(from 000px 000px to 300px 000px, #FFE3FD, #FAE9F0);*/
 #tilePane {
-	-fx-background-color: linear-gradient(from 000px 000px to 300px 000px, #FFF7E8, #f2f5f5);
+	/*-fx-background-color: linear-gradient(from 000px 000px to 3500px 000px, #f2f5f5, #FFF7E8);*/
+	-fx-background-color: #fcf7f5;
 }
 /*#FF9999,#FFC8C8*/
 /*	-fx-background-color: linear-gradient(from 000px 000px to 300px 000px, #EFD2D2, #FFE3FD);*/
 #sideCard {
-	-fx-background-color: linear-gradient(from 000px 000px to 300px 000px, #FFC5C2, #FFF7E8);
+	/*-fx-background-color: linear-gradient(from 000px 000px to 400px 000px, #ffdddb, #FFF7E8);*/
+	-fx-background-color:FAE0DD;
 }
 /* FFA1A7*/
-#buttonCard, #bellHBOX {
+#buttonCard {
 	-fx-background-radius: 20;
-	-fx-background-color: linear-gradient(from 0px 200px to 100px 0px, #F3F7E6, #FFC5C2);
+	-fx-background-color: linear-gradient(from 150px 150px to 0px 0px, FAE0DD, FAE0DD);
 	-fx-effect: dropShadow(three-pass-box, rgba(0.2, 0, 0, 0.3), 5.0, 0.0,
 		0.0, 5.0);
 }
+#bellHBOX{
+	-fx-background-radius: 20;
+	-fx-background-color: fbd3cc;
+	-fx-effect: dropShadow(three-pass-box, rgba(0.2, 0, 0, 0.3), 5.0, 0.0,
+		0.0, 3.0);
+}
 
-#buttonCard:hover, #bellHBOX:hover {
-	-fx-background-color: linear-gradient(from 0px 200px to 100px 0px, #e7ebd8, #f0b5b1);
+#buttonCard:hover {
+	/*-fx-background-color: linear-gradient(from 0px 200px to 100px 0px, #e7ebd8, #f0b5b1);*/
+	-fx-background-color: linear-gradient(from 150px 150px to 0px 0px, ebd2cf, ebd2cf);
+	-fx-cursor: hand;
+}
+
+ #bellHBOX:hover {
+	/*-fx-background-color: linear-gradient(from 0px 200px to 100px 0px, #e7ebd8, #f0b5b1);*/
+	-fx-background-color: linear-gradient(from 150px 150px to 0px 0px, eecac4, eecac4);
 	-fx-cursor: hand;
 }
 
 #bellCounter {
 	-fx-background-radius: 30;
-	-fx-background-color: #FaD6D6;
+	-fx-background-color: #fcf7f5;
 	-fx-border-width: 1px;
 	-fx-border-radius: 30;
-	-fx-border-color: #FF9999;
+	-fx-border-color: #F8E1DF;
 }
 
 .separator *.line {
