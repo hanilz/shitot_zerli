@@ -33,10 +33,10 @@ public class ProductOverviewEditHBox extends CustomProductHBox {
 
 	public void initHBox() {
 		super.initHBox();
-
+		super.initPriceHBox();
+		
 		initQuantityVBox();
 		removeButton.setCursor(Cursor.HAND);
-		removeButton.setStyle("-fx-background-color : Red ; -fx-font-size:16 ; -fx-font-weight: bold");
 		removeButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -46,8 +46,11 @@ public class ProductOverviewEditHBox extends CustomProductHBox {
 		priceHBox.setSpacing(5);
 		priceHBox.getChildren().add(quantityHBox);
 
+		nameLabel.setPrefWidth(150);
+		
 		priceHBox.getChildren().add(removeButton);
 		amountLabel.setText(InputChecker.price(getPrice()));
+		amountLabel.setAlignment(Pos.CENTER);
 	}
 	
 	private void initQuantityVBox() {

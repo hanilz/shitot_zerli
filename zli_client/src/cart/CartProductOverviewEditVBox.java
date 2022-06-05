@@ -42,8 +42,8 @@ public class CartProductOverviewEditVBox extends CartProductOverviewVBox {
 		initEditButtonsHBox();
 
 		this.getChildren().add(editButtonsHBox);
+		totalPriceLabel.setText("Custom Product Price:");
 	}
-
 	
 	
 	private void initEditButtonsHBox() {
