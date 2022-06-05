@@ -20,3 +20,29 @@
 	-fx-padding: 5 10 5 10;
 	-fx-font-size: 18;
 }
+
+.label{
+	-fx-font-weight: bold;
+}
+
+.text-field{
+	-fx-font-size: 18;
+	-fx-background-radius: 30;
+}
+
+.text-area{
+	-fx-font-size: 18;
+}
+
+.check-box{
+	-fx-background-radius: 10.0;
+	-fx-effect: dropshadow(three-pass-box, rgba(0.0, 0.0, 0.0, 0.1), 3.0, 0.0, 0.0, 1.0);
+	-fx-font-weight: bold;
+	-fx-font-size: 22.0;
+}
+
+.check-box .box {
+	-fx-background-color: #F4F4F4;
+	-fx-border-color:grey;
+	-fx-border-radius:3.0px; 
+}

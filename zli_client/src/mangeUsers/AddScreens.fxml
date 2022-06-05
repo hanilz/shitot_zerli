@@ -34,7 +34,7 @@
                         <Image url="@../resources/catalog/home.png" />
                      </image>
                      <HBox.margin>
-                        <Insets left="10.0" top="10.0" />
+                        <Insets left="10.0" top="20.0" />
                      </HBox.margin>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -56,7 +56,7 @@
                            <children>
                               <Label text="name:">
                                  <font>
-                                    <Font size="16.0" />
+                                    <Font name="System Bold" size="16.0" />
                                  </font>
                               </Label>
                               <Label fx:id="usernameLable" text="please select user" textFill="#2600ff">
@@ -73,7 +73,7 @@
                            <children>
                               <Label text="use type:">
                                  <font>
-                                    <Font size="16.0" />
+                                    <Font name="System Bold" size="16.0" />
                                  </font>
                               </Label>
                               <Label fx:id="userTypeLable" text="premission" textFill="#2600ff">
@@ -125,7 +125,7 @@
                                     </ImageView>
                                     <Label fx:id="amoutOfScreensLable" style="-fx-background-color: DBE1F0; -fx-background-radius: 50;" text="0">
                                        <font>
-                                          <Font size="16.0" />
+                                          <Font name="System Bold" size="19.0" />
                                        </font></Label>
                                  </children>
                                  <VBox.margin>
@@ -134,7 +134,7 @@
                               </HBox>
                               <Label fx:id="limitLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="468.0" text="Can Have Up To 6 Screens" textAlignment="JUSTIFY" textFill="#a80000">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font name="System Bold" size="20.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets bottom="4.0" />
@@ -173,7 +173,7 @@
             <Insets />
          </VBox.margin>
          <content>
-            <TilePane fx:id="userHomeScreens" alignment="CENTER" hgap="10.0" prefHeight="557.0" prefRows="3" prefWidth="1277.0" style="-fx-background-color: F1F9FF;" vgap="10.0" />
+            <TilePane fx:id="userHomeScreens" alignment="CENTER" hgap="10.0" prefHeight="557.0" prefRows="3" prefWidth="1277.0" style="-fx-background-color: FFF5F5;" vgap="10.0" />
          </content>
       </ScrollPane>
    </children>

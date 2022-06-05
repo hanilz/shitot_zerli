@@ -8,36 +8,54 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="740.0" spacing="10.0" style="-fx-background-radius: 50; -fx-background-color: #FEE1DC;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ordersView.orderRowController">
+<HBox id="orderHBox" alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="740.0" spacing="5.0" stylesheets="@../resources/css/OrderViewRow.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ordersView.orderRowController">
    <children>
-      <Label fx:id="orderNumberLabel" prefHeight="25.0" prefWidth="157.0" text="Order Number: XXXX ">
+      <Label fx:id="orderNumberLabel" prefHeight="25.0" prefWidth="165.0" text="Order Number: XXXX ">
          <font>
-            <Font size="16.0" />
+            <Font name="System Bold" size="16.0" />
          </font>
       </Label>
       <Separator orientation="VERTICAL" prefHeight="200.0" />
-      <VBox alignment="CENTER" prefWidth="411.0" spacing="10.0">
+      <VBox alignment="CENTER" prefHeight="65.0" prefWidth="417.0" spacing="10.0">
          <children>
-            <Label fx:id="orderStatusLabel" prefHeight="25.0" prefWidth="410.0" text="Order Status: Awaiting Approval">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="deliveryStatusLabel" prefHeight="25.0" prefWidth="410.0" text="Delivery Status: Awaiting delivery">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
+            <HBox>
+               <children>
+                  <Label prefHeight="25.0" prefWidth="114.0" text="Order Status: ">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="orderStatusLabel" prefHeight="25.0" prefWidth="307.0" text="status">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label prefHeight="25.0" prefWidth="132.0" text="Delivery Status: ">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="deliveryStatusLabel" prefHeight="25.0" prefWidth="289.0" text="status">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
          </children>
       </VBox>
       <VBox alignment="CENTER" spacing="10.0">
          <children>
-            <Button fx:id="viewDeatilsButton" mnemonicParsing="false" onAction="#viewOrderDetails" prefWidth="90.0" style="-fx-background-radius: 20;" text="View Details" />
-            <Button fx:id="cancelOrderButton" mnemonicParsing="false" onAction="#cancelOrder" prefWidth="90.0" style="-fx-background-radius: 20;" text="Cancel Order" />
+            <Button fx:id="viewDeatilsButton" mnemonicParsing="false" onAction="#viewOrderDetails" prefWidth="93.0" style="-fx-background-radius: 20;" text="View Details" />
+            <Button fx:id="cancelOrderButton" mnemonicParsing="false" onAction="#cancelOrder" prefWidth="93.0" style="-fx-background-radius: 20;" text="Cancel Order" />
          </children>
       </VBox>
    </children>
    <padding>
-      <Insets left="20.0" />
+      <Insets bottom="8.0" left="20.0" top="8.0" />
    </padding>
 </HBox>

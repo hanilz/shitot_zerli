@@ -1,0 +1,46 @@
+#productDetailsVBox{
+	-fx-background: #FBF3F1;
+	-fx-border-color:#e0beb8;
+	-fx-border-insets:10.0px; 
+	-fx-border-width:3px
+}
+
+.button:hover{
+	-fx-background-color: #FFE0F0;
+	-fx-cursor: hand;
+	-fx-font-weight: bold;
+	-fx-font-size: 18;
+}
+
+.button:pressed {
+	-fx-background-color: #FFD0FF;
+	-fx-cursor: hand;
+	-fx-font-weight: bold;
+	-fx-font-size: 18;
+}
+
+.button{
+	-fx-background-color: #F4F4F4;
+	-fx-background-radius: 30.0;
+	-fx-background-insets: 0.0, 1.0, 1.0;
+	-fx-text-fill: black;
+	-fx-effect: dropshadow(three-pass-box, rgba(0.0, 0.0, 0.0, 0.6), 3.0, 0.0, 0.0, 1.0);
+	-fx-font-weight: bold;
+	-fx-padding: 5.0 10.0 5.0 10.0;
+	-fx-font-size: 18.0;
+}
+
+.separator *.line {
+    -fx-border-style: solid;
+    -fx-border-width: 0 0.7 0.7 0; /* its make really one-pixel-border */
+    -fx-border-color: #e0beb8;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical {
+	-fx-background-color: #FBF3F1;
+}
+
+.scroll-bar:horizontal .thumb, .scroll-bar:vertical .thumb {
+	-fx-background-color: #FEE1DC;
+	-fx-background-radius: 5em;
+}

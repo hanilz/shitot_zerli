@@ -24,9 +24,6 @@ import util.Screens;
 public class HomeGuestController implements Initializable {
 
 	@FXML
-	private Button catalogButton;
-
-	@FXML
 	private ImageView catalogImage;
 
 	@FXML
@@ -38,14 +35,9 @@ public class HomeGuestController implements Initializable {
 	@FXML
 	private HBox hbox;
 
-	@FXML
-	private Button loginBtn;
 
 	@FXML
 	private ImageView ordersImage;
-
-	@FXML
-	private Button exitButton;
 
 	@FXML
 	private GridPane sideHomeGrid;
@@ -62,8 +54,6 @@ public class HomeGuestController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		TypeLabel.setText(User.getUserInstance().getUsername());
-		exitButton.setCursor(Cursor.HAND);
-		loginBtn.setCursor(Cursor.HAND);
 	}
 
 	/**

@@ -9,19 +9,23 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="400.0" spacing="5.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cart.CartProductOverviewItemVBox">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="400.0" spacing="5.0" stylesheets="@../resources/css/CartProductOverviewItemVBox.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cart.CartProductOverviewItemVBox">
    <children>
-      <Label fx:id="itemNameTopLabel" alignment="CENTER" prefHeight="30.0" prefWidth="409.0" text="Gerbil - Brown" />
+      <Label fx:id="itemNameTopLabel" alignment="CENTER" text="Gerbil - Brown">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font></Label>
       <ImageView fx:id="itemImage" fitHeight="120.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/catalog/flower.png" />
          </image>
       </ImageView>
-      <GridPane prefHeight="123.0" prefWidth="400.0">
+      <GridPane id="grid" prefHeight="123.0" prefWidth="320.0">
         <columnConstraints>
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="164.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="280.0" minWidth="10.0" prefWidth="166.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -29,15 +33,33 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Item Name:" />
-            <Label text="Item Color:" GridPane.rowIndex="1" />
-            <Label text="Item Type:" GridPane.rowIndex="2" />
-            <Label fx:id="itemNameLabel" text="Gerbil" GridPane.columnIndex="1" />
-            <Label fx:id="itemColorLabel" text="Brown" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="itemTypeLabel" text="Flower" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label prefHeight="0.0" prefWidth="138.0" text="Item Name:">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font></Label>
+            <Label prefHeight="0.0" prefWidth="138.0" text="Item Color:" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font></Label>
+            <Label prefHeight="0.0" prefWidth="138.0" text="Item Type:" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font></Label>
+            <Label fx:id="itemNameLabel" text="Gerbil" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font></Label>
+            <Label fx:id="itemColorLabel" text="Brown" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font></Label>
+            <Label fx:id="itemTypeLabel" text="Flower" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font></Label>
          </children>
       </GridPane>
-      <HBox fx:id="priceHBox" alignment="BOTTOM_CENTER" prefHeight="53.0" prefWidth="400.0" spacing="10.0">
+      <HBox fx:id="priceHBox" alignment="CENTER" prefHeight="53.0" prefWidth="400.0" spacing="10.0">
          <children>
             <Label text="Price:" />
             <Text fx:id="priceLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
