@@ -96,7 +96,6 @@ public class AnalayzeCommand {
 		String imagePath = rs.getString(16);
 		double discount = rs.getDouble(17);
 		Item itemResult = new Item(itemID, itemName, itemColor, itemPrice, itemType, imagePath, discount);
-
 		return itemResult;
 	}
 
@@ -1365,8 +1364,8 @@ public class AnalayzeCommand {
 	 * @param idOrder
 	 * @return
 	 */
-	public static HashMap<ProductsBase, Integer> getOrderProducts(int idOrder) {
-		HashMap<ProductsBase, Integer> products = new HashMap<>();
+	public static HashMap<Product, Integer> getOrderProducts(int idOrder) {
+		HashMap<Product, Integer> product = new HashMap<>();
 		Connection conn = DataBaseController.getConn();
 		PreparedStatement preparedStmt;
 		String query = "SELECT * FROM zli.order_products op INNER JOIN zli.products p ON op.idProduct=p.productID WHERE op.idOrder=?;";
@@ -1375,8 +1374,72 @@ public class AnalayzeCommand {
 			preparedStmt.setInt(1, idOrder);
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
-				products.put(new ProductsBase(rs.getInt(4), rs.getString(5), rs.getString(7), rs.getDouble(8),
-						rs.getString(9), rs.getString(11)), rs.getInt(3));
+				//String query2 = "SELECT * FROM zli.order_products op INNER JOIN zli.products p ON op.idProduct=p.productID WHERE op.idOrder=?;";
+				product.put(new Product(rs.getInt(4), rs.getString(5),rs.getString(7),rs.getDouble(8), rs.getString(9), 
+						rs.getString(11),rs.getDouble(12),rs.getString(6),rs.getString(10), getItems(rs.getInt(4))), rs.getInt(3));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return product;
+	}
+
+	private static HashMap<Item, Integer> getItems(int producID) {
+		//SELECT * FROM zli.items i JOIN product_items pi ON i.itemID=pi.idItem AND pi.idProduct = 5;
+		HashMap<Item, Integer> items = new HashMap<>();
+		Connection conn = DataBaseController.getConn();
+		PreparedStatement preparedStmt;
+		String query = "SELECT * FROM zli.items i JOIN product_items pi ON i.itemID=pi.idItem AND pi.idProduct = ?;";
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, producID);
+			ResultSet rs = preparedStmt.executeQuery();
+			while (rs.next()) {
+				//String query2 = "SELECT * FROM zli.order_products op INNER JOIN zli.products p ON op.idProduct=p.productID WHERE op.idOrder=?;";
+				items.put(new Item(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getDouble(4), rs.getString(5), 
+						rs.getString(6),rs.getDouble(7)), rs.getInt(10));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return items;
+	}
+	
+	private static HashMap<Item, Integer> getCustomProductItems(int producID) {
+		//SELECT * FROM zli.items i JOIN product_items pi ON i.itemID=pi.idItem AND pi.idProduct = 5;
+		HashMap<Item, Integer> items = new HashMap<>();
+		Connection conn = DataBaseController.getConn();
+		PreparedStatement preparedStmt;
+		String query = "SELECT * FROM zli.items i JOIN custom_product_items cpi ON i.itemID=cpi.idItem AND cpi.idCustomProduct = ?;";
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, producID);
+			ResultSet rs = preparedStmt.executeQuery();
+			while (rs.next()) {
+				//String query2 = "SELECT * FROM zli.order_products op INNER JOIN zli.products p ON op.idProduct=p.productID WHERE op.idOrder=?;";
+				items.put(new Item(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getDouble(4), rs.getString(5), 
+						rs.getString(6),rs.getDouble(7)), rs.getInt(10));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return items;
+	}
+	
+	private static HashMap<Product, Integer> getCustomProductProducts(int producID) {
+		//SELECT * FROM zli.items i JOIN product_items pi ON i.itemID=pi.idItem AND pi.idProduct = 5;
+		HashMap<Product, Integer> products = new HashMap<>();
+		Connection conn = DataBaseController.getConn();
+		PreparedStatement preparedStmt;
+		String query = "SELECT * FROM zli.products p JOIN custom_product_products cpp ON p.productID = cpp.idProduct AND cpp.idCustomProduct = ?;";
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setInt(1, producID);
+			ResultSet rs = preparedStmt.executeQuery();
+			while (rs.next()) {
+				//String query2 = "SELECT * FROM zli.order_products op INNER JOIN zli.products p ON op.idProduct=p.productID WHERE op.idOrder=?;";
+				products.put(new Product(rs.getInt(1), rs.getString(2),rs.getString(4),rs.getDouble(5), rs.getString(6), 
+						rs.getString(8),rs.getDouble(9),rs.getString(3),rs.getString(7), getItems(rs.getInt(1))), rs.getInt(12));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1390,8 +1453,8 @@ public class AnalayzeCommand {
 	 * @param idOrder
 	 * @return
 	 */
-	public static HashMap<ProductsBase, Integer> getOrderItems(int idOrder) {
-		HashMap<ProductsBase, Integer> items = new HashMap<>();
+	public static HashMap<Item, Integer> getOrderItems(int idOrder) {
+		HashMap<Item, Integer> items = new HashMap<>();
 		Connection conn = DataBaseController.getConn();
 		PreparedStatement preparedStmt;
 		String query = "SELECT * FROM zli.order_items oi INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=?;";
@@ -1400,8 +1463,8 @@ public class AnalayzeCommand {
 			preparedStmt.setInt(1, idOrder);
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
-				items.put(new ProductsBase(rs.getInt(4), rs.getString(5), rs.getString(6), rs.getDouble(7),
-						rs.getString(8), rs.getString(9)), rs.getInt(3));
+				items.put(new Item(rs.getInt(4), rs.getString(5), rs.getString(6), rs.getDouble(7),
+						rs.getString(8), rs.getString(9),rs.getDouble(10)), rs.getInt(3));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1415,8 +1478,8 @@ public class AnalayzeCommand {
 	 * @param idOrder
 	 * @return
 	 */
-	public static HashMap<ProductsBase, Integer> getOrderCustomProducts(int idOrder) {
-		HashMap<ProductsBase, Integer> customProducts = new HashMap<>();
+	public static HashMap<CustomProduct, Integer> getOrderCustomProducts(int idOrder) {
+		HashMap<CustomProduct, Integer> customProducts = new HashMap<>();
 		Connection conn = DataBaseController.getConn();
 		PreparedStatement preparedStmt;
 		String query = "SELECT * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON ocp.idCustomProduct=cp.id WHERE ocp.idOrder=?;";
@@ -1425,8 +1488,8 @@ public class AnalayzeCommand {
 			preparedStmt.setInt(1, idOrder);
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
-				customProducts.put(new ProductsBase(rs.getInt(4), rs.getString(5), "not specified", rs.getDouble(6),
-						"not specified", "/resources/catalog/customProductImage.png"), rs.getInt(3));
+				customProducts.put(new CustomProduct(rs.getInt(4), rs.getString(5), "Custom", rs.getDouble(6),
+						"Custom", "/resources/catalog/customProductImage.png",getCustomProductItems(rs.getInt(4)),getCustomProductProducts(rs.getInt(4))), rs.getInt(3));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

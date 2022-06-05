@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -33,11 +32,11 @@
                   <Insets right="-16.0" />
                </padding>
             </Label>
-            <VBox id="bellHBOX" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="129.0" prefWidth="159.0">
+            <VBox id="bellHBOX" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" onMousePressed="#showNotifications" prefHeight="129.0" prefWidth="159.0">
                <children>
                   <HBox alignment="CENTER" maxHeight="130.0" maxWidth="153.0" minHeight="75.0" minWidth="150.0" prefHeight="130.0" prefWidth="153.0">
                      <children>
-                        <ImageView fx:id="notificationIcon" fitHeight="76.0" fitWidth="73.0" onMousePressed="#showNotifications" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="notificationIcon" fitHeight="76.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../resources/home/notification.png" />
                            </image>
@@ -70,11 +69,11 @@
             <Insets top="100.0" />
          </padding>
       </VBox>
-      <TilePane id="tilePane" fx:id="gridOptions" alignment="CENTER" hgap="40.0" prefColumns="3" prefHeight="567.0" prefRows="2" prefTileHeight="230.0" prefTileWidth="200.0" prefWidth="979.0" vgap="40.0">
+      <TilePane id="tilePane" fx:id="gridOptions" alignment="CENTER" hgap="40.0" prefColumns="3" prefHeight="567.0" prefRows="2" prefTileHeight="250.0" prefTileWidth="200.0" prefWidth="979.0" vgap="40.0">
          <children>
-            <VBox id="buttonCard" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+            <VBox id="buttonCard" alignment="CENTER" onMouseClicked="#exitHomeScreen" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                <children>
-                  <Button fx:id="exitButton" mnemonicParsing="false" onMouseClicked="#exitHomeScreen" onMousePressed="#exitHomeScreen" text="Exit" textFill="#7c0000" />
+                  <Label id="cardLabel" text="Exit" textFill="#b90000" />
                   <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/home/exit.png" />
@@ -82,9 +81,9 @@
                   </ImageView>
                </children>
             </VBox>
-            <VBox id="buttonCard" alignment="CENTER" prefHeight="294.0" prefWidth="234.0" spacing="10.0">
+            <VBox id="buttonCard" alignment="CENTER" onMouseClicked="#logoutFromUser" prefHeight="294.0" prefWidth="234.0" spacing="10.0">
                <children>
-                  <Button fx:id="logoutButton" mnemonicParsing="false" onMouseClicked="#logoutFromUser" text="Logout" />
+                  <Label id="cardLabel" text="Logout" />
                   <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/home/logout.png" />

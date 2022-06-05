@@ -20,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import notifications.NotificationController;
 import util.Commands;
@@ -42,17 +43,12 @@ public class HomeUserTypesController implements Initializable {
 	@FXML
 	private Label notificationLabel;
 
-	@FXML
-	private Button exitButton;
 
 	@FXML
 	private TilePane gridOptions;
 
 	@FXML
 	private HBox hbox;
-
-	@FXML
-	private Button logoutButton;
 
 	@FXML
 	private Label userNameLabel;
@@ -71,8 +67,6 @@ public class HomeUserTypesController implements Initializable {
 		ArrayList<Screens> userScreens = User.getUserInstance().getUserHomeScreens();
 		setScreen(userScreens);//
 		userNameLabel.setText(User.getUserInstance().getUsername());
-		logoutButton.setCursor(Cursor.HAND);
-		exitButton.setCursor(Cursor.HAND);
 
 		getNotifications();
 		// update notifications every 10 seconds

@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox id="productDetailsVBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" spacing="6.0" stylesheets="@../resources/css/ProductDetailsPopup.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.ProductDetailsController">
+<VBox id="productDetailsVBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="810.0" spacing="6.0" stylesheets="@../resources/css/ProductDetailsPopup.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.ProductDetailsController">
    <padding>
       <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
    </padding>
@@ -26,7 +26,7 @@
       </Label>
       <HBox prefHeight="469.0" prefWidth="740.0" spacing="3.0">
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="464.0" prefWidth="379.0">
+            <VBox alignment="TOP_CENTER" prefHeight="449.0" prefWidth="363.0">
                <children>
                   <ImageView fx:id="productImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -41,8 +41,8 @@
                     <rowConstraints>
                       <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
                       <RowConstraints maxHeight="92.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="62.0" valignment="TOP" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="175.0" minHeight="10.0" prefHeight="110.0" valignment="TOP" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="66.4" valignment="TOP" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="175.0" minHeight="10.0" prefHeight="98.39999999999998" valignment="TOP" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="106.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>

@@ -81,13 +81,13 @@ public class orderRowController {
 			e.printStackTrace();
 		}
 		if(date.compareTo(new Date())<0 && !customerOrder.getDeliveryStatus().equals("Delivered")) {
-			deliveryStatusLabel.setText("Delivery Status: " + customerOrder.getDeliveryStatus() + " | Late");
+			deliveryStatusLabel.setText(customerOrder.getDeliveryStatus() + " | Late");
 		}
 		else
-			deliveryStatusLabel.setText("Delivery Status: " + customerOrder.getDeliveryStatus());
+			deliveryStatusLabel.setText(customerOrder.getDeliveryStatus());
 
 		orderNumberLabel.setText("Order Number: " + customerOrder.getOrderID());
-		orderStatusLabel.setText("Order Status: " + customerOrder.getOrderStatus());
+		orderStatusLabel.setText(customerOrder.getOrderStatus());
 		if (customerOrder.getOrderStatus().equals("Waiting for Cancellation")
 				|| customerOrder.getOrderStatus().equals("Canceled")
 				|| customerOrder.getDeliveryStatus().equals("Delivered")
