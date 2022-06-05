@@ -1,11 +1,11 @@
 /*FFF2F2 */
 #tilePane {
-	-fx-background-color: linear-gradient(from 000px 000px to 300px 000px, #FFE3FD, #FAE9F0);
+	-fx-background-color: linear-gradient(from 000px 000px to 300px 000px, #FFF7E8, #f2f5f5);
 
 }
 /*#FF9999,#FFC8C8*/
 #sideCard{
-	 -fx-background-color: linear-gradient(from 000px 000px to 300px 000px, #EFD2D2, #FFE3FD);
+	-fx-background-color: linear-gradient(from 000px 000px to 300px 000px, #FFC5C2, #FFF7E8);
 }
 /* FFA1A7*/
 #buttonCard,#bellHBOX{

@@ -1,24 +1,28 @@
 /*FFF2F2 */
+/*	-fx-background-color: linear-gradient(from 000px 000px to 300px 000px, #FFE3FD, #FAE9F0);*/
 #tilePane {
-	-fx-background-color: linear-gradient(from 000px 000px to 300px 000px, #FFE3FD, #FAE9F0);
-
+	-fx-background-color: linear-gradient(from 000px 000px to 300px 000px, #FFF7E8, #f2f5f5);
 }
 /*#FF9999,#FFC8C8*/
-#sideCard{
-	 -fx-background-color: linear-gradient(from 000px 000px to 300px 000px, #EFD2D2, #FFE3FD);
+/*	-fx-background-color: linear-gradient(from 000px 000px to 300px 000px, #EFD2D2, #FFE3FD);*/
+#sideCard {
+	-fx-background-color: linear-gradient(from 000px 000px to 300px 000px, #FFC5C2, #FFF7E8);
 }
 /* FFA1A7*/
-#buttonCard,#bellHBOX{
-	-fx-background-radius:20;
-	-fx-background-color: linear-gradient(from 0px 200px to 100px 0px, #F3F7E6,#FFC5C2);
-	-fx-effect: dropShadow(three-pass-box, rgba(0.2, 0, 0, 0.3), 5.0, 0.0, 0.0,5.0);
+#buttonCard, #bellHBOX {
+	-fx-background-radius: 20;
+	-fx-background-color: linear-gradient(from 0px 200px to 100px 0px, #F3F7E6, #FFC5C2);
+	-fx-effect: dropShadow(three-pass-box, rgba(0.2, 0, 0, 0.3), 5.0, 0.0,
+		0.0, 5.0);
 }
-#buttonCard:hover,#bellHBOX:hover{
+
+#buttonCard:hover, #bellHBOX:hover {
 	-fx-background-color: linear-gradient(from 0px 200px to 100px 0px, #e7ebd8, #f0b5b1);
 	-fx-cursor: hand;
 }
-#bellCounter{
-	-fx-background-radius:30;
+
+#bellCounter {
+	-fx-background-radius: 30;
 	-fx-background-color: #FaD6D6;
 	-fx-border-width: 1px;
 	-fx-border-radius: 30;
@@ -26,16 +30,15 @@
 }
 
 .separator *.line {
-    -fx-border-style: solid;
-    -fx-border-width: 0 2 0.7 0; /* its make really one-pixel-border */
-    -fx-border-color: #FF9999;
+	-fx-border-style: solid;
+	-fx-border-width: 0 2 0.7 0; /* its make really one-pixel-border */
+	-fx-border-color: #FF9999;
 }
 
-
-#cardLabel{
-	-fx-wrap-text:true;
-	-fx-min-height : 65;
-	-fx-text-alignment:center;
-	-fx-font-size:22;
-	-fx-font-weight:bold;
+#cardLabel {
+	-fx-wrap-text: true;
+	-fx-min-height: 65;
+	-fx-text-alignment: center;
+	-fx-font-size: 22;
+	-fx-font-weight: bold;
 }
