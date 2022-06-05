@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import util.ManageScreens;
 
-public class OrderProductRowController {
+public class OrderProductRowController{
 	private ProductsBase product;
 	private int qty;
 	
@@ -50,11 +50,16 @@ public class OrderProductRowController {
     
     @FXML
     void openDetails(MouseEvent event) {
+//    	System.out.println(product);
+//    	System.out.println(((Product)product).getItems());
+//    	if(product instanceof CustomProduct) {
+//    		System.out.println(((CustomProduct) product).getProducts());    		
+//    	}
     	if(product instanceof Product) {
 			try {
-				ProductDetailsController.setProduct((Product)product);
 				if(product instanceof CustomProduct)
 					ProductDetailsController.setCustomProduct(((CustomProduct)product).getProducts());
+				ProductDetailsController.setProduct((Product)product);
 				ManageScreens.openPopupFXML(ProductDetailsController.class.getResource("ProductDetailsPopup.fxml"), product.getName());
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -72,4 +77,6 @@ public class OrderProductRowController {
 			ManageScreens.removePopup(stage);
 		}
     }
+   
 }
+
