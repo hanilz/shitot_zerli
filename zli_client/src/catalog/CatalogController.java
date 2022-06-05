@@ -108,10 +108,8 @@ public class CatalogController implements Initializable {
 
 	@FXML
 	void openLogin(MouseEvent event) {
-		LoginScreenController.resetLogin();
 		if (!User.getUserInstance().isUserLoggedIn()) {
-			LoginScreenController.enableCatalogFlow(true);
-			ManageScreens.changeScreenTo(Screens.LOGIN);
+			LoginScreenController.loginFromCatalog();
 		} else {
 			User.getUserInstance().logout();
 			ManageScreens.changeScreenTo(Screens.CATALOG);// to refresh screen

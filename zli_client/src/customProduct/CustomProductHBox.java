@@ -29,7 +29,6 @@ public class CustomProductHBox extends HBox implements ICustomProductHBox {
 	protected Label nameLabel;
 	protected HBox priceHBox = new HBox();
 	protected VBox priceVBox = new VBox();
-	protected Label priceLabel = new Label("Price:");
 	protected Label amountLabel;
 
 	public CustomProductHBox(ProductsBase product) {

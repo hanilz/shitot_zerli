@@ -16,7 +16,7 @@ public class CartProductOverviewVBox extends VBox {
 
 	private Label nameLabel;
 	protected ImageView productImage;
-	protected Label totalPriceLabel = new Label("Total price:");
+	protected Label totalPriceLabel = new Label();
 	private HBox totalPriceHBox = new HBox(totalPriceLabel);
 	protected Label TotalPriceAmountLabel;
 	protected Label TotalPriceDiscountLabel;
