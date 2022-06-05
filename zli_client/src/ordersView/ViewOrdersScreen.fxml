@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ordersView.ViewOrdersController">
+<VBox id="ordersVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../resources/css/ViewOrdersScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ordersView.ViewOrdersController">
    <children>
       <GridPane prefHeight="71.0" prefWidth="1240.0">
          <columnConstraints>
@@ -39,11 +39,15 @@
                   </Label>
                </children>
             </VBox>
-            <ImageView fx:id="homeImage" fitHeight="100.0" fitWidth="100.0" onMousePressed="#returnHome" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../resources/catalog/home.png" />
-               </image>
-            </ImageView>
+            <VBox id="homeHBox">
+               <children>
+                  <ImageView fx:id="homeImage" fitHeight="100.0" fitWidth="100.0" onMousePressed="#returnHome" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/catalog/home.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
          </children>
       </GridPane>
       <HBox prefHeight="603.0" prefWidth="1240.0" spacing="5.0">
@@ -54,6 +58,7 @@
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font></Label>
+                  <Separator prefWidth="200.0" />
                   <ScrollPane fx:id="orderListsScrollPane" prefHeight="574.0" prefWidth="765.0">
                      <content>
                         <VBox fx:id="orderList" prefHeight="547.0" prefWidth="748.0" spacing="10.0">
@@ -177,7 +182,7 @@
                         </Label>
                         <ScrollPane fx:id="orderOverViewScrollPane" prefHeight="349.0" prefWidth="450.0">
                            <content>
-                              <VBox fx:id="orderContentsVbox" prefHeight="346.0" prefWidth="432.0" spacing="5.0">
+                              <VBox fx:id="orderContentsVbox" prefHeight="346.0" prefWidth="432.0" spacing="10.0">
                                  <padding>
                                     <Insets left="5.0" top="5.0" />
                                  </padding></VBox>
