@@ -14,16 +14,22 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import util.ManageScreens;
 
 public class OrderSummaryHBox extends HBox {
 	private ImageView image;
 
-	private Label priceLabel = new Label();
+	private Text priceLabel = new Text();
+	
+	private Label discountLabel = new Label();
 
 	private Label quantityLabel = new Label();
+	
+	private VBox priceVBox = new VBox();
 
 	private ProductsBase product;
 
@@ -44,12 +50,18 @@ public class OrderSummaryHBox extends HBox {
 		quantityLabel.setText("" + quantity);
 
 		priceLabel.setFont(new Font(20));
-		priceLabel.setText(InputChecker.price(product.getPrice()));
-
+		priceLabel.setText(InputChecker.price(product.getPrice() * quantity));
+		priceVBox.getChildren().add(priceLabel);
+		priceVBox.setAlignment(Pos.CENTER);
+		
 		this.getChildren().add(image);
 		this.getChildren().add(quantityLabel);
 		this.getChildren().add(new Label("X"));
-		this.getChildren().add(priceLabel);
+		this.getChildren().add(priceVBox);
+		if(product.isDiscount()) {
+			discountLabel.setText(InputChecker.price(product.calculateDiscount() * quantity));
+			priceVBox.getChildren().add(discountLabel);		
+		}
 	}
 
 	private void initImageProduct() {

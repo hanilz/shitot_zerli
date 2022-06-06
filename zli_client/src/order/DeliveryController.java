@@ -155,7 +155,7 @@ public class DeliveryController implements Initializable {
 		if (canProceed) {
 			if (checkDateNotPassed(pickupDatePicker.getValue(), pickupHourComboBox.getValue(),
 					pickupMinuteComboBox.getValue())) {
-				switchFillAllFields(selectABranchLabel, "* Please select a date that hasn't passed!");
+				switchFillAllFields(selectABranchLabel, "* Please select a date that isn't sooner than the next 3 hours!");
 				canProceed = false;
 			}
 		}
@@ -188,7 +188,7 @@ public class DeliveryController implements Initializable {
 				canProceed = false;
 			} else if (checkDateNotPassed(deliveryDatePicker.getValue(), deliveryHourComboBox.getValue(),
 					deliveryMinuteComboBox.getValue())) {
-				switchFillAllFields(fillAllFieldsLabel, "* Please select a date that hasn't passed!");
+				switchFillAllFields(fillAllFieldsLabel, "* Please select a date that isn't sooner than the next 3 hours!");
 				canProceed = false;
 			}
 		}
