@@ -2,10 +2,12 @@ package entities;
 
 import java.io.Serializable;
 
+/**
+ * SurveyQuestion saves questionID,surveyID and question
+ * Provides setters and getters
+ *
+ */
 public class SurveyQuestion implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 736007857216709227L;
 	private int questionID;
 	private int surveyID;

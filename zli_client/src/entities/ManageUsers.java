@@ -2,6 +2,10 @@ package entities;
 
 import java.io.Serializable;
 
+/**
+ * Manage users save specific user details
+ * Provides setters and getters
+ */
 @SuppressWarnings("serial")
 public class ManageUsers implements Serializable{
 		private int idUser;
@@ -12,7 +16,6 @@ public class ManageUsers implements Serializable{
 		private String status;
 		
 		public ManageUsers(int idUser, String firstName, String lastName, String id, String userType, String status) {
-			super();
 			this.idUser = idUser;
 			this.firstName = firstName;
 			this.lastName = lastName;

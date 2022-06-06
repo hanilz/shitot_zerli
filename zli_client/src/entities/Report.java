@@ -9,9 +9,6 @@ import java.util.Date;
  * Provides setters and getters.
  */
 public class Report implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private int idReport;
 	/**

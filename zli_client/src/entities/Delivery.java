@@ -2,13 +2,13 @@ package entities;
 
 import java.io.Serializable;
 
+/**
+ * Delivery saves receiver information and status of delivery 
+ * Provides setters and getters
+ */
 public class Delivery implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-
 	private int idDelivery; // PK
 	private String address;
 	private String receiverName;
@@ -37,7 +37,7 @@ public class Delivery implements Serializable {
 		this.status = status;
 		this.type = type;
 	}
-	
+
 	// for pickup
 	public Delivery(String deliveryDate, String status, String type) {
 		this.deliveryDate = deliveryDate;

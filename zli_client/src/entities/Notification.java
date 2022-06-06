@@ -2,12 +2,12 @@ package entities;
 
 import java.io.Serializable;
 
+/**
+ * Notification saves user id and notifications attributes
+ *Provides setters and getters
+ */
 public class Notification implements Serializable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1265799512492593120L;
-	
 	private int idNotification;
 	private int idUser;
 	private boolean isRead;

@@ -3,28 +3,30 @@ package entities;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Cart save ProductsBase objects
+ * can only have one cart(singleton)
+ */
 public class Cart {
 	private Map<ProductsBase, Integer> cart = new HashMap<>(); // saves the product or items and the quantity of the
 																// product in the cart
 	private static Cart cartInstance = null;
-
 	private double totalPrice = 0;
-	
 	private double totalDiscountPrice = 0;
-
-	
 	private Product productToEdit = null;
 
 	private Cart() {
 	}
 
+	/**
+	 * @return instance of cart(singleton)
+	 */
 	public static Cart getInstance() {
 		return ((cartInstance == null) ? cartInstance = new Cart() : cartInstance);
 	}
 
 	/**
 	 * This method is used to add/update and item or products in the cart
-	 * 
 	 * @param product  or item we want to add/update
 	 * @param quantity we want to set for the product or item
 	 * @return if added/updated successfully
@@ -59,6 +61,9 @@ public class Cart {
 		return true;
 	}
 
+	/**
+	 * Remove all objects from cart and reset total price
+	 */
 	public void emptyCart() {
 		cart.clear();
 		totalPrice = 0;
@@ -73,10 +78,18 @@ public class Cart {
 		return totalDiscountPrice;
 	}
 	
+	/**
+	 * add amount to total price
+	 * @param amount
+	 */
 	private void calculateTotalPrice(double amount) {
 		totalPrice += amount;
 	}
 	
+	/**
+	 * add amount to total discount price
+	 * @param amount
+	 */
 	private void calculateTotalDiscountPrice(double amount) {
 		totalDiscountPrice += amount;
 	}
@@ -117,6 +130,11 @@ public class Cart {
 		return cart;
 	}
 
+	/**
+	 * searching object in cart by its ProductsBase id
+	 * @param check
+	 * @return ProductsBase if found else null
+	 */
 	private ProductsBase findByID(ProductsBase check) {
 		for (ProductsBase product : cart.keySet()) {
 			if (check.getId() == product.getId() && product instanceof Product && check instanceof Product)

@@ -6,12 +6,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
-
+/////!!!line 86!!!!
+/**
+ * SurveyAnalysisFile saves file attributes
+ * Provides Setters and Getters
+ */
 public class SurveyAnalysisFile implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String fileName;
 	private int size = 0;
@@ -62,15 +62,20 @@ public class SurveyAnalysisFile implements Serializable {
 			this.bytesToArray[i] = bytesToArray[i];
 	}
 
+	/**
+	 * Upload file survey analysis
+	 * @param savedFile
+	 * @return saved file
+	 */
 	public static SurveyAnalysisFile createSurveyAnalysisFile(File savedFile) {
 		byte[] byteArray = new byte[(int) savedFile.length()];
-		FileInputStream fis = null;
+		FileInputStream fileInputStream = null;
 		try {
-			fis = new FileInputStream(savedFile);
+			fileInputStream = new FileInputStream(savedFile);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		BufferedInputStream bis = new BufferedInputStream(fis);
+		BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
 
 		String[] pathSpliter = savedFile.getPath().split("\\\\");
 		String fileName = pathSpliter[pathSpliter.length - 1];
@@ -79,7 +84,7 @@ public class SurveyAnalysisFile implements Serializable {
 		SurveyAnalysisFile surveyAnaylsis = new SurveyAnalysisFile(fileName, byteArray.length, byteArray.length,
 				filePath);
 		try {
-			bis.read(surveyAnaylsis.getBytesToArray(), 0, byteArray.length);
+			bufferedInputStream.read(surveyAnaylsis.getBytesToArray(), 0, byteArray.length);////// need to close 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
