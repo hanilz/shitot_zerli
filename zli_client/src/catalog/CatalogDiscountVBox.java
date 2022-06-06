@@ -19,6 +19,9 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import util.ManageScreens;
 
+/**
+ * Component that displays one of the most discounted products.
+ */
 public class CatalogDiscountVBox {
 	private Product product;
 
@@ -40,42 +43,41 @@ public class CatalogDiscountVBox {
 	@FXML
 	private VBox productVBox;
 
-	private double calculateDiscount(double price, double discount) {
-		return price - price * discount / 100;
-	}
-
+	/**
+	 * Initialize the VBox - get a product and set the appropriate price and
+	 * discount labels, also the image and it's behavior.
+	 * @param product
+	 */
 	public void initVBox(Product product) {
 		this.product = product;
 		beforeDiscountTxt.setText(InputChecker.price(product.getPrice()));
 		beforeDiscountTxt.setStrikethrough(true);
-		afterDiscountLabel.setText(InputChecker.price(calculateDiscount(product.getPrice(), product.getDiscount())));
+		afterDiscountLabel.setText(InputChecker.price(product.calculateDiscount()));
 		initImageProduct();
 		productNameLabel.setText(product.getName());
 		initAddToCartButton();
 	}
 
+	/** Getter for product.
+	 * @return ProductsBase
+	 */
 	public ProductsBase getProduct() {
 		return product;
 	}
 
-	private void initImageProduct() { // same function but not with the event so we will call super.
+	/**
+	 * Set the image and it's behavior(open details popup).
+	 */
+	private void initImageProduct() {
 		productImage.setImage(new Image(product.getImagePath()));
 
 		productImage.setOnMouseReleased(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-//				ProductVBox popup = new ProductVBox(product);
-//				popup.initProductVBox();
-//				Scene scene = new Scene(popup);
-//				Stage stage = new Stage();
-//				stage.setTitle("Product Details - " + product.getName());
-//				stage.setScene(scene);
-//				ManageScreens.addPopup(stage);
-//				stage.showAndWait();
-//				ManageScreens.removePopup(stage);
 				try {
 					ProductDetailsController.setProduct(product);
-					ManageScreens.openPopupFXML(ProductDetailsController.class.getResource("ProductDetailsPopup.fxml"), product.getName());
+					ManageScreens.openPopupFXML(ProductDetailsController.class.getResource("ProductDetailsPopup.fxml"),
+							product.getName());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -83,6 +85,9 @@ public class CatalogDiscountVBox {
 		});
 	}
 
+	/**
+	 * Initialize the Add To Cart button and it's behavior.
+	 */
 	private void initAddToCartButton() {
 		addToCartButton.setCursor(Cursor.HAND);
 		addToCartButton.setOnAction(new EventHandler<ActionEvent>() {

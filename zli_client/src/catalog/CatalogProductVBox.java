@@ -13,19 +13,28 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import util.ManageScreens;
 
+/**
+ * Component for the catalog - Display product details, price and discount.
+ */
 public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
-	private Product product; // will be used to get the data from
+	private Product product;  // will be used to get the data from
 	private Text originalPriceTxt;
 
+	/**
+	 * Constructor.
+	 * @param product
+	 */
 	public CatalogProductVBox(Product product) {
 		this.product = product;
 	}
 
 	/**
-	 * 
+	 * Initialize the productVBox, using the product.
+	 * Set all the relevant information and node behavior for the component.
 	 */
 	public void initVBox() {
 		nameLabel.setText(product.getName());
+		
 		initImageProduct();
 
 		amountLabel.setText(InputChecker.price(product.getPrice()));
@@ -36,6 +45,15 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 
 		super.initVBox();
 		
+		initDiscountLabel();
+		
+		this.getChildren().add(addToCartButton);
+	}
+
+	/**
+	 * Initialize discount label if there is discount for this product
+	 */
+	private void initDiscountLabel() {
 		if(product.isDiscount()) {
 			discountLabel.setText(InputChecker.price(product.calculateDiscount()));
 			originalPriceTxt = new Text(InputChecker.price(product.getPrice()));
@@ -46,10 +64,11 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 			priceHBox.getChildren().add(discountLabel);
 			amountLabel.setId("priceAfterDiscountLabel");;
 		}
-		
-		this.getChildren().add(addToCartButton);
 	}
 
+	/**
+	 * Initialize the addToCartButton behavior.
+	 */
 	private void initAddToCartButton() {
 		addToCartButton.setCursor(Cursor.HAND);
 		addToCartButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -67,22 +86,16 @@ public class CatalogProductVBox extends CatalogVBox implements ICatalogVBox {
 		});
 	}
 
-	private void initImageProduct() { // same function but not with the event so we will call super.
+	/**
+	 * Initialize the image and it's behavior.
+	 */
+	private void initImageProduct() {
 		image = new ImageView(product.getImagePath());
 		setImageProp();
 
 		image.setOnMouseReleased(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-//				ProductVBox popup = new ProductVBox(product);
-//				popup.initProductVBox();
-//				Scene scene = new Scene(popup);
-//				Stage stage = new Stage();
-//				stage.setTitle("Product Details - " + product.getName());
-//				stage.setScene(scene);
-//				ManageScreens.addPopup(stage);
-//				stage.showAndWait();
-//				ManageScreens.removePopup(stage);
 				try {
 					ProductDetailsController.setProduct(product);
 					ManageScreens.openPopupFXML(ProductDetailsController.class.getResource("ProductDetailsPopup.fxml"), product.getName());
