@@ -22,19 +22,39 @@ import javafx.collections.FXCollections;
  */
 public class ClientMessageController {
 
+	/**
+	 * Controller instance used for singleton
+	 */
 	private static ClientMessageController instance = null;
+	/**
+	 * Data structure used to transfer information
+	 */
 	private HashMap<String, Object> message = null;
+	
+	/**
+	 * save response from communication between server and client
+	 */
 	private Object response = null;
 
+	/**
+	 * Constructor for singleton
+	 */
 	private ClientMessageController() {
 	}
 
+	/**
+	 * @return controller (singleton)
+	 */
 	public static ClientMessageController getClientMessageController() {
 		if (instance == null)
 			instance = new ClientMessageController();
 		return instance;
 	}
 
+	/**
+	 * @param msg message from server
+	 * Receive message from server and return client the proper respond
+	 */
 	@SuppressWarnings("unchecked")
 	public void handleMessages(Object msg) {
 		message = (HashMap<String, Object>) msg;
@@ -111,16 +131,25 @@ public class ClientMessageController {
 		}
 	}
 
+	/**
+	 * set client the respond in the hashMap under key "response"
+	 */
 	private void returnServerRespond() {
 		ClientController.setResponse(message.get("response"));
 	}
 
+	/** 
+	 * set client the respond in the hashMap as a given ArrayList<>
+	 */
 	private void returnServerListRespond(ArrayList<?> listResponse) {
 		ArrayList<?> respondAsList = ((listResponse.isEmpty()) ? (ArrayList<?>) message.get("response") : listResponse);
 		response = FXCollections.observableArrayList(respondAsList);
 		ClientController.setResponse(response);
 	}
 	
+	/**
+	 * set client the respond in the hashMap as a given Map<,>
+	 */
 	private void returnServerMapRespond(Map<?,?> mapResponse) {
 		Map<?,?> respondAsMap = ((mapResponse.isEmpty()) ? (Map<?,?>) message.get("response") : mapResponse);
 		response = respondAsMap;

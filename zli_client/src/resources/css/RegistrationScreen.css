@@ -22,7 +22,8 @@
 #detailsVBox{
 	-fx-border-color:#e0beb8;
 	-fx-border-insets:5.0px; 
-	-fx-border-width:3px
+	-fx-border-width:3px;
+	-fx-background-color: FDFAFA;
 }
 
 .label{

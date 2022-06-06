@@ -37,6 +37,7 @@ import mangeCustomerOrders.ManageCustomerOrdersController;
 import mangeUsers.AddScreensController;
 import mangeUsers.ManageUsersController;
 import mangeUsers.ManageUsersPermissionController;
+import notifications.NotificationController;
 import order.CheckoutController;
 import order.DeliveryController;
 import order.GreetingCardController;
@@ -49,14 +50,27 @@ import surveyAnalysis.AnalyzeAnswersController;
 import surveyAnalysis.SurveyAnswersHomeController;
 import surveyAnalysisView.SurveyAnalysisViewHomeController;
 
+/**
+ * Controlling flow of screens 
+ */
 public class ManageScreens implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -9183350856829427451L;
+	/**
+	 * The main stage the client sees
+	 */
 	private static Stage stage;
+	/**
+	 * Current and Previous screens are been saved
+	 */
 	private static Screens previousScreen, currentScreen;
+	/**
+	 * Stage to show popup screen
+	 */
 	private static Stage popupStage;
+	/**
+	 * All current open popups
+	 */
 	private static ArrayList<Stage> openedPopups = new ArrayList<>();
 
 	/**
@@ -88,6 +102,11 @@ public class ManageScreens implements Serializable {
 		});
 	}
 
+	/**
+	 * @param url
+	 * @param scene
+	 * Setting the look of specific scene
+	 */
 	private static void setStyleSheet(URL url, Scene scene) {
 		String[] splitedUrl = url.toString().split("/");
 		String style = splitedUrl[splitedUrl.length - 1];
@@ -129,6 +148,12 @@ public class ManageScreens implements Serializable {
 		return false;
 	}
 
+	/**
+	 * @param url
+	 * @param title
+	 * @throws Exception
+	 * Open a popup that can be opened one at a time
+	 */
 	public static void openPopupFXML(URL url, String title) throws Exception {
 		// setIconApplication();
 		Scene scene = setPopup(url);
@@ -146,6 +171,12 @@ public class ManageScreens implements Serializable {
 			}
 		});
 	}
+	/**
+	 * @param url
+	 * @param title
+	 * @throws Exception
+	 * Open a popup that can be opened more than one at a time
+	 */
 	public static void openPopupUnlimitedFXML(URL url, String title) throws Exception {
 		// setIconApplication();
 		Scene scene = setPopup(url);
@@ -163,6 +194,12 @@ public class ManageScreens implements Serializable {
 		});
 	}
 
+	/**
+	 * @param url
+	 * @return
+	 * @throws IOException
+	 * Setting the scene of a popup
+	 */
 	private static Scene setPopup(URL url) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
 		try {
@@ -178,23 +215,39 @@ public class ManageScreens implements Serializable {
 	}
 
 
+	/**
+	 * @param lastScreen
+	 * Setting previous screen to be given lastScreen
+	 */
 	public static void setPreviousScreen(Screens lastScreen)// added
 	{
 		previousScreen = lastScreen;
 	}
 
+	/**
+	 * @param stage
+	 * Adding icon to stage
+	 */
 	private static void setIconApplication(Stage stage) {
 		stage.getIcons().add(new Image("/resources/icon.png"));
 	}
 
-	public static void addPopup(Stage window) {
-		openedPopups.add(window);
+	/**
+	 * Save open popup
+	 */
+	public static void addPopup(Stage popup) {
+		openedPopups.add(popup);
 	}
-
+	/**
+	 * Remove popup that closed
+	 */
 	public static void removePopup(Stage popup) {
 		openedPopups.remove(popup);
 	}
 
+	/**
+	 * Close all open popup
+	 */
 	public static void closeAllPopups() {
 		for (Stage popup : openedPopups) {
 			Platform.runLater(new Runnable() {
@@ -209,19 +262,31 @@ public class ManageScreens implements Serializable {
 		openedPopups.clear();
 	}
 
+	/**
+	 * Saving stage to be given stage
+	 */
 	public static void setStage(Stage stage) {
 		ManageScreens.stage = stage;
 		setIconApplication(stage);
 	}
 
+	/**
+	 * @return current stage
+	 */
 	public static Stage getStage() {
 		return stage;
 	}
 
+	/**
+	 * @return current popup
+	 */
 	public static Stage getPopupStage() {
 		return popupStage;
 	}
 
+	/**
+	 * Change the main stage to show the given screen
+	 */
 	public static void changeScreenTo(Screens screen) {
 		setPreviousScreen(currentScreen);// saved one become last one
 		try {
@@ -346,6 +411,10 @@ public class ManageScreens implements Serializable {
 				ManageScreens.changeScene(ManageCatalogController.class.getResource("NewProduct.fxml"),
 						"Manage Catalog");
 				break;
+			case NOTIFICATIONS:
+				ManageScreens.openPopupFXML(NotificationController.class.getResource("NotificationMainScreen.fxml"),
+						"Notification Center");
+				break;
 			default:
 				break;
 			}
@@ -356,6 +425,9 @@ public class ManageScreens implements Serializable {
 
 	}
 
+	/**
+	 * Change the main stage to show home screen
+	 */
 	public static void home() {
 		if (User.getUserInstance().isUserLoggedIn())
 			ManageScreens.changeScreenTo(Screens.USER_HOME);
@@ -363,7 +435,10 @@ public class ManageScreens implements Serializable {
 			ManageScreens.changeScreenTo(Screens.GUEST_HOME);
 	}
 
-	public static void previousScreen()// added
+	/**
+	 * Change the main stage to show previous screen
+	 */
+	public static void previousScreen()
 	{
 		if (previousScreen == Screens.GUEST_HOME || previousScreen == Screens.USER_HOME)
 			home();
@@ -371,7 +446,9 @@ public class ManageScreens implements Serializable {
 			changeScreenTo(previousScreen);
 	}
 
-	// set the name for the button in the home screen
+	/**
+	 * @return Name for the button in the home screen
+	 */
 	public static String getName(Screens user) {
 		switch (user) {
 		case CART:
@@ -435,6 +512,9 @@ public class ManageScreens implements Serializable {
 		}
 	}
 
+	/**
+	 * @return The icon for the button in the home screen
+	 */
 	public static String getIconPath(Screens user) {
 		switch (user) {
 		case CART:
@@ -494,7 +574,7 @@ public class ManageScreens implements Serializable {
 		case USER_PREMISSION:
 			return "resources/home/homeSetting.png";
 		default:
-			return "";// no such user//
+			return "";
 		}
 	}
 }

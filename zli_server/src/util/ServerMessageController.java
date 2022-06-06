@@ -35,23 +35,25 @@ import surveyAnalysis.QuestionAnswer;
  * This class will help us the control all the messages that the server receives
  * and the server sending. for example: handling all the queries that the client
  * sending. ServerMessageController is a singleton class.
- *
  */
 public class ServerMessageController {
 
 	/**
-	 * To limit the instance of the object using singleton design pattern.
+	 * Instance if the controller(singleton)
 	 */
 	private static ServerMessageController instance = null;
 	/**
-	 * used for to send message back to client.
+	 * Data structure to transfer information between server and client 
 	 */
 	private HashMap<String, Object> message;
 	/**
-	 * response for the client if the query succeded or not.
+	 * The response the server make
 	 */
 	private String response;
 
+	/**
+	 * Constructor for singleton purpose
+	 */
 	private ServerMessageController() {
 	}
 
@@ -445,7 +447,7 @@ public class ServerMessageController {
 	}
 
 	/**
-	 * sendToClient will send the message after the server executed the query frrom the database.
+	 * sendToClient will send the message to the client after the server executed the query frrom the database.
 	 * @param client
 	 */
 	private void sendToClient(ConnectionToClient client) {

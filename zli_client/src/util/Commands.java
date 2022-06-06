@@ -1,5 +1,8 @@
 package util;
 
+/**
+ * Commands defined between server and client
+ */
 public enum Commands {
 
 	FETCH_ORDERS, FETCH_PRODUCTS, FETCH_BRANCHES, FETCH_ITEMS, FETCH_ALL_USERS_DETAILS, FETCH_SURVEYS,
