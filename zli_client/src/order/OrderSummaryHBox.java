@@ -7,6 +7,7 @@ import entities.Product;
 import entities.ProductsBase;
 import inputs.InputChecker;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -42,23 +43,28 @@ public class OrderSummaryHBox extends HBox {
 
 	public void initHBox() {
 		this.setId("productSummaryHBox");
-		this.setAlignment(Pos.CENTER);
+		this.setAlignment(Pos.CENTER_LEFT);
+		this.setPadding(new Insets(0,0,0,60));
 		this.setSpacing(15);
 
 		initImageProduct();
 
 		quantityLabel.setText("" + quantity);
-
+		quantityLabel.setMinWidth(40);
+		quantityLabel.setAlignment(Pos.CENTER);
 		priceLabel.setFont(new Font(20));
 		priceLabel.setText(InputChecker.price(product.getPrice() * quantity));
 		priceLabel.setStyle("-fx-font-weight: bold;");
 		priceVBox.getChildren().add(priceLabel);
 		priceVBox.setAlignment(Pos.CENTER);
-		
-		this.getChildren().add(image);
+		VBox imageVbox = new VBox(image);
+		imageVbox.setAlignment(Pos.CENTER);
+		imageVbox.setMinWidth(70);
+		this.getChildren().add(imageVbox);
 		this.getChildren().add(quantityLabel);
 		this.getChildren().add(new Label("X"));
 		this.getChildren().add(priceVBox);
+		discountLabel.setId("discountLabel");
 		if(product.isDiscount()) {
 			priceLabel.setStyle("-fx-strikethrough: true;\r\n"
 					+ "	-fx-font-size: 18px;\r\n"
@@ -68,6 +74,7 @@ public class OrderSummaryHBox extends HBox {
 					+ "	-fx-font-weight: bold;\r\n"
 					+ "	-fx-font-size: 20px;");
 			priceVBox.getChildren().add(discountLabel);		
+			priceLabel.setStrikethrough(true);
 		}
 	}
 

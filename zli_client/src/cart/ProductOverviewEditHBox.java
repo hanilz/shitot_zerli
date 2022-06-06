@@ -35,6 +35,7 @@ public class ProductOverviewEditHBox extends CustomProductHBox {
 	}
 
 	public void initHBox() {
+		this.setId("editHBox");
 		super.initHBox();
 		super.initPriceHBox();
 		amountLabel.setStyle("-fx-font-size: 20px;\r\n"
@@ -45,7 +46,7 @@ public class ProductOverviewEditHBox extends CustomProductHBox {
 			initDiscountLabel();
 		}
 		initQuantityVBox();
-		removeButton.setCursor(Cursor.HAND);
+		removeButton.setId("removeBtn");
 		removeButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -65,9 +66,12 @@ public class ProductOverviewEditHBox extends CustomProductHBox {
 			}
 		});
 		priceHBox.setSpacing(5);
+		priceHBox.getChildren().remove(priceVBox);
 		priceHBox.getChildren().add(quantityHBox);
-
-		nameLabel.setPrefWidth(150);
+		priceVBox.setAlignment(Pos.CENTER);
+		priceHBox.getChildren().add(priceVBox);
+		nameLabel.setId("NameLabel");
+		nameLabel.setPrefWidth(145);
 
 		priceHBox.getChildren().add(removeButton);
 		amountLabel.setText(InputChecker.price(quantity * product.getPrice()));
@@ -84,6 +88,8 @@ public class ProductOverviewEditHBox extends CustomProductHBox {
 
 	private void initQuantityVBox() {
 		quantityLabel = new Label("" + quantity);
+		quantityLabel.setMinWidth(15);
+		quantityLabel.setAlignment(Pos.CENTER);
 		addQuantity.setCursor(Cursor.HAND);
 		addQuantity.setOnAction(new EventHandler<ActionEvent>() {
 			@Override

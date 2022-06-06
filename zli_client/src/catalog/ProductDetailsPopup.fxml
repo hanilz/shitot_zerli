@@ -28,7 +28,7 @@
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="449.0" prefWidth="363.0">
                <children>
-                  <ImageView fx:id="productImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="productImage" fitHeight="141.0" fitWidth="197.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/products/1.png" />
                      </image>
@@ -40,9 +40,9 @@
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="92.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="66.4" valignment="TOP" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="175.0" minHeight="10.0" prefHeight="98.39999999999998" valignment="TOP" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="92.0" minHeight="10.0" prefHeight="63.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="64.0" valignment="TOP" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="175.0" minHeight="10.0" prefHeight="90.0" valignment="TOP" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="106.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
@@ -61,7 +61,7 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="flowerTypeLabel" alignment="TOP_LEFT" prefHeight="63.0" prefWidth="264.0" text="Tulips" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Label fx:id="flowerTypeLabel" alignment="TOP_LEFT" prefHeight="63.0" prefWidth="264.0" text="Tulips sdfasdfasdfsadfasdfsdfasdf" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -71,7 +71,7 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="productTypeLabel" prefHeight="60.0" prefWidth="265.0" text="Bouquet" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label fx:id="productTypeLabel" prefHeight="60.0" prefWidth="265.0" text="Bouquetsd asd sadfsadfasdf" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -81,7 +81,7 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="productDescriptionlabel" alignment="TOP_LEFT" contentDisplay="CENTER" prefHeight="123.0" prefWidth="265.0" text="A beautiful bouquet of pink tulips." wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Label fx:id="productDescriptionlabel" alignment="TOP_LEFT" contentDisplay="CENTER" prefHeight="123.0" prefWidth="265.0" text="A beautiful bouquet of pink tulips" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <font>
                               <Font size="20.0" />
                            </font>
