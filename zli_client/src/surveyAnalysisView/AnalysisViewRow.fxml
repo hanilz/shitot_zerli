@@ -9,25 +9,25 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER_LEFT" prefHeight="61.0" prefWidth="1170.0" spacing="10.0" style="-fx-background-color: D8E2DC; -fx-background-radius: 50;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="surveyAnalysisView.AnalysisViewRowController">
+<HBox id="reportHBox" alignment="CENTER_LEFT" prefHeight="61.0" prefWidth="1170.0" spacing="10.0" stylesheets="@../resources/css/SurveyReportsHomeScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="surveyAnalysisView.AnalysisViewRowController">
    <children>
-      <Label text="Survery ID:">
+      <Label id="rowLabels" text="Survery ID:">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="surveryIDNumber" minWidth="100.0" text="id Number">
+      <Label id="rowLabels" fx:id="surveryIDNumber" minWidth="100.0" text="id Number">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
       <Separator orientation="VERTICAL" prefHeight="200.0" />
-      <Label text="Survery Name:">
+      <Label id="rowLabels" text="Survery Name:">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="surveyNameLabel" prefHeight="60.0" prefWidth="544.0" text="name" wrapText="true">
+      <Label id="rowLabels" fx:id="surveyNameLabel" prefHeight="37.0" prefWidth="512.0" text="name" wrapText="true">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>

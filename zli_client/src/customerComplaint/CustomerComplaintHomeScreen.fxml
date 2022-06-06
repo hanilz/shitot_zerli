@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="customerComplaint.CustomerComplaintHomeController">
+<VBox id="complaintVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="10.0" stylesheets="@../resources/css/CustomerComplaintHomeScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="customerComplaint.CustomerComplaintHomeController">
    <opaqueInsets>
       <Insets />
    </opaqueInsets>
@@ -46,24 +46,28 @@
                   </Label>
                </children>
             </VBox>
-            <ImageView fx:id="homeImage" fitHeight="100.0" fitWidth="100.0" onMousePressed="#returnHome" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../resources/catalog/home.png" />
-               </image>
-            </ImageView>
+            <HBox id="homeHBox">
+               <children>
+                  <ImageView fx:id="homeImage" fitHeight="100.0" fitWidth="100.0" onMousePressed="#returnHome" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/catalog/home.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
          </children>
       </GridPane>
       <TableView fx:id="complaintsTable" prefHeight="541.0" prefWidth="1260.0">
         <columns>
-          <TableColumn fx:id="complaintID" prefWidth="92.0" text="Compliant ID" />
-          <TableColumn fx:id="orderID" prefWidth="73.0" text="Order ID" />
-            <TableColumn fx:id="complaintReason" prefWidth="623.0" text="Title" />
-            <TableColumn fx:id="date" prefWidth="127.0" text="Remaining Time" />
+          <TableColumn fx:id="complaintID" prefWidth="115.20001065731049" text="Compliant ID" />
+          <TableColumn fx:id="orderID" prefWidth="135.20001983642578" text="Order ID" />
+            <TableColumn fx:id="complaintReason" prefWidth="621.0" text="Title" />
+            <TableColumn fx:id="date" prefWidth="258.0" text="Remaining Time" />
         </columns>
       </TableView>
       <HBox alignment="CENTER" prefHeight="66.0" prefWidth="980.0">
          <children>
-            <Button fx:id="newCustomerComplaintButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#createNewCustomerComplaint" text="New Cutomer Complaint">
+            <Button id="newComplaintBtn" fx:id="newCustomerComplaintButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#createNewCustomerComplaint" text="New Cutomer Complaint">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>

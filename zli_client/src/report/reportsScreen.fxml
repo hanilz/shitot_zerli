@@ -16,19 +16,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="5.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.ReportsController">
+<VBox id="reportsVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="5.0" stylesheets="@../resources/css/reportsScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.ReportsController">
    <children>
       <GridPane prefHeight="99.0" prefWidth="980.0">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="100.0" prefWidth="172.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1066.0" minWidth="10.0" prefWidth="900.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="155.0" minWidth="0.0" prefWidth="155.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="75.0" prefWidth="82.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1072.0" minWidth="10.0" prefWidth="1058.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="155.0" minWidth="0.0" prefWidth="81.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="100.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="101.0" prefWidth="994.0" GridPane.columnIndex="1">
+            <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="1031.0" GridPane.columnIndex="1">
                <children>
                   <Label text="Reports">
                      <font>
@@ -44,14 +44,18 @@
             </VBox>
             <VBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="74.0">
                <children>
-                  <ImageView fx:id="homeImage" fitHeight="80.0" fitWidth="74.0" onMousePressed="#returnHome" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../resources/catalog/home.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
+                  <VBox id="homeHBox" alignment="CENTER">
+                     <children>
+                        <ImageView fx:id="homeImage" fitHeight="80.0" fitWidth="74.0" onMousePressed="#returnHome" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/catalog/home.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                     </children>
+                  </VBox>
                </children>
             </VBox>
          </children>
@@ -64,7 +68,7 @@
                      <font>
                         <Font size="16.0" />
                      </font></Label>
-                  <ComboBox fx:id="branchComboBox" prefHeight="25.0" prefWidth="222.0" promptText="Select Branch">
+                  <ComboBox fx:id="branchComboBox" prefHeight="30.0" prefWidth="277.0" promptText="Select Branch">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></ComboBox>

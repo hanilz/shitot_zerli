@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mangeCustomerOrders.ManageCustomerOrdersController">
+<VBox id="reviewOrdersVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="10.0" stylesheets="@../resources/css/ManageCustomerOrdersScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mangeCustomerOrders.ManageCustomerOrdersController">
    <opaqueInsets>
       <Insets />
    </opaqueInsets>
@@ -48,11 +48,15 @@
                   </Label>
                </children>
             </VBox>
-            <ImageView fx:id="homeImage" fitHeight="100.0" fitWidth="100.0" onMousePressed="#returnHome" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../resources/catalog/home.png" />
-               </image>
-            </ImageView>
+            <VBox id="homeHBox">
+               <children>
+                  <ImageView fx:id="homeImage" fitHeight="100.0" fitWidth="100.0" onMousePressed="#returnHome" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/catalog/home.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
          </children>
       </GridPane>
       <TabPane prefHeight="591.0" prefWidth="1260.0" tabClosingPolicy="UNAVAILABLE">
@@ -63,17 +67,17 @@
                      <children>
                         <TableView fx:id="newOrderTable" prefHeight="491.0" prefWidth="1260.0">
                           <columns>
-                            <TableColumn fx:id="idOrderCol" prefWidth="95.0" text="Order Number" />
-                            <TableColumn fx:id="priceCol" prefWidth="89.0" text="Price" />
-                              <TableColumn fx:id="firstNameCol" prefWidth="78.0" text="First Name" />
-                              <TableColumn fx:id="lastNameCol" prefWidth="82.0" text="Last Name" />
-                              <TableColumn fx:id="orderStatusCol" prefWidth="149.0" text="Order Status" />
-                              <TableColumn fx:id="orderDateCol" prefWidth="139.0" text="Order Date" />
-                              <TableColumn fx:id="deliveryDateCol" prefWidth="118.0" text="Delivery Date" />
-                              <TableColumn fx:id="deliveryTypeCol" prefWidth="134.0" text="Delivery Type" />
+                            <TableColumn fx:id="idOrderCol" prefWidth="113.0" text="Order Number" />
+                            <TableColumn fx:id="priceCol" prefWidth="130.0" text="Price" />
+                              <TableColumn fx:id="firstNameCol" prefWidth="160.0" text="First Name" />
+                              <TableColumn fx:id="lastNameCol" prefWidth="160.0" text="Last Name" />
+                              <TableColumn fx:id="orderStatusCol" prefWidth="175.0" text="Order Status" />
+                              <TableColumn fx:id="orderDateCol" prefWidth="160.0" text="Order Date" />
+                              <TableColumn fx:id="deliveryDateCol" prefWidth="160.0" text="Delivery Date" />
+                              <TableColumn fx:id="deliveryTypeCol" prefWidth="160.0" text="Delivery Type" />
                           </columns>
                         </TableView>
-                        <HBox alignment="CENTER" prefHeight="47.0" prefWidth="980.0" spacing="200.0">
+                        <HBox alignment="CENTER" prefHeight="61.0" prefWidth="1220.0" spacing="500.0">
                            <children>
                               <Button fx:id="approveOrderButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#approveOrder" text="Approve Order">
                                  <graphic>
@@ -103,19 +107,19 @@
                      <children>
                         <TableView fx:id="cancelOrdersTable" prefHeight="491.0" prefWidth="1260.0">
                            <columns>
-                              <TableColumn fx:id="idOrderCol1" prefWidth="95.0" text="Order Number" />
-                              <TableColumn fx:id="priceCol1" prefWidth="89.0" text="Price" />
-                              <TableColumn fx:id="firstNameCol1" prefWidth="78.0" text="First Name" />
-                              <TableColumn fx:id="lastNameCol1" prefWidth="82.0" text="Last Name" />
-                              <TableColumn fx:id="orderStatusCol1" prefWidth="149.0" text="Order Status" />
-                              <TableColumn fx:id="orderDateCol1" prefWidth="140.0" text="Order Date" />
-                              <TableColumn fx:id="deliveryDateCol1" prefWidth="126.0" text="Delivery Date" />
-                              <TableColumn fx:id="deliveryTypeCol1" prefWidth="116.0" text="Delivery Type" />
-                              <TableColumn fx:id="requestDateCol1" prefWidth="129.0" text="Request Time" />
+                              <TableColumn fx:id="idOrderCol1" text="Order No." />
+                              <TableColumn fx:id="priceCol1" prefWidth="115.0" text="Price" />
+                              <TableColumn fx:id="firstNameCol1" prefWidth="120.0" text="First Name" />
+                              <TableColumn fx:id="lastNameCol1" prefWidth="120.0" text="Last Name" />
+                              <TableColumn fx:id="orderStatusCol1" prefWidth="160.0" text="Order Status" />
+                              <TableColumn fx:id="orderDateCol1" prefWidth="144.0" text="Order Date" />
+                              <TableColumn fx:id="deliveryDateCol1" prefWidth="144.0" text="Delivery Date" />
+                              <TableColumn fx:id="deliveryTypeCol1" prefWidth="110.0" text="Delivery Type" />
+                              <TableColumn fx:id="requestDateCol1" prefWidth="140.0" text="Request Time" />
                               <TableColumn fx:id="timeTillDeliveryCol" prefWidth="133.0" text="Remaining Time" />
                            </columns>
                         </TableView>
-                        <HBox alignment="CENTER" prefHeight="42.0" prefWidth="980.0" spacing="100.0">
+                        <HBox alignment="CENTER" prefHeight="59.0" prefWidth="1220.0" spacing="500.0">
                            <children>
                               <Button fx:id="approveCancelButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#approveCancelRequest" text="Approve Cancel Request">
                                  <graphic>
@@ -141,7 +145,6 @@
           </Tab>
         </tabs>
       </TabPane>
-      <HBox alignment="CENTER" prefHeight="27.0" prefWidth="980.0" spacing="170.0" />
       <Label fx:id="errorLabel" text="*Please select an item to perform an operation" textFill="RED" visible="false">
          <font>
             <Font name="System Bold" size="15.0" />

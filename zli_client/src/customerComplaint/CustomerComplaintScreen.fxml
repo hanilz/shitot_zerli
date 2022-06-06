@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="customerComplaint.CustomerComplaintController">
+<VBox id="complaintVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" stylesheets="@../resources/css/CustomerComplaintScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="customerComplaint.CustomerComplaintController">
    <children>
       <Label text="New Customer Complaint">
          <font>
@@ -24,11 +24,11 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <VBox alignment="CENTER" prefHeight="632.0" prefWidth="1200.0" spacing="20.0">
+      <VBox id="complaintVBOX" alignment="CENTER" prefHeight="632.0" prefWidth="1200.0" spacing="20.0">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="980.0" spacing="20.0">
                <children>
-                  <Label text="Order Number: ">
+                  <Label prefHeight="35.0" prefWidth="184.0" text="Order Number: ">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
@@ -43,7 +43,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="980.0" spacing="20.0">
                <children>
-                  <Label text="Complaint Reason:">
+                  <Label prefHeight="35.0" prefWidth="268.0" text="Complaint Reason:">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
@@ -56,7 +56,7 @@
             </HBox>
             <HBox prefHeight="220.0" prefWidth="1200.0" spacing="11.0">
                <children>
-                  <Label text="Complaint Content:">
+                  <Label prefHeight="35.0" prefWidth="274.0" text="Complaint Content:">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
@@ -75,8 +75,11 @@
                </children>
             </HBox>
          </children>
+         <padding>
+            <Insets left="20.0" right="20.0" />
+         </padding>
       </VBox>
-      <HBox alignment="BOTTOM_CENTER" prefHeight="72.0" prefWidth="1200.0" spacing="70.0">
+      <HBox alignment="CENTER" prefHeight="72.0" prefWidth="1200.0" spacing="330.0">
          <children>
             <Button fx:id="discardButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#discardComplaint" text="Discard And Close">
                <graphic>
@@ -86,6 +89,11 @@
                      </image>
                   </ImageView>
                </graphic></Button>
+            <Label fx:id="errorLabel" text="*Failed to submit order" textFill="RED" visible="false">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
             <Button fx:id="submitButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#saveComplaint" text="Submit Complaint">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
@@ -98,20 +106,12 @@
          <VBox.margin>
             <Insets />
          </VBox.margin>
-         <padding>
-            <Insets top="10.0" />
-         </padding>
       </HBox>
-      <Label fx:id="errorLabel" text="*Failed to submit order" textFill="RED" visible="false">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
    </children>
    <opaqueInsets>
       <Insets />
    </opaqueInsets>
    <padding>
-      <Insets bottom="10.0" left="40.0" right="40.0" top="10.0" />
+      <Insets bottom="30.0" left="40.0" right="40.0" top="20.0" />
    </padding>
 </VBox>

@@ -1,7 +1,6 @@
 package util;
 
 import notifications.NotificationManager;
-
 /**
  * This a subclass of the NotificationManager (so the ServerNotificationManager
  * will have access to all the methods and properties of the superclass). This

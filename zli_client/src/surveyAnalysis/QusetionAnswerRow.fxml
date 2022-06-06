@@ -10,17 +10,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER_LEFT" maxHeight="65.0" maxWidth="1200.0" minHeight="65.0" minWidth="1200.0" prefHeight="65.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="surveyAnalysis.QuestionAnswerRowController">
+<HBox alignment="CENTER_LEFT" maxHeight="65.0" maxWidth="1200.0" minHeight="65.0" minWidth="1200.0" prefHeight="65.0" prefWidth="1200.0" stylesheets="@../resources/css/AnalyzeAnswersScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="surveyAnalysis.QuestionAnswerRowController">
    <children>
-      <Label fx:id="questionLabel" prefHeight="55.0" prefWidth="503.0" text="Question" wrapText="true">
+      <Label fx:id="questionLabel" prefHeight="55.0" prefWidth="501.0" text="Question" wrapText="true">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Separator orientation="VERTICAL" prefHeight="200.0" />
       <GridPane fx:id="gradeGridPane" gridLinesVisible="true">
          <columnConstraints>
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="109.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="153.0" minWidth="10.0" prefWidth="114.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" />
@@ -42,7 +42,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label prefHeight="25.0" prefWidth="104.0" text="Answer Count:" GridPane.rowIndex="1">
+            <Label text="Answer Count:" GridPane.rowIndex="1">
                <font>
                   <Font size="16.0" />
                </font>

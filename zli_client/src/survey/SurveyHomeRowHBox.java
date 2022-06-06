@@ -32,11 +32,11 @@ public class SurveyHomeRowHBox extends HBox{
 	
 	
 	private void initHBox() {
-		Font font = new Font(24);
+		this.setId("surveyHBox");
 		this.setPadding(new Insets(20));
 		this.setSpacing(20);
 		Label surveyName = new Label("Survey ID: " + surveyID + "\tSurvey Name: " + title);
-		surveyName.setFont(font);
+		surveyName.setId("surveyName");
 		surveyName.setPrefWidth(1000);
 		this.getChildren().add(surveyName);
 		Button btn = new Button("Fill Survey");

@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="15.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="manageCatalog.newProductBuilderController">
+<VBox id="productBuilderVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="15.0" stylesheets="@../resources/css/NewProduct.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="manageCatalog.newProductBuilderController">
    <children>
       <GridPane id="upperGrid" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="73.0" prefWidth="1258.0">
         <columnConstraints>
@@ -42,7 +42,7 @@
                   </Label>
                   <Label text="Build a new product or Item for the catalog">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
                </children>
@@ -160,7 +160,7 @@
                   </Label>
                   <ScrollPane prefHeight="482.0" prefWidth="639.0">
                      <content>
-                        <VBox fx:id="itemSelectorVBox" alignment="TOP_CENTER" prefHeight="472.0" prefWidth="620.0" spacing="8.0">
+                        <VBox fx:id="itemSelectorVBox" alignment="TOP_CENTER" prefHeight="472.0" prefWidth="620.0" spacing="10.0">
                            <padding>
                               <Insets left="5.0" top="10.0" />
                            </padding>
