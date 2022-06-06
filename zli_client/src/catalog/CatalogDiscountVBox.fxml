@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox id="discountVBox" fx:id="productVBox" alignment="TOP_CENTER" prefHeight="175.0" prefWidth="260.0" style="-fx-background-color: FEE1DC; -fx-background-radius: 30;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.CatalogDiscountVBox">
+<VBox id="discountVBox" fx:id="productVBox" alignment="TOP_CENTER" maxHeight="260.0" prefHeight="175.0" prefWidth="260.0" style="-fx-background-color: FEE1DC; -fx-background-radius: 30;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.CatalogDiscountVBox">
    <children>
       <Label fx:id="productNameLabel" alignment="CENTER" maxWidth="240.0" minWidth="240.0" prefHeight="31.0" prefWidth="240.0" text="Product Name" textAlignment="CENTER" wrapText="true">
          <font>
@@ -20,7 +20,7 @@
       </Label>
       <HBox prefHeight="150.0" prefWidth="240.0">
          <children>
-            <VBox alignment="CENTER" minHeight="139.0" minWidth="150.0" prefHeight="139.0" prefWidth="150.0">
+            <VBox alignment="CENTER" minHeight="139.0" minWidth="142.0" prefHeight="140.0" prefWidth="142.0">
                <children>
                   <ImageView fx:id="productImage" fitHeight="143.0" fitWidth="129.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -32,7 +32,7 @@
                   </ImageView>
                </children>
             </VBox>
-            <VBox alignment="CENTER" spacing="10.0">
+            <VBox alignment="CENTER" prefHeight="140.0" prefWidth="100.0" spacing="10.0">
                <children>
                   <Text fx:id="beforeDiscountTxt" strokeType="OUTSIDE" strokeWidth="0.0" text="100$" textAlignment="CENTER" wrappingWidth="89.875">
                      <font>
@@ -48,7 +48,7 @@
                         </Label>
                      </children>
                   </VBox>
-                  <Button id="discountCartBtn" fx:id="addToCartButton" contentDisplay="BOTTOM" mnemonicParsing="false" prefHeight="31.0" prefWidth="90.0" style="-fx-background-radius: 20;" text="Add To Cart">
+                  <Button id="discountCartBtn" fx:id="addToCartButton" contentDisplay="BOTTOM" mnemonicParsing="false" prefHeight="31.0" style="-fx-background-radius: 20;" text="Add To Cart">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" prefHeight="239.0" prefWidth="665.0" spacing="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.DeliveryDetailsDeliveryVBoxController">
+<VBox id="mainVBox" alignment="TOP_CENTER" prefHeight="239.0" prefWidth="665.0" spacing="10.0" stylesheets="@../resources/css/CheckoutPopup.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.DeliveryDetailsDeliveryVBoxController">
    <children>
       <HBox maxWidth="-Infinity" prefHeight="20.0" prefWidth="665.0" spacing="10.0">
          <children>

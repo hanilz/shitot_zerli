@@ -5,14 +5,13 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import entities.Item;
 import entities.Product;
 import entities.ProductsBase;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -72,23 +71,32 @@ public class ManageCatalogController implements Initializable {// might extends
 
 	private void loadProductsAndItems() {
 		for (ProductsBase product : ManageData.products) {
-			try {
-				manageTile.getChildren().add(loadProduct(product));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			loadItemOrProduct(product);
 		}
 
 		for (ProductsBase item : ManageData.items) {
-			try {
-				manageTile.getChildren().add(loadProduct(item));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			loadItemOrProduct(item);
 		}
 	}
 
+	private void loadItemOrProduct(ProductsBase item) {
+		try {
+			manageTile.getChildren().add(loadProduct(item));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void addNewItemToManageData(Item item){
+		ManageData.fetchAllItems();
+	}
+	
+	public void addNewProcuctToManageData(Product product){
+		ManageData.fetchAllProducts();
+	}
+
 	private VBox addNewProduct() {
+		
 		VBox newItemVBox = new VBox();
 		newItemVBox.setId("customProductCard");
 		Label title = new Label("Click To Add\nNew Product");
@@ -99,6 +107,7 @@ public class ManageCatalogController implements Initializable {// might extends
 		image.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
+				newProductBuilderController.setManageCatalog(manageCatalogController);
 				ManageScreens.changeScreenTo(Screens.CREATE_NEW_PRODUCT);
 			}
 		});
