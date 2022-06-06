@@ -50,6 +50,9 @@ import surveyAnalysis.AnalyzeAnswersController;
 import surveyAnalysis.SurveyAnswersHomeController;
 import surveyAnalysisView.SurveyAnalysisViewHomeController;
 
+/**
+ * Controlling flow of screens 
+ */
 public class ManageScreens implements Serializable {
 
 	private static final long serialVersionUID = -9183350856829427451L;

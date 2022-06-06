@@ -24,7 +24,7 @@ import util.ManageScreens;
 import util.Screens;
 
 /**
- * @author dolev User Home Screen - Allowing to Exit,Logout and Use Given
+ * User Home Screen - Allowing to Exit,Logout and Use Given
  *         Options
  *
  */

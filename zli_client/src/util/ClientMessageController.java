@@ -20,10 +20,6 @@ import javafx.collections.FXCollections;
  * server sending. for example: handling all the queries that the client
  * sending.
  */
-/**
- * @author dolev
- *
- */
 public class ClientMessageController {
 
 	/**

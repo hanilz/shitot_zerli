@@ -9,7 +9,6 @@ import client.ClientFormController;
 import entities.User;
 
 /**
- * @author dolev
  *Handle common actions for all clients  
  */
 public class ManageClients {

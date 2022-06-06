@@ -13,7 +13,6 @@ import util.ManageScreens;
 import util.Screens;
 
 /**
- * @author dolev
  *[VBox] User card(VBox function as button) and icon that shows on user home screen
  */
 public class HomeVBox extends VBox {

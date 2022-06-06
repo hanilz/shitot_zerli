@@ -26,7 +26,7 @@ import util.Status;
 import util.UserType;
 
 /**
- * @author dolev Login screen allowing to login to user that registered in the
+ * Login screen allowing to login to user that registered in the
  *         system
  */
 public class LoginScreenController implements Initializable {
