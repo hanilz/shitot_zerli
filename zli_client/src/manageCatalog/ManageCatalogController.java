@@ -91,13 +91,9 @@ public class ManageCatalogController implements Initializable {// might extends
 
 	private VBox addNewProduct() {
 		VBox newItemVBox = new VBox();
-		newItemVBox.setPadding(new Insets(20));
-		newItemVBox.setSpacing(20);
+		newItemVBox.setId("customProductCard");
 		Label title = new Label("Click To Add\nNew Product");
-		title.setStyle("-fx-font-size : 16 ; -fx-font-weight : bold");
 		newItemVBox.getChildren().add(title);
-		newItemVBox.setStyle("-fx-background-color :  FAE1DD ; -fx-background-radius : 20");
-		newItemVBox.setAlignment(Pos.TOP_CENTER);
 		ImageView image = new ImageView("/resources/catalog/newProduct.png");
 		image.setFitHeight(150);
 		image.setFitWidth(150);

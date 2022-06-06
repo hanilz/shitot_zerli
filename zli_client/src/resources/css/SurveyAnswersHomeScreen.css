@@ -1,0 +1,95 @@
+#surveyAnswersVBox {
+	-fx-background: #FBF3F1;
+}
+
+#homeVBOX{
+		-fx-background-color: #FEE1DC;
+	-fx-background-radius: 15;
+	-fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 5.0, 0.0, 0.0,
+		5.0);
+}
+
+.label{
+	-fx-font-weight: bold;
+}
+
+#rowLabels{
+	-fx-font-size: 22;
+	-fx-font-weight: bold;
+}
+#refundLabels{
+	-fx-font-size: 18;
+}
+
+.text-field{
+	-fx-font-size: 16;
+	-fx-background-radius: 30;
+}
+
+.button:hover{
+	-fx-background-color: #FFE0F0;
+	-fx-cursor: hand;
+	-fx-font-weight: bold;
+	-fx-font-size: 18;
+}
+
+.button:pressed {
+	-fx-background-color: #FFD0FF;
+	-fx-cursor: hand;
+	-fx-font-weight: bold;
+	-fx-font-size: 18;
+}
+
+.button{
+	-fx-background-color: #F4F4F4;
+	-fx-background-radius: 30.0;
+	-fx-background-insets: 0.0, 1.0, 1.0;
+	-fx-text-fill: black;
+	-fx-effect: dropshadow(three-pass-box, rgba(0.0, 0.0, 0.0, 0.6), 3.0, 0.0, 0.0, 1.0);
+	-fx-font-weight: bold;
+	-fx-padding: 5.0 10.0 5.0 10.0;
+	-fx-font-size: 18.0;
+}
+
+.combo-box{
+	-fx-background-color: #F4F4F4;
+	-fx-background-radius: 10;
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
+	-fx-font-weight: bold;
+	-fx-font-size: 16;
+}
+
+.scroll-pane {
+	-fx-background-insets: 2;
+	-fx-background: #FDFAFA;
+	-fx-border-color:#e0beb8;
+	-fx-border-width:4px;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical {
+	-fx-background-color: #FBF3F1;
+}
+
+.scroll-bar:horizontal .thumb, .scroll-bar:vertical .thumb {
+	-fx-background-color: #FEE1DC;
+	-fx-background-radius: 5em;
+}
+
+
+.separator *.line {
+    -fx-border-style: solid;
+    -fx-border-width: 0 1 1 0; /* its make really one-pixel-border */
+    -fx-border-color: #e0beb8;
+}
+
+#answerHBox{
+	-fx-background-radius: 50;
+	-fx-background-color: FAE0DD;
+	-fx-padding: 15 10 15 10;
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
+}
+
+#surveyName{
+	-fx-font-weight: bold;
+	-fx-font-size: 24;
+}

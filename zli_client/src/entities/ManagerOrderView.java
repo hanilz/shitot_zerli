@@ -40,7 +40,13 @@ public class ManagerOrderView implements Serializable {
 		int minutes = timeTillDelivery%60;
 		int hours = timeTillDelivery/60;
 		// TODO Auto-generated method stub
-		return hours+":"+minutes;
+		if(timeTillDelivery<0)
+			return "Delivery Due";
+		if(hours<24)
+			return hours+":"+minutes;
+		else
+			return (hours/24) +" days, "+(hours % 24)+":"+minutes;
+		
 	}
 	/**
 	 * @return the idOrder

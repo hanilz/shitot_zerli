@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER_LEFT" maxHeight="70.0" maxWidth="1150.0" prefHeight="70.0" prefWidth="1150.0" spacing="5.0" style="-fx-background-color: #FEE1DC; -fx-background-radius: 50;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="surveyAnalysis.AnswerRowController">
+<HBox id="answerHBox" alignment="CENTER_LEFT" maxHeight="70.0" maxWidth="1150.0" prefHeight="70.0" prefWidth="1150.0" spacing="5.0" stylesheets="@../resources/css/SurveyAnswersHomeScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="surveyAnalysis.AnswerRowController">
    <children>
-      <Label fx:id="surveyTitle" prefHeight="32.0" prefWidth="972.0" text="Survey ID: ">
+      <Label id="rowLabels" fx:id="surveyTitle" prefHeight="32.0" prefWidth="956.0" stylesheets="@../resources/css/SurveyAnswersHomeScreen.css" text="Survey ID: ">
          <font>
             <Font size="22.0" />
          </font>

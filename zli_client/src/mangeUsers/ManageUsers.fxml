@@ -51,13 +51,13 @@
             </VBox>
          </children>
       </GridPane>
-      <TableView fx:id="userTable" prefHeight="531.0" prefWidth="1219.0">
+      <TableView fx:id="userTable" prefHeight="531.0" prefWidth="1000.0">
         <columns>
-          <TableColumn fx:id="firstName" prefWidth="200.0" text="First Name" />
-            <TableColumn fx:id="lastName" prefWidth="200.0" text="Last Name" />
-            <TableColumn fx:id="userType" prefWidth="159.0" text="User Type" />
-            <TableColumn fx:id="id" prefWidth="118.0" text="Personal ID" />
-            <TableColumn fx:id="status" prefWidth="119.0" text="Status" />
+          <TableColumn fx:id="firstName" prefWidth="260.0" text="First Name" />
+            <TableColumn fx:id="lastName" prefWidth="260.0" text="Last Name" />
+            <TableColumn fx:id="userType" prefWidth="189.0" text="User Type" />
+            <TableColumn fx:id="id" prefWidth="170.0" text="Personal ID" />
+            <TableColumn fx:id="status" prefWidth="174.0" text="Status" />
         </columns>
       </TableView>
       <HBox prefHeight="27.0" prefWidth="980.0">
@@ -79,11 +79,11 @@
             <Insets />
          </VBox.margin>
          <padding>
-            <Insets left="20.0" top="5.0" />
+            <Insets top="5.0" />
          </padding>
       </HBox>
    </children>
    <padding>
-      <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+      <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
    </padding>
 </VBox>

@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="938.0" spacing="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.PopupReportController">
+<VBox id="reportVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="938.0" spacing="10.0" stylesheets="@../resources/css/PopupReport.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.PopupReportController">
    <children>
       <GridPane prefHeight="84.0" prefWidth="878.0">
         <columnConstraints>
@@ -36,7 +36,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="48.0" prefWidth="107.0" spacing="118.0">
                <children>
-                  <ImageView fitHeight="87.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/icon.png" />
                      </image>
@@ -84,11 +84,11 @@
                                  </font>
                               </Label>
                               <Separator prefHeight="0.0" prefWidth="862.0" />
-                              <HBox fx:id="itemsHBox" alignment="TOP_CENTER" spacing="5.0" VBox.vgrow="ALWAYS">
+                              <HBox id="sellVBoxes" fx:id="itemsHBox" alignment="TOP_CENTER" spacing="5.0" VBox.vgrow="ALWAYS">
                                  <children>
                                     <VBox fx:id="itemTypeVBox" minHeight="120.0" minWidth="125.0">
                                        <children>
-                                          <Label prefHeight="17.0" prefWidth="88.0" text="Item Type" underline="true">
+                                          <Label id="titleLabels" prefHeight="17.0" prefWidth="88.0" text="Item Type" underline="true">
                                              <font>
                                                 <Font name="System Bold" size="16.0" />
                                              </font>
@@ -101,7 +101,7 @@
                                     <Separator orientation="VERTICAL" />
                                     <VBox fx:id="totalItemsVBox" minHeight="120.0" minWidth="60.0">
                                        <children>
-                                          <Label text="Total" underline="true">
+                                          <Label id="titleLabels" text="Total" underline="true">
                                              <font>
                                                 <Font name="System Bold" size="16.0" />
                                              </font>
@@ -124,11 +124,11 @@
                                  </font>
                               </Label>
                               <Separator prefHeight="0.0" prefWidth="862.0" />
-                              <HBox fx:id="productsHBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="100.0" minWidth="-Infinity" prefWidth="266.0" spacing="5.0">
+                              <HBox id="sellVBoxes" fx:id="productsHBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="100.0" minWidth="-Infinity" prefWidth="266.0" spacing="5.0">
                                  <children>
                                     <VBox fx:id="productTypeVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="120.0" minWidth="160.0">
                                        <children>
-                                          <Label text="Product Type" underline="true">
+                                          <Label id="titleLabels" text="Product Type" underline="true">
                                              <font>
                                                 <Font name="System Bold" size="16.0" />
                                              </font>
@@ -141,7 +141,7 @@
                                     <Separator orientation="VERTICAL" />
                                     <VBox fx:id="totalProductsVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="120.0" minWidth="90.0">
                                        <children>
-                                          <Label text="Total" underline="true">
+                                          <Label id="titleLabels" text="Total" underline="true">
                                              <font>
                                                 <Font name="System Bold" size="16.0" />
                                              </font>
@@ -270,6 +270,6 @@
       </ScrollPane>
    </children>
    <padding>
-      <Insets bottom="30.0" left="30.0" right="30.0" top="15.0" />
+      <Insets bottom="30.0" left="24.0" right="24.0" top="15.0" />
    </padding>
 </VBox>

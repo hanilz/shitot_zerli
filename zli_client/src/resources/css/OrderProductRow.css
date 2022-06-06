@@ -4,3 +4,7 @@
 	-fx-padding: 5 10 5 20;
 	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
 }
+
+#orderHBox:hover{
+	-fx-cursor: hand;
+}

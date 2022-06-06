@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="productVBox" alignment="TOP_CENTER" prefHeight="300.0" prefWidth="240.0" spacing="6.0" style="-fx-background-color: FAE1DD; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="manageCatalog.ProductVBoxController">
+<VBox id="catalogCard" fx:id="productVBox" alignment="TOP_CENTER" prefHeight="320.0" prefWidth="240.0" spacing="6.0" stylesheets="@../resources/css/ManageCatalog.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="manageCatalog.ProductVBoxController">
    <children>
-      <Label fx:id="productNameLabel" alignment="CENTER" maxWidth="240.0" minWidth="240.0" prefHeight="50.0" prefWidth="240.0" text="Product Name" textAlignment="CENTER" wrapText="true">
+      <Label id="productName" fx:id="productNameLabel" alignment="CENTER" prefHeight="90.0" prefWidth="240.0" text="Product Name" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -23,7 +23,7 @@
       </VBox>
       <HBox alignment="TOP_CENTER" prefHeight="20.0" prefWidth="150.0" spacing="10.0">
          <children>
-            <Label text="Price:">
+            <Label id="priceLabel" text="Price:">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -35,7 +35,7 @@
             </Label>
          </children>
       </HBox>
-      <Button fx:id="editProductButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#openProductEditor" prefHeight="14.0" prefWidth="130.0" style="-fx-background-radius: 20;" text="Edit Product">
+      <Button fx:id="editProductButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#openProductEditor" style="-fx-background-radius: 20;" text="Edit Product">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
@@ -48,6 +48,6 @@
          </graphic></Button>
    </children>
    <padding>
-      <Insets top="10.0" />
+      <Insets bottom="10.0" top="10.0" />
    </padding>
 </VBox>

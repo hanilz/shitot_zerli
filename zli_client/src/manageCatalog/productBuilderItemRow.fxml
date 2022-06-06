@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="rowHBox" alignment="CENTER_LEFT" maxHeight="100.0" maxWidth="615.0" minHeight="100.0" minWidth="615.0" prefHeight="100.0" prefWidth="615.0" spacing="10.0" style="-fx-background-radius: 40; -fx-background-color: ECE4DB;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="manageCatalog.ProductBuilderItemRowController">
+<HBox id="itemVBox" fx:id="rowHBox" alignment="CENTER_LEFT" maxHeight="100.0" maxWidth="615.0" minHeight="100.0" minWidth="615.0" prefHeight="100.0" prefWidth="615.0" spacing="10.0" style="-fx-background-radius: 40; -fx-background-color: ECE4DB;" stylesheets="@../resources/css/NewProduct.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="manageCatalog.ProductBuilderItemRowController">
    <children>
       <VBox alignment="CENTER" maxWidth="85.0" minWidth="85.0" prefWidth="85.0">
          <children>
@@ -55,7 +55,7 @@
       </VBox>
       <HBox alignment="CENTER" prefHeight="43.0" prefWidth="100.0">
          <children>
-            <Label text="QTY:">
+            <Label text="Qty:">
                <font>
                   <Font size="16.0" />
                </font>

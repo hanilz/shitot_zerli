@@ -60,11 +60,10 @@ public class ManageClients {
 		case STORE_MANGER:
 			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.MANAGE_USERS, Screens.REGISTER_CUSTMER,Screens.VIEW_ORDERS_MANAGER,Screens.VIEW_REPORTS,Screens.USER_PREMISSION}));
 		case STORE_WORKER:
-			break;
+			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.CATALOG,Screens.SURVEY_HOME}));
 		default:
 			return new ArrayList<>();
 		}
-		return null;
 	}
 
 			
