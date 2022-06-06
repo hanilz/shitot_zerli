@@ -7,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 
 public class ServerScreen extends Application {
@@ -15,7 +14,7 @@ public class ServerScreen extends Application {
 		launch(args);
 	}
 
-	/**
+	/**s
 	 *Initialize the screen from the fxml file and presenting the screen after the initial from the fxml file
 	 */
 	@Override
