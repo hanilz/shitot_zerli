@@ -91,7 +91,6 @@ public class ProductEditorController implements Initializable {
 
 	/**
 	 * By pressing the close button, it's closing the product editor popup.
-	 * 
 	 * @param MouseEvent
 	 */
 	@FXML
@@ -102,7 +101,6 @@ public class ProductEditorController implements Initializable {
 	/**
 	 * By pressing the remove product, it removes the product/item from the databse
 	 * by sending to the server a message.
-	 * 
 	 * @param MouseEvent
 	 */
 	@FXML
@@ -132,7 +130,6 @@ public class ProductEditorController implements Initializable {
 	 * This method saving the product/item by the changes that the manager inserted
 	 * (for examples: if he changed the base price, adding discount or changing the
 	 * description of the product).
-	 * 
 	 * @param MouseEvent
 	 */
 	@FXML
@@ -161,7 +158,6 @@ public class ProductEditorController implements Initializable {
 	/**
 	 * This method sending to the server the update of the product/item. if the
 	 * updated succeded, it will return true. else, will return false.
-	 * 
 	 * @return true or false, depeding of the product/item updated after the server
 	 *         sent response to the client.
 	 */

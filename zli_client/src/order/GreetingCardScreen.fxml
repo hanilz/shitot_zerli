@@ -16,19 +16,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox id="greetingVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" stylesheets="@../resources/css/GreetingCardScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.GreetingCardController">
+<VBox id="greetingVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" stylesheets="@../resources/css/GreetingCardScreen.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.GreetingCardController">
    <children>
       <GridPane prefHeight="104.0" prefWidth="1220.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="465.0" minWidth="10.0" prefWidth="87.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1073.0" minWidth="10.0" prefWidth="1046.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="853.0" minWidth="10.0" prefWidth="87.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="465.0" minWidth="10.0" prefWidth="369.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1073.0" minWidth="10.0" prefWidth="457.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="853.0" minWidth="10.0" prefWidth="415.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="86.0" prefWidth="1067.0" GridPane.columnIndex="1">
+            <VBox alignment="TOP_CENTER" prefHeight="84.0" prefWidth="443.0" GridPane.columnIndex="1">
                <children>
                   <Label text="Greeting Card">
                      <font>
@@ -42,7 +42,7 @@
                   </Label>
                </children>
             </VBox>
-            <HBox id="homeHBox" alignment="CENTER" prefHeight="81.0" prefWidth="94.0" GridPane.hgrow="NEVER" GridPane.vgrow="NEVER">
+            <HBox id="homeHBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="81.0" prefWidth="94.0" GridPane.hgrow="NEVER" GridPane.vgrow="NEVER">
                <children>
                   <ImageView fx:id="homeButton" fitHeight="80.0" fitWidth="80.0" onMouseClicked="#changeToHomeScreen" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -54,6 +54,11 @@
                   </ImageView>
                </children>
             </HBox>
+            <ImageView fitHeight="78.0" fitWidth="433.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+               <image>
+                  <Image url="@../resources/catalog/greetingCardCrum.png" />
+               </image>
+            </ImageView>
          </children>
       </GridPane>
       <VBox alignment="TOP_CENTER" prefHeight="592.0" prefWidth="1220.0">

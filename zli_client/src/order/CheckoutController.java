@@ -141,7 +141,8 @@ public class CheckoutController implements Initializable {
 		totalPriceBeforeCredit += calculateDiscount();
 		totalPrice = totalPriceBeforeCredit;
 		totalLabel.setText(InputChecker.price(totalPriceBeforeCredit));
-		totalDiscountsLabel.setText(InputChecker.price(Cart.getInstance().getTotalDiscountPrice() - Cart.getInstance().getTotalPrice()));
+		totalDiscountsLabel.setText(
+				InputChecker.price(Cart.getInstance().getTotalDiscountPrice() - Cart.getInstance().getTotalPrice()));
 
 		greetingCardButton.setDisable(!SingletonOrder.getInstance().getIsGreetingCard());
 	}
@@ -421,7 +422,7 @@ public class CheckoutController implements Initializable {
 
 		storeCreditUsedLabel.setText(InputChecker.price(usedStoreCredit));
 		totalLabel.setText(InputChecker.price(totalPrice));
-		
+
 		storeCreditLeftHBox.setVisible(false);
 	}
 
@@ -432,7 +433,7 @@ public class CheckoutController implements Initializable {
 
 		storeCreditUsedLabel.setText(InputChecker.price(-usedStoreCredit));
 		totalLabel.setText(InputChecker.price(totalPrice));
-		
+
 		storeCreditLeftHBox.setVisible(true);
 		storeCreditLeftLabel.setText(InputChecker.price(User.getUserInstance().getStoreCredit() - usedStoreCredit));
 	}
