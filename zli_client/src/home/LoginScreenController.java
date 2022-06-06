@@ -26,31 +26,49 @@ import util.Status;
 import util.UserType;
 
 /**
- * @author dolev Login Screen Allowing to Login To User That Registered In The
- *         System
+ * @author dolev Login screen allowing to login to user that registered in the
+ *         system
  */
 public class LoginScreenController implements Initializable {
+	/**
+	 * Data structure used to transfer information between client and server
+	 */
 	private HashMap<String, Object> response;
+	/**
+	 * GUI Setting the error message
+	 */
 	@FXML
 	private Label errorLabel;
 
+	/**
+	 * GUI Login button in login screen 
+	 */
 	@FXML
 	private Button loginButton;
 
+	/**
+	 * GUI Password text in login screen 
+	 */
 	@FXML
 	private PasswordField passwordLabel;
 
+	/**
+	 * GUI User name text in login screen
+	 */
 	@FXML
 	private TextField usernameLabel;
 
+	/**
+	 * GUI back button in login screen 
+	 */
 	@FXML
 	private Button backButton;
 
 	private static boolean isCart, isCatalog;
 
 	/**
-	 * Labels React to Enter Pressed If User Already Logged In Disable Login Button
-	 * in GUI
+	 * GUI Labels react to enter pressed if user already logged in disable login button
+	 * 
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -64,7 +82,7 @@ public class LoginScreenController implements Initializable {
 	}
 
 	/**
-	 * Read Input from GUI, If Input isn't Empty Check Validation with DB then Login
+	 * Read input from GUI, If input isn't empty check validation with DB then login
 	 */
 	@FXML
 	void loginUserIntoSystem(Event event) {
@@ -79,8 +97,8 @@ public class LoginScreenController implements Initializable {
 	/**
 	 * @param username
 	 * @param password
-	 * @return if GUI Fields are not empty or A User is Already Logged in Check GUI
-	 *         Login Validation
+	 * @return if GUI Fields are not empty or a user is already logged in check GUI
+	 *         login validation
 	 */
 	private boolean isUserInputValid(String username, String password) {
 		boolean isInputValid = false;
@@ -97,8 +115,8 @@ public class LoginScreenController implements Initializable {
 	/**
 	 * @param username
 	 * @param password
-	 * @return Status of Input Correlated to DB and User Details, if Can Send Send
-	 *         Username and Password From GUI to DB through Server
+	 * @return Status of input correlated to DB and user details, If can send
+	 *         username and password from GUI to DB through Server
 	 */
 	@SuppressWarnings("unchecked")
 	private HashMap<String, Object> setRespondToServer(String username, String password) {
@@ -147,8 +165,8 @@ public class LoginScreenController implements Initializable {
 	}
 
 	/**
-	 * @param username Username Given from GUI Set All User Data From DB and Save as
-	 *                 Current User
+	 * @param username Username given from GUI set all user data from DB and save as
+	 *                 current user
 	 */
 	private void loginUser(String username) {
 		int idUser = (Integer) response.get("idUser");
@@ -159,8 +177,8 @@ public class LoginScreenController implements Initializable {
 	}
 
 	/**
-	 * Login In Cart Screen Only Allows Customers Users To Login And Continue To
-	 * Make A Purchase
+	 * Login in cart screen only allows customers users to login and continue to
+	 * make a purchase
 	 */
 	private void cartFlow() {
 		if (User.getUserInstance().getType() != UserType.CUSTOMER
@@ -174,8 +192,8 @@ public class LoginScreenController implements Initializable {
 	}
 
 	/**
-	 * Login In Catalog Screen If Customer Stay in Catalog Else Change Send to Home
-	 * Screen
+	 * Login in catalog screen if customer stay in catalog else change send to home
+	 * screen
 	 */
 	private void catalogFlow() {
 		if (User.getUserInstance().getType() == UserType.CUSTOMER) {
@@ -187,14 +205,14 @@ public class LoginScreenController implements Initializable {
 	}
 
 	/**
-	 * @param isCartFlow set Login Flow To Be From Cart
+	 * @param isCartFlow Set login flow to be from cart
 	 */
 	public static void loginFromCart() {
 		setLoginFlow(true,false);
 	}
 
 	/**
-	 * @param isCatalogFlow Set Login Flow To Be From Catalog
+	 * @param isCatalogFlow Set login flow to be from catalog
 	 */
 	public static void loginFromCatalog() {
 		setLoginFlow(false,true);
@@ -202,7 +220,7 @@ public class LoginScreenController implements Initializable {
 	/**
 	 * @param isFromCart Set Flow Of Login From Cart
 	 * @param isFromCatalog Set Flow Of Login From Catalog
-	 * Open Login Popup And set Behavior
+	 * Open login popup and set behavior
 	 */
 	private static void setLoginFlow(boolean isFromCart,boolean isFromCatalog)
 	{
@@ -212,7 +230,7 @@ public class LoginScreenController implements Initializable {
 	}
 
 	/**
-	 * Back Button Close Login Popup
+	 * Back button close login popup
 	 */
 	@FXML
 	private void back() {
@@ -220,14 +238,14 @@ public class LoginScreenController implements Initializable {
 	}
 
 	/**
-	 * Closing Login Popup
+	 * Closing login popup
 	 */
 	private void CloseWindow() {
 		ManageScreens.getPopupStage().close();
 	}
 
 	/**
-	 * Reset Login FLow To Be Default(Login From Guest Home)
+	 * Reset login flow to be default(Login From Guest Home)
 	 */
 	public static void resetLogin() {
 		isCart = false;
@@ -235,7 +253,7 @@ public class LoginScreenController implements Initializable {
 	}
 
 	/**
-	 * @param err=Error Message Present Error Message on GUI
+	 * @param err=Error message present error message on GUI
 	 */
 	private void setError(String err) {
 		errorLabel.setText(err);
@@ -243,7 +261,7 @@ public class LoginScreenController implements Initializable {
 	}
 
 	/**
-	 * @param textField setting TextField to Response to Enter Pressed
+	 * @param textField setting TextField to response to enter pressed
 	 */
 	private void setTextBehaviour(TextField textField) {
 		textField.setOnKeyReleased(event -> {

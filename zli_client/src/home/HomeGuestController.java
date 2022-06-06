@@ -1,18 +1,7 @@
 package home;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import entities.User;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.Cursor;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import util.ManageClients;
 import util.ManageScreens;
 import util.Screens;
@@ -21,43 +10,10 @@ import util.Screens;
  * @author dolev Guest Home Screen - Allowing to Exit And To Start A Purchase
  *
  */
-public class HomeGuestController implements Initializable {
-
-	@FXML
-	private ImageView catalogImage;
-
-	@FXML
-	private ImageView editProfileImage;
-
-	@FXML
-	private GridPane gridOptions;
-
-	@FXML
-	private HBox hbox;
-
-
-	@FXML
-	private ImageView ordersImage;
-
-	@FXML
-	private GridPane sideHomeGrid;
-
-	@FXML
-	private Label welcomeLbl;
-
-	@FXML
-	private Label TypeLabel;
+public class HomeGuestController{
 
 	/**
-	 * Setting Screen
-	 */
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		TypeLabel.setText(User.getUserInstance().getUsername());
-	}
-
-	/**
-	 * Reset Flow(Cart,Catalog,Home) Of login,Loading Login Popup
+	 * Reset flow(cart,catalog,home) of login,loading login popup to login in from home
 	 */
 	@FXML
 	void changeToLoginScreen(MouseEvent event) {
@@ -66,7 +22,7 @@ public class HomeGuestController implements Initializable {
 	}
 
 	/**
-	 * Change Screen to Catalog Screen
+	 * Change screen to catalog screen
 	 */
 	@FXML
 	void changeToCatalogScreen(MouseEvent event) {
@@ -74,13 +30,11 @@ public class HomeGuestController implements Initializable {
 	}
 
 	/**
-	 * Clicking on Exit Disconnect from Server and Close The Screen
+	 * Clicking on exit disconnect from eerver and close the screen
 	 */
 	@FXML
 	void exitApplication(MouseEvent event) {
-		// release the client from the ocsf server + disconnect from the db
 		ManageClients.exitClient();
-		// exit window
 		System.exit(0);
 	}
 

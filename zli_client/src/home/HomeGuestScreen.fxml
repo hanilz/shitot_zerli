@@ -18,7 +18,7 @@
                   <Image url="@../resources/icon.png" />
                </image>
             </ImageView>
-            <Label fx:id="welcomeLbl" alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="289.0" text="Welcome To Zer-Li">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="289.0" text="Welcome To Zer-Li">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
@@ -44,7 +44,7 @@
             <VBox id="buttonCard" alignment="CENTER" onMousePressed="#exitApplication" spacing="10.0">
                <children>
                   <Label id="cardLabel" text="Exit" textFill="#ab0000" />
-                  <ImageView fx:id="ordersImage" fitHeight="147.0" fitWidth="146.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="147.0" fitWidth="146.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/home/exit.png" />
                      </image>
@@ -54,7 +54,7 @@
             <VBox id="buttonCard" alignment="CENTER" onMousePressed="#changeToLoginScreen" spacing="10.0">
                <children>
                   <Label id="cardLabel" text="Login" />
-                  <ImageView fx:id="editProfileImage" fitHeight="148.0" fitWidth="146.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="148.0" fitWidth="146.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/home/login.png" />
                      </image>
@@ -64,7 +64,7 @@
             <VBox id="buttonCard" alignment="CENTER" onMousePressed="#changeToCatalogScreen" spacing="10.0">
                <children>
                   <Label id="cardLabel" text="Catalog" />
-                  <ImageView fx:id="catalogImage" fitHeight="150.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="150.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/home/store.png" />
                      </image>

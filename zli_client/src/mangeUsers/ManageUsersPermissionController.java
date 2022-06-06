@@ -30,43 +30,90 @@ import util.ManageScreens;
 import util.Screens;
 import util.UserType;
 
+/**
+ * @author dolev Adding/Removing a chosen employee screens cards(VBox as
+ *         Buttons) from their home screen
+ */
 public class ManageUsersPermissionController implements Initializable {
 
+	/**
+	 * GUI contains all screen the specific user is given
+	 */
 	@FXML
 	private TilePane userHomeScreens;
 
+	/**
+	 * GUI showing a list of employees(id+name) to choose from
+	 */
 	@FXML
 	private ComboBox<String> usersOption;
+	/**
+	 * GUI user type of chosen employee
+	 */
 	@FXML
 	private Label userTypeLable;
 
+	/**
+	 * GUI name of chosen employee
+	 */
 	@FXML
 	private Label usernameLable;
+	/**
+	 * GUI add screens button(HBox as a button)
+	 */
 	@FXML
 	private HBox addScreenButton;
 
+	/**
+	 * GUI setting default screens button(HBox as a button)
+	 */
 	@FXML
 	private HBox defaultScreenButton;
 
+	/**
+	 * GUI saving shown screens button(HBox as a button)
+	 */
 	@FXML
 	private HBox saveScreenButton;
 
-	private static ObservableList<ManageUsers> users = FXCollections.observableArrayList();
+	/**
+	 * GUI error message shown to the user that managing the screens
+	 */
 	@FXML
 	private Label errorLable;
+	/**
+	 * List of employees
+	 */
+	private static ObservableList<ManageUsers> users = FXCollections.observableArrayList();
+
+	/**
+	 * User id of the chosen employee
+	 */
 	private int userId;
+	/**
+	 * User type of the chosen employee
+	 */
 	private UserType userType;
+	/**
+	 * User home screens of the chosen employee
+	 */
 	private static ArrayList<Screens> userScreens, initUserScreens = new ArrayList<>();
+	/**
+	 * Static access to this screen
+	 */
 	private static ManageUsersPermissionController instace;
+	/**
+	 * The current user the the manager choose
+	 */
 	private ManageUsers curUser;
+	/**
+	 * Timing the error message
+	 */
 	private PauseTransition visiblePause;
 
-	@FXML
-	void changeToHome(Event event) {
-		AddScreensController.removeUser();
-		ManageScreens.home();
-	}
-
+	/**
+	 * Setting up the GUI for a specific user screens
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		instace = this;
@@ -84,6 +131,10 @@ public class ManageUsersPermissionController implements Initializable {
 		showMessage("User can have Up to 6 Screens", "blue");
 	}
 
+	/**
+	 * Clicking on Save User Screens, Saving the showing screens in DB for the
+	 * specific user
+	 */
 	public void clickSaveScreen() {
 		if (userScreens.isEmpty()) {
 			showMessage("No Screens Is NOT Allowed", "red");
@@ -96,11 +147,27 @@ public class ManageUsersPermissionController implements Initializable {
 
 	}
 
+	/**
+	 * @param event Change screen to home screen
+	 */
+	@FXML
+	void changeToHome(Event event) {
+		AddScreensController.removeUser();
+		ManageScreens.home();
+	}
+
+	/**
+	 * Adding the screen that were added in Add screen
+	 */
 	private void setInitUserScreen() {
 		initUserScreens.clear();
 		initUserScreens.addAll(userScreens);
 	}
 
+	/**
+	 * @return If screens were saved properly Sending the screens to the server and
+	 *         saving them in DB
+	 */
 	private boolean saveScreensInDB() {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.SAVE_SCREENS);// might change
@@ -109,6 +176,10 @@ public class ManageUsersPermissionController implements Initializable {
 		return (boolean) ClientFormController.client.accept(message);
 	}
 
+	/**
+	 * @return List of employees Getting the list of employees related to the user
+	 *         in the manage screens
+	 */
 	@SuppressWarnings("unchecked")
 	private ObservableList<ManageUsers> getUsersFromDB() {
 		HashMap<String, Object> message = new HashMap<>();
@@ -117,6 +188,9 @@ public class ManageUsersPermissionController implements Initializable {
 		return (ObservableList<ManageUsers>) response;
 	}
 
+	/**
+	 * Get selected User details
+	 */
 	@FXML
 	void getUser(ActionEvent event) {
 		disableSave();
@@ -132,18 +206,24 @@ public class ManageUsersPermissionController implements Initializable {
 		getUserHomeScreen();
 	}
 
+	/**
+	 * Setting chosen employee details
+	 */
 	private void setTextForUser() {
 		userType = UserType.valueOf(curUser.getUserType());
 		userTypeLable.setText(curUser.getUserType().toString());
 		usernameLable.setText(curUser.getFirstName() + " " + curUser.getLastName());
 	}
 
+	/**
+	 * Show the screens of the employee
+	 */
 	void getUserHomeScreen() {// get home icons
 		if (usersOption.getValue() == null && curUser == null) {
 			showMessage("ERROR! PLEASE SELECT A USER FIRST!", "red");
 		} else {
 			if (AddScreensController.getUser() != null)
-				userScreens = AddScreensController.setScreens();//get screens
+				userScreens = AddScreensController.setScreens();// get screens
 			else {
 				userScreens = getScreensFromDB();
 				setInitUserScreen();
@@ -152,6 +232,10 @@ public class ManageUsersPermissionController implements Initializable {
 		}
 	}
 
+	/** 
+	 * setting the message by the message that been sent and coloring
+	 * it by the color that been sent
+	 */
 	private void showMessage(String message, String color) {
 		errorLable.setText(message);
 		errorLable.setTextFill(Paint.valueOf(color));
@@ -163,6 +247,9 @@ public class ManageUsersPermissionController implements Initializable {
 		visiblePause.play();
 	}
 
+	/**
+	 * @return Screen of chosen employee from DB
+	 */
 	@SuppressWarnings("unchecked")
 	private ArrayList<Screens> getScreensFromDB() {
 		HashMap<String, Object> message = new HashMap<>();
@@ -172,11 +259,18 @@ public class ManageUsersPermissionController implements Initializable {
 		return (ArrayList<Screens>) ClientFormController.client.accept(message);
 	}
 
+	/**
+	 * Setting the default screen of the specific employee
+	 */
 	public void setDefaultScreens() {
 		userScreens = ManageClients.getUserScreens(userType);
 		setScreen(userScreens);
 	}
 
+	/**
+	 * @param userScreens2
+	 * Setting the employee screens to be the given one
+	 */
 	private void setScreen(ArrayList<Screens> userScreens2) {
 		userHomeScreens.getChildren().clear();
 		if (userScreens2 != null)
@@ -196,6 +290,9 @@ public class ManageUsersPermissionController implements Initializable {
 		enableButtons();
 	}
 
+	/**
+	 * Only if there is difference in the employee screens allow to save 
+	 */
 	public void enableSave() {
 		if (!userScreens.equals(initUserScreens) && !userScreens.isEmpty()) {
 			saveScreenButton.setDisable(false);
@@ -208,6 +305,9 @@ public class ManageUsersPermissionController implements Initializable {
 		}
 	}
 
+	/**
+	 * Only if employee screen are not the same as default allow to set to be default screens(defined in ManageClients)
+	 */
 	public void enableDefault() {
 		if (userScreens.containsAll(ManageClients.getUserScreens(UserType.valueOf(curUser.getUserType())))
 				&& (ManageClients.getUserScreens(UserType.valueOf(curUser.getUserType())).containsAll(userScreens))) {
@@ -219,12 +319,18 @@ public class ManageUsersPermissionController implements Initializable {
 		}
 	}
 
+	/**
+	 * Allow/Forbid buttons to be clicked 
+	 */
 	private void enableButtons() {
 		enableSave();
 		enableDefault();
 		enableAddButton();
 	}
 
+	/**
+	 * Only if employee has more than 5 screens forbid adding screens
+	 */
 	private void enableAddButton() {
 		if (userScreens.size() == 6) {
 			addScreenButton.setStyle("-fx-background-radius: 20; -fx-background-color: E4C2C2;");
@@ -236,41 +342,70 @@ public class ManageUsersPermissionController implements Initializable {
 		}
 	}
 
+	/**
+	 * Disable save button 
+	 */
 	public void disableSave() {
 		saveScreenButton.setDisable(true);
 		saveScreenButton.setStyle("-fx-background-radius: 20; -fx-background-color: E4C2C2;");
 	}
 
+	/**
+	 * @param screen
+	 * Remove the given screen from the employee screens
+	 */
 	public static void removeScreen(Screens screen) {
 		userScreens.remove(screen);
 		instace.setScreen(userScreens);
 	}
 
+	/**
+	 * @param screen
+	 * Add the given screen to the employee screens
+	 */
 	public static void addScreen(Screens screen) {
 		userScreens.add(screen);
 		instace.setScreen(userScreens);
 	}
 
+	/**
+	 * @return controller of the screen
+	 */
 	public static ManageUsersPermissionController connect() {
 		return instace;
 	}
 
+	/**
+	 * Clicking on add screens change to Adding screens screen
+	 */
 	public void addScreens() {
 		ManageScreens.changeScreenTo(Screens.ADD_SCREENS);
 	}
 
+	/**
+	 * @return Employee user type
+	 */
 	public UserType getUserType() {
 		return userType;
 	}
 
+	/**
+	 * @return Employee screens
+	 */
 	public static ArrayList<Screens> getUserScreens() {
 		return userScreens;
 	}
 
+	/**
+	 * @return employee user id
+	 */
 	public int UserId() {
 		return userId;
 	}
 
+	/**
+	 * @return Employee
+	 */
 	public ManageUsers User() {
 		return curUser;
 	}

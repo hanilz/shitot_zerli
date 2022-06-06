@@ -13,14 +13,9 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Cursor;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import notifications.NotificationController;
 import util.Commands;
@@ -34,22 +29,36 @@ import util.Screens;
  *
  */
 public class HomeUserTypesController implements Initializable {
+	/**
+	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	 */
 	private ArrayList<Notification> newNotifications = new ArrayList<>();
+	/**
+	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	 */
 	private ArrayList<Notification> readNotifications = new ArrayList<>();
+	/**
+	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	 */
 	private Timeline notificationThread;
-	@FXML
-	private ImageView notificationIcon;
 
+	/**
+	 * GUI-Show users near the bell how many notifications they have
+	 */
 	@FXML
 	private Label notificationLabel;
 
 
+	/**
+	 * GUI-contains user home buttons
+	 */
 	@FXML
 	private TilePane gridOptions;
 
-	@FXML
-	private HBox hbox;
 
+	/**
+	 * GUI-adding user name to home screen 
+	 */
 	@FXML
 	private Label userNameLabel;
 
@@ -78,25 +87,23 @@ public class HomeUserTypesController implements Initializable {
 	}
 
 	/**
-	 * Clicking on Exit Disconnect from Server and Close The Screen
+	 * Clicking on Exit, Disconnect Client from Server and Close The Screen
 	 */
 	public void exitHomeScreen(MouseEvent event) {
-		// release the client from the OCSF server + disconnect from the DB
 		ManageClients.exitClient();
-		// exit window
 		System.exit(0);
 	}
 
 	/**
-	 * Clicking On Logout Empty The User Instance and return to Guest Home
+	 * Clicking On Logout, Logout The User and return to Guest Home
 	 */
 	public void logoutFromUser(MouseEvent event) {
 		User.getUserInstance().logout();
-		ManageScreens.changeScreenTo(Screens.GUEST_HOME);
+		ManageScreens.home();
 	}
 
 	/**
-	 * Setting User Notifications
+	 * Setting User Notifications from DB
 	 */
 	@SuppressWarnings("unchecked")
 	private void getNotifications() {
@@ -113,7 +120,7 @@ public class HomeUserTypesController implements Initializable {
 	}
 
 	/**
-	 * Setting Buttons for User Screen From DB
+	 * Setting Buttons from DB for User Home Screen
 	 */
 	private void setScreen(ArrayList<Screens> userScreens) {
 		if (userScreens != null) {
@@ -127,15 +134,14 @@ public class HomeUserTypesController implements Initializable {
 	}
 
 	/**
-	 * Clicking on Bell Shows Notifications
+	 * Clicking on Bell Shows Notifications Popup
 	 */
 	@FXML
 	void showNotifications(MouseEvent event) {
 		try {
 			NotificationController.newNotifications = newNotifications;
 			NotificationController.readNotifications = readNotifications;
-			ManageScreens.openPopupFXML(NotificationController.class.getResource("NotificationMainScreen.fxml"),
-					"Notification Center");
+			ManageScreens.changeScreenTo(Screens.NOTIFICATIONS);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
