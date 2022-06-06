@@ -18,13 +18,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox id="checkoutVBox" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" stylesheets="@../resources/css/CheckoutScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.CheckoutController">
+<VBox id="checkoutVBox" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" stylesheets="@../resources/css/CheckoutScreen.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.CheckoutController">
    <children>
       <GridPane prefHeight="76.0" prefWidth="1220.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="402.0" minWidth="10.0" prefWidth="160.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="858.0" minWidth="10.0" prefWidth="650.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="309.0" minWidth="10.0" prefWidth="160.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="402.0" minWidth="10.0" prefWidth="281.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="858.0" minWidth="10.0" prefWidth="576.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="403.0" minWidth="10.0" prefWidth="380.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -59,6 +59,11 @@
                   </Label>
                </children>
             </VBox>
+            <ImageView fx:id="currentProgressImage" fitHeight="150.0" fitWidth="394.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+               <image>
+                  <Image url="@../resources/catalog/deliveryOptionsDone.png" />
+               </image>
+            </ImageView>
          </children>
       </GridPane>
       <HBox alignment="CENTER" prefHeight="531.0" prefWidth="1069.0" spacing="10.0">
