@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox id="checkoutVBox" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" stylesheets="@../resources/css/CheckoutScreen.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.CheckoutController">
+<VBox id="checkoutVBox" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" stylesheets="@../resources/css/CheckoutScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.CheckoutController">
    <children>
       <GridPane prefHeight="76.0" prefWidth="1220.0">
         <columnConstraints>
@@ -235,7 +235,7 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label fx:id="totalDiscountsLabel" text="12 $" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <Label id="totalSavings" fx:id="totalDiscountsLabel" text="12 $" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
