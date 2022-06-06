@@ -24,3 +24,8 @@
 	 -fx-text-box-border: #000000; 
 	 -fx-focus-color: #000000
 }
+
+#welcome {
+	-fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.2), 5.0, 0.0, 0.0,
+		5.0);
+}

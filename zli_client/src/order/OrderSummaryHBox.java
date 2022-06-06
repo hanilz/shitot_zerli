@@ -51,6 +51,7 @@ public class OrderSummaryHBox extends HBox {
 
 		priceLabel.setFont(new Font(20));
 		priceLabel.setText(InputChecker.price(product.getPrice() * quantity));
+		priceLabel.setStyle("-fx-font-weight: bold;");
 		priceVBox.getChildren().add(priceLabel);
 		priceVBox.setAlignment(Pos.CENTER);
 		
@@ -59,7 +60,13 @@ public class OrderSummaryHBox extends HBox {
 		this.getChildren().add(new Label("X"));
 		this.getChildren().add(priceVBox);
 		if(product.isDiscount()) {
+			priceLabel.setStyle("-fx-strikethrough: true;\r\n"
+					+ "	-fx-font-size: 18px;\r\n"
+					+ "	-fx-font-weight: bold");
 			discountLabel.setText(InputChecker.price(product.calculateDiscount() * quantity));
+			discountLabel.setStyle("-fx-text-fill: red;\r\n"
+					+ "	-fx-font-weight: bold;\r\n"
+					+ "	-fx-font-size: 20px;");
 			priceVBox.getChildren().add(discountLabel);		
 		}
 	}
