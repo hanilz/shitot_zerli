@@ -12,10 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -26,7 +23,6 @@ import util.ManageScreens;
 import util.Screens;
 
 /**
- * @author Eitan
  *	this class is used as a controller for the CustomerComplaintScreen.fxml
  */
 public class CustomerComplaintController implements Initializable {

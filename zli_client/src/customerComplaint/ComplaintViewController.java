@@ -12,10 +12,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -26,7 +23,6 @@ import util.ManageScreens;
 import util.Screens;
 
 /**
- * @author Eitan
  *controller class for customerComplaintView
  */
 public class ComplaintViewController implements Initializable {

@@ -11,8 +11,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -26,6 +24,11 @@ import util.ManageData;
 import util.ManageScreens;
 import util.Screens;
 
+/**
+ * This class controllers all the functionality of the manageCatalog. Using this
+ * controller, it gives a employee option to edit each product/items in the
+ * catalog.
+ */
 public class ManageCatalogController implements Initializable {// might extends
 	private ManageCatalogController manageCatalogController;
 	@FXML
@@ -63,6 +66,10 @@ public class ManageCatalogController implements Initializable {// might extends
 
 	private HashMap<ProductsBase, ProductVBoxController> productMap = new HashMap<>();
 
+	/**
+	 * This method initialize the products/items into the screen so the employee can
+	 * edit them.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		manageCatalogController = this;
@@ -70,6 +77,9 @@ public class ManageCatalogController implements Initializable {// might extends
 		loadProductsAndItems();
 	}
 
+	/**
+	 * This method load the product/items to the manage catalog screen.
+	 */
 	private void loadProductsAndItems() {
 		for (ProductsBase product : ManageData.products) {
 			try {
@@ -88,6 +98,11 @@ public class ManageCatalogController implements Initializable {// might extends
 		}
 	}
 
+	/**
+	 * This method creates a new vbox for adding items/products to the catalog. If
+	 * the employee clicks on the add new product button, It will open a new screen.
+	 * @return VBox of new product
+	 */
 	private VBox addNewProduct() {
 		VBox newItemVBox = new VBox();
 		newItemVBox.setId("customProductCard");
@@ -102,10 +117,16 @@ public class ManageCatalogController implements Initializable {// might extends
 				ManageScreens.changeScreenTo(Screens.CREATE_NEW_PRODUCT);
 			}
 		});
+		image.setStyle("-fx-cursor: hand;");
 		newItemVBox.getChildren().add(image);
 		return newItemVBox;
 	}
 
+	/**
+	 * This method changing the screen to the home screen if the employee clicked on
+	 * the button.
+	 * @param event
+	 */
 	@FXML
 	void changeToHomeScreen(MouseEvent event) {
 		ManageScreens.home();
@@ -116,18 +137,30 @@ public class ManageCatalogController implements Initializable {// might extends
 
 	}
 
+	/**
+	 * This method updates the current manage catalog screen if specific
+	 * product/items removed from the screen after editing the product.
+	 * @param productVBoxController
+	 */
 	@SuppressWarnings("unlikely-arg-type")
 	public void removeProduct(ProductVBoxController productVBoxController) {
 		int i = manageTile.getChildren().indexOf(productVBoxController.getProductVBox());
 		System.out.println(i);
 		manageTile.getChildren().remove(i);
 		productMap.remove(productVBoxController);
-		if(productVBoxController.getProduct() instanceof Product)
+		if (productVBoxController.getProduct() instanceof Product)
 			ManageData.products.remove(productVBoxController.getProduct());
 		else
 			ManageData.items.remove(productVBoxController.getProduct());
 	}
 
+	/**
+	 * This method initialize the Vbox for the products/items that we have in the
+	 * catalog.
+	 * @param pb
+	 * @return VBox of product or item.
+	 * @throws IOException
+	 */
 	private VBox loadProduct(ProductsBase pb) throws IOException {
 		FXMLLoader loader = new FXMLLoader(ProductVBoxController.class.getResource("MangaeCatalogVBox.fxml"));
 		VBox productVBox = (VBox) loader.load();
