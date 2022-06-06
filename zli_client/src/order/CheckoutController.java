@@ -419,6 +419,7 @@ public class CheckoutController implements Initializable {
 	}
 
 	// for getting all account payment methods for the account payment ComboBox
+	@SuppressWarnings("unchecked")
 	private void fetchAccountPayments() {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.FETCH_ACCOUNT_PAYMENTS);

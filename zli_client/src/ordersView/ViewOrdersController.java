@@ -67,6 +67,7 @@ public class ViewOrdersController implements Initializable{
     	ManageScreens.home();
     }
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		voc=this;
@@ -101,6 +102,7 @@ public class ViewOrdersController implements Initializable{
 		message.put("command", Commands.FETCH_ORDER_CONTENT);
 		message.put("orderID", order.getOrderID());
 		Object response = ClientFormController.client.accept(message);
+		@SuppressWarnings("unchecked")
 		HashMap<ProductsBase,Integer> orderContent = (HashMap<ProductsBase,Integer>)response;
 		orderContentsVbox.getChildren().clear();
 		for(ProductsBase pb : orderContent.keySet()) {

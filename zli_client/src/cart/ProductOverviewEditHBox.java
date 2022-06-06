@@ -10,8 +10,6 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 
 public class ProductOverviewEditHBox extends CustomProductHBox {
 	private int quantity = 1;

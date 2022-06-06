@@ -304,7 +304,6 @@ public class DeliveryController implements Initializable {
 		deliveryFeeLabel.setText(InputChecker.price(deliveryFee));
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initTimeComboBoxes();
@@ -391,6 +390,7 @@ public class DeliveryController implements Initializable {
 	}
 
 	// for getting all branches for the branches ComboBoxes
+	@SuppressWarnings("unchecked")
 	private void fetchBranches() {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.FETCH_BRANCHES);

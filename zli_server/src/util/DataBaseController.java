@@ -80,6 +80,7 @@ public class DataBaseController {
 	 * configures the driver for the JDBC API
 	 * @return String
 	 */
+	@SuppressWarnings("deprecation")
 	private static String configDriver() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();

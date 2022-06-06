@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import entities.ManageUsers;
@@ -32,7 +31,7 @@ public class AddScreensController implements Initializable {
 	@FXML
 	private TilePane userHomeScreens;
 
-	/**
+	/**s
 	 * GUI User type of the specific user
 	 */
 	@FXML
