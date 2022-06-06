@@ -20,12 +20,14 @@ public class ProductOverviewNoEditHBox extends CustomProductHBox {
 	}
 
 	public void initHBox() {
+		this.setId("noEditHBox");
 		super.initHBox();
 		super.initPriceHBox();
 		
 		priceHBox.getChildren().remove(priceVBox);
 		nameLabel.setPrefWidth(190);
 
+		nameLabel.setId("NameLabel");
 		initQuantityVBox();
 		priceHBox.setSpacing(5);
 		priceHBox.getChildren().add(quantityVBox);

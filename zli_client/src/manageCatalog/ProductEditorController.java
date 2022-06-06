@@ -76,7 +76,7 @@ public class ProductEditorController implements Initializable {
 		productTypeLabel.setText(product.getType());
 		flowerTypeLabel.setText("");
 		basePriceField.setText(product.getPrice() + "");
-		priceDiscountLabel.setText(InputChecker.price(0));
+		priceDiscountLabel.setText(InputChecker.price(product.calculateDiscount()));
 		discountField.setText(product.getDiscount() + "");
 		if (product instanceof Product) {
 			flowerTypeLabel.setText(((Product) product).getFlowerType());

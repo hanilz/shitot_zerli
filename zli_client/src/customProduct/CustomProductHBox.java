@@ -55,6 +55,7 @@ public class CustomProductHBox extends HBox implements ICustomProductHBox {
 		amountLabel.setId("ammountLabel");
 		priceVBox.getChildren().add(amountLabel);
 		priceVBox.setSpacing(7);
+		priceVBox.setMinWidth(65);
 		priceHBox.setAlignment(Pos.CENTER_RIGHT);
 		priceHBox.getChildren().add(priceVBox);
 		this.getChildren().add(priceHBox);
@@ -65,7 +66,7 @@ public class CustomProductHBox extends HBox implements ICustomProductHBox {
 		nameLabel = new Label(product.getName());
 		nameLabel.setId("nameLabel");
 		nameLabel.setMinWidth(Control.USE_PREF_SIZE);
-		nameLabel.setPrefWidth(240);
+		nameLabel.setPrefWidth(230);
 		nameLabel.setWrapText(true);
 		
 		idNameVBox.getChildren().add(idLabel);

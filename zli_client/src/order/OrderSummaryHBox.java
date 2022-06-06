@@ -7,6 +7,7 @@ import entities.Product;
 import entities.ProductsBase;
 import inputs.InputChecker;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -42,25 +43,31 @@ public class OrderSummaryHBox extends HBox {
 
 	public void initHBox() {
 		this.setId("productSummaryHBox");
-		this.setAlignment(Pos.CENTER);
+		this.setAlignment(Pos.CENTER_LEFT);
+		this.setPadding(new Insets(0,0,0,60));
 		this.setSpacing(15);
 
 		initImageProduct();
 
 		quantityLabel.setText("" + quantity);
-
+		quantityLabel.setMinWidth(40);
+		quantityLabel.setAlignment(Pos.CENTER);
 		priceLabel.setFont(new Font(20));
 		priceLabel.setText(InputChecker.price(product.getPrice() * quantity));
 		priceVBox.getChildren().add(priceLabel);
 		priceVBox.setAlignment(Pos.CENTER);
-		
-		this.getChildren().add(image);
+		VBox imageVbox = new VBox(image);
+		imageVbox.setAlignment(Pos.CENTER);
+		imageVbox.setMinWidth(70);
+		this.getChildren().add(imageVbox);
 		this.getChildren().add(quantityLabel);
 		this.getChildren().add(new Label("X"));
 		this.getChildren().add(priceVBox);
+		discountLabel.setId("discountLabel");
 		if(product.isDiscount()) {
 			discountLabel.setText(InputChecker.price(product.calculateDiscount() * quantity));
 			priceVBox.getChildren().add(discountLabel);		
+			priceLabel.setStrikethrough(true);
 		}
 	}
 
