@@ -34,9 +34,13 @@ public class ProductOverviewEditHBox extends CustomProductHBox {
 	public void initHBox() {
 		super.initHBox();
 		super.initPriceHBox();
+		amountLabel.setStyle("-fx-font-size: 20px;\r\n"
+				+ "	-fx-font-weight: bold;");
 		price = product.getPrice();
-		if(product.isDiscount())
+		if (product.isDiscount()) {
+			amountLabel.setStyle("-fx-strikethrough: true;\r\n" + "	-fx-font-size: 18px;\r\n" + "	-fx-font-weight: bold;");
 			initDiscountLabel();
+		}
 		initQuantityVBox();
 		removeButton.setCursor(Cursor.HAND);
 		removeButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -49,13 +53,16 @@ public class ProductOverviewEditHBox extends CustomProductHBox {
 		priceHBox.getChildren().add(quantityHBox);
 
 		nameLabel.setPrefWidth(150);
-		
+
 		priceHBox.getChildren().add(removeButton);
 		amountLabel.setText(InputChecker.price(quantity * product.getPrice()));
 	}
-	
+
 	private void initDiscountLabel() {
 		discountLabel.setText(InputChecker.price(quantity * product.calculateDiscount()));
+		discountLabel.setStyle("-fx-text-fill: red;\r\n"
+				+ "	-fx-font-weight: bold;\r\n"
+				+ "	-fx-font-size: 20px;");
 		priceVBox.getChildren().add(discountLabel);
 		price = product.calculateDiscount();
 	}
@@ -75,7 +82,7 @@ public class ProductOverviewEditHBox extends CustomProductHBox {
 				cartProductOverviewVBox.addToTotalPrice(product.getPrice(), product.calculateDiscount());
 			}
 		});
-		if(quantity == 1)
+		if (quantity == 1)
 			removeQuantity.setDisable(true);
 		removeQuantity.setCursor(Cursor.HAND);
 		removeQuantity.setOnAction(new EventHandler<ActionEvent>() {

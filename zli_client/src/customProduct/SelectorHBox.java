@@ -27,8 +27,12 @@ public class SelectorHBox extends CustomProductHBox implements ICustomProductHBo
 		this.getChildren().add(selected);
 		super.initHBox();
 		super.initPriceHBox();
-		if(product.isDiscount())
+		if(product.isDiscount()) {
+			amountLabel.setStyle("	-fx-strikethrough: true;\r\n"
+					+ "	-fx-font-size: 18px;\r\n"
+					+ "	-fx-font-weight: bold;");
 			initDiscount();
+		}
 	}
 
 	private void initDiscount() {

@@ -22,6 +22,10 @@ import javafx.stage.Stage;
 import util.Commands;
 import util.ManageScreens;
 
+/**
+ * This controller displays to the user the product that he selected in the
+ * manage catalog.
+ */
 public class ProductEditorController implements Initializable {
 
 	@FXML
@@ -58,10 +62,14 @@ public class ProductEditorController implements Initializable {
 	private Button saveButton;
 
 	private static ProductsBase product;
-	
+
 	private static ManageCatalogController manageCatalogController;
 	private static ProductVBoxController productVBoxController;
 
+	/**
+	 * This method settings the labels depeding on the product/item that selected in
+	 * the manageCatalog.
+	 */
 	private void setLabelOnPopup() {
 		productImageView.setImage(new Image(product.getImagePath()));
 		productNameLabel.setText(product.getName());
@@ -81,11 +89,22 @@ public class ProductEditorController implements Initializable {
 		}
 	}
 
+	/**
+	 * By pressing the close button, it's closing the product editor popup.
+	 * 
+	 * @param MouseEvent
+	 */
 	@FXML
 	void closeProductPopup(MouseEvent event) {
 		((Stage) closeButton.getScene().getWindow()).close();
 	}
 
+	/**
+	 * By pressing the remove product, it removes the product/item from the databse
+	 * by sending to the server a message.
+	 * 
+	 * @param MouseEvent
+	 */
 	@FXML
 	void removeProduct(MouseEvent event) {
 		if (ManageScreens.getYesNoDecisionAlert("Product Editor", "",
@@ -109,6 +128,13 @@ public class ProductEditorController implements Initializable {
 		}
 	}
 
+	/**
+	 * This method saving the product/item by the changes that the manager inserted
+	 * (for examples: if he changed the base price, adding discount or changing the
+	 * description of the product).
+	 * 
+	 * @param MouseEvent
+	 */
 	@FXML
 	void saveProduct(MouseEvent event) {
 		if (InputChecker.isFieldsEmpty(basePriceField.getText())
@@ -132,6 +158,13 @@ public class ProductEditorController implements Initializable {
 			ManageScreens.displayAlert("Product Editor", "Can't update product");
 	}
 
+	/**
+	 * This method sending to the server the update of the product/item. if the
+	 * updated succeded, it will return true. else, will return false.
+	 * 
+	 * @return true or false, depeding of the product/item updated after the server
+	 *         sent response to the client.
+	 */
 	private boolean isUpdated() {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.UPDATE_PRODUCTS_BASE);
@@ -150,6 +183,10 @@ public class ProductEditorController implements Initializable {
 		return false;
 	}
 
+	/**
+	 * This method initialize the product/item that selected. It recieves the
+	 * informatiom from the server and displays it to the screen.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		HashMap<String, Object> message = new HashMap<>();
@@ -171,8 +208,10 @@ public class ProductEditorController implements Initializable {
 			priceDiscountLabel.setText(InputChecker.price(priceAfterDiscount));
 		}
 	}
-	
 
+	/**
+	 * This method displays a discount if discount added to the product/items.
+	 */
 	private void calculateDiscount() {
 		if (Double.parseDouble(discountField.getText()) != 0) {
 			double price = Double.parseDouble(basePriceField.getText());
@@ -183,6 +222,9 @@ public class ProductEditorController implements Initializable {
 			priceDiscountLabel.setText(InputChecker.price(0));
 	}
 
+	/**
+	 * This method will set the information of the product/item to defult if the user insesrted wrong input into the screen.
+	 */
 	private void setToDefult() {
 		if (editDesTextArea.getText().isEmpty() && product instanceof Product)
 			editDesTextArea.setText(((Product) product).getProductDescription());
@@ -195,7 +237,7 @@ public class ProductEditorController implements Initializable {
 	}
 
 	public static void setManageCatalogController(ManageCatalogController manageCatalogController2) {
-		manageCatalogController =manageCatalogController2;
+		manageCatalogController = manageCatalogController2;
 	}
 
 	public static void setProductVBox(ProductVBoxController productVBoxController2) {
