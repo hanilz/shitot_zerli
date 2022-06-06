@@ -16,6 +16,12 @@ import javafx.scene.control.Label;
 import util.Commands;
 import util.FilesHandler;
 
+/**AnalysisViewRowController used as a controller for the AnalysisRow FXMl
+ * the row contains the survey information and the button to fetch and display the survey file
+ * initRow must be called before initializing the row
+ * @author Eitan
+ *
+ */
 public class AnalysisViewRowController {
 	private Desktop desktop = Desktop.getDesktop();
 	private File surveyFile;
@@ -30,6 +36,9 @@ public class AnalysisViewRowController {
     @FXML
     private Button viewAnalysisButton;
 
+    /**when the open report button is pressed the report is fetched and then displayed to the user
+     * @param event
+     */
     @FXML
     void openReportAnalysis(ActionEvent event) {
     	if(surveyFile == null) {
@@ -42,12 +51,19 @@ public class AnalysisViewRowController {
     	openFile(surveyFile);
     }
     
+    /**must be called to initialize the row
+     * @param surveyID
+     * @param surveyName
+     */
     public void initRow(int surveyID,String surveyName) {
     	this.surveyID=surveyID;
     	surveryIDNumber.setText(surveyID+"");
     	surveyNameLabel.setText(surveyName);
     }
     
+	/**used to open a file for the user afeter pressing the button
+	 * @param file
+	 */
 	private void openFile(File file) {
 		try {
 			desktop.open(file);

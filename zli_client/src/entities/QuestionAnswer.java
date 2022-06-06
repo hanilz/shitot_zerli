@@ -1,8 +1,15 @@
-package surveyAnalysis;
+package entities;
 
 import java.io.Serializable;
 
-public class QuestionAnswer implements Serializable{
+/**
+ * QuestionAnswer used as an entity to contain all the information needed from a
+ * survey question with its answers
+ * 
+ * @author Eitan
+ *
+ */
+public class QuestionAnswer implements Serializable {
 	/**
 	 * 
 	 */
@@ -10,7 +17,7 @@ public class QuestionAnswer implements Serializable{
 	private int idQuestion;
 	private String Question;
 	private int[] answers;
-	
+
 	public QuestionAnswer(int idQuestion, String question, int[] answers) {
 		this.idQuestion = idQuestion;
 		Question = question;
@@ -58,6 +65,5 @@ public class QuestionAnswer implements Serializable{
 	public void setAnswers(int[] answers) {
 		this.answers = answers;
 	}
-	
-	
+
 }

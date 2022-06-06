@@ -3,6 +3,7 @@ package deliveryCoordination;
 import java.util.HashMap;
 
 import client.ClientFormController;
+import entities.DeliveryCoordinatorView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,9 +14,14 @@ import util.Commands;
 import util.ManageScreens;
 import util.NotificationType;
 
+
+/**used to load a row for the delivery coordinator screen
+ * @author Eitan
+ *
+ */
 public class OrderRowController {
-	DeliveryCoordinatorView deliveryCoordinatorView;
-	DeliveryCoordinatorController deliveryCoordinatorController;
+	private DeliveryCoordinatorView deliveryCoordinatorView;
+	private DeliveryCoordinatorController deliveryCoordinatorController;
 	
 	@FXML
     private Label addressLabel;
@@ -42,6 +48,11 @@ public class OrderRowController {
     private Label numberLabel;
 
 
+	/**when the confirm button is pressed the order changes its status to confirmed
+	 * if the delivery is late the user then get a full refund for the order
+	 * the customer gets a notification with the correct notification upon delivery
+	 * @param event
+	 */
 	@FXML
 	void confirmOrder(ActionEvent event) {
 		HashMap<String, Object> message = new HashMap<>();
@@ -67,6 +78,9 @@ public class OrderRowController {
 		ManageScreens.displayAlert("Order Delivered", "Order has been marked as Delivered");			
 	}
 
+	/**used to set the order for the class and initialize all the text in the HBox
+	 * @param deliveryCoordinatorView
+	 */
 	public void setOrder(DeliveryCoordinatorView deliveryCoordinatorView) {
 		this.deliveryCoordinatorView = deliveryCoordinatorView;
 		addressLabel.setText(deliveryCoordinatorView.getAddress());
@@ -77,6 +91,9 @@ public class OrderRowController {
 		deliveryTypeLabel.setText(deliveryCoordinatorView.getDeliverytype());
 	}
 
+	/**sets the delivery coordinator controller to allow the order row to be removed after confirming delivery
+	 * @param deliveryCoordinatorController
+	 */
 	public void setDeliveryController(DeliveryCoordinatorController deliveryCoordinatorController) {
 		this.deliveryCoordinatorController = deliveryCoordinatorController;
 	}

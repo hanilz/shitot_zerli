@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import deliveryCoordination.DeliveryCoordinatorView;
 import entities.AccountPayment;
 import entities.Branch;
 import entities.Complaint;
 import entities.CustomProduct;
+import entities.CustomerOrderView;
 import entities.Delivery;
+import entities.DeliveryCoordinatorView;
 import entities.Item;
 import entities.ManageUsers;
 import entities.ManagerOrderView;
@@ -22,14 +23,13 @@ import entities.OrderItem;
 import entities.OrderProduct;
 import entities.Product;
 import entities.ProductsBase;
+import entities.QuestionAnswer;
 import entities.Report;
 import entities.SurveyAnalysisFile;
 import entities.SurveyQuestion;
 import entities.UserDetails;
 import ocsf.server.ConnectionToClient;
-import ordersView.CustomerOrderView;
 import server.ServerController;
-import surveyAnalysis.QuestionAnswer;
 
 /**
  * This class will help us the control all the messages that the server receives

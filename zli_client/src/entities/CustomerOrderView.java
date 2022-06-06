@@ -1,7 +1,11 @@
-package ordersView;
+package entities;
 
 import java.io.Serializable;
 
+/**CustomerOrderView used to contain all the data required to display an order for the customer
+ * @author Eitan
+ *
+ */
 public class CustomerOrderView implements Serializable{
 	/**
 	 * 

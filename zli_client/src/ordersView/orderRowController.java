@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import client.ClientFormController;
+import entities.CustomerOrderView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,6 +14,14 @@ import javafx.scene.control.Label;
 import util.Commands;
 import util.ManageScreens;
 
+/**
+ * orderRowController used to control an orderRow FXML file, it needs to be
+ * initialized with a CustomerOrderView and ViewOrdersController to run when
+ * initialized
+ * 
+ * @author Eitan
+ *
+ */
 public class orderRowController {
 	private CustomerOrderView customerOrder;
 	private ViewOrdersController viewOrdersController;
@@ -31,7 +40,9 @@ public class orderRowController {
 	@FXML
 	private Button viewDeatilsButton;
 
-
+	/**used to cancel an order by the customer
+	 * @param event
+	 */
 	@FXML
 	void cancelOrder(ActionEvent event) {
 		boolean cancel = ManageScreens.getYesNoDecisionAlert("Order Cancellation",
@@ -55,6 +66,10 @@ public class orderRowController {
 
 	}
 
+	
+	/**used to load an order details in the orderOverview on the side of the order view screen
+	 * @param event
+	 */
 	@FXML
 	void viewOrderDetails(ActionEvent event) {
 		if (viewOrdersController != null)
@@ -63,14 +78,23 @@ public class orderRowController {
 			System.out.println("viewOrdersController is null");
 	}
 
+	/**used to set the CustomerOrderView prior to initializing the order row
+	 * @param customerOrder
+	 */
 	public void setOrder(CustomerOrderView customerOrder) {
 		this.customerOrder = customerOrder;
 	}
 
+	/**used to set the ViewOrdersController prior to initializing the order row
+	 * @param customerOrder
+	 */
 	public void setMainController(ViewOrdersController viewOrdersController) {
 		this.viewOrdersController = viewOrdersController;
 	}
 
+	/**
+	 * used to initialize the screen before to display an order
+	 */
 	public void initializer() {
 		Date date = null;
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -79,10 +103,9 @@ public class orderRowController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		if(date.compareTo(new Date())<0 && !customerOrder.getDeliveryStatus().equals("Delivered")) {
+		if (date.compareTo(new Date()) < 0 && !customerOrder.getDeliveryStatus().equals("Delivered")) {
 			deliveryStatusLabel.setText(customerOrder.getDeliveryStatus() + " | Late");
-		}
-		else
+		} else
 			deliveryStatusLabel.setText(customerOrder.getDeliveryStatus());
 
 		orderNumberLabel.setText("Order Number: " + customerOrder.getOrderID());
@@ -91,8 +114,7 @@ public class orderRowController {
 				|| customerOrder.getOrderStatus().equals("Canceled")
 				|| customerOrder.getDeliveryStatus().equals("Delivered")
 				|| customerOrder.getDeliveryStatus().equals("Delivered-Refunded")
-				|| customerOrder.getDeliveryType().equals("express delivery")
-				|| date.compareTo(new Date()) < 0)
+				|| customerOrder.getDeliveryType().equals("express delivery") || date.compareTo(new Date()) < 0)
 			cancelOrderButton.setDisable(true);
 	}
 }

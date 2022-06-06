@@ -18,6 +18,11 @@ import util.Commands;
 import util.ManageScreens;
 import util.NotificationType;
 
+/**used as a controller class for the RegistrationScreen FXML
+ * allows to register a new customer into the system
+ * @author Eitan
+ *
+ */
 public class RegistrationController {
 
 	@FXML
@@ -65,8 +70,14 @@ public class RegistrationController {
 	@FXML
 	private TextField cvvLabel;
 
+	
+	/**used to create a new customer and add it to the DB
+	 * activates when the register button is pressed
+	 * will show an error message if incorrct information is entered
+	 * @param event
+	 */
 	@FXML
-	void createNewCustomerComplaint(ActionEvent event) {
+	void createNewCustomer(ActionEvent event) {
 		if (!checkFields()) {
 			errorLabel.setText("*Please fill all the fields before submitting!");
 			errorLabel.setVisible(true);
@@ -131,6 +142,9 @@ public class RegistrationController {
 		ManageScreens.home();
 	}
 
+	/**if adding user fails, request to delete userDetails is executed
+	 * @param idAccount
+	 */
 	private void deleteUserDetails(int idAccount) {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.DELETE_USER_DETAILS);
@@ -140,7 +154,10 @@ public class RegistrationController {
 			System.out.println("deleted user: "+ idAccount);
 	}
 
-	// this method is used to insert a user into user_details Table
+
+	/**this method is used to insert a user into user_details Table
+	 * @return
+	 */
 	private int sendUserDetailsToDB() {
 		UserDetails ud = new UserDetails(0, firstNameLabel.getText(), lastNameLabel.getText(), idLabel.getText(),
 				emailLabel.getText(), phoneLabel.getText(), "Active");
@@ -151,7 +168,10 @@ public class RegistrationController {
 		return (int) response;
 	}
 
-	// this method is used to insert a user into users Table
+	/** this method is used to insert a user into users Table
+	 * @param idAccount
+	 * @return
+	 */
 	private int sendUserToDB(int idAccount) {
 		String username = usernameLabel.getText();
 		String password = passwordLabel.getText();
@@ -164,7 +184,10 @@ public class RegistrationController {
 		return (int) response;
 	}
 
-	// this method is used to insert user payment Method to DB
+	/**this method is used to insert user payment Method to DB
+	 * @param idUser
+	 * @return
+	 */
 	private boolean sendPaymentToDB(int idUser) {
 		AccountPayment ap = new AccountPayment(firstNameLabel.getText() + " " + lastNameLabel.getText(),
 				cardNumberLabel.getText(), monthLabel.getText() + "/" + yearLabel.getText(), cvvLabel.getText(),
@@ -178,18 +201,26 @@ public class RegistrationController {
 		return true;
 	}
 
+    /**used to return the user to the home screen
+     * @param event
+     */
     @FXML
     void returnHome(MouseEvent event) {
     	ManageScreens.home();
     }
 
+    /**return the user back to home Screen after displaying a question pop-up
+     * @param event
+     */
     @FXML
     void returnHomebtn(ActionEvent event) {
     	if(ManageScreens.getYesNoDecisionAlert("User Registration", "Are you sure you want to exit?", null))
     		ManageScreens.home();
     }
 
-	// this method is used to check if all fields were filled in this form
+	/**this method is used to check if all fields were filled in this form
+	 * @return
+	 */
 	private boolean checkFields() {
 		if (firstNameLabel.getText().isEmpty() || lastNameLabel.getText().isEmpty() || idLabel.getText().isEmpty()
 				|| monthLabel.getText().isEmpty() || yearLabel.getText().isEmpty() || phoneLabel.getText().isEmpty()

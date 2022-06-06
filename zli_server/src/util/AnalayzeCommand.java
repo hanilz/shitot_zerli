@@ -20,12 +20,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
-import deliveryCoordination.DeliveryCoordinatorView;
 import entities.AccountPayment;
 import entities.Branch;
 import entities.Complaint;
 import entities.CustomProduct;
+import entities.CustomerOrderView;
 import entities.Delivery;
+import entities.DeliveryCoordinatorView;
 import entities.Item;
 import entities.ManageUsers;
 import entities.ManagerOrderView;
@@ -35,12 +36,11 @@ import entities.OrderCustomProduct;
 import entities.OrderItem;
 import entities.OrderProduct;
 import entities.Product;
+import entities.QuestionAnswer;
 import entities.Report;
 import entities.SurveyAnalysisFile;
 import entities.SurveyQuestion;
 import entities.UserDetails;
-import ordersView.CustomerOrderView;
-import surveyAnalysis.QuestionAnswer;
 
 /**
  * AnaylzeCommand - will analyze the command that given from the server

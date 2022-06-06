@@ -18,20 +18,32 @@ import util.Commands;
 import util.ManageScreens;
 import util.Screens;
 
+/**
+ * SurveyHomeController used as a controller class to the SurveyHomeScreen FXML
+ * file and is used to display all the surveys available for the user to fill
+ * 
+ * @author Eitan
+ *
+ */
 public class SurveyHomeController implements Initializable {
-	// Map<Integer,String> surveys = new HashMap<>();
-	HashMap<Integer, String> surveys = new HashMap<>();
+	private HashMap<Integer, String> surveys = new HashMap<>();
 	@FXML
 	private ImageView homeImage;
 
 	@FXML
 	private VBox surveyList;
 
+	/**Returns the user to the home screen
+	 * @param event
+	 */
 	@FXML
 	void returnHome(MouseEvent event) {
 		ManageScreens.changeScreenTo(Screens.USER_HOME);
 	}
 
+	/**
+	 *used to fetch all the surveys and initialize the screen
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -41,12 +53,12 @@ public class SurveyHomeController implements Initializable {
 		Object response = ClientFormController.client.accept(message);
 		surveys = (HashMap<Integer, String>) response;
 		System.out.println("got surveys");
-		if(surveys.isEmpty()) {
+		if (surveys.isEmpty()) {
 			Label noSurveys = new Label("Sorry, no surveys to display at the moment.");
 			noSurveys.setFont(new Font(24));
 			surveyList.getChildren().add(noSurveys);
 		}
-		
+
 		for (int surveyID : surveys.keySet()) {
 			SurveyHomeRowHBox shrh = new SurveyHomeRowHBox(surveyID, surveys.get(surveyID));
 			surveyList.getChildren().add(shrh);

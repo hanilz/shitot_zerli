@@ -44,12 +44,18 @@ public class SurveyController implements Initializable{
     @FXML
     private Button submitButton;
 
+    /**used to exit the survey form if the user changed its mind about filling the survery
+     * @param event
+     */
     @FXML
     void discardSurveyAnswer(ActionEvent event) {
     	if(ManageScreens.getYesNoDecisionAlert("Discard Answer", "Are you sure you want to discard your answers?", null))
     		ManageScreens.changeScreenTo(Screens.SURVEY_HOME);
     }
 
+    /**if all the fields are filled saves the survey answers to the DB
+     * @param event
+     */
     @FXML
     void saveSurveyAnswer(ActionEvent event) {
     	HashMap<SurveyQuestion,Integer> answers = new HashMap<>();
@@ -72,6 +78,9 @@ public class SurveyController implements Initializable{
     }
 
     
+	/**
+	 *used to initialize the survey questions to the survey form
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		surveyTitleLabel.setText(survey.getSurveyName());		
@@ -82,6 +91,9 @@ public class SurveyController implements Initializable{
 		}
 	}
 	
+	/**sets the survey for the survey screen, must be initialized
+	 * @param survey2
+	 */
 	public static void setSurvey(Survey survey2) {
 		survey = survey2;
 	}

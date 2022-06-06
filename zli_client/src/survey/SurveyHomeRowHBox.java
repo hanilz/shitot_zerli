@@ -13,24 +13,29 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
 import util.Commands;
 import util.ManageScreens;
 import util.Screens;
 
-public class SurveyHomeRowHBox extends HBox{
+/**
+ * SurveyHomeRowHBox extends HBox represents a row for a survey that can be
+ * filled by the user in the survey screen
+ * 
+ * @author Eitan
+ *
+ */
+public class SurveyHomeRowHBox extends HBox {
 	private int surveyID;
 	private String title;
 	private Survey survey;
-	
+
 	public SurveyHomeRowHBox(int surveyID, String title) {
-		this.surveyID=surveyID;
-		this.title=title;
+		this.surveyID = surveyID;
+		this.title = title;
 		this.setAlignment(Pos.CENTER_LEFT);
 		initHBox();
 	}
-	
-	
+
 	private void initHBox() {
 		this.setId("surveyHBox");
 		this.setPadding(new Insets(20));
@@ -40,23 +45,23 @@ public class SurveyHomeRowHBox extends HBox{
 		surveyName.setPrefWidth(1000);
 		this.getChildren().add(surveyName);
 		Button btn = new Button("Fill Survey");
-		
+
 		btn.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
-		    	//TODO add SQL call HERE TO fetch question
+			@Override
+			public void handle(ActionEvent e) {
 				HashMap<String, Object> message = new HashMap<>();
-				message.put("command",  Commands.GET_SERVEY);
+				message.put("command", Commands.GET_SERVEY);
 				message.put("surveyID", surveyID);
 				Object response = ClientFormController.client.accept(message);
-				
+
 				@SuppressWarnings("unchecked")
-				ArrayList<SurveyQuestion> questions = (ArrayList<SurveyQuestion>)response;//(ObservableList<Survey>) response;
-				survey = new Survey(surveyID,title,questions);
-		        SurveyController.setSurvey(survey);
-		        ManageScreens.changeScreenTo(Screens.SURVEY);
-		    }
+				ArrayList<SurveyQuestion> questions = (ArrayList<SurveyQuestion>) response;
+				survey = new Survey(surveyID, title, questions);
+				SurveyController.setSurvey(survey);
+				ManageScreens.changeScreenTo(Screens.SURVEY);
+			}
 		});
-		
+
 		this.getChildren().add(btn);
 	}
 }
