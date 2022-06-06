@@ -15,6 +15,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import util.ManageScreens;
 
+/**OrderProductRowController is used to control a single product row in the orderView FxmlFile
+ * it controls an OrderProductRow FXML file
+ * must be initialized with a product and a quantity before loading
+ * @author Eitan
+ *
+ */
 public class OrderProductRowController{
 	private ProductsBase product;
 	private int qty;
@@ -35,11 +41,18 @@ public class OrderProductRowController{
     private Label productQty;
 
 
+	/**used to initialize the product and the quantity 
+	 * @param pb
+	 * @param qty
+	 */
 	public void setProductBase(ProductsBase pb,int qty) {
 		this.product = pb;
 		this.qty = qty;
 	}
     
+    /**
+     * used to set the text and the image for the row
+     */
     public void initRow() {
     	productID.setText(""+product.getId());
     	productName.setText(product.getName());
@@ -48,13 +61,12 @@ public class OrderProductRowController{
     	productImage.setImage(new Image(product.getImagePath()));
     }
     
+    
+    /**used to open a product details Pop-up for the product in the order
+     * @param event
+     */
     @FXML
     void openDetails(MouseEvent event) {
-//    	System.out.println(product);
-//    	System.out.println(((Product)product).getItems());
-//    	if(product instanceof CustomProduct) {
-//    		System.out.println(((CustomProduct) product).getProducts());    		
-//    	}
     	if(product instanceof Product) {
 			try {
 				if(product instanceof CustomProduct)

@@ -1,11 +1,13 @@
-package deliveryCoordination;
+package entities;
 
 import java.io.Serializable;
 
+/**DeliveryCoordinatorView used to contain all the data used by the delivery coordinator for a single order
+ * @author Eitan
+ *
+ */
 public class DeliveryCoordinatorView implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -3987697842726663499L;
 	private int idOrder;
 	private String firstName;

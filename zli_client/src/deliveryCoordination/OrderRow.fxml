@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="mainHBox" alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="1195.0" spacing="5.0" style="-fx-background-radius: 50; -fx-background-color: D8E2DC;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deliveryCoordination.OrderRowController">
+<HBox id="deliveryRowHBox" fx:id="mainHBox" alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="1180.0" spacing="5.0" stylesheets="@../resources/css/DeliveryCoordinatorScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deliveryCoordination.OrderRowController">
    <children>
       <VBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="140.0" spacing="5.0">
          <children>
@@ -70,7 +70,7 @@
             </Label>
          </children>
       </VBox>
-      <VBox alignment="CENTER_LEFT" prefHeight="91.0" prefWidth="485.0" spacing="5.0">
+      <VBox alignment="CENTER_LEFT" prefHeight="91.0" prefWidth="455.0" spacing="5.0">
          <children>
             <Label fx:id="deliveryTypeLabel" text="deliveryType">
                <font>

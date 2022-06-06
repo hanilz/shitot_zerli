@@ -27,7 +27,7 @@ import util.Screens;
 
 /**
  * @author Eitan
- *
+ *	this class is used as a controller for the CustomerComplaintScreen.fxml
  */
 public class CustomerComplaintController implements Initializable {
 	private ObservableList<Integer> orderNumbers = FXCollections.observableArrayList();
@@ -56,6 +56,9 @@ public class CustomerComplaintController implements Initializable {
 	@FXML
 	private Button submitButton;
 
+	/**
+	 *gets the order numbers the do not have a complaint yet and displays them to the customer service employee to write a complaint
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -65,12 +68,18 @@ public class CustomerComplaintController implements Initializable {
 		orderNumberCombo.setItems(orderNumbers);
 	}
 
+	/**returns back to the main complaint screen without saving the complaint
+	 * @param event
+	 */
 	@FXML
 	void discardComplaint(ActionEvent event) {
 		if(ManageScreens.getYesNoDecisionAlert("Discard Complaint", "Are you sure you want to cancel this complaint?", null))
 			ManageScreens.changeScreenTo(Screens.COMPLAINT_HOME);
 	}
 
+	/**returns back to the main complaint screen after saving the complaint
+	 * @param event
+	 */
 	@FXML
 	void saveComplaint(ActionEvent event) {
 		if (!checkInput())
@@ -89,18 +98,13 @@ public class CustomerComplaintController implements Initializable {
 		errorLabel.setText("Submitted Successfuly");
 		errorLabel.setTextFill(Color.GREEN);
 		errorLabel.setVisible(true);
-		displayPopUp();
+		ManageScreens.displayAlert("Complaint Submitted","Your complaint has been submitted\nplease make sure to review it within the next 24 hours");
 		ManageScreens.changeScreenTo(Screens.COMPLAINT_HOME);
 	}
 
-	private void displayPopUp() {
-		Alert a = new Alert(AlertType.NONE,"Complaint Submitted",ButtonType.CLOSE);
-		a.setTitle("Complaint Submitted");
-		a.setContentText("Your complaint has been submitted\nplease make sure to review it within the next 24 hours");
-		a.show();
-	}
-
-	// used to make sure that all the fields have been filled
+	/**used to make sure that all the fields have been filled
+	 * @return
+	 */
 	private boolean checkInput() {
 		
 		if (orderNumberCombo.getValue() == null) {

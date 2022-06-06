@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import client.ClientFormController;
+import entities.CustomerOrderView;
 import entities.ProductsBase;
 import entities.User;
 import inputs.InputChecker;
@@ -22,6 +23,11 @@ import javafx.scene.layout.VBox;
 import util.Commands;
 import util.ManageScreens;
 
+/**ViewOrdersController as a controller class for the ViewOrdersScreen FXML to allow the customer to view his orders and cancel them
+ * the customer is presented with all of his orders
+ * @author Eitan
+ *
+ */
 public class ViewOrdersController implements Initializable{
 	private static ViewOrdersController voc;
 	private static HashMap<String, Object> message = new HashMap<>();
@@ -62,11 +68,17 @@ public class ViewOrdersController implements Initializable{
     @FXML
     private Label placedDateLabel;
 
+    /**used to return to the home screen for the customer
+     * @param event
+     */
     @FXML
     void returnHome(MouseEvent event) {
     	ManageScreens.home();
     }
 
+	/**
+	 *used to get the orders for the clients and initialize the order rows in the screen
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -89,6 +101,9 @@ public class ViewOrdersController implements Initializable{
 			initializeOverview(customerOrders.get(0));
 	}
 	
+	/**used to initialize the order overview portion in the screen
+	 * @param order
+	 */
 	public void initializeOverview(CustomerOrderView order) {
 		orderNumberLabel.setText(""+order.getOrderID());
 		orderStatusLabel.setText(order.getOrderStatus());
@@ -115,6 +130,11 @@ public class ViewOrdersController implements Initializable{
 		}
 	}
 	
+	/**used to load an order OrderViewRow.fxml to display order information
+	 * @param cov
+	 * @return
+	 * @throws IOException
+	 */
 	private HBox loadRow(CustomerOrderView cov) throws IOException {
 		FXMLLoader loader = new FXMLLoader(orderRowController.class.getResource("OrderViewRow.fxml"));
 		HBox orderRow = (HBox) loader.load();
@@ -124,6 +144,12 @@ public class ViewOrdersController implements Initializable{
 		return orderRow;
 	}
 	
+	/**used to load an order product row for the customer to be able to see the contents of his order
+	 * @param pb
+	 * @param qty
+	 * @return
+	 * @throws IOException
+	 */
 	private HBox loadOrderRow(ProductsBase pb,int qty) throws IOException {
 		FXMLLoader loader = new FXMLLoader(OrderProductRowController.class.getResource("OrderProductRow.fxml"));
 		HBox orderProductRow = (HBox) loader.load();
@@ -132,6 +158,9 @@ public class ViewOrdersController implements Initializable{
 		return orderProductRow;
 	}
 	
+	/**when a customer order is being canceled this method is used to update the delivery and order status
+	 * @param cov
+	 */
 	public void updateOrderStatus(CustomerOrderView cov) {
 		customerOrders.get(customerOrders.indexOf(cov)).setDeliveryStatus("Waiting for Cancellation");
 		customerOrders.get(customerOrders.indexOf(cov)).setOrderStatus("Waiting for Cancellation");

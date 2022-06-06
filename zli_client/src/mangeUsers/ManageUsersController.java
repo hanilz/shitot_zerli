@@ -22,6 +22,12 @@ import javafx.util.Callback;
 import util.Commands;
 import util.ManageScreens;
 
+
+/**ManageUsersController used as a controller for the manageUsers.fxml file
+ * this class allows a manager to suspend and re-activate a customer account
+ * @author Eitan
+ *
+ */
 public class ManageUsersController implements Initializable {
 	private static ObservableList<ManageUsers> users = FXCollections.observableArrayList();
 
@@ -51,21 +57,29 @@ public class ManageUsersController implements Initializable {
 	private TableView<ManageUsers> userTable;
 	
 
+    /**Returns to the home screen when the home image is pressed
+     * @param event
+     */
     @FXML
     void changeScreenToMain(ActionEvent event) {
     	ManageScreens.home();
     }
 	
+    /**Returns to the home screen when the back button is pressed
+     * @param event
+     */
     @FXML
     void returnHome(MouseEvent event) {
     	ManageScreens.home();
     }
 
+	/**
+	 *used to initialize the table for the manager to be able to suspend and re-activate customers
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//define table columns
-		//idUser.setCellValueFactory(new PropertyValueFactory<>("idUser"));
 		firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 		lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
 		id.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -84,7 +98,10 @@ public class ManageUsersController implements Initializable {
 
 	}
 
-	//method to add a button to the last column in the table for each row
+
+	/**
+	 * method to add a button to the last column in the table for each row
+	 */
 	private void addButtonToTable() {
 		TableColumn<ManageUsers, Void> colBtn = new TableColumn<>("Action");
 

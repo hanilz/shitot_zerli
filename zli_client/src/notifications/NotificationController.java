@@ -16,6 +16,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import util.ManageScreens;
 
+/**notification controller is used to initialize the notification panel in the home screen for the users
+ * @author Eitan
+ *
+ */
 public class NotificationController implements Initializable {
 	public static ArrayList<Notification> newNotifications;
 	public static ArrayList<Notification> readNotifications;
@@ -31,12 +35,18 @@ public class NotificationController implements Initializable {
 
 	private static NotificationController nc;
 
+	/**used when the notification center is closed 
+	 * @param event
+	 */
 	@FXML
 	void closeNotificationCenter(ActionEvent event) {
 		ManageScreens.home();
 		((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
 	}
 
+	/**
+	 *used to load all the notifications for the user by loading external FXML files with the notification rows
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		nc = this;
@@ -56,6 +66,11 @@ public class NotificationController implements Initializable {
 		}
 	}
 
+	/**used to load a notification row in the notification controller
+	 * @param notif
+	 * @return
+	 * @throws IOException
+	 */
 	private HBox loadRow(Notification notif) throws IOException {
 		FXMLLoader loader = new FXMLLoader(NotificationController.class.getResource("NotifcationRow.fxml"));
 		HBox notificationRow = (HBox) loader.load();
@@ -63,6 +78,10 @@ public class NotificationController implements Initializable {
 		return notificationRow;
 	}
 
+	/**used to change the status of the notification to read and remover it to the marked as read panel in the second tab
+	 * @param notificationRow
+	 * @param notif
+	 */
 	public static void moveToRead(HBox notificationRow, Notification notif) {
 		nc.newNotificationsVBox.getChildren().remove(notificationRow);
 		nc.readNotificationsVBox.getChildren().add(notificationRow);
@@ -70,6 +89,10 @@ public class NotificationController implements Initializable {
 
 	}
 
+	/**used to delete a notification forever after it was marked as read
+	 * @param notificationRow
+	 * @param notif
+	 */
 	public static void removeNotification(HBox notificationRow, Notification notif) {
 		nc.readNotificationsVBox.getChildren().remove(notificationRow);
 		newNotifications.remove(notif);

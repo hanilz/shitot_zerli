@@ -25,6 +25,10 @@ import util.Commands;
 import util.ManageScreens;
 import util.Screens;
 
+/**CustomerComplaintHomeController used as a controller class for the CustomerComplaintHomeScreen.fxml
+ * @author Eitan
+ *
+ */
 public class CustomerComplaintHomeController implements Initializable{
 	private static ObservableList<Complaint> complaints = FXCollections.observableArrayList();
 
@@ -51,16 +55,25 @@ public class CustomerComplaintHomeController implements Initializable{
 
 
 
+    /**when the create button is pressed opens a new screen to fill a new complaint
+     * @param event
+     */
     @FXML
     void createNewCustomerComplaint(ActionEvent event) {
     	ManageScreens.changeScreenTo(Screens.COMPLAINT);
     }
 
+    /**returns to the main home screen when the home image is pressed
+     * @param event
+     */
     @FXML
     void returnHome(MouseEvent event) {
     	ManageScreens.home();
     }
 
+	/**
+	 *gets the complaints from the DB and displays them in the table
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -69,10 +82,6 @@ public class CustomerComplaintHomeController implements Initializable{
 		message.put("HandlerID", User.getUserInstance().getIdUser());
 		Object response = ClientFormController.client.accept(message);
 		complaints = (ObservableList<Complaint>)response;
-//		for(Complaint complaint: complaints) {
-//			complaintList.getChildren().add(new ComplaintHomeHBox(complaint));
-//			complaintList.getChildren().add(new Separator(Orientation.HORIZONTAL));
-//		}
 		complaintID.setCellValueFactory(new PropertyValueFactory<>("complaintID"));
 		orderID.setCellValueFactory(new PropertyValueFactory<>("orderID"));
 		complaintReason.setCellValueFactory(new PropertyValueFactory<>("complaintReason"));
@@ -81,6 +90,11 @@ public class CustomerComplaintHomeController implements Initializable{
 		addButtonToTable();
 	}
     
+	
+	
+	/**
+	 * adds a button to each row of the table, when the button is pressed the complaint opens in a new screen
+	 */
 	private void addButtonToTable() {
 		TableColumn<Complaint, Void> colBtn = new TableColumn<>("Action");
 

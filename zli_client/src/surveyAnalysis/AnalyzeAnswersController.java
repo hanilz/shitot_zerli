@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import client.ClientFormController;
+import entities.QuestionAnswer;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,6 +26,12 @@ import javafx.util.Duration;
 import util.Commands;
 import util.ManageScreens;
 
+/**AnalyzeAnswersController used as a controller class for the AnalyzeAnswersScreen FXML
+ * needs to be initializes with surveyID and surveyName to work
+ * allows the user to upload a file to the DB as a reort for the survey
+ * @author Eitan
+ *
+ */
 public class AnalyzeAnswersController implements Initializable {
 	private static int surveyID;
 	private static String surveyName;
@@ -46,11 +53,17 @@ public class AnalyzeAnswersController implements Initializable {
 	@FXML
 	private Button uploadButton;
 
+	/**used to close the screen and return to the previous one
+	 * @param event
+	 */
 	@FXML
 	void closeSurvey(ActionEvent event) {
 		ManageScreens.previousScreen();
 	}
 
+	/**used to submit a survey analysis to the DB after uploading it
+	 * @param event
+	 */
 	@FXML
 	void submitAnalysis(ActionEvent event) {
 		if(!convertAndUploadToDb(savedFile)) {
@@ -68,6 +81,10 @@ public class AnalyzeAnswersController implements Initializable {
 		ManageScreens.displayAlert("File Uploaded", "Your file has been uploaded");
 	}
 
+	/**Uploads a file to the DB
+	 * @param savedFile2
+	 * @return
+	 */
 	private boolean convertAndUploadToDb(File savedFile2) {
 		HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.UPLOAD_FILE);
@@ -77,6 +94,9 @@ public class AnalyzeAnswersController implements Initializable {
 		return (boolean)response;
 	}
 
+	/**Used to allow the user to upload a file to the class to later be uploaded to the DB
+	 * @param event
+	 */
 	@FXML
 	void uploadAnalysis(ActionEvent event) {
 		final FileChooser fileChooser = new FileChooser();
@@ -88,6 +108,10 @@ public class AnalyzeAnswersController implements Initializable {
 			submitButton.setDisable(true);
 	}
 
+	
+	/**
+	 *used to get and initialize the survey answers 
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		surveyTitleLabel.setText(surveyName);
@@ -119,6 +143,11 @@ public class AnalyzeAnswersController implements Initializable {
 		}
 	}
 
+	/**used to set the survey and name and id
+	 * must be called before initializing the screen
+	 * @param surveyID2
+	 * @param surveyName2
+	 */
 	public static void setSurvey(int surveyID2, String surveyName2) {
 		surveyID = surveyID2;
 		surveyName = surveyName2;

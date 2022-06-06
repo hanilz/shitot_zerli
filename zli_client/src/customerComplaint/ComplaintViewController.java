@@ -25,6 +25,10 @@ import util.Commands;
 import util.ManageScreens;
 import util.Screens;
 
+/**
+ * @author Eitan
+ *controller class for customerComplaintView
+ */
 public class ComplaintViewController implements Initializable {
 	private static Complaint complaint;
 	private Double refund = 0.0 ;
@@ -71,6 +75,11 @@ public class ComplaintViewController implements Initializable {
 		ManageScreens.changeScreenTo(Screens.COMPLAINT_HOME);
     }
 
+    
+    /**
+     * closeAndDeleteRequest closes a request without refund to the user
+     * @param event
+     */
     @FXML
     void closeAndDeleteRequest(ActionEvent event) {
     	HashMap<String, Object> message = new HashMap<>();
@@ -83,21 +92,18 @@ public class ComplaintViewController implements Initializable {
 			errorLabel.setVisible(true);
 			return;
 		}
-		displayPopUp("Complaint Closed","Complaint has been closed\n No refund was issued to the customer");
+		ManageScreens.displayAlert("Complaint Closed","Complaint has been closed\n No refund was issued to the customer");
 		ManageScreens.changeScreenTo(Screens.COMPLAINT_HOME);
 	}
-
-	private void displayPopUp(String title, String text) {
-		Alert a = new Alert(AlertType.NONE,title,ButtonType.CLOSE);
-		a.setTitle(title);
-		a.setContentText(text);
-		a.show();
-	}
-
+    
+    /**
+     * refundUser closes the user and refunds the user the selected ammount by the slider
+     * @param event
+     */
     @FXML
     void refundUser(ActionEvent event) {
     	HashMap<String, Object> message = new HashMap<>();
-		message.put("command", Commands.CLOSE_COMPLAINT);//might need to be changed in the future to save the refund to the user
+		message.put("command", Commands.CLOSE_COMPLAINT);
 		message.put("Complaint Number", complaint.getComplaintID());
 		message.put("refund", refund);
 		Object response = ClientFormController.client.accept(message);
@@ -106,18 +112,25 @@ public class ComplaintViewController implements Initializable {
 			errorLabel.setVisible(true);
 			return;
 		}
-		displayPopUp("Customer refunded","Complaint has been closed\nCustomer has been refunded "+ InputChecker.price(refund));
+		ManageScreens.displayAlert("Customer refunded","Complaint has been closed\nCustomer has been refunded "+ InputChecker.price(refund));
 		ManageScreens.changeScreenTo(Screens.COMPLAINT_HOME);
     }
 
     
+    
+    /**sets the text of the refund label according to the refund on the slider
+     * @param event
+     */
     @FXML
-    void setRefund(MouseEvent event) {//slider Event
+    void setRefund(MouseEvent event) {
     	refund = refundSlider.getValue();
     	refundText.setText(String.format("%.0f", refundSlider.getValue()));
     }
     
 
+    /**sets the refund whenever a key is pressed in the check box
+     * @param event
+     */
     @FXML
     void setRefundBox(KeyEvent event) {
     	Double value = !refundText.getText().isEmpty() ? Double.parseDouble(refundText.getText()) : 0.0;
@@ -135,10 +148,19 @@ public class ComplaintViewController implements Initializable {
     	System.out.println(refundText.getText());
     }
     
+    
+    /**the complaint must be set before initializing the screen
+     * @param complaint2
+     */
     public static void setComplaint(Complaint complaint2) {
     	complaint = complaint2;
     }
     
+    
+    
+	/**
+	 *	initializes all the fields in the screen
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		complaintNumber.setText(""+complaint.getComplaintID());

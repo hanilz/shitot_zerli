@@ -13,10 +13,18 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 
+/**questionHBox extends a regular HBox and contains a question entity,
+ * the label for the question and the radio buttons to get the selected answer
+ * @author Eitan
+ *
+ */
 public class questionHBox extends HBox {
 	private Label question;
 	private int selected = 0;
 
+	/**constructor for the QuestionHBox
+	 * @param question
+	 */
 	public questionHBox(SurveyQuestion question) {
 		this.setAlignment(Pos.CENTER_LEFT);
 		this.question = new Label(question.getQuestion());
@@ -32,6 +40,10 @@ public class questionHBox extends HBox {
 		initSelection();
 	}
 
+	
+	/**used to initialize the radio buttons and the toggle group
+	 * 
+	 */
 	private void initSelection() {
 		// add question
 		ToggleGroup tg = new ToggleGroup();
@@ -52,6 +64,10 @@ public class questionHBox extends HBox {
 		}
 	}
 
+	
+	/**return the number of the selected radio button
+	 * @return
+	 */
 	public int getSelected() {
 		return selected;
 	}

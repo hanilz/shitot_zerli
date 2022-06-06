@@ -18,6 +18,10 @@ import javafx.scene.text.Font;
 import util.Commands;
 import util.ManageScreens;
 
+/**SurveyAnswersHomeController used to show the surveys that are available in the system
+ * @author Eitan
+ *
+ */
 public class SurveyAnswersHomeController implements Initializable {
 	private HashMap<Integer, String> surveys = new HashMap<>();
 	@FXML
@@ -26,11 +30,17 @@ public class SurveyAnswersHomeController implements Initializable {
 	@FXML
 	private VBox surveyList;
 
+	/**return to the home screen
+	 * @param event
+	 */
 	@FXML
 	void returnHome(MouseEvent event) {
 		ManageScreens.home();
 	}
 
+	/**
+	 *fetches the surveys from the DB and displays all the information
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
