@@ -20,6 +20,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Component for the catalog - Display item And +- buttons for the quantity.
+ */
 public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 	private Item item; // will be used to get the data from item
 	private HBox quantityHBox = new HBox();
@@ -28,19 +31,65 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 	private Button addQuantityButton = new Button("+");
 	private Text originalPriceTxt;
 
+	/**
+	 * Constructor.
+	 * @param item
+	 */
 	public CatalogItemVBox(Item item) {
 		this.item = item;
 	}
 
 	/**
-	 * 
+	 * Initialize the itemVBox, using the item.
+	 * Set all the relevant information and node behavior for the component.
 	 */
 	public void initVBox() {
 		nameLabel.setText(item.getName() + " - " + item.getColor());
+		
 		initImageProduct();
 
 		amountLabel.setText("" + InputChecker.price((item.getPrice())));
 
+		initQuantityLabel();
+
+		initSubtractQuantityButton();
+
+		initAddQuantityButton();
+
+		initPriceHBox();
+		
+		initDiscountLabel();
+		
+		initQuantityHBox();
+
+		initAddToCartButton();
+
+		super.initVBox();
+		this.getChildren().add(quantityHBox);
+		this.getChildren().add(addToCartButton);
+	}
+
+	/**
+	 * Initialize discount label if there is discount for this item
+	 */
+	private void initDiscountLabel() {
+		if(item.isDiscount()) {
+			discountLabel.setText(InputChecker.price(item.calculateDiscount()));
+			originalPriceTxt = new Text(InputChecker.price(item.getPrice()));
+			originalPriceTxt.setStrikethrough(true);
+			originalPriceTxt.setStyle("-fx-font-size: 16px;");
+			priceHBox.getChildren().remove(amountLabel);
+			priceHBox.getChildren().add(originalPriceTxt);
+			priceHBox.getChildren().add(discountLabel);
+			
+			amountLabel.setId("priceAfterDiscountLabel");;
+		}
+	}
+
+	/**
+	 * Initialize the quantity field behavior and size.
+	 */
+	private void initQuantityLabel() {
 		// force the field to be numeric only
 		quantityField.textProperty().addListener(new ChangeListener<String>() {
 			@Override
@@ -52,7 +101,12 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 		});
 		quantityField.setMaxWidth(50);
 		quantityField.setAlignment(Pos.CENTER);
+	}
 
+	/**
+	 * Initialize the subtractQuantityButton behavior.
+	 */
+	private void initSubtractQuantityButton() {
 		subtractQuantityButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -66,7 +120,12 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 					quantityField.setText("" + (--quantity));
 			}
 		});
+	}
 
+	/**
+	 * Initialize the addQuantityButton behavior.
+	 */
+	private void initAddQuantityButton() {
 		addQuantityButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -79,31 +138,13 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 				quantityField.setText("" + (++quantity));
 			}
 		});
-
-		initPriceHBox();
-		
-		if(item.isDiscount()) {
-			discountLabel.setText(InputChecker.price(item.calculateDiscount()));
-			originalPriceTxt = new Text(InputChecker.price(item.getPrice()));
-			originalPriceTxt.setStrikethrough(true);
-			originalPriceTxt.setStyle("-fx-font-size: 16px;");
-			priceHBox.getChildren().remove(amountLabel);
-			priceHBox.getChildren().add(originalPriceTxt);
-			priceHBox.getChildren().add(discountLabel);
-			
-			amountLabel.setId("priceAfterDiscountLabel");;
-		}
-		
-		initQuantityHBox();
-
-		initAddToCartButton();
-
-		super.initVBox();
-		this.getChildren().add(quantityHBox);
-		this.getChildren().add(addToCartButton);
 	}
 
-	private void initImageProduct() { // same function but not with the event so we will call super.
+	
+	/**
+	 * Initialize the image and it's behavior.
+	 */
+	private void initImageProduct() {
 		image = new ImageView(item.getImagePath());
 		setImageProp();
 
@@ -121,6 +162,9 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 		});
 	}
 
+	/**
+	 * Initialize the addToCartButton behavior.
+	 */
 	private void initAddToCartButton() {
 		addToCartButton.setCursor(Cursor.HAND);
 		addToCartButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -144,6 +188,9 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 		});
 	}
 
+	/**
+	 * Add all relevant nodes to quantityHBox.
+	 */
 	private void initQuantityHBox() {
 		quantityHBox.getChildren().add(subtractQuantityButton);
 		quantityHBox.getChildren().add(quantityField);
@@ -152,6 +199,9 @@ public class CatalogItemVBox extends CatalogVBox implements ICatalogVBox {
 		quantityHBox.setSpacing(10);
 	}
 
+	/**
+	 * Set all sizes of image.
+	 */
 	protected void setImageProp() {
 		image = new ImageView(item.getImagePath());
 		super.setImageProp();

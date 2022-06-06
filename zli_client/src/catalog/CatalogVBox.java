@@ -9,6 +9,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+/**
+ * Component for displaying a ProductsBase in the catalog grid.
+ */
 public class CatalogVBox extends VBox implements ICatalogVBox{
 	protected Label nameLabel = new Label();  // will show the product name
 	protected VBox nameVBox = new VBox();
@@ -19,6 +22,9 @@ public class CatalogVBox extends VBox implements ICatalogVBox{
 	protected HBox priceHBox = new HBox();
 	protected Button addToCartButton = new Button("Add To Cart");
 
+	/**
+	 * Initialize the VBox - All the sizes and design of the component.
+	 */
 	@Override
 	public void initVBox() {
 		this.setPrefWidth(200);
@@ -37,12 +43,18 @@ public class CatalogVBox extends VBox implements ICatalogVBox{
 		this.setAlignment(Pos.CENTER);
 	}
 	
+	/**
+	 * Initialize the size of the price.
+	 */
 	protected void initPriceHBox() {
 		priceHBox.getChildren().add(amountLabel);
 		priceHBox.setAlignment(Pos.CENTER);
 		priceHBox.setSpacing(25);
 	}
 
+	/**
+	 * Initialize all the sizes of the image.
+	 */
 	protected void setImageProp() {
 		imageVBox.getChildren().add(image);
 		image.setFitHeight(140);

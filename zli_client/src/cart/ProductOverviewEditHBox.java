@@ -1,7 +1,6 @@
 package cart;
 
 import customProduct.CustomProductHBox;
-import entities.CustomProduct;
 import entities.Product;
 import entities.ProductsBase;
 import inputs.InputChecker;

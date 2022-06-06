@@ -17,6 +17,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import util.ManageScreens;
 
+/**
+ * Controller class for product details popup.
+ */
 public class ProductDetailsController implements Initializable {
 	private static Product product;
 
@@ -46,14 +49,20 @@ public class ProductDetailsController implements Initializable {
 	@FXML
 	private ImageView productImage;
 
+	/**
+	 * Set behavior of close button.
+	 */
 	@FXML
 	void closePopup() {
 		if (ManageScreens.getPopupStage() != null) {
-			products.clear();			
+			products.clear();
 			ManageScreens.getPopupStage().close();
 		}
 	}
 
+	/**
+	 * Initialize popup based on given product.
+	 */
 	public void initProduct() {
 		productImage.setImage(new Image(product.getImagePath()));
 		productTypeLabel.setText(product.getType());
@@ -64,38 +73,48 @@ public class ProductDetailsController implements Initializable {
 		initItems();
 	}
 
+	/**
+	 * Initialize items and products, if there are any, in the VBox.
+	 */
 	private void initItems() {
-		if(products != null) {
+		if (products != null) {
 			for (Product productRow : products.keySet()) {
-				ProductOverviewNoEditHBox itemHBox = new ProductOverviewNoEditHBox(productRow, products.get(productRow));
+				ProductOverviewNoEditHBox itemHBox = new ProductOverviewNoEditHBox(productRow,
+						products.get(productRow));
 				itemHBox.initHBox();
 				productContentVBox.getChildren().add(itemHBox);
 			}
 			products.clear();
 		}
-//		if (product.getItems().isEmpty())
-//			productContentVBox.getChildren().add(new Label("No items to display"));
-//		else {
-			for (Item item : product.getItems().keySet()) {
-				ProductOverviewNoEditHBox itemHBox = new ProductOverviewNoEditHBox(item, product.getItems().get(item));
-				itemHBox.initHBox();
-				productContentVBox.getChildren().add(itemHBox);
-			}
-//		}
+		for (Item item : product.getItems().keySet()) {
+			ProductOverviewNoEditHBox itemHBox = new ProductOverviewNoEditHBox(item, product.getItems().get(item));
+			itemHBox.initHBox();
+			productContentVBox.getChildren().add(itemHBox);
+		}
 	}
 
+	/**
+	 * Set the current product.
+	 * @param product
+	 */
 	public static void setProduct(Product product) {
 		ProductDetailsController.product = product;
 	}
-	
-	public static void setCustomProduct(HashMap<Product,Integer> products) {
+
+	/**
+	 * Set the current custom product(Hashmap of products).
+	 * @param product
+	 */
+	public static void setCustomProduct(HashMap<Product, Integer> products) {
 		ProductDetailsController.products.clear();
 		ProductDetailsController.products.putAll(products);
 	}
 
+	/**
+	 * Initialize the popup.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initProduct();
-    
 	}
 }

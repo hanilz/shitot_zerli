@@ -30,6 +30,10 @@ import util.ManageData;
 import util.ManageScreens;
 import util.Screens;
 
+/**
+ * Controller for catalog screen - Display all the items and products from the
+ * database and let the customer add them to their cart.
+ */
 public class CatalogController implements Initializable {
 
 	@FXML
@@ -59,15 +63,15 @@ public class CatalogController implements Initializable {
 	@FXML
 	private HBox loginHBox;
 
-    @FXML
-    private Pane discountPane1;
+	@FXML
+	private Pane discountPane1;
 
-    @FXML
-    private Pane discountPane2;
+	@FXML
+	private Pane discountPane2;
 
-    @FXML
-    private Pane discountPane3;
-	
+	@FXML
+	private Pane discountPane3;
+
 	@FXML
 	private TextField searchBar;
 
@@ -93,16 +97,31 @@ public class CatalogController implements Initializable {
 
 	private GridPane catalogGrid = ManageData.catalogGrid;
 
+	/**
+	 * Change to cart screen after clicking cart icon.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void changeToCartScreen(MouseEvent event) {
 		ManageScreens.changeScreenTo(Screens.CART);
 	}
 
+	/**
+	 * Change to home screen after clicking home icon.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void changeToHomeScreen(MouseEvent event) {
 		ManageScreens.home();
 	}
 
+	/**
+	 * Open the login popup.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void openLogin(MouseEvent event) {
 		if (!User.getUserInstance().isUserLoggedIn()) {
@@ -118,14 +137,24 @@ public class CatalogController implements Initializable {
 
 	}
 
+	/**
+	 * Refresh the small label near the cart button.
+	 */
 	public static void refreshTotalAmountInCart() {
 		instance.setTotalAmountCartLabel();
 	}
 
+	/**
+	 * Refresh the small label near the cart button.
+	 */
 	private void setTotalAmountCartLabel() {
 		totalAmountCartLabel.setText("" + Cart.getInstance().getCart().size());
 	}
 
+	/**
+	 * Initialize the catalog screen - Set the catalog grid and check if the user is
+	 * logged in
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		instance = this;
@@ -144,16 +173,25 @@ public class CatalogController implements Initializable {
 		initDiscountPanes();
 	}
 
+	/**
+	 * Display the 3 most discounted products in the right side of the screen.
+	 */
 	private void initDiscountPanes() {
 		VBox discount1 = initDiscountVBox(0);
 		VBox discount2 = initDiscountVBox(1);
 		VBox discount3 = initDiscountVBox(2);
-		
+
 		discountPane1.getChildren().add(discount1);
 		discountPane2.getChildren().add(discount2);
 		discountPane3.getChildren().add(discount3);
 	}
 
+	/**
+	 * Load a new discount VBox for the right side of the catalog.
+	 * 
+	 * @param index
+	 * @return
+	 */
 	private VBox initDiscountVBox(int index) {
 		VBox discountVBox = null;
 		try {
@@ -166,6 +204,9 @@ public class CatalogController implements Initializable {
 		return discountVBox;
 	}
 
+	/**
+	 * Initialize the value and behavior of the small label near the cart Button.
+	 */
 	private void initTotalAmountCartLabel() {
 		setTotalAmountCartLabel();
 		totalAmountCartLabel.textProperty().addListener(new ChangeListener<String>() {
@@ -176,7 +217,7 @@ public class CatalogController implements Initializable {
 				transition.setToY(1.4);
 				transition.play();
 				PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
-				pause.setOnFinished(e -> {	
+				pause.setOnFinished(e -> {
 					transition.setToX(1);
 					transition.setToY(1);
 					transition.play();
