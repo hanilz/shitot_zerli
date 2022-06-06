@@ -134,7 +134,7 @@ public class ManageScreens implements Serializable {
 	 * @return true if yes button was pressed, false otherwise
 	 */
 	public static boolean getYesNoDecisionAlert(String title, String header, String content) {
-		Alert alert = new Alert(AlertType.NONE, header, ButtonType.YES, ButtonType.NO);
+		Alert alert = new Alert(AlertType.NONE, header, ButtonType.NO, ButtonType.YES);
 		alert.initOwner(ManageScreens.getStage());
 		alert.setTitle(title);
 		alert.setHeaderText(content);
