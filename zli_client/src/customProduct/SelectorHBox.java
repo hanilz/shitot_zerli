@@ -7,8 +7,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 
 public class SelectorHBox extends CustomProductHBox implements ICustomProductHBox {
 
@@ -28,8 +26,12 @@ public class SelectorHBox extends CustomProductHBox implements ICustomProductHBo
 		this.getChildren().add(selected);
 		super.initHBox();
 		super.initPriceHBox();
-		if (product.isDiscount())
+		if(product.isDiscount()) {
+			amountLabel.setStyle("	-fx-strikethrough: true;\r\n"
+					+ "	-fx-font-size: 18px;\r\n"
+					+ "	-fx-font-weight: bold;");
 			initDiscount();
+		}
 	}
 
 	private void initDiscount() {
