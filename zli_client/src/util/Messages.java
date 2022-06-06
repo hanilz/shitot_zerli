@@ -1,5 +1,8 @@
 package util;
 
+/**
+ * Commands defined the messages for the notification center.
+ */
 public enum Messages {
 	SELECT_ALL_PRODUCTS, SELECT_ALL_ITEMS, SELECT_ALL_BRANCHES, UPDATE_ORDER, LOGIN_USER, LOG_OUT_USER,
 	SELECT_ALL_USERS, CHANGE_USER_STATUS, INSERT_ACCOUNT_PAYMENT, INSERT_NEW_USER_DETAILS, INSERT_NEW_USER,

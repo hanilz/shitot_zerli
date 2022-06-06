@@ -1,23 +1,57 @@
 package entities;
 
 import java.io.Serializable;
+import java.time.Month;
 import java.util.Date;
 
+/**
+ * This class saves the data of the report after receiving the information from the database.
+ * Provides setters and getters.
+ */
 public class Report implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private int idReport;
+	/**
+	 * Saves the report type.
+	 */
 	private String type;
 	private Date date;
+	/**
+	 * Convert the date to string.
+	 */
 	private String dateToString;
 	private int idBranch;
 	private int quarter;
 	private String year;
+	/**
+	 * Saves the dateRange for the query.
+	 */
 	private String dateRange;
+	/**
+	 * Saving all the information of the branch (and not only the FK of the branch).
+	 */
 	private Branch branch;
+	/**
+	 * Saving all the information of the user to check the user type to init the relevant reports.
+	 */
 	private User user;
+	/**
+	 * Saving the name of the given month.
+	 */
+	private String month;
+	
+	public Report(String dateRange, String type, int idBranch, Date date) {
+		this.dateRange = dateRange;
+		this.type = type;
+		this.idBranch = idBranch;
+		this.user = User.getUserInstance();
+		this.dateToString = date.toString();
+		int currentMonth = Integer.parseInt(dateToString.substring(5,7));
+		this.month = Month.of(currentMonth).name();
+	}
 	
 	public Report(String dateRange, String type, int idBranch) {
 		this.dateRange = dateRange;
@@ -35,6 +69,8 @@ public class Report implements Serializable {
 		this.idBranch = idBranch;
 		this.quarter = quarter;
 		this.user = User.getUserInstance();
+		int currentMonth = Integer.parseInt(dateToString.substring(5,7));
+		this.month = Month.of(currentMonth).name();
 	}
 
 	public Report(int idBranch, String year, int quarter) {
@@ -49,6 +85,20 @@ public class Report implements Serializable {
 		this.date = date;
 		this.idBranch = idBranch;
 		this.user = User.getUserInstance();
+		int currentMonth = Integer.parseInt(dateToString.substring(5,7));
+		this.month = Month.of(currentMonth).name();
+	}
+
+	/**
+	 * Converts the integer of the current month to String.
+	 */
+	public void setMonth() {
+		int currentMonth = Integer.parseInt(dateToString.substring(5,7));
+		this.month = Month.of(currentMonth).name();
+	}
+
+	public String getMonth() {
+		return month;
 	}
 
 	public String getYear() {
@@ -123,6 +173,9 @@ public class Report implements Serializable {
 		return user;
 	}
 
+	/**
+	 * Checking by a given report, if it's the same idBranch, year and quarter.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof Report))
