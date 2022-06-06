@@ -2,10 +2,11 @@ package entities;
 
 import java.io.Serializable;
 
+/**
+ * branch save location of branch and it's manager id
+ * provides setters and getters for branch
+ */
 public class Branch implements Serializable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private int idBranch;
 	private String city;

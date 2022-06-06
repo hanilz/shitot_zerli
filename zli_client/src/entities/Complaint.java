@@ -2,10 +2,13 @@ package entities;
 
 import java.io.Serializable;
 
+
+/**
+ * Complaint saves a information about complaint status
+ * Each complaint has the id user of the employee who handles it.
+ *
+ */
 public class Complaint implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4951050968131626674L;
 	private int complaintID;
 	private int orderID;
@@ -35,6 +38,9 @@ public class Complaint implements Serializable {
 		this.idUser = idUser;
 	}
 
+	/**
+	 * @return If there is remaining time of the given time to handle the complaint return the amount of time else "DUE"
+	 */
 	private String getRemainingTime(int date) {
 		int minutes = date % 60;
 		int hours = date / 60;
@@ -166,31 +172,4 @@ public class Complaint implements Serializable {
 	public void setIdUser(int idUser) {
 		this.idUser = idUser;
 	}
-
-//	public static void main(String[] args) {
-//		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.ENGLISH);
-//	    Date firstDate = null;
-//	    Date secondDate = new Date(System.currentTimeMillis());
-//		try {
-//			firstDate = sdf.parse("05/17/2022 12:00:00");
-//			secondDate = sdf.parse("06/30/2017 14:12:12");
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//		}
-//		System.out.println(getRemainingTime(firstDate));
-//	}
-
-//	LocalDateTime firstDate = date;
-//	//Date secondDate = new Date(System.currentTimeMillis());
-//	LocalDateTime secondDate = LocalDateTime.now();
-//    System.out.println(firstDate);
-//    System.out.println(secondDate);
-//    long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getLong(null));
-//    long hourDiff = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-//    long MinuteDiff = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
-//    System.out.println(String.format("%02d:%02d",24-hourDiff,60-MinuteDiff%60));
-//    
-//    if(hourDiff<24)
-//    	return String.format("%02d:%02d",hourDiff,MinuteDiff%60);
-//	return "DUE";
 }

@@ -1,10 +1,10 @@
 package entities;
 
+/**
+ * SingletonOrder saves Delivery attributes GreetingCard and singleton attribute
+ *Provides Setters and Getters
+ */
 public class SingletonOrder extends Order {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private static SingletonOrder instance = null;
 	private Delivery delivery = null;
@@ -37,6 +37,9 @@ public class SingletonOrder extends Order {
 		instance = null;
 	}
 
+	/**
+	 * Format:From: (greetingCardFrom), To: (greetingCardTo), Greeting Card: (greetingCardContent)
+	 */
 	public void formatGreetingCard() {
 		if (isGreetingCard) {
 			greetingCardFrom = greetingCardFrom.isEmpty() ? "Anonymous": greetingCardFrom;

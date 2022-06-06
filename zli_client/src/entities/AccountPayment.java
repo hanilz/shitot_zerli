@@ -2,16 +2,22 @@ package entities;
 
 import java.io.Serializable;
 
+/**
+ * Account payment of a user
+ * save user and his payment method
+ * provides getters and setter for payments method
+ */
 public class AccountPayment implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private String fullName;
 	private String cardNumber;
-	private String cardDate;  //format: mm/yy
+	/**
+	 * user card date
+	 * format: mm/yy
+	 */
+	private String cardDate;  
 	private String cardVCC;
 	private User user;
 	private int idUser=-1;

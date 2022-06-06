@@ -435,7 +435,6 @@ public class ServerMessageController {
 			int productID = AnalayzeCommand.insertNewProductToDB((Product) message.get("product"));
 			message.put("response", productID);
 			break;
-
 		default:
 			break;
 		}

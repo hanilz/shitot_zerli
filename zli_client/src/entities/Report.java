@@ -3,10 +3,8 @@ package entities;
 import java.io.Serializable;
 import java.util.Date;
 
+
 public class Report implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private int idReport;
 	private String type;

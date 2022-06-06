@@ -2,11 +2,13 @@ package entities;
 
 import java.io.Serializable;
 
-//this class is used to view a row of orders in the manager screen
+
+/**
+ * ManagerOrderView saves view a row of orders
+ * Provides setters and getters
+ */
 public class ManagerOrderView implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private int idOrder;
 	private Double price;
@@ -39,7 +41,6 @@ public class ManagerOrderView implements Serializable {
 	private String convertToString(int timeTillDelivery) {
 		int minutes = timeTillDelivery%60;
 		int hours = timeTillDelivery/60;
-		// TODO Auto-generated method stub
 		return hours+":"+minutes;
 	}
 	/**
