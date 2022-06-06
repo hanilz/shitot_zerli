@@ -64,12 +64,6 @@ public class ServerFormController implements Initializable {
 	private TextField IPTextField;
 
 	/**
-	 * closing server window button
-	 */
-	@FXML
-	private Button closeButton;
-
-	/**
 	 * connecting to database and server button
 	 */
 	@FXML
@@ -196,15 +190,6 @@ public class ServerFormController implements Initializable {
 		consoleField.setText("Server and Database have disconnected.");
 		connectionTable.refresh();
 	}
-
-	/**Clicking on the exit button, will close the applications and the running threads.
-	 * @param event
-	 */
-	@FXML
-	void closeWindow(MouseEvent event) {
-		closeServerWindow();
-	}
-	
 	
 	/**will close the applications and the running threads.
 	 * 

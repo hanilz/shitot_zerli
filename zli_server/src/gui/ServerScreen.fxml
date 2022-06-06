@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ServerFormController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" stylesheets="@../resources/ServerScreen.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ServerFormController">
    <children>
       <ImageView fitHeight="600.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -24,17 +24,22 @@
       </ImageView>
       <HBox alignment="CENTER" layoutX="33.0" layoutY="51.0" prefHeight="516.0" prefWidth="920.0" spacing="327.0" AnchorPane.leftAnchor="33.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="594.0" prefWidth="293.0">
+            <VBox id="serverConfigVBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="344.0">
                <children>
+                  <ImageView id="flower" fitHeight="93.0" fitWidth="146.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../zli_client/src/resources/icon.png" />
+                     </image>
+                  </ImageView>
                   <VBox prefHeight="55.0" prefWidth="293.0" />
                   <Label text="Server Configuration">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Label>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="108.0">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="108.0">
                      <children>
-                        <Label text="IP:">
+                        <Label prefHeight="27.0" prefWidth="35.0" text="IP:">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -42,9 +47,9 @@
                         <TextField fx:id="IPTextField" text="localhost" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="87.0">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="87.0">
                      <children>
-                        <Label prefHeight="32.0" prefWidth="40.0" text="Port:">
+                        <Label prefHeight="32.0" prefWidth="54.0" text="Port:">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -52,9 +57,9 @@
                         <TextField fx:id="portTextField" text="5555" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="45.0">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="45.0">
                      <children>
-                        <Label prefHeight="32.0" prefWidth="82.0" text="DB Name:">
+                        <Label prefHeight="32.0" prefWidth="100.0" text="DB Name:">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -62,9 +67,9 @@
                         <TextField fx:id="DBNameField" text="zli" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="54.0">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="54.0">
                      <children>
-                        <Label prefHeight="27.0" prefWidth="74.0" text="DB User:">
+                        <Label prefHeight="27.0" prefWidth="88.0" text="DB User:">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -72,9 +77,9 @@
                         <TextField fx:id="DBUserTextField" text="root" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="19.0">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="19.0">
                      <children>
-                        <Label prefHeight="27.0" prefWidth="110.0" text="DB Password:">
+                        <Label prefHeight="27.0" prefWidth="124.0" text="DB Password:">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -90,6 +95,9 @@
                               <Button fx:id="connectButton" mnemonicParsing="false" onMousePressed="#clickOnConnect" text="Connect" />
                               <Button fx:id="disconnectButton" disable="true" mnemonicParsing="false" onMousePressed="#clickOnDisconnect" text="Disconnect" />
                            </children>
+                           <VBox.margin>
+                              <Insets top="-10.0" />
+                           </VBox.margin>
                         </HBox>
                      </children>
                   </VBox>
@@ -98,9 +106,9 @@
                   <Insets top="5.0" />
                </padding>
             </VBox>
-            <VBox alignment="CENTER" prefHeight="552.0" prefWidth="261.0" spacing="46.0">
+            <VBox id="rightSideVBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="499.0" prefWidth="261.0" spacing="46.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white;">
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <Label text="Connnected Clients" />
                         <TableView fx:id="connectionTable" prefHeight="146.0" prefWidth="261.0">
@@ -112,21 +120,27 @@
                         </TableView>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="121.0" style="-fx-background-color: white;">
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="121.0">
                      <children>
                         <Label text="Console" />
-                        <VBox prefHeight="183.0" prefWidth="138.0">
+                        <VBox prefHeight="149.0" prefWidth="261.0">
                            <children>
                               <TextArea fx:id="consoleField" editable="false" prefHeight="107.0" prefWidth="204.0" />
                            </children>
                         </VBox>
+                        <VBox alignment="CENTER">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <children>
+                              <Button fx:id="generateReportsButton" mnemonicParsing="false" onAction="#generateReports" text="Generate Reports" />
+                           </children>
+                        </VBox>
                      </children>
                   </VBox>
-                  <Button fx:id="generateReportsButton" mnemonicParsing="false" onAction="#generateReports" text="Generate Reports" />
                </children>
             </VBox>
          </children>
       </HBox>
-      <Button fx:id="closeButton" layoutX="18.0" layoutY="17.0" mnemonicParsing="false" onMousePressed="#closeWindow" prefHeight="32.0" prefWidth="33.0" text="X" />
    </children>
 </AnchorPane>
