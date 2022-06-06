@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="165.0" prefWidth="547.0" spacing="5.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.GreetingCardVBoxController">
+<VBox id="mainVBox" prefHeight="165.0" prefWidth="547.0" spacing="5.0" stylesheets="@../resources/css/CheckoutPopup.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.GreetingCardVBoxController">
    <children>
       <HBox maxWidth="-Infinity" prefHeight="20.0" prefWidth="554.0">
          <children>
@@ -40,7 +40,7 @@
                      <children>
                         <Label text="From:">
                            <font>
-                              <Font size="14.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
                      </children>
@@ -49,7 +49,7 @@
                      <children>
                         <Label text="To:">
                            <font>
-                              <Font size="14.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
                      </children>
@@ -80,7 +80,7 @@
                      <children>
                         <Label text="Greeting Card:">
                            <font>
-                              <Font size="14.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
                      </children>

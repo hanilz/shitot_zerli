@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="catalogVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="15.0" stylesheets="@../resources/css/CatalogScreen.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.CatalogController">
+<VBox fx:id="catalogVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="15.0" stylesheets="@../resources/css/CatalogScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.CatalogController">
    <children>
       <GridPane id="upperGrid" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="73.0" prefWidth="1172.0">
         <columnConstraints>
@@ -116,7 +116,7 @@
       </GridPane>
       <HBox alignment="TOP_CENTER" prefHeight="603.0" prefWidth="1247.0" spacing="10.0">
          <children>
-            <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="165.0" spacing="5.0">
+            <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="155.0" spacing="5.0">
                <children>
                   <VBox id="filterOptionsLabel" alignment="CENTER" spacing="3.0" style="-fx-background-color: #fcf7f5;">
                      <children>
@@ -125,15 +125,53 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Separator prefWidth="200.0" />
                      </children>
                   </VBox>
-                  <ScrollPane fx:id="filterScrollPane" prefHeight="517.0" prefWidth="140.0">
+                  <ScrollPane fx:id="filterScrollPane" nodeOrientation="RIGHT_TO_LEFT" prefHeight="517.0" prefWidth="144.0">
                      <content>
-                        <VBox prefHeight="200.0" prefWidth="125.0" spacing="5.0">
+                        <VBox nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="125.0" spacing="5.0">
                            <children>
+                              <VBox alignment="BOTTOM_LEFT" spacing="5.0">
+                                 <children>
+                                    <Label text="Price Range:">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox alignment="BOTTOM_LEFT" prefHeight="0.0" prefWidth="120.0" spacing="4.0">
+                                       <children>
+                                          <VBox prefHeight="200.0">
+                                             <children>
+                                                <Label text="From">
+                                                   <font>
+                                                      <Font name="System Bold" size="15.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="52.0" promptText="min" />
+                                             </children>
+                                          </VBox>
+                                          <Label text=":">
+                                             <font>
+                                                <Font name="System Bold" size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <VBox prefHeight="200.0">
+                                             <children>
+                                                <Label text="To">
+                                                   <font>
+                                                      <Font name="System Bold" size="15.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="52.0" promptText="max" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
                               <VBox spacing="5.0">
                                  <children>
+                                    <Separator prefWidth="200.0" />
                                     <Label text="Product Type">
                                        <font>
                                           <Font name="System Bold" size="16.0" />
@@ -255,7 +293,7 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="587.0" prefWidth="255.0" spacing="3.0">
+            <VBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="587.0" prefWidth="270.0" spacing="3.0">
                <children>
                   <HBox alignment="CENTER">
                      <children>
