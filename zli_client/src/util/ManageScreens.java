@@ -10,6 +10,7 @@ import cart.CartController;
 import catalog.CatalogController;
 import catalog.SplashScreenController;
 import client.ClientScreen;
+import client.LandingScreenController;
 import customProduct.CustomProductBuilderController;
 import customerComplaint.ComplaintViewController;
 import customerComplaint.CustomerComplaintHomeController;
@@ -47,7 +48,7 @@ import surveyAnalysis.SurveyAnswersHomeController;
 import surveyAnalysisView.SurveyAnalysisViewHomeController;
 
 /**
- * Controlling flow of screens 
+ * Controlling flow of screens
  */
 public class ManageScreens implements Serializable {
 
@@ -100,8 +101,7 @@ public class ManageScreens implements Serializable {
 
 	/**
 	 * @param url
-	 * @param scene
-	 * Setting the look of specific scene
+	 * @param scene Setting the look of specific scene
 	 */
 	private static void setStyleSheet(URL url, Scene scene) {
 		String[] splitedUrl = url.toString().split("/");
@@ -147,8 +147,7 @@ public class ManageScreens implements Serializable {
 	/**
 	 * @param url
 	 * @param title
-	 * @throws Exception
-	 * Open a popup that can be opened one at a time
+	 * @throws Exception Open a popup that can be opened one at a time
 	 */
 	public static void openPopupFXML(URL url, String title) throws Exception {
 		// setIconApplication();
@@ -156,22 +155,22 @@ public class ManageScreens implements Serializable {
 		Platform.runLater(new Runnable() { // this thread will help us change between scenes and avoid exceptions
 			@Override
 			public void run() {
-		addPopup(popupStage);
-		popupStage.setTitle(title);
-		popupStage.setScene(scene);
-		if (popupStage.getModality() == Modality.NONE)
-			popupStage.initModality(Modality.APPLICATION_MODAL);
-		if (!popupStage.isShowing())
-			popupStage.showAndWait();
-		removePopup(popupStage);
+				addPopup(popupStage);
+				popupStage.setTitle(title);
+				popupStage.setScene(scene);
+				if (popupStage.getModality() == Modality.NONE)
+					popupStage.initModality(Modality.APPLICATION_MODAL);
+				if (!popupStage.isShowing())
+					popupStage.showAndWait();
+				removePopup(popupStage);
 			}
 		});
 	}
+
 	/**
 	 * @param url
 	 * @param title
-	 * @throws Exception
-	 * Open a popup that can be opened more than one at a time
+	 * @throws Exception Open a popup that can be opened more than one at a time
 	 */
 	public static void openPopupUnlimitedFXML(URL url, String title) throws Exception {
 		// setIconApplication();
@@ -179,13 +178,13 @@ public class ManageScreens implements Serializable {
 		Platform.runLater(new Runnable() { // this thread will help us change between scenes and avoid exceptions
 			@Override
 			public void run() {
-		addPopup(popupStage);
-		popupStage.setTitle(title);
-		popupStage.setScene(scene);
-		popupStage.initModality(Modality.NONE);
-		if (!popupStage.isShowing())
-			popupStage.showAndWait();
-		removePopup(popupStage);
+				addPopup(popupStage);
+				popupStage.setTitle(title);
+				popupStage.setScene(scene);
+				popupStage.initModality(Modality.NONE);
+				if (!popupStage.isShowing())
+					popupStage.showAndWait();
+				removePopup(popupStage);
 			}
 		});
 	}
@@ -193,8 +192,7 @@ public class ManageScreens implements Serializable {
 	/**
 	 * @param url
 	 * @return
-	 * @throws IOException
-	 * Setting the scene of a popup
+	 * @throws IOException Setting the scene of a popup
 	 */
 	private static Scene setPopup(URL url) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
@@ -210,10 +208,8 @@ public class ManageScreens implements Serializable {
 		return scene;
 	}
 
-
 	/**
-	 * @param lastScreen
-	 * Setting previous screen to be given lastScreen
+	 * @param lastScreen Setting previous screen to be given lastScreen
 	 */
 	public static void setPreviousScreen(Screens lastScreen)// added
 	{
@@ -221,8 +217,7 @@ public class ManageScreens implements Serializable {
 	}
 
 	/**
-	 * @param stage
-	 * Adding icon to stage
+	 * @param stage Adding icon to stage
 	 */
 	private static void setIconApplication(Stage stage) {
 		stage.getIcons().add(new Image("/resources/icon.png"));
@@ -234,6 +229,7 @@ public class ManageScreens implements Serializable {
 	public static void addPopup(Stage popup) {
 		openedPopups.add(popup);
 	}
+
 	/**
 	 * Remove popup that closed
 	 */
@@ -253,7 +249,7 @@ public class ManageScreens implements Serializable {
 						popup.close();
 					}
 				}
-			});	
+			});
 		}
 		openedPopups.clear();
 	}
@@ -411,6 +407,10 @@ public class ManageScreens implements Serializable {
 				ManageScreens.openPopupFXML(NotificationController.class.getResource("NotificationMainScreen.fxml"),
 						"Notification Center");
 				break;
+			case LANDING:
+				ManageScreens.changeScene(LandingScreenController.class.getResource("LandingScreen.fxml"),
+						"Landing Screen");
+				break;
 			default:
 				break;
 			}
@@ -434,8 +434,7 @@ public class ManageScreens implements Serializable {
 	/**
 	 * Change the main stage to show previous screen
 	 */
-	public static void previousScreen()
-	{
+	public static void previousScreen() {
 		if (previousScreen == Screens.GUEST_HOME || previousScreen == Screens.USER_HOME)
 			home();
 		else
@@ -503,6 +502,8 @@ public class ManageScreens implements Serializable {
 			return "Users Premission";
 		case ADD_SCREENS:
 			return "Add Screens";
+		case LANDING:
+			return "Landing";
 		default:
 			return "";
 		}

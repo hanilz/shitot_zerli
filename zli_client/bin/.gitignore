@@ -1,4 +1,5 @@
 /cart/
+/cartTest/
 /catalog/
 /client/
 /customProduct/
@@ -15,7 +16,6 @@
 /ordersView/
 /registerUser/
 /report/
-/cartTest/
 /survey/
 /surveyAnalysis/
 /surveyAnalysisView/

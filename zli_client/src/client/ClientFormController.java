@@ -79,8 +79,7 @@ public class ClientFormController implements Initializable{
 	 * connected to the server-ip
 	 */
 	private void changeSceneToCatalog() {
-		ManageScreens.changeScreenTo(Screens.CATALOG_SPLASH_SCREEN);
-
+		ManageScreens.changeScreenTo(Screens.LANDING);
 	}
 
 	/**
