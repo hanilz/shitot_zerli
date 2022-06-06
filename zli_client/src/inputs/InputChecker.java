@@ -157,7 +157,7 @@ public class InputChecker {
 	 * @return true or false based on the parameters.
 	 */
 	public static boolean isGreetingCardInputVaild(String from, String to) {
-		if (!from.matches("^[ A-Za-z]+$") || !to.matches("^[ A-Za-z]+$"))
+		if (!(from.matches("^[ A-Za-z]+$") || from.isEmpty()) || !to.matches("^[ A-Za-z]+$"))
 			return false;
 		return true;
 	}

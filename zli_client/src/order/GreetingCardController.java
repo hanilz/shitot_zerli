@@ -65,7 +65,7 @@ public class GreetingCardController implements Initializable {
 			switchFillAllFieldsLabel(
 					"* Please fill 'to' and 'greeting card' fields in order to proceed with the order!");
 		} else if (isIncludedCheckBox.isSelected()
-				&& !InputChecker.isGreetingCardInputVaild(greetingCardTextArea.getText(), toTextField.getText())) {
+				&& !InputChecker.isGreetingCardInputVaild(fromTextField.getText(), toTextField.getText())) {
 			switchFillAllFieldsLabel("* Please check the input of the greeting card!");
 		} else if (isIncludedCheckBox.isSelected() && !InputChecker.isGreetingCardInputNotLong(fromTextField.getText(),
 				toTextField.getText(), greetingCardTextArea.getText())) {
