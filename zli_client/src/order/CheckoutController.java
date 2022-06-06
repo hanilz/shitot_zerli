@@ -32,6 +32,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
@@ -41,6 +42,15 @@ import util.Screens;
 import util.UserType;
 
 public class CheckoutController implements Initializable {
+
+	@FXML
+	private HBox storeCreditLeftHBox;
+
+	@FXML
+	private Label totalDiscountsLabel;
+
+	@FXML
+	private Label storeCreditLeftLabel;
 
 	@FXML
 	private Button backButton;
@@ -114,8 +124,11 @@ public class CheckoutController implements Initializable {
 		initPaymentMethodComboBox();
 
 		storeCreditAmountLabel.setText(InputChecker.price(User.getUserInstance().getStoreCredit()));
-		if(User.getUserInstance().getStoreCredit() == 0)
+		if (User.getUserInstance().getStoreCredit() == 0)
 			useStoreCreditCheckBox.setDisable(true);
+
+		deliveryFee = (SingletonOrder.getInstance().getIsPickup() ? 0
+				: (SingletonOrder.getInstance().getIsExpress() ? 30 : 15));
 
 		deliveryFeeLabel.setText(InputChecker.price(deliveryFee));
 
@@ -128,7 +141,8 @@ public class CheckoutController implements Initializable {
 		totalPriceBeforeCredit += calculateDiscount();
 		totalPrice = totalPriceBeforeCredit;
 		totalLabel.setText(InputChecker.price(totalPriceBeforeCredit));
-		
+		totalDiscountsLabel.setText(InputChecker.price(Cart.getInstance().getTotalDiscountPrice() - Cart.getInstance().getTotalPrice()));
+
 		greetingCardButton.setDisable(!SingletonOrder.getInstance().getIsGreetingCard());
 	}
 
@@ -157,7 +171,7 @@ public class CheckoutController implements Initializable {
 
 			addToLists(product);
 		}
-		cartTotal = Cart.getInstance().getTotalPrice();
+		cartTotal = Cart.getInstance().getTotalDiscountPrice();
 		cartSummaryTotalLabel.setText(InputChecker.price(cartTotal));
 		cartTotalLabel.setText(InputChecker.price(Cart.getInstance().getTotalPrice()));
 	}
@@ -189,10 +203,10 @@ public class CheckoutController implements Initializable {
 				ManageScreens.openPopupFXML(getClass().getResource("PaymentSuccessfulPopup.fxml"),
 						"Payment Successful!");
 				ManageScreens.getPopupStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
-			          public void handle(WindowEvent we) {
-			        	  PaymentSuccessfulController.restAndReturn();
-			          }
-			      });        
+					public void handle(WindowEvent we) {
+						PaymentSuccessfulController.restAndReturn();
+					}
+				});
 
 			}
 		} catch (Exception e) {
@@ -407,6 +421,8 @@ public class CheckoutController implements Initializable {
 
 		storeCreditUsedLabel.setText(InputChecker.price(usedStoreCredit));
 		totalLabel.setText(InputChecker.price(totalPrice));
+		
+		storeCreditLeftHBox.setVisible(false);
 	}
 
 	private void calculateUsedStoreCredit() {
@@ -416,6 +432,9 @@ public class CheckoutController implements Initializable {
 
 		storeCreditUsedLabel.setText(InputChecker.price(-usedStoreCredit));
 		totalLabel.setText(InputChecker.price(totalPrice));
+		
+		storeCreditLeftHBox.setVisible(true);
+		storeCreditLeftLabel.setText(InputChecker.price(User.getUserInstance().getStoreCredit() - usedStoreCredit));
 	}
 
 	// for getting all account payment methods for the account payment ComboBox
