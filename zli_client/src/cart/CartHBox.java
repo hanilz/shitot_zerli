@@ -1,6 +1,8 @@
 package cart;
 
 import entities.Cart;
+import entities.CustomProduct;
+import entities.Product;
 import entities.ProductsBase;
 import inputs.InputChecker;
 import javafx.beans.value.ChangeListener;
@@ -19,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import util.ManageScreens;
 
 public class CartHBox extends HBox {
 	private Cart cart = Cart.getInstance();
@@ -73,9 +76,25 @@ public class CartHBox extends HBox {
 		removeButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				cart.removeFromCart(product);
-				CartController.connectionWithCartHBox("refresh cart");
-				CartController.instance.clearCartOverview(product);
+				String prompt = "";
+				String title = "";
+				if(product instanceof CustomProduct) {
+					prompt = "Are you sure you want to remove this custom product from the cart?";
+					title = "Remove Custom Product From Cart";
+				}
+				else if (product instanceof Product) {
+					prompt = "Are you sure you want to remove this product from the cart?";
+					title = "Remove Product From Cart";
+				}
+				else {
+					prompt = "Are you sure you want to remove this item from the cart?";
+					title = "Remove Item From Cart";
+				}
+				if(ManageScreens.getYesNoDecisionAlert(title, "", prompt)) {
+					cart.removeFromCart(product);
+					CartController.connectionWithCartHBox("refresh cart");
+					CartController.instance.clearCartOverview(product);
+				}
 			}
 		});
 

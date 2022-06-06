@@ -1,6 +1,8 @@
 package cart;
 
 import customProduct.CustomProductHBox;
+import entities.CustomProduct;
+import entities.Product;
 import entities.ProductsBase;
 import inputs.InputChecker;
 import javafx.event.ActionEvent;
@@ -10,6 +12,7 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import util.ManageScreens;
 
 public class ProductOverviewEditHBox extends CustomProductHBox {
 	private int quantity = 1;
@@ -42,7 +45,19 @@ public class ProductOverviewEditHBox extends CustomProductHBox {
 		removeButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				cartProductOverviewVBox.removeHBoxFromOverview(instance);
+				String prompt = "";
+				String title = "";
+				if (product instanceof Product) {
+					prompt = "Are you sure you want to remove this product from the custom product?";
+					title = "Remove Product From Custom Product";
+				}
+				else {
+					prompt = "Are you sure you want to remove this item from the custom product?";
+					title = "Remove Item From Custom Product";
+				}
+				if(ManageScreens.getYesNoDecisionAlert(title, "", prompt)) {
+					cartProductOverviewVBox.removeHBoxFromOverview(instance);
+				}
 			}
 		});
 		priceHBox.setSpacing(5);
