@@ -14,13 +14,27 @@ import util.Screens;
 
 /**
  * @author dolev
- *User Button and Icon that Shows On User Home
+ *[VBox] User card(VBox function as button) and icon that shows on user home screen
  */
 public class HomeVBox extends VBox {
+	
+	/**
+	 * Home user card icon
+	 */
 	private ImageView image;
+	/**
+	 * Home user card name
+	 */
 	private Label cardName;
+	/**
+	 * Home user card interaction cause to change to changeToScreen 
+	 */
 	private Screens changeToScreen;
 
+	/**
+	 * @param changeToScreen Screen set the card action,image and name
+	 * Setting a card on user home screen by the screen
+	 */
 	public HomeVBox(Screens changeToScreen) {
 		this.setId("buttonCard");
 		this.changeToScreen = changeToScreen;
@@ -33,7 +47,7 @@ public class HomeVBox extends VBox {
 	}
 
 	/**
-	 * Setting label and Icon
+	 * Setting label and icon on the card
 	 */
 	public void init() {
 		this.setPadding(new Insets(10));

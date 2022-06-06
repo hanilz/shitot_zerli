@@ -31,26 +31,42 @@ import ordersView.CustomerOrderView;
 import server.ServerController;
 import surveyAnalysis.QuestionAnswer;
 
+/**
+ * This class will help us the control all the messages that the server receives
+ * and the server sending. for example: handling all the queries that the client
+ * sending.
+ */
 public class ServerMessageController {
 
+	/**
+	 * Instance if the controller(singleton)
+	 */
 	private static ServerMessageController instance = null;
+	/**
+	 * Data structure to transfer information between server and client 
+	 */
 	private HashMap<String, Object> message;
+	/**
+	 * The response the server make
+	 */
 	private String response;
 
+	/**
+	 * Constructor for singleton purpose
+	 */
 	private ServerMessageController() {
 	}
 
+	/**
+	 * @return instance of controller (singleton)
+	 */
 	public static ServerMessageController getServerMessageController() {
 		if (instance == null)
 			instance = new ServerMessageController();
 		return instance;
 	}
 
-	/**
-	 * This class will help us the control all the messages that the server receives
-	 * and the server sending. for example: handling all the queries that the client
-	 * sending.
-	 */
+	
 
 	/**
 	 * handleMessages handles the messages that the client send to the server. This
@@ -426,6 +442,9 @@ public class ServerMessageController {
 		sendToClient(client);
 	}
 
+	/**
+	 * Send to a given client the message the server prepared
+	 */
 	private void sendToClient(ConnectionToClient client) {
 		try {
 			client.sendToClient(message);

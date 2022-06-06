@@ -8,8 +8,15 @@ import java.util.HashMap;
 import client.ClientFormController;
 import entities.User;
 
+/**
+ * @author dolev
+ *Handle common actions for all clients  
+ */
 public class ManageClients {
 	
+	/**
+	 * Disconnecting client from user and server
+	 */
 	public static void exitClient() {
 		try {
 			if (ClientFormController.client.isConnected()) {
@@ -31,6 +38,10 @@ public class ManageClients {
 			ex.printStackTrace();
 		}
 	}
+	/**
+	 * @param type Type of user
+	 * @return default home screen of user by his type 
+	 */
 	public static ArrayList<Screens> getUserScreens(UserType type){//assumed user logged in 
 		switch(type) {
 		case CEO:

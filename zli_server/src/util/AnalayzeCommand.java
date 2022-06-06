@@ -179,6 +179,9 @@ public class AnalayzeCommand {
 		}
 	}
 
+	/**
+	 * @return User buttons that are used in the specific user home screen
+	 */
 	public static ArrayList<Screens> getUserHomeScreens(int userId, UserType userType) {
 		Connection conn;
 		ArrayList<Screens> userHomeScreens = new ArrayList<Screens>();
@@ -204,6 +207,12 @@ public class AnalayzeCommand {
 		return userHomeScreens;
 	}
 
+	/**
+	 * Given user name and password looking in DB to see if such user exist and able to login 
+	 * if so add to hashMap details of the user and update DB that this user is logged
+	 * else return reason of failure 
+	 *  @return HashMap contains details of login
+	 */
 	public static HashMap<String, Object> loginUser(String username, String password) {
 		Connection conn;
 		Status status = Status.NOT_REGISTERED;
@@ -247,6 +256,10 @@ public class AnalayzeCommand {
 		return login;// default for any throw would be unregistered
 	}
 
+	/**
+	 *If user logged in in DB then log him out in DB 
+	 * @return if logged out properly return true else false
+	 */
 	public static boolean logoutUser(int idUser) {
 		Connection conn;
 		conn = DataBaseController.getConn();
@@ -287,6 +300,10 @@ public class AnalayzeCommand {
 		System.out.println("returned users");
 		return users;
 	}
+	/**
+	 * Get all employees in array
+	 * @return array of employees details
+	 */
 	public static ArrayList<ManageUsers> selectAllEmployee() {
 		System.out.println("getting all employee");
 		ArrayList<ManageUsers> users = new ArrayList<>();
@@ -313,7 +330,6 @@ public class AnalayzeCommand {
 
 	// this methods gets an Account id and changes the status of the user
 	public static String changeUserStatus(Object object) {
-
 		System.out.println("Changing user status, id: " + (int) object);
 		Connection conn = DataBaseController.getConn();
 		ResultSet rs;
@@ -1548,6 +1564,10 @@ public class AnalayzeCommand {
 		return true;
 	}
 
+	/**
+	 * Adding a specific user list of screens to DB
+	 * @return If all screens were added to DB
+	 */
 	public static boolean insertScreens(Integer id, ArrayList<Screens> userScreen) {
 		Connection conn = DataBaseController.getConn();
 		String query = "DELETE FROM user_screen WHERE idUser = ?;";
@@ -1870,6 +1890,9 @@ public class AnalayzeCommand {
 		return idInserted;
 	}
 
+	/**
+	 * Disconnecting all user in DB
+	 */
 	public static void disconnectAllUser() {
 		Connection conn = DataBaseController.getConn();
 		String query = "UPDATE users SET isLogin=0;";
