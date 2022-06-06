@@ -31,26 +31,41 @@ import ordersView.CustomerOrderView;
 import server.ServerController;
 import surveyAnalysis.QuestionAnswer;
 
+/**
+ * This class will help us the control all the messages that the server receives
+ * and the server sending. for example: handling all the queries that the client
+ * sending. ServerMessageController is a singleton class.
+ *
+ */
 public class ServerMessageController {
 
+	/**
+	 * To limit the instance of the object using singleton design pattern.
+	 */
 	private static ServerMessageController instance = null;
+	/**
+	 * used for to send message back to client.
+	 */
 	private HashMap<String, Object> message;
+	/**
+	 * response for the client if the query succeded or not.
+	 */
 	private String response;
 
 	private ServerMessageController() {
 	}
 
+	/**
+	 * To get the instance of the ServerMessageController so the client can send
+	 * requests to the server.
+	 * 
+	 * @return ServerMessageController instance
+	 */
 	public static ServerMessageController getServerMessageController() {
 		if (instance == null)
 			instance = new ServerMessageController();
 		return instance;
 	}
-
-	/**
-	 * This class will help us the control all the messages that the server receives
-	 * and the server sending. for example: handling all the queries that the client
-	 * sending.
-	 */
 
 	/**
 	 * handleMessages handles the messages that the client send to the server. This
@@ -246,7 +261,8 @@ public class ServerMessageController {
 			message.put("response", complaints);
 			break;
 		case CLOSE_COMPLAINT:
-			boolean ans = AnalayzeCommand.setComlaintClosedAndRefund((Integer) message.get("Complaint Number"),(Double) message.get("refund"));
+			boolean ans = AnalayzeCommand.setComlaintClosedAndRefund((Integer) message.get("Complaint Number"),
+					(Double) message.get("refund"));
 			message.put("response", ans);
 			break;
 		case GET_ORDER_SUM:
@@ -272,7 +288,8 @@ public class ServerMessageController {
 			message.put("response", orders);
 			break;
 		case APPROVE_ORDER:
-			boolean approve = AnalayzeCommand.approveOrder((Integer) message.get("order id"),(String)message.get("orderType"));
+			boolean approve = AnalayzeCommand.approveOrder((Integer) message.get("order id"),
+					(String) message.get("orderType"));
 			message.put("response", approve);
 			break;
 		case CANCEL_ORDER:
@@ -302,7 +319,8 @@ public class ServerMessageController {
 			message.put("response", questions);
 			break;
 		case UPLOAD_FILE:
-			boolean uploaded = AnalayzeCommand.uploadFileToDB((File) message.get("FILE"),(Integer) message.get("surveyID")); //and then send saveFileToDB
+			boolean uploaded = AnalayzeCommand.uploadFileToDB((File) message.get("FILE"),
+					(Integer) message.get("surveyID")); // and then send saveFileToDB
 			message.put("response", uploaded);
 			break;
 		case FETCH_FILES:
@@ -359,7 +377,7 @@ public class ServerMessageController {
 		case FETCH_ORDER_CONTENT:
 			HashMap<ProductsBase, Integer> productsInOrder = new HashMap<>();
 			productsInOrder.putAll(AnalayzeCommand.getOrderCustomProducts((Integer) message.get("orderID")));
-			productsInOrder.putAll( AnalayzeCommand.getOrderProducts((Integer) message.get("orderID")));
+			productsInOrder.putAll(AnalayzeCommand.getOrderProducts((Integer) message.get("orderID")));
 			productsInOrder.putAll(AnalayzeCommand.getOrderItems((Integer) message.get("orderID")));
 			message.put("response", productsInOrder);
 			break;
@@ -426,6 +444,10 @@ public class ServerMessageController {
 		sendToClient(client);
 	}
 
+	/**
+	 * sendToClient will send the message after the server executed the query frrom the database.
+	 * @param client
+	 */
 	private void sendToClient(ConnectionToClient client) {
 		try {
 			client.sendToClient(message);
