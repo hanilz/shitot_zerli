@@ -66,7 +66,7 @@ public class SurveyController implements Initializable{
     	HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.SUBMIT_SURVEY);
 		message.put("answers", answers);
-		Object response = ClientFormController.client.accept(message);
+		ClientFormController.client.accept(message);
     	ManageScreens.changeScreenTo(Screens.SURVEY_HOME);
     	ManageScreens.displayAlert("Survey Saved", "Thank you for filling our survey!\nYour opinion really matters to us!");
     }

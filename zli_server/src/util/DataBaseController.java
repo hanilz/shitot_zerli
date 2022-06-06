@@ -12,6 +12,9 @@ import java.util.List;
  *
  */
 public class DataBaseController {
+	/**
+	 * DatabaseController is singleton, there is only one conn to connect the database.
+	 */
 	private static Connection conn = null;
 
 	/**
@@ -73,6 +76,11 @@ public class DataBaseController {
 		return buff.toString();
 	}
 
+	/**
+	 * configures the driver for the JDBC API
+	 * @return String
+	 */
+	@SuppressWarnings("deprecation")
 	private static String configDriver() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();

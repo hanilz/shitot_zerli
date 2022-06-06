@@ -25,7 +25,7 @@ public class ManageClients {
 					message.put("logout", User.getUserInstance().getIdUser());
 					User.getUserInstance().logout();
 				}
-				Object response = ClientFormController.client.accept(message);
+				ClientFormController.client.accept(message);
 				ClientFormController.client.closeConnection();
 				System.out.println("disconnected! yayyyy");
 			} else {
