@@ -1,7 +1,6 @@
 package util;
 
 /**
- * @author dolev
  *Types of user in the system 
  */
 public enum UserType {

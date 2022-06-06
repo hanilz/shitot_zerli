@@ -11,7 +11,7 @@ import util.Screens;
 import util.UserType;
 
 /**
- * @author dolev Logged in User(singleton) in the current system
+ * Logged in User(singleton) in the current system
  */
 public class User implements Serializable {
 

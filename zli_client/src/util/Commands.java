@@ -1,7 +1,6 @@
 package util;
 
 /**
- * @author dolev
  * Commands defined between server and client
  */
 public enum Commands {

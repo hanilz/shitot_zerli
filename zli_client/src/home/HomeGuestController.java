@@ -7,7 +7,7 @@ import util.ManageScreens;
 import util.Screens;
 
 /**
- * @author dolev Guest Home Screen - Allowing to Exit And To Start A Purchase
+ * Guest Home Screen - Allowing to Exit And To Start A Purchase
  *
  */
 public class HomeGuestController{

@@ -1,7 +1,6 @@
 package util;
 
 /**
- * @author dolev
  *Screen the defined for client in the system 
  */
 public enum Screens {

@@ -1,7 +1,6 @@
 package util;
 
 /**
- * @author dolev
  *User(client) status in the system
  */
 public enum Status {
