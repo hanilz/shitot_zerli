@@ -21,7 +21,6 @@ import server.ServerController;
 import util.ClientDetails;
 import util.DataBaseController;
 import util.ImportUsers;
-import util.ManageScreens;
 
 
 /**
@@ -40,6 +39,9 @@ public class ServerFormController implements Initializable {
 	@FXML
 	private TextField DBNameField;
 	
+    /**
+     * import button for the external database to import users into zli server
+     */
     @FXML
     private Button importButton;
 
@@ -91,6 +93,9 @@ public class ServerFormController implements Initializable {
 	@FXML
 	private TextArea consoleField;
 	
+    /**
+     * GenerateReport button to generate for each store the report when it's the end of the month
+     */
     @FXML
     private Button generateReportsButton;
 
@@ -135,7 +140,7 @@ public class ServerFormController implements Initializable {
 		if (DataBaseController.isConnected) {
 			try {
 				if(isImported) {
-					String messageInsert = ImportUsers.insertIntoZliDB();
+					String messageInsert = ImportUsers.insertUsersIntoZliDB();
 					buff.append(messageInsert);
 					if(messageInsert.contains("Users already"))
 						importButton.setDisable(true);
@@ -160,6 +165,11 @@ public class ServerFormController implements Initializable {
 		// connectionTable.getItems().addAll(ServerController.clients);
 	}
 	
+	/**
+	 * The parameters that given by the user, it will set the conncetion the database.
+	 * If the parameters are illegal, it will return false and will not connect to the database.
+	 * @return true or false, based on the parameters that given by the user.
+	 */
 	private boolean getConnectionFieldsAndConnect() {
 		String ip = IPTextField.getText();
 		String dbName = DBNameField.getText();
@@ -208,6 +218,9 @@ public class ServerFormController implements Initializable {
 		System.exit(0);
 	}
 
+	/**
+	 * The function disconnects from the OCSF Server and from the database.
+	 */
 	private void disconnectServerAndDB() {
 		sv.disconnectServer();
 		DataBaseController.Disconnect();
@@ -239,6 +252,11 @@ public class ServerFormController implements Initializable {
 		connectionTable.setItems(ServerController.clients);
 	}
 	
+    /**
+     * If the users clicked on the import button when he connected to the externalDB, 
+     * it will save the users into list to insert them into zli DB.
+     * @param mouseEvent
+     */
     @FXML
     void importUsersToZliAction(MouseEvent event) {
     	if(!getConnectionFieldsAndConnect() || DBNameField.getText().contains("zli")) {
@@ -260,11 +278,18 @@ public class ServerFormController implements Initializable {
 		return sfc;
 	}
 	
+	/**
+	 * If client connected to the server, it will refersh the table for the new clients that connected.
+	 */
 	public void refreshClientsTable() {
 		connectionTable.refresh();
 	}
 	
 
+    /**
+     * If the user clicked on generateReport, it will generate the reports if it's the end of the month.
+     * @param ActionEvent
+     */
     @FXML
     void generateReports(ActionEvent event) {
     	sv.genrateReportCommand(new Date());
