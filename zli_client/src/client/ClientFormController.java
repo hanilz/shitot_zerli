@@ -13,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.WindowEvent;
 import util.ManageClients;
 import util.ManageScreens;
@@ -62,6 +61,9 @@ public class ClientFormController implements Initializable{
 		changeSceneToCatalog();
 	}
 	
+	/**
+	 * Disconnectiong the client from the server after the user clicked on 'X' button.
+	 */
 	public void exitFromWindow() {
 		ManageScreens.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {  // Windows X button pressed
 			@Override
@@ -81,6 +83,10 @@ public class ClientFormController implements Initializable{
 
 	}
 
+	/**
+	 * If the user clicking on enter rather on 'Connect to Server' button.
+	 * @param txt
+	 */
 	private void setTextBehaviour(Node txt) {
 		txt.setOnKeyReleased(event -> {
 			if (event.getCode() == KeyCode.ENTER) {
@@ -89,6 +95,9 @@ public class ClientFormController implements Initializable{
 		});
 	}
 
+	/**
+	 * Initialize the behaviour when the user clicks on enter rather on the button.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		setTextBehaviour(ipTextField);		

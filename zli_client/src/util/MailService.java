@@ -9,11 +9,21 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * Using this class, the application can send emails (for exmaple: if the manager accepted the order, and etc).
+ * It's saves the details of the host (using gmail), user of the email and password.
+ */
 public class MailService {
 	private static String host = "smtp.gmail.com";
 	private static String user = "zlimessager@gmail.com";
 	private static String password = "shitotbraude123@";
 
+	/**
+	 * Using sendEmailToUser, it uses the activation and mail API to send the email to the customer using zli email.
+	 * @param userEmail
+	 * @param emailSubject
+	 * @param message
+	 */
 	public static void sendEmailToUser(String userEmail, String emailSubject, String message) {
 		try {
 			boolean sessionDebug = false;
@@ -41,6 +51,10 @@ public class MailService {
 		}
 	}
 
+	/**
+	 * To configure activation and mail API to use sendEmailToUser method.
+	 * @return props of the current system.
+	 */
 	private static Properties configureEmailAPI() {
 		Properties props = System.getProperties();
 		props.put("mail.smtp.starttls.enable", "true");

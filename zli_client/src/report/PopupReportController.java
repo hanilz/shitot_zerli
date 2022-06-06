@@ -14,94 +14,166 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+/**
+ * This class displays the income or orders report after receiving the data from
+ * the ReportController.
+ */
 public class PopupReportController implements Initializable {
 
+	/**
+	 * For display the branch of the reported that selected.
+	 */
 	@FXML
-    private Label branchLabel;
+	private Label branchLabel;
 
-    @FXML
-    private VBox itemTypeVBox;
+	/**
+	 * To init the item types to the itemTypeVBox.
+	 */
+	@FXML
+	private VBox itemTypeVBox;
 
-    @FXML
-    private HBox itemsHBox;
+	/**
+	 * The content of the report that selected.
+	 */
+	@FXML
+	private VBox mainVBox;
 
-    @FXML
-    private VBox mainVBox;
+	/**
+	 * To init the product types to the productTypeVBox.
+	 */
+	@FXML
+	private VBox productTypeVBox;
 
-    @FXML
-    private VBox productTypeVBox;
+	/**
+	 * To init the month of the report that selected.
+	 */
+	@FXML
+	private Label quraterLabel;
 
-    @FXML
-    private HBox productsHBox;
+	/**
+	 * To init the lables of the refunds when the income report selected.
+	 */
+	@FXML
+	private HBox refundHbox;
 
-    @FXML
-    private Label quraterLabel;
+	@FXML
+	private Separator refundSeperator;
 
-    @FXML
-    private HBox refundHbox;
+	/**
+	 * To init the total refunds of the income report.
+	 */
+	@FXML
+	private Label refundsLabel;
 
-    @FXML
-    private Separator refundSeperator;
+	/**
+	 * To init the title of the items label.
+	 */
+	@FXML
+	private Label reportTypeItemsLabel;
 
-    @FXML
-    private Label refundsLabel;
+	/**
+	 * To init the report type that selected.
+	 */
+	@FXML
+	private Label reportTypeLabel;
 
-    @FXML
-    private Label reportTypeItemsLabel;
+	/**
+	 * To init the title of the products label.
+	 */
+	@FXML
+	private Label reportTypeProductsLabel;
 
-    @FXML
-    private Label reportTypeLabel;
+	/**
+	 * To init the total income/orders of the customProducts.
+	 */
+	@FXML
+	private Label totalCustomLabel;
 
-    @FXML
-    private Label reportTypeProductsLabel;
+	/**
+	 * To init the title of the total income/sales based on the report type.
+	 */
+	@FXML
+	private Label totalIncomeLabel;
 
-    @FXML
-    private Label totalCustomLabel;
+	/**
+	 * To init the total income/orders based on the branch.
+	 */
+	@FXML
+	private Label totalIncomeQuantityLabel;
 
-    @FXML
-    private Label totalIncomeLabel;
+	/**
+	 * To init the totalItems of the income/orders report (based on sales or the income).
+	 */
+	@FXML
+	private Label totalItemsLabel;
 
-    @FXML
-    private Label totalIncomeQuantityLabel;
+	@FXML
+	private VBox totalItemsVBox;
 
-    @FXML
-    private Label totalItemsLabel;
+	/**
+	 * To init the totalProducts of the income/orders report (based on sales or the income).
+	 */
+	@FXML
+	private Label totalProductsLabel;
 
-    @FXML
-    private VBox totalItemsVBox;
+	@FXML
+	private VBox totalProductsVBox;
 
-    @FXML
-    private Label totalProductsLabel;
+	/**
+	 * To init the total refunds title.
+	 */
+	@FXML
+	private Label totalRefundsLabel;
 
-    @FXML
-    private VBox totalProductsVBox;
+	/**
+	 * To init the title of the total custom products.
+	 */
+	@FXML
+	private Label totalReportTpeCustomLabel;
 
-    @FXML
-    private Label totalRefundsLabel;
+	/**
+	 * To init the title of the items based on the report that selected.
+	 */
+	@FXML
+	private Label totalReportTypeItemsLabel;
 
-    @FXML
-    private Label totalReportTpeCustomLabel;
+	/**
+	 * To init the title of the products based on the report that selected.
+	 */
+	@FXML
+	private Label totalReportTypeProductsLabel;
 
-    @FXML
-    private HBox totalReportTypeCustom;
-
-    @FXML
-    private Label totalReportTypeItemsLabel;
-
-    @FXML
-    private Label totalReportTypeProductsLabel;
-
-
+	/**
+	 * Saving the items information after receiving the info from the
+	 * ReportController.
+	 */
 	private static Map<String, Integer> itemsLabels = new HashMap<>();
 
+	/**
+	 * Saving the product information after receiving the info from the
+	 * ReportController.
+	 */
 	private static Map<String, Integer> productsLabels = new HashMap<>();
 
+	/**
+	 * Saving the report that selected.
+	 */
 	private static Report selectedReport;
 
+	/**
+	 * Saving the total income/orders of the customProducts.
+	 */
 	private static Integer totalCustom;
 
+	/**
+	 * Saving the total refunds for the income report.
+	 */
 	private static Integer totalRefunds;
 
+	/**
+	 * initialize the labels based on the report type that selected from the
+	 * ReportController and it's initialize the content of the report.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		switch (selectedReport.getType()) {
@@ -130,6 +202,13 @@ public class PopupReportController implements Initializable {
 		initProductsAndItemsTypesVBox();
 	}
 
+	/**
+	 * initialize the itemVbox based on the item types in the database and
+	 * initialize the productsVbox based on the product types in the database. It's
+	 * initialize the total of the income/orders for each item types or product
+	 * types. Init the total products/items/custom produts income/orders (based on
+	 * the reportType) and setting the name of the branch and the current month.
+	 */
 	private void initProductsAndItemsTypesVBox() {
 		boolean isIncome = selectedReport.getType().equals("income");
 		int totalItems = 0;
@@ -172,7 +251,8 @@ public class PopupReportController implements Initializable {
 			totalProductsLabel.setText(InputChecker.price(totalItems));
 			totalItemsLabel.setText(InputChecker.price(totalProducts));
 			totalCustomLabel.setText(InputChecker.price(totalCustom));
-			totalIncomeQuantityLabel.setText(InputChecker.price(totalItems + totalProducts + totalCustom - totalRefunds));
+			totalIncomeQuantityLabel
+					.setText(InputChecker.price(totalItems + totalProducts + totalCustom - totalRefunds));
 		} else {
 			totalProductsLabel.setText(totalItems + "");
 			totalItemsLabel.setText(totalProducts + "");
@@ -180,30 +260,47 @@ public class PopupReportController implements Initializable {
 			totalIncomeQuantityLabel.setText(totalItems + totalProducts + totalCustom + "");
 		}
 		branchLabel.setText(selectedReport.getBranch().toString());
-		quraterLabel.setText("Q" + selectedReport.getQuarter() + " " + selectedReport.getYear());
+		quraterLabel.setText(selectedReport.getMonth() + " " + selectedReport.getYear());
 
 	}
 
+	/**
+	 * Setting the map of items (depeding on the reportType).
+	 * 
+	 * @param itemsLabels
+	 */
 	public static void setItemsLabels(Map<String, Integer> itemsLabels) {
 		PopupReportController.itemsLabels = itemsLabels;
 	}
 
+	/**
+	 * Setting the map of products (depeding on the reportType).
+	 * @param productsLabels
+	 */
 	public static void setProductsLabels(Map<String, Integer> productsLabels) {
 		PopupReportController.productsLabels = productsLabels;
 	}
 
+	/**
+	 * Setting the selectedReport from the ReportController.
+	 * @param selectedReport
+	 */
 	public static void setSelectedReport(Report selectedReport) {
 		PopupReportController.selectedReport = selectedReport;
 	}
 
+	/**
+	 * Setting the total custom products based on the report type.
+	 * @param totalCustom
+	 */
 	public static void setTotalCustom(Integer totalCustom) {
 		PopupReportController.totalCustom = totalCustom;
 	}
 
-	public static Integer getTotalRefunds() {
-		return totalRefunds;
-	}
-
+	/**
+	 * Setting the total refunds for the income report.
+	 * @param totalRefunds
+	 */
 	public static void setTotalRefunds(Integer totalRefunds) {
 		PopupReportController.totalRefunds = totalRefunds;
 	}
