@@ -56,7 +56,7 @@
             </HBox>
             <ImageView fitHeight="78.0" fitWidth="433.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                <image>
-                  <Image url="@../resources/catalog/startOrder.png" />
+                  <Image url="@../resources/catalog/greetingCardCrum.png" />
                </image>
             </ImageView>
          </children>
