@@ -1,7 +1,6 @@
 package cart;
 
 import entities.Cart;
-import entities.Item;
 import entities.ProductsBase;
 import inputs.InputChecker;
 import javafx.beans.value.ChangeListener;
@@ -49,7 +48,7 @@ public class CartHBox extends HBox {
 	public CartHBox(ProductsBase product, int quantity) {
 		this.product = product;
 		this.quantity = quantity;
-		price = product.isDiscount() ? product.calculateDiscount(): product.getPrice();
+		setPrice(product.isDiscount() ? product.calculateDiscount(): product.getPrice());
 	}
 
 	public void initHBox() {
@@ -202,5 +201,13 @@ public class CartHBox extends HBox {
 
 	public void setProduct(ProductsBase product) {
 		this.product = product;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 }

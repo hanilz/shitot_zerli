@@ -1,19 +1,15 @@
 package catalog;
 
-import entities.Product;
 import entities.ProductsBase;
 import inputs.InputChecker;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class ItemDetailsVBox extends VBox {
@@ -68,7 +64,6 @@ public class ItemDetailsVBox extends VBox {
 	}
 
 	private void initCellsInGrid() {
-		Label cell;
 		mainGrid.add(new Label("Name:"), 0, 0);
 		mainGrid.add(new Label(product.getName()), 1, 0);
 		mainGrid.add(new Label("Type:"), 0, 1);

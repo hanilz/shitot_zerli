@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-import cart.CartHBox;
 import entities.Cart;
 import entities.CustomProduct;
 import entities.Item;
