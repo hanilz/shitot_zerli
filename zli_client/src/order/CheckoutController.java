@@ -30,6 +30,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -102,6 +103,9 @@ public class CheckoutController implements Initializable {
 
 	@FXML
 	private CheckBox useStoreCreditCheckBox;
+	
+    @FXML
+    private ImageView currentProgressImage;
 
 	private ArrayList<CustomProduct> customProducts = new ArrayList<>();
 	private ArrayList<ProductsBase> customProductsBase = new ArrayList<>();
@@ -202,6 +206,7 @@ public class CheckoutController implements Initializable {
 					updateUserTypeToCustomer();
 				ManageScreens.openPopupFXML(getClass().getResource("PaymentSuccessfulPopup.fxml"),
 						"Payment Successful!");
+				currentProgressImage.setImage(new Image("/resources/catalog/checkoutIsDone.png"));
 				ManageScreens.getPopupStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
 					public void handle(WindowEvent we) {
 						PaymentSuccessfulController.restAndReturn();

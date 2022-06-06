@@ -15,6 +15,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
+/**
+ * This class init the row in the adding new product to select items for the new
+ * product in the manageCatalog screen.
+ */
 public class ProductBuilderItemRowController implements Initializable {
 	private Item item;
 	private newProductBuilderController newProductBuilderController;
@@ -38,6 +42,12 @@ public class ProductBuilderItemRowController implements Initializable {
 	@FXML
 	private HBox rowHBox;
 
+	/**
+	 * This method setting for each item in the row, the details of the items that
+	 * we have in the catalog.
+	 * 
+	 * @param item
+	 */
 	public void setItem(Item item) {
 		this.item = item;
 		itemIDLabel.setText(item.getId() + "");
@@ -45,6 +55,12 @@ public class ProductBuilderItemRowController implements Initializable {
 		itemImage.setImage(new Image(item.getImagePath()));
 	}
 
+	/**
+	 * This method adding the item to the new product after the employee selected
+	 * the item.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void addItemToProduct(ActionEvent event) {
 		if (!includeCheckBox.isSelected()) {
@@ -64,18 +80,17 @@ public class ProductBuilderItemRowController implements Initializable {
 	}
 
 	/**
-	 * returns true if the item is selected
+	 * This method checking if item selected to a new product.
 	 * 
-	 * @return
+	 * @return true if the item is selected
 	 */
 	public boolean isSelected() {
 		return includeCheckBox.isSelected();
 	}
 
 	/**
-	 * returns the desired quantity for the product
-	 * 
-	 * @return
+	 * This method gets the quantity that inserted by the employee.
+	 * @return the desired quantity for the product.
 	 */
 	public int getQuantity() {
 		return Integer.parseInt(qtytextField.getText());
@@ -85,6 +100,11 @@ public class ProductBuilderItemRowController implements Initializable {
 		this.newProductBuilderController = newProductBuilderController;
 	}
 
+	/**
+	 * This method initialize the items that we have in the catalog so the employee
+	 * will select item to a new product.
+	 * And this method setting a listener for the qunatityTextField to check a valid input.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		qtytextField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -101,7 +121,6 @@ public class ProductBuilderItemRowController implements Initializable {
 				newProductBuilderController.addItemToProduct(item, quantity);
 			else
 				newProductBuilderController.removeFromProduct(item);
-			System.out.println("" + quantity);
 		});
 	}
 }
