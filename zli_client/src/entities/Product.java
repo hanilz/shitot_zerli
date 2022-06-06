@@ -3,6 +3,10 @@ package entities;
 import java.io.Serializable;
 import java.util.HashMap;
 
+/**
+ * Product saves flowerType,productDescription and items
+ * Provides setters and getters
+ */
 public class Product extends ProductsBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 

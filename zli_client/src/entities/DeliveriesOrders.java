@@ -2,10 +2,11 @@ package entities;
 
 import java.io.Serializable;
 
+/**
+ * Deliveries orders saves the order id and the delivery id
+ * Provides getters and setters
+ */
 public class DeliveriesOrders implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private int idOrder;
 	private int idDelivery;

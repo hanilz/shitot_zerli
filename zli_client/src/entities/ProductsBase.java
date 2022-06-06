@@ -2,10 +2,12 @@ package entities;
 
 import java.io.Serializable;
 
+/**
+ *Product base save attributes 
+ *Provides getters and Setters 
+ */
 public class ProductsBase implements Serializable, Comparable<ProductsBase> {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private int id;
 	protected String name;

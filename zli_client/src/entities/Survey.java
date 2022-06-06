@@ -3,10 +3,12 @@ package entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Survey saves SurveyQuestion and attributes 
+ * Provides setters and getters
+ *
+ */
 public class Survey implements Serializable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6878148869855072143L;
 	private String surveyName;
 	private ArrayList<SurveyQuestion> questions;
@@ -46,6 +48,11 @@ public class Survey implements Serializable{
 		this.questions = questions;
 	}
 
+	/**
+	 * Search the question in the survey
+	 * @param idx
+	 * @return if finds the question in the survey then return it else null 
+	 */
 	public SurveyQuestion getQuestion(int idx) {
 		if (idx >= 0 && idx < questions.size())
 			return questions.get(idx);

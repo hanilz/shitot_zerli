@@ -2,10 +2,11 @@ package entities;
 
 import java.io.Serializable;
 
+/**
+ * UserDetails saves attributes
+ * Provides Setters and Getters
+ */
 public class UserDetails implements Serializable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7153997594908851279L;
 	private int idAccount;
 	private String firstName, lastName, id, email, phoneNumber, status;
