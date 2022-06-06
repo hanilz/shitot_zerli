@@ -44,53 +44,56 @@ public class SelectedHBox extends CustomProductHBox implements ICustomProductHBo
 		super.initPriceHBox();
 		priceHBox.getChildren().add(removeButton);
 		amountLabel.setText(InputChecker.price(getPrice()));
-		if(product.isDiscount())
+		if (product.isDiscount()) {
+			amountLabel.setStyle(
+					"	-fx-strikethrough: true;\r\n" + "	-fx-font-size: 18px;\r\n" + "	-fx-font-weight: bold;");
 			initDiscount();
-		
+		}
+
 	}
-	
+
 	private void initDiscount() {
 		discountLabel.setText(InputChecker.price(product.calculateDiscount() * quantity));
 		amountLabel.setId("originalPriceTxt");
 		discountLabel.setId("discountLabel");
-		priceVBox.getChildren().add(discountLabel);		
+		priceVBox.getChildren().add(discountLabel);
 	}
 
 	private void initQuantityVBox() {
 		quantityLabel = new Label("" + quantity);
 		addQuantity.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-            	++quantity;
-            	if(quantity > 1)
-            		removeQuantity.setDisable(false);
-                quantityLabel.setText("" + quantity);
-                amountLabel.setText(InputChecker.price(quantity * product.getPrice()));		
-                discountLabel.setText(InputChecker.price(quantity * product.calculateDiscount()));
-                CustomProductBuilderController.updateTotalPriceLabel();
-            }
-        });
-		
-		if(quantity == 1)
+			@Override
+			public void handle(ActionEvent event) {
+				++quantity;
+				if (quantity > 1)
+					removeQuantity.setDisable(false);
+				quantityLabel.setText("" + quantity);
+				amountLabel.setText(InputChecker.price(quantity * product.getPrice()));
+				discountLabel.setText(InputChecker.price(quantity * product.calculateDiscount()));
+				CustomProductBuilderController.updateTotalPriceLabel();
+			}
+		});
+
+		if (quantity == 1)
 			removeQuantity.setDisable(true);
 		removeQuantity.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-            	--quantity;
-            	if(quantity == 1)
-            		removeQuantity.setDisable(true);
-                quantityLabel.setText("" + quantity);
-                amountLabel.setText(InputChecker.price(quantity * product.getPrice()));
-                discountLabel.setText(InputChecker.price(quantity * product.calculateDiscount()));
-                CustomProductBuilderController.updateTotalPriceLabel();
-            }
-        });
-		
+			@Override
+			public void handle(ActionEvent event) {
+				--quantity;
+				if (quantity == 1)
+					removeQuantity.setDisable(true);
+				quantityLabel.setText("" + quantity);
+				amountLabel.setText(InputChecker.price(quantity * product.getPrice()));
+				discountLabel.setText(InputChecker.price(quantity * product.calculateDiscount()));
+				CustomProductBuilderController.updateTotalPriceLabel();
+			}
+		});
+
 		quantityLabel.setId("quantityLabel");
-		
+
 		quantityHBox.setAlignment(Pos.CENTER);
 		quantityHBox.setSpacing(10);
-		
+
 		quantityHBox.getChildren().add(removeQuantity);
 		quantityHBox.getChildren().add(quantityLabel);
 		quantityHBox.getChildren().add(addQuantity);
@@ -99,11 +102,11 @@ public class SelectedHBox extends CustomProductHBox implements ICustomProductHBo
 	public int getQuantity() {
 		return quantity;
 	}
-	
+
 	public double getPrice() {
 		return product.getPrice() * quantity;
 	}
-	
+
 	public double getDiscountedPrice() {
 		return product.calculateDiscount() * quantity;
 	}

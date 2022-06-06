@@ -1,11 +1,9 @@
-
 #tilePane {
-
 	-fx-background-color: #fcf7f5;
 }
 
 #sideCard {
-	-fx-background-color:FAE0DD;
+	-fx-background-color: FAE0DD;
 }
 
 #buttonCard {
@@ -20,6 +18,15 @@
 	-fx-cursor: hand;
 }
 
+#flower {
+	-fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.3), 5.0, 0.0, 0.0,
+		5.0);
+}
+
+#userLabel, #welcome {
+	-fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.2), 5.0, 0.0, 0.0,
+		5.0);
+}
 
 .separator *.line {
 	-fx-border-style: solid;
