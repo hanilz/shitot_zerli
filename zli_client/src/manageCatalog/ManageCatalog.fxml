@@ -71,7 +71,7 @@
             </HBox>
          </children>
       </GridPane>
-      <HBox alignment="CENTER" prefHeight="590.0" prefWidth="1294.0" spacing="10.0">
+      <HBox alignment="CENTER" prefHeight="590.0" prefWidth="1294.0" spacing="5.0">
          <children>
             <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="150.0" spacing="5.0">
                <children>
@@ -85,10 +85,48 @@
                         <Separator prefWidth="200.0" />
                      </children>
                   </VBox>
-                  <ScrollPane fx:id="filterScrollPane" prefHeight="517.0" prefWidth="140.0">
+                  <ScrollPane fx:id="filterScrollPane" nodeOrientation="RIGHT_TO_LEFT">
                      <content>
-                        <VBox prefHeight="200.0" prefWidth="125.0" spacing="5.0">
+                        <VBox nodeOrientation="LEFT_TO_RIGHT" prefHeight="511.0" prefWidth="130.0" spacing="5.0">
                            <children>
+                              <VBox alignment="BOTTOM_LEFT" spacing="5.0">
+                                 <children>
+                                    <Label prefHeight="25.0" prefWidth="99.0" text="Price Range:">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox alignment="BOTTOM_LEFT" prefHeight="0.0" prefWidth="120.0" spacing="4.0">
+                                       <children>
+                                          <VBox prefHeight="200.0">
+                                             <children>
+                                                <Label text="From">
+                                                   <font>
+                                                      <Font name="System Bold" size="15.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="49.0" promptText="min" />
+                                             </children>
+                                          </VBox>
+                                          <Label text=":">
+                                             <font>
+                                                <Font name="System Bold" size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <VBox prefHeight="200.0">
+                                             <children>
+                                                <Label text="To">
+                                                   <font>
+                                                      <Font name="System Bold" size="15.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="49.0" promptText="max" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
                               <VBox spacing="5.0">
                                  <children>
                                     <Label text="Product Type">
@@ -169,9 +207,9 @@
                      </children>
                   </VBox>
                </children>
-               <padding>
-                  <Insets left="10.0" />
-               </padding>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
             </VBox>
             <VBox maxWidth="-Infinity" prefHeight="590.0" prefWidth="1072.0" spacing="7.0" HBox.hgrow="ALWAYS">
                <HBox.margin>
