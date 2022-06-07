@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox id="reportVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="938.0" spacing="10.0" stylesheets="@../resources/css/PopupReport.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.PopupReportController">
+<VBox id="reportVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="938.0" spacing="10.0" stylesheets="@../resources/css/PopupReport.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.PopupReportController">
    <children>
       <GridPane prefHeight="84.0" prefWidth="878.0">
         <columnConstraints>
@@ -183,10 +183,13 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="totalProductsLabel" text="0">
+                        <Label fx:id="totalItemsLabel" text="0">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
                         </Label>
                      </children>
                      <padding>
@@ -201,13 +204,10 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="totalItemsLabel" text="0">
+                        <Label fx:id="totalProductsLabel" text="0">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
                         </Label>
                      </children>
                      <padding>
