@@ -6,6 +6,10 @@ import javafx.scene.input.MouseEvent;
 import util.ManageScreens;
 import util.Screens;
 
+/**
+ * Popup controller class for displaying after a successful creation and
+ * addition of a custom product to the cart.
+ */
 public class customProductSuccessfulController {
 
 	@FXML

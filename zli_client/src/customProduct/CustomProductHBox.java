@@ -19,6 +19,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import util.ManageScreens;
 
+/**
+ * Father component class for hboxes in custom product builder screen.
+ */
 public class CustomProductHBox extends HBox implements ICustomProductHBox {
 	protected ProductsBase product;
 
@@ -85,8 +88,10 @@ public class CustomProductHBox extends HBox implements ICustomProductHBox {
 		imageVBox.setPrefWidth(60);
 		imageVBox.setAlignment(Pos.CENTER);
 		
-		
 		image.setOnMouseReleased(new EventHandler<MouseEvent>() {
+			/**
+			 * Display popup.
+			 */
 			@Override
 			public void handle(MouseEvent event) {
 				if(product instanceof Product)
