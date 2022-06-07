@@ -135,7 +135,7 @@ public class CustomProductBuilderController implements Initializable {
 	 * current screen, it will display an alert to the customer.
 	 */
 	void setAddToCartButton() {
-		EventHandler<ActionEvent> event = new EventHandler<>() {
+		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				if (overViewVBox.getChildren().size() == 0) { // if no items/products were selected
@@ -197,7 +197,7 @@ public class CustomProductBuilderController implements Initializable {
 	 * This method changing screen to catalog if the customer pressed on the button.
 	 */
 	void setBackToCatalogButton() {
-		EventHandler<ActionEvent> event = new EventHandler<>() {
+		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				ManageScreens.changeScreenTo(Screens.CATALOG);
@@ -301,7 +301,7 @@ public class CustomProductBuilderController implements Initializable {
 	 */
 	private void changeBackToCatalogButtonEvent() {
 		backToCatalogButton.setText("Back To Cart");
-		backToCatalogButton.setOnAction(new EventHandler<>() {
+		backToCatalogButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				Cart.getInstance().setProductToEdit(null); // cancel edit
@@ -324,7 +324,7 @@ public class CustomProductBuilderController implements Initializable {
 			addToCartButton.setText("Edit Product");
 			addToCartImage.setImage(new Image("/resources/icons/addToCartIcon.png"));
 		}
-		addToCartButton.setOnAction(new EventHandler<>() {
+		addToCartButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				if (overViewVBox.getChildren().size() == 0) { // if no items/products were selected

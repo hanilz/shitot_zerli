@@ -44,7 +44,7 @@ public class SelectorHBox extends CustomProductHBox implements ICustomProductHBo
 	}
 
 	private void setCheckBoxEvent() {
-		EventHandler<ActionEvent> eventCheckBox = new EventHandler<>() {
+		EventHandler<ActionEvent> eventCheckBox = new EventHandler<ActionEvent>() {
 			/**
 			 * Create or remove selectedHBox from overview.
 			 * 
