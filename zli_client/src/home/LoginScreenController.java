@@ -71,11 +71,15 @@ public class LoginScreenController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		setTextBehaviour(usernameLabel);
 		setTextBehaviour(passwordLabel);
-		if (User.getUserInstance().isUserLoggedIn()) {// one user is already active in this client
-			loginButton.setDisable(true);// user logged in
+		if (isUserLoggedIn()) {// one user is already active in this client
+			disableLoginButton();
 			errorLabel.setText("You already logged in as " + User.getUserInstance().getUsername());
 			errorLabel.setTextFill(Paint.valueOf("RED"));
 		}
+	}
+
+	public boolean isUserLoggedIn() {
+		return User.getUserInstance().isUserLoggedIn();
 	}
 
 	/**
@@ -99,14 +103,18 @@ public class LoginScreenController implements Initializable {
 	 */
 	private boolean isUserInputValid(String username, String password) {
 		boolean isInputValid = false;
-		if (User.getUserInstance().isUserLoggedIn()) {
+		if (isUserLoggedIn()) {
 			setError("Already logged in");
-			loginButton.setDisable(true);
+			disableLoginButton();
 		} else if (username.equals("") || password.equals(""))
 			setError("Please enter Username and Password!");
 		else
 			isInputValid = true;
 		return isInputValid;
+	}
+
+	public void disableLoginButton() {
+		loginButton.setDisable(true);
 	}
 
 	/**
@@ -158,7 +166,6 @@ public class LoginScreenController implements Initializable {
 			setError("User Suspended");
 			break;
 		}
-
 	}
 
 	/**
@@ -252,7 +259,7 @@ public class LoginScreenController implements Initializable {
 	/**
 	 * @param err=Error message present error message on GUI
 	 */
-	private void setError(String err) {
+	public void setError(String err) {
 		errorLabel.setText(err);
 		errorLabel.setTextFill(Paint.valueOf("RED"));
 	}
