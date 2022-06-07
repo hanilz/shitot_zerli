@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -17,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox id="customProdictVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="10.0" stylesheets="@../resources/css/CustomProductBuilder.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="customProduct.CustomProductBuilderController">
+<VBox id="customProdictVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="5.0" stylesheets="@../resources/css/CustomProductBuilder.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="customProduct.CustomProductBuilderController">
    <children>
       <GridPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="73.0" prefWidth="1232.0">
         <columnConstraints>
@@ -57,83 +58,126 @@
       </GridPane>
       <HBox minHeight="-Infinity" prefHeight="406.0" prefWidth="940.0" VBox.vgrow="ALWAYS">
          <children>
-            <VBox id="labels" prefHeight="546.0" prefWidth="113.0" spacing="15.0">
+            <ScrollPane nodeOrientation="RIGHT_TO_LEFT" prefHeight="556.0" prefWidth="139.0">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
-               <children>
-                  <VBox alignment="CENTER" prefHeight="30.0" prefWidth="156.0">
+               <content>
+                  <VBox id="labels" nodeOrientation="LEFT_TO_RIGHT" prefHeight="577.0" prefWidth="123.0" spacing="15.0">
                      <children>
-                        <Label text="Filters">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
+                        <VBox alignment="CENTER" prefHeight="30.0" prefWidth="156.0">
+                           <children>
+                              <Label text="Filters">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Separator prefWidth="200.0" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="BOTTOM_LEFT" spacing="5.0">
+                           <children>
+                              <Label text="Price Range:">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              <HBox alignment="BOTTOM_LEFT" prefHeight="0.0" prefWidth="120.0" spacing="4.0">
+                                 <children>
+                                    <VBox prefHeight="200.0">
+                                       <children>
+                                          <Label text="From">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="52.0" promptText="min" />
+                                       </children>
+                                    </VBox>
+                                    <Label text=":">
+                                       <font>
+                                          <Font name="System Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <VBox prefHeight="200.0">
+                                       <children>
+                                          <Label text="To">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="52.0" promptText="max" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
                         <Separator prefWidth="200.0" />
-                     </children>
-                  </VBox>
-                  <VBox spacing="5.0">
-                     <children>
-                        <Label text="Item Type">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
                         <VBox spacing="5.0">
                            <children>
-                              <CheckBox fx:id="flowerFilterCheckBox" mnemonicParsing="false" text="Flower" />
-                              <CheckBox fx:id="chocolateFilterCheckBox" mnemonicParsing="false" text="Chocolates" />
+                              <Label text="Item Type">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <VBox spacing="5.0">
+                                 <children>
+                                    <CheckBox fx:id="chocolateFilterCheckBox" mnemonicParsing="false" text="Chocolates" />
+                                    <CheckBox fx:id="flowerFilterCheckBox1" mnemonicParsing="false" text="Flower" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin>
+                              </VBox>
                            </children>
-                           <VBox.margin>
-                              <Insets left="10.0" />
-                           </VBox.margin>
+                        </VBox>
+                        <VBox spacing="5.0">
+                           <children>
+                              <Label text="Flower Type">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <VBox spacing="5.0">
+                                 <children>
+                                    <CheckBox fx:id="carnationFilterCheckBox" mnemonicParsing="false" text="Carnation" />
+                                    <CheckBox fx:id="peonyFilterCheckBox" mnemonicParsing="false" text="Peony" />
+                                    <CheckBox fx:id="orchidFilterCheckBox" mnemonicParsing="false" text="Orchid" />
+                                    <CheckBox fx:id="daffodilFilterCheckBox" mnemonicParsing="false" text="Daffodil" />
+                                    <CheckBox fx:id="roseFilterCheckBox" mnemonicParsing="false" text="Rose" />
+                                    <CheckBox fx:id="lilyFilterCheckBox" mnemonicParsing="false" text="Lily" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin>
+                              </VBox>
+                           </children>
+                        </VBox>
+                        <VBox spacing="5.0">
+                           <children>
+                              <Label text="Color">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <VBox spacing="5.0">
+                                 <children>
+                                    <CheckBox fx:id="pinklFilterCheckBox" mnemonicParsing="false" text="Pink" />
+                                    <CheckBox fx:id="whiteFilterCheckBox" mnemonicParsing="false" text="White" />
+                                    <CheckBox fx:id="redFilterCheckBox" mnemonicParsing="false" text="Red" />
+                                    <CheckBox fx:id="yellowFilterCheckBox" mnemonicParsing="false" text="Yellow" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin>
+                              </VBox>
+                           </children>
                         </VBox>
                      </children>
                   </VBox>
-                  <VBox spacing="5.0">
-                     <children>
-                        <Label text="Flower Type">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <VBox spacing="5.0">
-                           <children>
-                              <CheckBox fx:id="carnationFilterCheckBox" mnemonicParsing="false" text="Carnation" />
-                              <CheckBox fx:id="peonyFilterCheckBox" mnemonicParsing="false" text="Peony" />
-                              <CheckBox fx:id="orchidFilterCheckBox" mnemonicParsing="false" text="Orchid" />
-                              <CheckBox fx:id="daffodilFilterCheckBox" mnemonicParsing="false" text="Daffodil" />
-                              <CheckBox fx:id="roseFilterCheckBox" mnemonicParsing="false" text="Rose" />
-                              <CheckBox fx:id="lilyFilterCheckBox" mnemonicParsing="false" text="Lily" />
-                           </children>
-                           <VBox.margin>
-                              <Insets left="10.0" />
-                           </VBox.margin>
-                        </VBox>
-                     </children>
-                  </VBox>
-                  <VBox spacing="5.0">
-                     <children>
-                        <Label text="Color">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <VBox spacing="5.0">
-                           <children>
-                              <CheckBox fx:id="pinklFilterCheckBox" mnemonicParsing="false" text="Pink" />
-                              <CheckBox fx:id="whiteFilterCheckBox" mnemonicParsing="false" text="White" />
-                              <CheckBox fx:id="redFilterCheckBox" mnemonicParsing="false" text="Red" />
-                              <CheckBox fx:id="yellowFilterCheckBox" mnemonicParsing="false" text="Yellow" />
-                           </children>
-                           <VBox.margin>
-                              <Insets left="10.0" />
-                           </VBox.margin>
-                        </VBox>
-                     </children>
-                  </VBox>
-               </children>
-            </VBox>
+               </content>
+            </ScrollPane>
             <Separator orientation="VERTICAL" prefHeight="429.0" prefWidth="13.0" />
             <VBox alignment="TOP_CENTER" prefHeight="544.0" prefWidth="481.0" spacing="10.0">
                <children>
@@ -237,6 +281,6 @@
       </GridPane>
    </children>
    <padding>
-      <Insets bottom="20.0" left="30.0" right="30.0" top="10.0" />
+      <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
    </padding>
 </VBox>
