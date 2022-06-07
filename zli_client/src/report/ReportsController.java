@@ -387,7 +387,7 @@ public class ReportsController implements Initializable {
 							Report selectedReport = getTableView().getItems().get(index);
 							selectedReport.setBranch(branchComboBox.getValue());
 							if (selectedReport.getType().equals("income histogram")
-									&& selectedReport.getType().equals("complaints"))
+									|| selectedReport.getType().equals("complaints"))
 								selectedReport.setDateRange(setDateRangeQuarterForQuery(selectedReport));
 							else {
 								selectedReport.setDateRange(setDateRangeCurrentMonthForQuery(selectedReport));
