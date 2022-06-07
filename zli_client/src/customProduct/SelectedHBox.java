@@ -10,6 +10,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
+/**
+ * Component class for a selected product/item in the right side of custom product builder.
+ * Was created by a SelectorHBox and bound to it.
+ * Will be removed when a user clicks on the checkbox of the SelectorHBox.
+ */
 public class SelectedHBox extends CustomProductHBox implements ICustomProductHBox {
 	private int quantity = 1;
 	private HBox quantityHBox = new HBox();
@@ -29,15 +34,10 @@ public class SelectedHBox extends CustomProductHBox implements ICustomProductHBo
 	public void initHBox() {
 		this.setId("selectedHBox");
 		selectedProduct = this;
+		
 		initQuantityVBox();
-		removeButton.setCursor(Cursor.HAND);
-		removeButton.setStyle("-fx-background-color : Red ; -fx-font-size:16 ; -fx-font-weight: bold");
-		removeButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				CustomProductBuilderController.updateOverViewVBox("remove from overview", selectedProduct);
-			}
-		});
+		initRemoveButton();
+		
 		super.initHBox();
 		priceHBox.setSpacing(5);
 		priceHBox.getChildren().add(quantityHBox);
@@ -49,7 +49,20 @@ public class SelectedHBox extends CustomProductHBox implements ICustomProductHBo
 					"	-fx-strikethrough: true;\r\n" + "	-fx-font-size: 18px;\r\n" + "	-fx-font-weight: bold;");
 			initDiscount();
 		}
+	}
 
+	/**
+	 * Remove selectedHBox from overview and refresh prices
+	 */
+	private void initRemoveButton() {
+		removeButton.setCursor(Cursor.HAND);
+		removeButton.setStyle("-fx-background-color : Red ; -fx-font-size:16 ; -fx-font-weight: bold");
+		removeButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				CustomProductBuilderController.updateOverViewVBox("remove from overview", selectedProduct);
+			}
+		});
 	}
 
 	private void initDiscount() {
@@ -61,33 +74,10 @@ public class SelectedHBox extends CustomProductHBox implements ICustomProductHBo
 
 	private void initQuantityVBox() {
 		quantityLabel = new Label("" + quantity);
-		addQuantity.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				++quantity;
-				if (quantity > 1)
-					removeQuantity.setDisable(false);
-				quantityLabel.setText("" + quantity);
-				amountLabel.setText(InputChecker.price(quantity * product.getPrice()));
-				discountLabel.setText(InputChecker.price(quantity * product.calculateDiscount()));
-				CustomProductBuilderController.updateTotalPriceLabel();
-			}
-		});
+		
+		initAddQuantityButton();
 
-		if (quantity == 1)
-			removeQuantity.setDisable(true);
-		removeQuantity.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				--quantity;
-				if (quantity == 1)
-					removeQuantity.setDisable(true);
-				quantityLabel.setText("" + quantity);
-				amountLabel.setText(InputChecker.price(quantity * product.getPrice()));
-				discountLabel.setText(InputChecker.price(quantity * product.calculateDiscount()));
-				CustomProductBuilderController.updateTotalPriceLabel();
-			}
-		});
+		initRemoveQuantityButton();
 
 		quantityLabel.setId("quantityLabel");
 
@@ -99,14 +89,61 @@ public class SelectedHBox extends CustomProductHBox implements ICustomProductHBo
 		quantityHBox.getChildren().add(addQuantity);
 	}
 
+	private void initRemoveQuantityButton() {
+		if (quantity == 1)
+			removeQuantity.setDisable(true);
+		removeQuantity.setOnAction(new EventHandler<ActionEvent>() {
+			/**
+			 * Remove quantity and refresh prices.
+			 */
+			@Override
+			public void handle(ActionEvent event) {
+				--quantity;
+				if (quantity == 1)
+					removeQuantity.setDisable(true);
+				quantityLabel.setText("" + quantity);
+				amountLabel.setText(InputChecker.price(quantity * product.getPrice()));
+				discountLabel.setText(InputChecker.price(quantity * product.calculateDiscount()));
+				CustomProductBuilderController.updateTotalPriceLabel();
+			}
+		});
+	}
+
+	private void initAddQuantityButton() {
+		addQuantity.setOnAction(new EventHandler<ActionEvent>() {
+			/**
+			 * Add quantity and refresh prices.
+			 */
+			@Override
+			public void handle(ActionEvent event) {
+				++quantity;
+				if (quantity > 1)
+					removeQuantity.setDisable(false);
+				quantityLabel.setText("" + quantity);
+				amountLabel.setText(InputChecker.price(quantity * product.getPrice()));
+				discountLabel.setText(InputChecker.price(quantity * product.calculateDiscount()));
+				CustomProductBuilderController.updateTotalPriceLabel();
+			}
+		});
+	}
+
+	/**
+	 * @return quantity.
+	 */
 	public int getQuantity() {
 		return quantity;
 	}
 
+	/**
+	 * @return product price * quantity.
+	 */
 	public double getPrice() {
 		return product.getPrice() * quantity;
 	}
 
+	/**
+	 * @return product price after discount * quantity.
+	 */
 	public double getDiscountedPrice() {
 		return product.calculateDiscount() * quantity;
 	}
