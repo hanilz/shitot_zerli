@@ -11,6 +11,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+/**
+ * A Father Component class for overview vboxes - set basic Product information
+ * in the VBox.
+ */
 public class CartProductOverviewVBox extends VBox {
 	protected Product product;
 
@@ -30,20 +34,20 @@ public class CartProductOverviewVBox extends VBox {
 
 	public void initVBox() {
 		totalPriceLabel.setId("totalPriceLabel");
-		
+
 		this.setAlignment(Pos.TOP_CENTER);
 		this.setPrefHeight(340);
 		this.setMaxWidth(Control.USE_PREF_SIZE);
 		this.setPrefWidth(450);
 		this.setMinWidth(Control.USE_PREF_SIZE);
 		this.setSpacing(10);
-		
+
 		nameLabel = new Label(product.getName());
 
 		initProductImage();
 
 		initItemsProductsScrollPane();
-		
+
 		this.getChildren().add(nameLabel);
 		this.getChildren().add(productImage);
 		this.getChildren().add(itemsProductsScrollPane);
@@ -56,23 +60,27 @@ public class CartProductOverviewVBox extends VBox {
 		originalPriceTxt.setId("totalPriceAmountLabel");
 		originalPriceTxt.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 		totalPriceHBox.getChildren().add(originalPriceTxt);
-		if(product.isDiscount()) {
-			originalPriceTxt.setId("totalOriginalPriceTxt");
-			originalPriceTxt.setStyle("-fx-font-size: 16px;");
-			TotalPriceDiscountLabel.setText(InputChecker.price(product.calculateDiscount()));
-			TotalPriceDiscountLabel.setId("totalPriceDiscountLabel");
-			TotalPriceDiscountLabel.setStyle("-fx-text-fill: red;");
-			totalPriceHBox.getChildren().add(TotalPriceDiscountLabel);
-		}
+		if (product.isDiscount())
+			initDiscountLabel();
 		this.getChildren().add(totalPriceHBox);
 	}
-	
+
+	private void initDiscountLabel() {
+		originalPriceTxt.setId("totalOriginalPriceTxt");
+		originalPriceTxt.setStyle("-fx-font-size: 16px;");
+		TotalPriceDiscountLabel.setText(InputChecker.price(product.calculateDiscount()));
+		TotalPriceDiscountLabel.setId("totalPriceDiscountLabel");
+		TotalPriceDiscountLabel.setStyle("-fx-text-fill: red;");
+		totalPriceHBox.getChildren().add(TotalPriceDiscountLabel);
+	}
+
 	private void initProductImage() {
 		productImage = new ImageView(product.getImagePath());
 		productImage.setFitHeight(140);
 		productImage.setFitWidth(200);
 		productImage.setPreserveRatio(true);
 	}
+
 	private void initItemsProductsScrollPane() {
 		itemsProductsScrollPane.setPrefHeight(250);
 		itemsProductsScrollPane.setMinHeight(Control.USE_PREF_SIZE);

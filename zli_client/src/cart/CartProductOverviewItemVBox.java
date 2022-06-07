@@ -9,6 +9,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
+/**
+ * Controller for item overview which is used in the cart screen.
+ */
 public class CartProductOverviewItemVBox {
 	private Label discountLabel;
 	
@@ -33,6 +36,10 @@ public class CartProductOverviewItemVBox {
     @FXML
     private Text priceLabel;
     
+    /**
+     * Get an Item and set all information accordingly.
+     * @param item
+     */
     public void initVBox(Item item) {
     	itemColorLabel.setText(item.getColor());
     	itemImage.setImage(new Image(item.getImagePath()));
