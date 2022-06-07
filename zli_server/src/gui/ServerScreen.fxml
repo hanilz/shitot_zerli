@@ -28,7 +28,7 @@
                <children>
                   <ImageView id="flower" fitHeight="93.0" fitWidth="146.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../zli_client/src/resources/icon.png" />
+                        <Image url="@../resources/icon.png" />
                      </image>
                   </ImageView>
                   <VBox prefHeight="55.0" prefWidth="293.0" />
