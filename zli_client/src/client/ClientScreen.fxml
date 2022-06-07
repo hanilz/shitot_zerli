@@ -5,27 +5,31 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: &quot;white&quot;;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.ClientFormController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: &quot;white&quot;;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.ClientFormController">
    <children>
-      <ImageView fitHeight="600.0" fitWidth="1074.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../resources/serverScreenBackground.png" />
-         </image>
-      </ImageView>
-      <VBox alignment="CENTER" layoutX="347.0" layoutY="34.0" prefHeight="409.0" prefWidth="306.0">
+      <ImageView id="zliClientImage" fitHeight="783.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" />
+      <VBox id="connectToServerBox" alignment="CENTER" layoutX="280.0" layoutY="188.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="715.0" spacing="20.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="94.0" prefWidth="225.0" text="Client">
-               <font>
-                  <Font name="System Bold" size="52.0" />
-               </font>
-            </Label>
-            <VBox alignment="CENTER" prefHeight="298.0" prefWidth="325.0" spacing="20.0">
+            <VBox alignment="TOP_CENTER">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="94.0" prefWidth="477.0" text="Connect To Server">
+                     <font>
+                        <Font name="System Bold" size="52.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="65.0" prefWidth="617.0" text="Please enter a valid IP in order to connect to the ZLI server">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="181.0" prefWidth="715.0" spacing="12.0">
                <children>
                   <Label fx:id="errorLabel" text="Error! This IP is invalid" textFill="#c61010" visible="false">
                      <font>
@@ -33,18 +37,24 @@
                      </font></Label>
                   <Label text="Server IP:">
                      <font>
-                        <Font size="22.0" />
+                        <Font name="System Bold" size="22.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="ipTextField" alignment="CENTER" prefHeight="25.0" prefWidth="302.0" text="localhost">
+                  <TextField id="serverField" fx:id="ipTextField" alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="190.0" text="localhost">
                      <VBox.margin>
                         <Insets left="70.0" right="70.0" />
                      </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
                   </TextField>
-                  <Button fx:id="connectToIPButton" mnemonicParsing="false" onMousePressed="#clickOnConnectButton" text="Connect To Server">
+                  <Button fx:id="connectToIPButton" mnemonicParsing="false" onMousePressed="#clickOnConnectButton" prefHeight="33.0" prefWidth="78.0" text="Connect">
                      <cursor>
                         <Cursor fx:constant="HAND" />
-                     </cursor></Button>
+                     </cursor>
+                     <font>
+                        <Font size="14.0" />
+                     </font></Button>
                </children>
             </VBox>
          </children>

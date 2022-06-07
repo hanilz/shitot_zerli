@@ -1,0 +1,161 @@
+#catalogVBox {
+	-fx-background-color: #fcf7f5;
+	-fx-background-image: url("../connectWallpaper2.png");
+}
+
+#catalogBtn, #filterBtn, #searchBtn, #discountCartBtn {
+	-fx-background-color: #F4F4F4;
+	-fx-background-radius: 30;
+	-fx-background-insets: 0, 1, 1;
+	-fx-text-fill: black;
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
+	-fx-font-weight: bold;
+	-fx-padding: 5 10 5 10;
+}
+
+#discountVBox {
+	-fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 8.0, 0.0, 0.0,
+		8.0);
+}
+
+#catalogBtn:hover, #filterBtn:hover, #searchBtn:hover, #discountCartBtn:hover
+	{
+	-fx-background-color: #FFE0F0;
+}
+
+#catalogBtn:pressed, #filterBtn:pressed, #searchBtn:pressed,
+	#discountCartBtn:pressed {
+	-fx-background-color: #FFD0FF;
+}
+
+#catalogScrollPane {
+	-fx-background-insets: 2;
+	-fx-background: #fcf7f5;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical {
+	-fx-background-color: #FBF3F1;
+}
+
+.scroll-bar:horizontal .thumb, .scroll-bar:vertical .thumb {
+	-fx-background-color: #FEE1DC;
+	-fx-background-radius: 5em;
+}
+
+#productsLabel {
+	-fx-font-weight: bold;
+	-fx-font-size: 14px;
+	-fx-text-alignment: center;
+}
+
+#priceLabel {
+	-fx-font-weight: bold;
+	-fx-font-size: 18px;
+}
+
+#priceAfterDiscountLabel {
+	-fx-font-size: 14px;
+}
+
+#discountLabel {
+	-fx-text-fill: red;
+	-fx-font-weight: bold;
+	-fx-font-size: 18px;
+}
+
+#catalogCard, #customProductCard {
+	-fx-background-color: #FEE1DC;
+	-fx-padding: 5 10 15 10;
+	-fx-background-radius: 20;
+	-fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 10.0, 0.0,
+		0.0, 10.0);
+	-fx-spacing: 3;
+}
+
+#catalogGrid {
+	-fx-alignment: center;
+	-fx-Hgap: 40;
+	-fx-Vgap: 40;
+	-fx-PrefHeight: 438;
+	-fx-PrefWidth: 600;
+	-fx-padding: 5 0 40 13;
+	-fx-PrefHeight: 438;
+	-fx-background: #fcf7f5;
+}
+
+#scrollVBox {
+	-fx-background-color: #fcf7f5;
+}
+
+#filterScrollPane {
+	-fx-border-color: #FEE1DC;
+	-fx-border-width: 2px;
+	-fx-background: #fcf7f5;
+}
+
+#filterOptionsLabel {
+	-fx-border-color: #FEE1DC;
+	-fx-border-width: 2px;
+	-fx-background: #fcf7f5;
+}
+
+#cartHBox, #homeVBox, #loginHBox {
+	-fx-background-color: #FEE1DC;
+	-fx-background-radius: 15;
+	-fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 5.0, 0.0, 0.0,
+		5.0);
+}
+
+#loginVBox {
+	-fx-PrefHeight: 73;
+	-fx-PrefWidth: 63;
+}
+
+#upperGrid {
+	-fx-Hgap: 10;
+}
+
+#searchBar {
+	-fx-background-radius: 20;
+	-fx-font-size: 14px;
+}
+
+.check-box {
+	-fx-background-radius: 10.0;
+	-fx-effect: dropshadow(three-pass-box, rgba(0.0, 0.0, 0.0, 0.1), 3.0,
+		0.0, 0.0, 1.0);
+	-fx-font-weight: bold;
+	-fx-font-size: 14.0;
+}
+
+.check-box .box {
+	-fx-background-color: #F4F4F4;
+	-fx-border-color:grey;
+	-fx-border-radius:3.0px; 
+}
+
+.button:hover{
+	-fx-background-color: #FFE0F0;
+	-fx-cursor: hand;
+	-fx-font-weight: bold;
+	-fx-font-size: 13;
+}
+
+.button:pressed {
+	-fx-background-color: #FFD0FF;
+	-fx-cursor: hand;
+	-fx-font-weight: bold;
+	-fx-font-size: 13;
+}
+
+.button{
+	-fx-min-width: 32;
+	-fx-background-color: #F4F4F4;
+	-fx-background-radius: 10.0;
+	-fx-background-insets: 0.0, 1.0, 1.0;
+	-fx-text-fill: black;
+	-fx-effect: dropshadow(three-pass-box, rgba(0.0, 0.0, 0.0, 0.6), 3.0, 0.0, 0.0, 1.0);
+	-fx-padding: 5.0 10.0 5.0 10.0;
+	-fx-font-size: 13.0;
+	-fx-font-weight: bold;
+}

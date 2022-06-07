@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox id="orderHBox" alignment="CENTER_LEFT" maxWidth="425.0" onMousePressed="#openDetails" prefHeight="70.0" prefWidth="425.0" spacing="3.0" stylesheets="@../resources/css/OrderProductRow.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ordersView.OrderProductRowController">
+   <children>
+      <VBox alignment="CENTER" maxHeight="65.0" maxWidth="65.0" prefHeight="65.0" prefWidth="65.0">
+         <children>
+            <ImageView fx:id="productImage" fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </VBox>
+      <VBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="121.0">
+         <children>
+            <HBox>
+               <children>
+                  <Label text="Poduct ID: ">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="productID" text="id">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label text="Price:  ">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="productPrice" text="price">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label text="Qty: ">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="productQty" text="quantity">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Separator orientation="VERTICAL" prefHeight="200.0" />
+      <VBox>
+         <children>
+            <Label alignment="TOP_LEFT" maxHeight="70.0" text="Product Name:" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="productName" alignment="TOP_LEFT" maxHeight="70.0" maxWidth="193.0" prefHeight="70.0" prefWidth="193.0" text="Product Name:" wrapText="true">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </children>
+   <padding>
+      <Insets left="25.0" />
+   </padding>
+</HBox>

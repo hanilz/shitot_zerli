@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox id="reportVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="938.0" spacing="10.0" stylesheets="@../resources/css/HistogramReport.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.HistogramReportController">
+   <children>
+      <AnchorPane>
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="88.0" prefWidth="878.0" spacing="5.0">
+               <children>
+                  <Label text="Zer-Li Company">
+                     <font>
+                        <Font name="System Bold" size="37.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="TOP_CENTER" prefHeight="32.0" prefWidth="878.0" spacing="35.0">
+                     <children>
+                        <Label fx:id="reportTypeLabel" text="Complaints Report">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <Label fx:id="branchLabel" text="Branch Name">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <Label fx:id="quraterLabel" text="Q1">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/icon.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Separator prefWidth="200.0" />
+      <ScrollPane prefHeight="357.0" prefWidth="878.0">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <content>
+            <VBox id="reportVbox" prefHeight="349.0" prefWidth="871.0">
+               <children>
+                  <BarChart fx:id="histogramChart" categoryGap="5.0">
+                    <xAxis>
+                      <CategoryAxis fx:id="monthAxis" endMargin="10.0" label="Months" side="RIGHT" startMargin="10.0" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis fx:id="countValuesAxis" label="Number of complaints" side="LEFT" />
+                    </yAxis>
+                  </BarChart>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+   <padding>
+      <Insets bottom="30.0" left="18.0" right="18.0" top="20.0" />
+   </padding>
+</VBox>

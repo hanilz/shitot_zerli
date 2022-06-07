@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox id="ordersVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../resources/css/ViewOrdersScreen.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ordersView.ViewOrdersController">
+   <children>
+      <GridPane prefHeight="71.0" prefWidth="1240.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="100.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1073.0" minWidth="10.0" prefWidth="986.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="0.0" prefWidth="87.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="100.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="86.0" prefWidth="1040.0" GridPane.columnIndex="1">
+               <children>
+                  <Label text="Orders">
+                     <font>
+                        <Font name="System Bold" size="42.0" />
+                     </font>
+                  </Label>
+                  <Label text="Here you can review your orders">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox id="homeHBox">
+               <children>
+                  <ImageView fx:id="homeImage" fitHeight="100.0" fitWidth="100.0" onMousePressed="#returnHome" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/catalog/home.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </children>
+            </VBox>
+         </children>
+      </GridPane>
+      <HBox prefHeight="603.0" prefWidth="1240.0" spacing="5.0">
+         <children>
+            <VBox alignment="TOP_CENTER">
+               <children>
+                  <Label text="Order List">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font></Label>
+                  <Separator prefWidth="200.0" />
+                  <ScrollPane fx:id="orderListsScrollPane" prefHeight="574.0" prefWidth="765.0">
+                     <content>
+                        <VBox fx:id="orderList" prefHeight="547.0" prefWidth="748.0" spacing="10.0">
+                           <padding>
+                              <Insets left="10.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                     </content></ScrollPane>
+               </children>
+            </VBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <VBox alignment="TOP_CENTER">
+               <children>
+                  <Label text="Order Overview">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font></Label>
+                  <Separator prefWidth="200.0" />
+                  <VBox alignment="TOP_CENTER" prefHeight="572.0" prefWidth="450.0">
+                     <children>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Label text="Order Number : ">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="orderNumberLabel" text="XXXX">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <GridPane maxHeight="170.0" maxWidth="350.0" prefHeight="170.0" prefWidth="315.0">
+                          <columnConstraints>
+                            <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="SOMETIMES" maxWidth="177.0" minWidth="10.0" prefWidth="156.0" />
+                            <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="SOMETIMES" maxWidth="331.0" minWidth="10.0" prefWidth="194.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Order Status:">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label prefHeight="25.0" prefWidth="120.0" text="Delivery Status:" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Order Date:" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="orderStatusLabel" text="orderStatus" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="deliveryStatusLabel" text="delivery status" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="placedDateLabel" text="placedDate" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Delivery Date:" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="deliveryDateLabel" text="deliveryDate" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Order Price:" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="orderPriceLabel" text="orderPrice" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Delivery Type:" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="deliveryTypeLabel" text="expressDelivery" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="30.0" />
+                           </VBox.margin>
+                        </GridPane>
+                        <Label text="Order Contents">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <ScrollPane fx:id="orderOverViewScrollPane" prefHeight="349.0" prefWidth="450.0">
+                           <content>
+                              <VBox fx:id="orderContentsVbox" prefHeight="346.0" prefWidth="432.0" spacing="10.0">
+                                 <padding>
+                                    <Insets left="5.0" top="5.0" />
+                                 </padding></VBox>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="20.0" right="20.0" top="5.0" />
+   </padding>
+</VBox>

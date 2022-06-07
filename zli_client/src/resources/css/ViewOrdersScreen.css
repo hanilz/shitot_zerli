@@ -1,0 +1,28 @@
+#ordersVBox {
+	-fx-background: #FBF3F1;
+}
+
+#homeHBox {
+	-fx-background-color: #FEE1DC;
+	-fx-background-radius: 15.0;
+	-fx-effect: dropShadow(three-pass-box, rgba(0.0, 0.0, 0.0, 0.1), 5.0, 0.0, 0.0,5.0);
+}
+
+.separator *.line {
+    -fx-border-style: solid;
+    -fx-border-width: 0 0.7 0.7 0; /* its make really one-pixel-border */
+    -fx-border-color: #e0beb8;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical {
+	-fx-background-color: #FBF3F1;
+}
+
+.scroll-bar:horizontal .thumb, .scroll-bar:vertical .thumb {
+	-fx-background-color: #FEE1DC;
+	-fx-background-radius: 5em;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}

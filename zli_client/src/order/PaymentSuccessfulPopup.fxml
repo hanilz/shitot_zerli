@@ -4,35 +4,51 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="199.0" prefWidth="390.0" spacing="6.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.PaymentSuccessfulController">
+<VBox id="orderSuccVBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="199.0" prefWidth="390.0" spacing="6.0" stylesheets="@../resources/css/PaymentSuccessfulPopup.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.PaymentSuccessfulController">
    <padding>
       <Insets bottom="30.0" left="30.0" right="30.0" top="15.0" />
    </padding>
    <children>
       <VBox alignment="CENTER" prefHeight="61.0" prefWidth="396.0" />
-      <VBox alignment="CENTER" prefHeight="167.0" prefWidth="245.0">
+      <VBox alignment="CENTER_RIGHT" minWidth="-Infinity" prefHeight="167.0" prefWidth="329.0">
          <children>
-            <Label text="Order Placed Successfully!">
+            <Label prefHeight="52.0" prefWidth="341.0" text="Order Placed Successfully!" wrapText="true">
                <font>
-                  <Font size="26.0" />
+                  <Font name="System Bold" size="26.0" />
                </font>
             </Label>
          </children>
       </VBox>
-      <HBox alignment="CENTER" prefHeight="146.0" prefWidth="245.0" spacing="30.0">
+      <HBox alignment="CENTER" minWidth="-Infinity" prefHeight="48.0" prefWidth="345.0" spacing="30.0">
          <children>
-            <Button fx:id="backToCatalogButton" mnemonicParsing="false" onMouseClicked="#changeToCatalog" text="Back To Catalog">
+            <Button fx:id="backToCatalogButton" contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#changeToCatalog" prefHeight="35.0" prefWidth="177.0" text="Back To Catalog">
                <cursor>
                   <Cursor fx:constant="HAND" />
-               </cursor></Button>
-            <Button mnemonicParsing="false" text="View Orders">
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/pickupIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="viewOrdersButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#openViewOrdersScreen" prefHeight="35.0" prefWidth="143.0" text="View Orders">
                <cursor>
                   <Cursor fx:constant="HAND" />
-               </cursor></Button>
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/buyIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
          </children>
       </HBox>
    </children>

@@ -2,10 +2,11 @@ package entities;
 
 import java.io.Serializable;
 
+/**
+ * OrderProduct saves idOrder,product and quantity
+ * Provides setters and getters
+ */
 public class OrderProduct implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private int idOrder;
 	private Product product;

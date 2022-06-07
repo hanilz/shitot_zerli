@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox id="reviewOrdersVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="10.0" stylesheets="@../resources/css/ManageCustomerOrdersScreen.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mangeCustomerOrders.ManageCustomerOrdersController">
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <padding>
+      <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+   </padding>
+   <children>
+      <GridPane prefHeight="99.0" prefWidth="980.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="100.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1073.0" minWidth="10.0" prefWidth="986.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="0.0" prefWidth="87.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="100.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="761.0" GridPane.columnIndex="1">
+               <children>
+                  <Label text="Review Orders">
+                     <font>
+                        <Font name="System Bold" size="42.0" />
+                     </font>
+                  </Label>
+                  <Label text="Review Orders that are Waiting for Approval or Cancellation">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox id="homeHBox">
+               <children>
+                  <ImageView fx:id="homeImage" fitHeight="100.0" fitWidth="100.0" onMousePressed="#returnHome" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/catalog/home.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </children>
+            </VBox>
+         </children>
+      </GridPane>
+      <TabPane prefHeight="591.0" prefWidth="1260.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="New Orders Waiting for Approval">
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <TableView fx:id="newOrderTable" prefHeight="491.0" prefWidth="1260.0">
+                          <columns>
+                            <TableColumn fx:id="idOrderCol" prefWidth="113.0" text="Order Number" />
+                            <TableColumn fx:id="priceCol" prefWidth="130.0" text="Price" />
+                              <TableColumn fx:id="firstNameCol" prefWidth="160.0" text="First Name" />
+                              <TableColumn fx:id="lastNameCol" prefWidth="160.0" text="Last Name" />
+                              <TableColumn fx:id="orderStatusCol" prefWidth="175.0" text="Order Status" />
+                              <TableColumn fx:id="orderDateCol" prefWidth="160.0" text="Order Date" />
+                              <TableColumn fx:id="deliveryDateCol" prefWidth="160.0" text="Delivery Date" />
+                              <TableColumn fx:id="deliveryTypeCol" prefWidth="160.0" text="Delivery Type" />
+                          </columns>
+                        </TableView>
+                        <HBox alignment="CENTER" prefHeight="61.0" prefWidth="1220.0" spacing="500.0">
+                           <children>
+                              <Button fx:id="approveOrderButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#approveOrder" text="Approve Order">
+                                 <graphic>
+                                    <ImageView fitHeight="45.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/icons/approveIcon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
+                              <Button fx:id="cancelOrderButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#cancelOrder" text="Cancel Order">
+                                 <graphic>
+                                    <ImageView fitHeight="45.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/icons/cancelIcon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </content>
+          </Tab>
+          <Tab text="Waiting for Cancellation">
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <TableView fx:id="cancelOrdersTable" prefHeight="491.0" prefWidth="1260.0">
+                           <columns>
+                              <TableColumn fx:id="idOrderCol1" text="Order No." />
+                              <TableColumn fx:id="priceCol1" prefWidth="115.0" text="Price" />
+                              <TableColumn fx:id="firstNameCol1" prefWidth="120.0" text="First Name" />
+                              <TableColumn fx:id="lastNameCol1" prefWidth="120.0" text="Last Name" />
+                              <TableColumn fx:id="orderStatusCol1" prefWidth="160.0" text="Order Status" />
+                              <TableColumn fx:id="orderDateCol1" prefWidth="144.0" text="Order Date" />
+                              <TableColumn fx:id="deliveryDateCol1" prefWidth="144.0" text="Delivery Date" />
+                              <TableColumn fx:id="deliveryTypeCol1" prefWidth="110.0" text="Delivery Type" />
+                              <TableColumn fx:id="requestDateCol1" prefWidth="140.0" text="Request Time" />
+                              <TableColumn fx:id="timeTillDeliveryCol" prefWidth="133.0" text="Remaining Time" />
+                           </columns>
+                        </TableView>
+                        <HBox alignment="CENTER" prefHeight="59.0" prefWidth="1220.0" spacing="500.0">
+                           <children>
+                              <Button fx:id="approveCancelButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#approveCancelRequest" text="Approve Cancel Request">
+                                 <graphic>
+                                    <ImageView fitHeight="45.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/icons/approveIcon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
+                              <Button fx:id="denyCancelButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#denyCancelRequest" text="Deny Cancel Request">
+                                 <graphic>
+                                    <ImageView fitHeight="45.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/icons/cancelIcon.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </content>
+          </Tab>
+        </tabs>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </TabPane>
+      <Label fx:id="errorLabel" text="*Please select an item to perform an operation" textFill="RED" visible="false">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+   </children>
+</VBox>

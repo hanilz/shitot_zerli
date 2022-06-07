@@ -3,16 +3,15 @@ package entities;
 import java.io.Serializable;
 
 /**
- * for sending as message between client <-> server
+ * Order saves order attributes,user,payment and branch
+ * Provides setters and getters
  */
 public class Order implements Serializable{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private int idOrder;
 	private double price; 
-	private String greetingCard;
+	protected String greetingCard;
 	private String dOrder;
 	private Branch branch;
 	private String date;

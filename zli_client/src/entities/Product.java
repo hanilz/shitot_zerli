@@ -1,35 +1,68 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
-public class Product extends ProductsBase implements Serializable{
-	/**
-	 * 
-	 */
+/**
+ * Product saves flowerType,productDescription and items
+ * Provides setters and getters
+ */
+public class Product extends ProductsBase implements Serializable {
 	private static final long serialVersionUID = 1L;
-	//private int productID; //
-	//private String productName; //
+
 	private String flowerType;
-	//private String productColor; //
-	//private double productPrice; //
-	//private String productType; //
 	private String productDescription;
-	//private String imagePath; //
+	protected HashMap<Item, Integer> items;
 	
+	public Product(int id, double price, double discount, String productDescription) {
+		super(id, price, discount);
+		this.productDescription = productDescription;
+	}
+
+	/**constructor with items
+	 * @param id
+	 * @param name
+	 * @param color
+	 * @param price
+	 * @param type
+	 * @param imagePath
+	 * @param discount
+	 * @param flowerType
+	 * @param productDescription
+	 * @param items
+	 */
+	public Product(int id, String name, String color, double price, String type, String imagePath, double discount, String flowerType,
+			String productDescription, HashMap<Item, Integer> items) {
+		super(id, name, color, price, type, imagePath,discount);
+		this.flowerType = flowerType;
+		this.productDescription = productDescription;
+		this.items = items;
+	}
+	
+	// constructor with items
 	public Product(int id, String name, String color, double price, String type, String imagePath, String flowerType,
-			String productDescription) {
+			String productDescription, HashMap<Item, Integer> items) {
 		super(id, name, color, price, type, imagePath);
 		this.flowerType = flowerType;
 		this.productDescription = productDescription;
+		this.items = items;
 	}
-	
+
+	// constructor without items
+	public Product(int id, String name, String color, double price, String type, String imagePath, double discount, String flowerType,
+			String productDescription) {
+		super(id, name, color, price, type, imagePath, discount);
+		this.flowerType = flowerType;
+		this.productDescription = productDescription;
+	}
+
 	/**
 	 * @return the flowerType
 	 */
 	public String getFlowerType() {
 		return flowerType;
 	}
-	
+
 	/**
 	 * @param flowerType the flowerType to set
 	 */
@@ -51,4 +84,11 @@ public class Product extends ProductsBase implements Serializable{
 		this.productDescription = productDescription;
 	}
 
+	public HashMap<Item, Integer> getItems() {
+		return items;
+	}
+
+	public void setItems(HashMap<Item, Integer> items) {
+		this.items = items;
+	}
 }

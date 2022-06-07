@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import client.ClientFormController;
+import entities.Survey;
+import entities.SurveyQuestion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -42,11 +44,18 @@ public class SurveyController implements Initializable{
     @FXML
     private Button submitButton;
 
+    /**used to exit the survey form if the user changed its mind about filling the survery
+     * @param event
+     */
     @FXML
     void discardSurveyAnswer(ActionEvent event) {
-    	ManageScreens.changeScreenTo(Screens.SURVEY_HOME);
+    	if(ManageScreens.getYesNoDecisionAlert("Discard Answer", "Are you sure you want to discard your answers?", null))
+    		ManageScreens.changeScreenTo(Screens.SURVEY_HOME);
     }
 
+    /**if all the fields are filled saves the survey answers to the DB
+     * @param event
+     */
     @FXML
     void saveSurveyAnswer(ActionEvent event) {
     	HashMap<SurveyQuestion,Integer> answers = new HashMap<>();
@@ -58,22 +67,23 @@ public class SurveyController implements Initializable{
     		}
     		answers.put(survey.getQuestion(i),ans);
 		}
+    	if(!ManageScreens.getYesNoDecisionAlert("Save Answer", "Are you sure you want to submit your answer?", null))
+    		return;
     	HashMap<String, Object> message = new HashMap<>();
 		message.put("command", Commands.SUBMIT_SURVEY);
 		message.put("answers", answers);
-		Object response = ClientFormController.client.accept(message);
-		System.out.println((String)response);
+		ClientFormController.client.accept(message);
     	ManageScreens.changeScreenTo(Screens.SURVEY_HOME);
+    	ManageScreens.displayAlert("Survey Saved", "Thank you for filling our survey!\nYour opinion really matters to us!");
     }
 
     
+	/**
+	 *used to initialize the survey questions to the survey form
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		if(survey==null)
-			System.out.println("null survey");
-		
-		surveyTitleLabel.setText(survey.getSurveyName());
-		
+		surveyTitleLabel.setText(survey.getSurveyName());		
 		for (int i = 0; i < survey.getQuestions().size(); i++) {
 			questionHBox question = new questionHBox(survey.getQuestion(i));
 			questionVbox.getChildren().add(question);
@@ -81,6 +91,9 @@ public class SurveyController implements Initializable{
 		}
 	}
 	
+	/**sets the survey for the survey screen, must be initialized
+	 * @param survey2
+	 */
 	public static void setSurvey(Survey survey2) {
 		survey = survey2;
 	}

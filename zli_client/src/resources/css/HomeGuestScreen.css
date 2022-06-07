@@ -1,0 +1,43 @@
+#tilePane {
+	-fx-background-color: #fcf7f5;
+}
+
+#sideCard {
+	-fx-background-color: FAE0DD;
+}
+
+#buttonCard {
+	-fx-background-radius: 20;
+	-fx-background-color: linear-gradient(from 150px 150px to 0px 0px, FAE0DD, FAE0DD);
+	-fx-effect: dropShadow(three-pass-box, rgba(0.2, 0, 0, 0.3), 5.0, 0.0,
+		0.0, 5.0);
+}
+
+#buttonCard:hover {
+	-fx-background-color: linear-gradient(from 150px 150px to 0px 0px, ebd2cf, ebd2cf);
+	-fx-cursor: hand;
+}
+
+#flower {
+	-fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.3), 5.0, 0.0, 0.0,
+		5.0);
+}
+
+#userLabel, #welcome {
+	-fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.2), 5.0, 0.0, 0.0,
+		5.0);
+}
+
+.separator *.line {
+	-fx-border-style: solid;
+	-fx-border-width: 0 2 0.7 0; /* its make really one-pixel-border */
+	-fx-border-color: #FF9999;
+}
+
+#cardLabel {
+	-fx-wrap-text: true;
+	-fx-min-height: 65;
+	-fx-text-alignment: center;
+	-fx-font-size: 22;
+	-fx-font-weight: bold;
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox id="reportHBox" alignment="CENTER_LEFT" prefHeight="61.0" prefWidth="1170.0" spacing="10.0" stylesheets="@../resources/css/SurveyReportsHomeScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="surveyAnalysisView.AnalysisViewRowController">
+   <children>
+      <Label id="rowLabels" text="Survery ID:">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label id="rowLabels" fx:id="surveryIDNumber" minWidth="100.0" text="id Number">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Separator orientation="VERTICAL" prefHeight="200.0" />
+      <Label id="rowLabels" text="Survery Name:">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label id="rowLabels" fx:id="surveyNameLabel" prefHeight="37.0" prefWidth="512.0" text="name" wrapText="true">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="viewAnalysisButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#openReportAnalysis" style="-fx-background-radius: 20;" text="View Analysis Report">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/icons/openFileIcon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+   <padding>
+      <Insets left="30.0" />
+   </padding>
+</HBox>

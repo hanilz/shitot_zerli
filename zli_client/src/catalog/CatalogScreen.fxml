@@ -2,88 +2,321 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.CatalogController">
+<VBox fx:id="catalogVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="15.0" stylesheets="@../resources/css/CatalogScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.CatalogController">
    <children>
-      <GridPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="109.0" prefWidth="787.0">
+      <GridPane id="upperGrid" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="73.0" prefWidth="1172.0">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.0" minWidth="10.0" prefWidth="83.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="471.0" minWidth="10.0" prefWidth="468.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="319.0" minWidth="0.0" prefWidth="9.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="258.0" minWidth="10.0" prefWidth="90.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="258.0" minWidth="10.0" prefWidth="110.0" />
+          <ColumnConstraints fx:id="upperGrid" halignment="CENTER" hgrow="SOMETIMES" maxWidth="899.0" minWidth="10.0" prefWidth="785.0" />
+          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="399.0" minWidth="0.0" prefWidth="200.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fx:id="cartImage" fitHeight="100.0" fitWidth="100.0" onMousePressed="#changeToCartScreen" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+            <HBox id="cartHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="128.0" GridPane.columnIndex="3">
                <GridPane.margin>
                   <Insets left="50.0" />
                </GridPane.margin>
-               <image>
-                  <Image url="@../resources/catalog/cart.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-            <Label fx:id="catalogLbl" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="134.0" prefWidth="460.0" text="Catalog" textAlignment="CENTER" GridPane.columnIndex="1">
-               <padding>
-                  <Insets bottom="40.0" left="40.0" />
-               </padding>
-               <font>
-                  <Font size="65.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="55.0" top="35.0" />
-               </GridPane.margin>
-            </Label>
-            <ImageView fx:id="homeImage" fitHeight="80.0" fitWidth="103.0" onMousePressed="#goToHomeScreen" pickOnBounds="true" preserveRatio="true">
+               <children>
+                  <ImageView fx:id="cartImage" fitHeight="80.0" fitWidth="80.0" onMousePressed="#changeToCartScreen" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/catalog/cart.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Label fx:id="totalAmountCartLabel" alignment="CENTER" minWidth="25.0" style="-fx-background-color: #FEFDFC; -fx-background-radius: 30;" text="0">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding></Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <VBox alignment="TOP_CENTER" prefHeight="73.0" prefWidth="1053.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
-               <image>
-                  <Image url="@../resources/catalog/home.png" />
-               </image>
+               <children>
+                  <Label fx:id="catalogLbl" alignment="TOP_CENTER" contentDisplay="CENTER" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="318.0" text="Zer-Li Catalog" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="42.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox fx:id="homeVBox" alignment="CENTER">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <children>
+                  <ImageView fx:id="homeImage" fitHeight="60.0" fitWidth="72.0" onMouseClicked="#changeToHomeScreen" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/catalog/home.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </children>
+            </VBox>
+            <HBox fx:id="loginHBox" alignment="CENTER_LEFT" prefHeight="73.0" prefWidth="119.0" GridPane.columnIndex="1">
+               <children>
+                  <ImageView fx:id="loginIcon" fitHeight="48.0" fitWidth="50.0" onMouseClicked="#openLogin" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/home/login.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <VBox id="loginVBox" fx:id="loginVBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="73.0" prefWidth="63.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <children>
+                        <Label fx:id="loginLabel" prefHeight="30.0" prefWidth="109.0" text="Login" wrapText="true">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
                <cursor>
-                  <Cursor fx:constant="HAND" />
+                  <Cursor fx:constant="DEFAULT" />
                </cursor>
-            </ImageView>
+            </HBox>
          </children>
       </GridPane>
-      <ScrollPane fx:id="scrollCatalogPane" maxWidth="-Infinity" pannable="true" prefHeight="457.0" prefWidth="940.0" style="-fx-border-color: transparent;" VBox.vgrow="ALWAYS">
-         <padding>
-            <Insets bottom="15.0" />
-         </padding>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-         <content>
-            <GridPane fx:id="catalogGrid" alignment="CENTER" prefHeight="438.0" prefWidth="925.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-            </GridPane>
-         </content>
-      </ScrollPane>
-      <HBox prefHeight="2.0" prefWidth="783.0">
+      <HBox alignment="TOP_CENTER" prefHeight="603.0" prefWidth="1247.0" spacing="10.0">
          <children>
-            <Label text="* Clicking on an image opens the product details popup" textFill="#4170d0" />
+            <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="155.0" spacing="5.0">
+               <children>
+                  <VBox id="filterOptionsLabel" alignment="CENTER" spacing="3.0" style="-fx-background-color: #fcf7f5;">
+                     <children>
+                        <Label prefHeight="27.0" prefWidth="149.0" text="Filtering options" textAlignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <ScrollPane fx:id="filterScrollPane" nodeOrientation="RIGHT_TO_LEFT" prefHeight="517.0" prefWidth="144.0">
+                     <content>
+                        <VBox nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="125.0" spacing="5.0">
+                           <children>
+                              <VBox alignment="BOTTOM_LEFT" spacing="5.0">
+                                 <children>
+                                    <Label text="Price Range:">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox alignment="BOTTOM_LEFT" prefHeight="0.0" prefWidth="120.0" spacing="4.0">
+                                       <children>
+                                          <VBox prefHeight="200.0">
+                                             <children>
+                                                <Label text="From">
+                                                   <font>
+                                                      <Font name="System Bold" size="15.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="52.0" promptText="min" />
+                                             </children>
+                                          </VBox>
+                                          <Label text=":">
+                                             <font>
+                                                <Font name="System Bold" size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <VBox prefHeight="200.0">
+                                             <children>
+                                                <Label text="To">
+                                                   <font>
+                                                      <Font name="System Bold" size="15.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="52.0" promptText="max" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox spacing="5.0">
+                                 <children>
+                                    <Separator prefWidth="200.0" />
+                                    <Label text="Product Type">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <VBox spacing="10.0">
+                                       <children>
+                                          <CheckBox mnemonicParsing="false" text="Product" />
+                                          <CheckBox mnemonicParsing="false" text="Item" />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                              </VBox>
+                              <VBox spacing="5.0">
+                                 <children>
+                                    <Label text="Flower Type">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <VBox spacing="10.0">
+                                       <children>
+                                          <CheckBox mnemonicParsing="false" text="Rose" />
+                                          <CheckBox mnemonicParsing="false" text="Tulip" />
+                                          <CheckBox mnemonicParsing="false" text="Gerbera" />
+                                          <CheckBox mnemonicParsing="false" text="Peony" />
+                                          <CheckBox mnemonicParsing="false" text="Lily" />
+                                          <CheckBox mnemonicParsing="false" text="Daffadoil" />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                              </VBox>
+                              <VBox spacing="5.0">
+                                 <children>
+                                    <Label text="Color">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <VBox spacing="10.0">
+                                       <children>
+                                          <CheckBox mnemonicParsing="false" text="Pink" />
+                                          <CheckBox mnemonicParsing="false" text="Red" />
+                                          <CheckBox mnemonicParsing="false" text="Yellow" />
+                                          <CheckBox mnemonicParsing="false" text="White" />
+                                          <CheckBox mnemonicParsing="false" text="Purple" />
+                                          <CheckBox mnemonicParsing="false" text="Blue" />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Button id="filterBtn" fx:id="filterButton" contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#search" text="Filter">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/icons/filterIcon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </VBox>
+            <VBox maxWidth="-Infinity" prefHeight="590.0" prefWidth="791.0" spacing="7.0" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <children>
+                  <HBox alignment="CENTER" prefHeight="28.0" prefWidth="785.0" spacing="15.0">
+                     <children>
+                        <TextField fx:id="searchBar" prefHeight="25.0" prefWidth="645.0" promptText="Search product by name, color..." />
+                        <Button id="searchBtn" fx:id="searchButton" contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#search" prefHeight="29.0" text="Search">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/icons/searchIcon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                     </children>
+                  </HBox>
+                  <HBox spacing="20.0">
+                     <children>
+                        <VBox id="scrollVBox">
+                           <children>
+                              <ScrollPane fx:id="catalogScrollPane" maxWidth="-Infinity" pannable="true" prefHeight="570.0" prefWidth="800.0" style="-fx-border-color: #faf2f2;">
+                                 <padding>
+                                    <Insets bottom="15.0" left="15.0" />
+                                 </padding>
+                              </ScrollPane>
+                              <Label text="* Click on a product image to see more details.">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font></Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="587.0" prefWidth="270.0" spacing="3.0">
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label prefHeight="27.0" text="SALES!!!" textFill="#ff0054">
+                           <font>
+                              <Font name="System Bold" size="25.0" />
+                           </font>
+                           <effect>
+                              <Glow />
+                           </effect>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Separator prefWidth="200.0" />
+                  <Pane fx:id="discountPane1" prefHeight="185.0" prefWidth="217.0" />
+                  <Pane fx:id="discountPane2" prefHeight="185.0" prefWidth="217.0" />
+                  <Pane fx:id="discountPane3" prefHeight="185.0" prefWidth="217.0" />
+               </children>
+            </VBox>
          </children>
       </HBox>
    </children>
    <padding>
-      <Insets bottom="20.0" left="30.0" right="30.0" top="10.0" />
+      <Insets bottom="20.0" top="10.0" />
    </padding>
 </VBox>

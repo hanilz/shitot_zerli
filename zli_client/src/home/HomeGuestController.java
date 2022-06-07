@@ -1,77 +1,41 @@
 package home;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import entities.User;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import util.ManageClients;
 import util.ManageScreens;
 import util.Screens;
 
-public class HomeGuestController implements Initializable {
+/**
+ * Guest Home Screen - Allowing to Exit And To Start A Purchase
+ *
+ */
+public class HomeGuestController{
 
-	@FXML
-	private Button catalogButton;
-
-	@FXML
-	private ImageView catalogImage;
-
-	@FXML
-	private ImageView editProfileImage;
-
-	@FXML
-	private GridPane gridOptions;
-
-	@FXML
-	private HBox hbox;
-
-	@FXML
-	private Button loginBtn;
-
-	@FXML
-	private ImageView ordersImage;
-
-    @FXML
-    private Button exitButton;
-
-	@FXML
-	private GridPane sideHomeGrid;
-
-	@FXML
-	private Label welcomeLbl;
-	
-    @FXML
-    private Label TypeLabel;
-
+	/**
+	 * Reset flow(cart,catalog,home) of login,loading login popup to login in from home
+	 */
 	@FXML
 	void changeToLoginScreen(MouseEvent event) {
+		LoginScreenController.resetLogin();
 		ManageScreens.changeScreenTo(Screens.LOGIN);
 	}
-	
-    @FXML
-    void changeToCatalogScreen(MouseEvent event) {
-    	ManageScreens.changeScreenTo(Screens.CATALOG);
-    }
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		TypeLabel.setText(User.getUserInstance().getUsername());		
+	/**
+	 * Change screen to catalog screen
+	 */
+	@FXML
+	void changeToCatalogScreen(MouseEvent event) {
+		ManageScreens.changeScreenTo(Screens.CATALOG);
 	}
-	
-    @FXML
-    void exitApplication(MouseEvent event) {
-		//release the client from the ocsf server + disconnect from the db
+
+	/**
+	 * Clicking on exit disconnect from eerver and close the screen
+	 */
+	@FXML
+	void exitApplication(MouseEvent event) {
 		ManageClients.exitClient();
-		//exit window
 		System.exit(0);
-    }
+	}
 
 }

@@ -1,0 +1,127 @@
+#manageUsersVBox {
+	-fx-background: #FBF3F1;
+}
+
+#homeHBox {
+	-fx-background-color: #FEE1DC;
+	-fx-background-radius: 15;
+	-fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 5.0, 0.0, 0.0,5.0);
+}
+
+#backBtn {
+	-fx-background-color: #F4F4F4;
+	-fx-background-radius: 30;
+	-fx-background-insets: 0, 1, 1;
+	-fx-text-fill: black;
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
+	-fx-font-weight: bold;
+	-fx-padding: 5 10 5 10;
+	-fx-font-size: 18;
+}
+#backBtn:hover{
+	-fx-background-color: #FFE0F0;
+	-fx-cursor: hand;
+	-fx-font-weight: bold;
+	-fx-font-size: 18;
+}
+
+#backBtn:pressed {
+	-fx-background-color: #FFD0FF;
+	-fx-cursor: hand;
+	-fx-font-weight: bold;
+	-fx-font-size: 18;
+}
+
+#detailsVBox{
+	-fx-border-color:#e0beb8;
+	-fx-border-insets:5.0px; 
+	-fx-border-width:3px
+}
+
+.label{
+	-fx-font-weight: bold;
+}
+
+.text-field{
+	-fx-font-size: 16;
+	-fx-background-radius: 30;
+}
+
+.check-box{
+	-fx-background-radius: 10.0;
+	-fx-effect: dropshadow(three-pass-box, rgba(0.0, 0.0, 0.0, 0.1), 3.0, 0.0, 0.0, 1.0);
+	-fx-font-weight: bold;
+	-fx-font-size: 22.0;
+}
+
+.check-box .box {
+	-fx-background-color: #F4F4F4;
+	-fx-border-color:grey;
+	-fx-border-radius:3.0px; 
+}
+
+.button:hover{
+	-fx-background-color: #FFE0F0;
+	-fx-cursor: hand;
+	-fx-font-weight: bold;
+	-fx-font-size: 12;
+}
+
+.button:pressed {
+	-fx-background-color: #FFD0FF;
+	-fx-cursor: hand;
+	-fx-font-weight: bold;
+	-fx-font-size: 12;
+}
+
+.button{
+	-fx-background-color: #F4F4F4;
+	-fx-background-radius: 30.0;
+	-fx-background-insets: 0.0, 1.0, 1.0;
+	-fx-text-fill: black;
+	-fx-effect: dropshadow(three-pass-box, rgba(0.0, 0.0, 0.0, 0.6), 3.0, 0.0, 0.0, 1.0);
+	-fx-font-weight: bold;
+	-fx-padding: 5.0 10.0 5.0 10.0;
+	-fx-font-size: 12.0;
+}
+
+.separator *.line {
+    -fx-border-style: solid;
+    -fx-border-width: 0 0.7 0.7 0; /* its make really one-pixel-border */
+    -fx-border-color: #e0beb8;
+}
+
+.table-view .column-header{
+    -fx-background-color: #D8D8D2;/* #FEE1DC;*/
+    -fx-background-radius: 3px 3px 0px 0px;
+    -fx-background-insets: 0 1px 0 0;
+    -fx-padding: 0 0 5px 0;
+    -fx-font-size: 18;
+}
+
+.table-view .table-cell{
+   /*  -fx-border-color: transparent;*/
+    -fx-padding: 2 0 2 10px;
+    -fx-font-size: 16;
+}
+
+
+/*temporary need to fix */
+.table-row-cell:hover {
+    -fx-background-color: #F3F3F1;
+    -fx-text-background-color: #59594B;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell:odd{
+    -fx-background-color: F3F3F1;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+
+.table-row-cell:even{
+    -fx-background-color: F8F8F7;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+

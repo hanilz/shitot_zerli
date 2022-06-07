@@ -1,12 +1,17 @@
 package util;
 
+/**
+ *Types of user in the system 
+ */
 public enum UserType {
 	CUSTOMER, STORE_WORKER, STORE_MANGER, DELIVERY_COORDINATOR, CUSTOMER_SERVICE, UNDEFINED, CEO, MARKETING_WORKER,
-	SERVICE_EXPERT;
+	SERVICE_EXPERT, NEW_CUSTOMER;
 
+	/**
+	 * @return name of the user type
+	 */
 	public static UserType get(String type) {
 		String upperCaseType = type.toUpperCase();
-		System.out.println(upperCaseType);
 		switch (upperCaseType) {
 		case "CUSTOMER":
 			return CUSTOMER;
@@ -22,6 +27,10 @@ public enum UserType {
 			return MARKETING_WORKER;
 		case "SERVICE_EXPERT":
 			return SERVICE_EXPERT;
+		case "CEO":
+			return CEO;
+		case "NEW_CUSTOMER":
+			return NEW_CUSTOMER;
 		}
 		return UNDEFINED;
 	}

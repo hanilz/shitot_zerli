@@ -1,0 +1,80 @@
+#registrationVBox {
+	-fx-background: #FBF3F1;
+}
+
+#homeHBox {
+	-fx-background-color: #FEE1DC;
+	-fx-background-radius: 15;
+	-fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 5.0, 0.0, 0.0,5.0);
+}
+
+#backBtn, #continueButton {
+	-fx-background-color: #F4F4F4;
+	-fx-background-radius: 30;
+	-fx-background-insets: 0, 1, 1;
+	-fx-text-fill: black;
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
+	-fx-font-weight: bold;
+	-fx-padding: 5 10 5 10;
+	-fx-font-size: 18;
+}
+
+#detailsVBox{
+	-fx-border-color:#e0beb8;
+	-fx-border-insets:5.0px; 
+	-fx-border-width:3px;
+	-fx-background-color: FDFAFA;
+}
+
+.label{
+	-fx-font-weight: bold;
+}
+
+.text-field{
+	-fx-font-size: 16;
+	-fx-background-radius: 30;
+}
+
+.check-box{
+	-fx-background-radius: 10.0;
+	-fx-effect: dropshadow(three-pass-box, rgba(0.0, 0.0, 0.0, 0.1), 3.0, 0.0, 0.0, 1.0);
+	-fx-font-weight: bold;
+	-fx-font-size: 22.0;
+}
+
+.check-box .box {
+	-fx-background-color: #F4F4F4;
+	-fx-border-color:grey;
+	-fx-border-radius:3.0px; 
+}
+
+.button:hover{
+	-fx-background-color: #FFE0F0;
+	-fx-cursor: hand;
+	-fx-font-weight: bold;
+	-fx-font-size: 18;
+}
+
+.button:pressed {
+	-fx-background-color: #FFD0FF;
+	-fx-cursor: hand;
+	-fx-font-weight: bold;
+	-fx-font-size: 18;
+}
+
+.button{
+	-fx-background-color: #F4F4F4;
+	-fx-background-radius: 30.0;
+	-fx-background-insets: 0.0, 1.0, 1.0;
+	-fx-text-fill: black;
+	-fx-effect: dropshadow(three-pass-box, rgba(0.0, 0.0, 0.0, 0.6), 3.0, 0.0, 0.0, 1.0);
+	-fx-font-weight: bold;
+	-fx-padding: 5.0 10.0 5.0 10.0;
+	-fx-font-size: 18.0;
+}
+
+.separator *.line {
+    -fx-border-style: solid;
+    -fx-border-width: 0 0.7 0.7 0; /* its make really one-pixel-border */
+    -fx-border-color: #e0beb8;
+}

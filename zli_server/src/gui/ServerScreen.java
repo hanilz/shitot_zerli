@@ -14,7 +14,7 @@ public class ServerScreen extends Application {
 		launch(args);
 	}
 
-	/**
+	/**s
 	 *Initialize the screen from the fxml file and presenting the screen after the initial from the fxml file
 	 */
 	@Override

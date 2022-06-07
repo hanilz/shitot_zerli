@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox id="deliveryRowHBox" fx:id="mainHBox" alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="1180.0" spacing="5.0" stylesheets="@../resources/css/DeliveryCoordinatorScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deliveryCoordination.OrderRowController">
+   <children>
+      <VBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="140.0" spacing="5.0">
+         <children>
+            <Label text="Order Number:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label text="Recipient ID:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label text="Recipient Name:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="176.0" spacing="5.0">
+         <children>
+            <Label fx:id="numberLabel" text="number">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="idNumberLabel" text="idNumber">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="nameLabel" text="name">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Separator orientation="VERTICAL" prefHeight="200.0" />
+      <VBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="148.0" spacing="5.0">
+         <children>
+            <Label text="Delivery Type:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label text="Delivery Time:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label text="Delivery Address:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox alignment="CENTER_LEFT" prefHeight="91.0" prefWidth="455.0" spacing="5.0">
+         <children>
+            <Label fx:id="deliveryTypeLabel" text="deliveryType">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="dateLabel" text="date">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="addressLabel" text="address">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Button fx:id="confirmButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#confirmOrder" prefHeight="30.0" style="-fx-background-radius: 20;" text="Confirm Delivery">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/icons/approveIcon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+   <padding>
+      <Insets bottom="3.0" left="40.0" top="3.0" />
+   </padding>
+</HBox>

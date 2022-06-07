@@ -2,96 +2,116 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="customerComplaint.CustomerComplaintController">
+<VBox id="complaintVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" stylesheets="@../resources/css/CustomerComplaintScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="customerComplaint.CustomerComplaintController">
    <children>
       <Label text="New Customer Complaint">
          <font>
             <Font name="System Bold" size="42.0" />
          </font>
       </Label>
-      <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="980.0" spacing="20.0">
-         <children>
-            <Label text="Full Name: ">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <TextField fx:id="nameString" prefHeight="25.0" prefWidth="300.0">
-               <HBox.margin>
-                  <Insets left="85.0" />
-               </HBox.margin>
-            </TextField>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="980.0" spacing="20.0">
-         <children>
-            <Label text="Personal ID: ">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <TextField fx:id="personalID">
-               <HBox.margin>
-                  <Insets left="70.0" />
-               </HBox.margin>
-            </TextField>
-            <Label fx:id="idLabel" text="*9 digits" textFill="BLUE" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="980.0" spacing="20.0">
-         <children>
-            <Label text="Complaint Reason:">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <TextField fx:id="complaintReason" prefHeight="26.0" prefWidth="686.0" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="980.0" spacing="20.0">
-         <children>
-            <Label text="Complaint Content:">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-      <TextArea fx:id="complaintText" prefHeight="295.0" prefWidth="920.0" wrapText="true">
+      <Label text="Here you can open a complaint for one of the existing orders">
          <font>
-            <Font size="14.0" />
+            <Font size="18.0" />
          </font>
-      </TextArea>
-      <Label text="*Limited to 1024 characters (all fields combined)" textFill="#0400ff" />
-      <HBox alignment="TOP_CENTER" prefHeight="30.0" prefWidth="960.0" spacing="70.0">
+      </Label>
+      <VBox id="complaintVBOX" alignment="CENTER" prefHeight="632.0" prefWidth="1200.0" spacing="20.0">
          <children>
-            <Button fx:id="discardButton" mnemonicParsing="false" onAction="#discardComplaint" text="Discard And Close" />
-            <Button fx:id="submitButton" mnemonicParsing="false" onAction="#saveComplaint" text="Submit Complaint" />
+            <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="980.0" spacing="20.0">
+               <children>
+                  <Label prefHeight="35.0" prefWidth="184.0" text="Order Number: ">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="orderNumberCombo" prefHeight="25.0" prefWidth="176.0">
+                     <HBox.margin>
+                        <Insets left="35.0" />
+                     </HBox.margin>
+                  </ComboBox>
+                  <Label fx:id="orderLabel" text="*Please select an order number from the list" textFill="BLUE" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="980.0" spacing="20.0">
+               <children>
+                  <Label prefHeight="35.0" prefWidth="268.0" text="Complaint Reason:">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="complaintReason" prefHeight="26.0" prefWidth="960.0" promptText="*Limited to 128 characters!">
+                     <font>
+                        <Font size="14.0" />
+                     </font></TextField>
+               </children>
+            </HBox>
+            <HBox prefHeight="220.0" prefWidth="1200.0" spacing="11.0">
+               <children>
+                  <Label prefHeight="35.0" prefWidth="274.0" text="Complaint Content:">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <TextArea fx:id="complaintText" prefHeight="315.0" prefWidth="959.0" promptText="*Limited to 1024 characters!" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextArea>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" spacing="70.0">
+               <children>
+                  <Label fx:id="complaintError" text="*Please make sure to fill a complaint reason and content before submitting" textFill="BLUE" />
+                  <Label text="*Limited to 1024 characters!" textFill="#0400ff" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="20.0" right="20.0" />
+         </padding>
+      </VBox>
+      <HBox alignment="CENTER" prefHeight="72.0" prefWidth="1200.0" spacing="330.0">
+         <children>
+            <Button fx:id="discardButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#discardComplaint" text="Discard And Close">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/deleteIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Label fx:id="errorLabel" text="*Failed to submit order" textFill="RED" visible="false">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Button fx:id="submitButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#saveComplaint" text="Submit Complaint">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/saveIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
          </children>
          <VBox.margin>
             <Insets />
          </VBox.margin>
-         <padding>
-            <Insets top="10.0" />
-         </padding>
       </HBox>
-      <Label fx:id="errorLabel" text="*Please fill all the fields before submiting" textFill="RED" visible="false">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
    </children>
    <opaqueInsets>
       <Insets />
    </opaqueInsets>
    <padding>
-      <Insets bottom="10.0" left="40.0" right="40.0" top="10.0" />
+      <Insets bottom="30.0" left="40.0" right="40.0" top="20.0" />
    </padding>
 </VBox>

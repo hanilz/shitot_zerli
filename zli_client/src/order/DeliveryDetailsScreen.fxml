@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -18,30 +19,35 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.DeliveryController">
+<VBox id="mainDeliveryVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../resources/css/DeliveryDetailsScreen.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.DeliveryController">
    <children>
-      <GridPane>
+      <GridPane prefHeight="100.0" prefWidth="1220.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="465.0" minWidth="10.0" prefWidth="160.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="853.0" minWidth="10.0" prefWidth="650.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="853.0" minWidth="10.0" prefWidth="160.0" />
+          <ColumnConstraints hgrow="NEVER" maxWidth="465.0" minWidth="10.0" prefWidth="368.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="889.0" minWidth="10.0" prefWidth="461.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="853.0" minWidth="10.0" prefWidth="411.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <HBox alignment="CENTER" prefHeight="48.0" prefWidth="107.0" spacing="118.0" GridPane.columnIndex="1">
+            <VBox alignment="TOP_CENTER" prefHeight="84.0" prefWidth="733.0" GridPane.columnIndex="1">
                <children>
                   <Label text="Delivery Details">
                      <font>
-                        <Font size="40.0" />
+                        <Font name="System Bold" size="40.0" />
+                     </font>
+                  </Label>
+                  <Label text="Please select your desired delivery method and time">
+                     <font>
+                        <Font size="17.0" />
                      </font>
                   </Label>
                </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="48.0" prefWidth="107.0" spacing="118.0">
+            </VBox>
+            <HBox id="homeHBox" alignment="CENTER" maxWidth="80.0" minWidth="80.0" prefHeight="80.0" prefWidth="133.0">
                <children>
-                  <ImageView fx:id="homeButton" fitHeight="54.0" fitWidth="45.0" onMousePressed="#changeToHomeScreen" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="homeButton" fitHeight="80.0" fitWidth="80.0" onMousePressed="#changeToHomeScreen" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/catalog/home.png" />
                      </image>
@@ -51,28 +57,39 @@
                   </ImageView>
                </children>
             </HBox>
+            <ImageView fitHeight="71.0" fitWidth="424.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+               <image>
+                  <Image url="@../resources/catalog/deliveryOptionsCrum.png" />
+               </image>
+            </ImageView>
          </children>
       </GridPane>
       <HBox prefHeight="44.0" prefWidth="940.0" />
-      <VBox alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="469.0" prefWidth="775.0">
+      <VBox id="addressFields" maxWidth="-Infinity" prefHeight="552.0" prefWidth="1052.0">
          <children>
-            <VBox prefHeight="51.0" prefWidth="775.0" spacing="10.0">
+            <VBox prefHeight="32.0" prefWidth="1042.0" spacing="10.0">
                <children>
-                  <RadioButton fx:id="pickUpRadioButton" mnemonicParsing="false" onMouseClicked="#selectPickup" selected="true" text="In-Store Pickup">
+                  <RadioButton fx:id="pickUpRadioButton" mnemonicParsing="false" onMouseClicked="#selectPickupEvent" selected="true" text="In-Store Pickup">
                      <toggleGroup>
                         <ToggleGroup fx:id="delivery" />
                      </toggleGroup>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/icons/pickupIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </RadioButton>
-                  <RadioButton fx:id="deliveryRadioButton" mnemonicParsing="false" onMouseClicked="#selectDelivery" selected="true" text="Delivery" toggleGroup="$delivery">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor></RadioButton>
                </children>
             </VBox>
-            <VBox alignment="TOP_CENTER" prefHeight="97.0" prefWidth="775.0">
+            <VBox alignment="TOP_CENTER" prefHeight="73.0" prefWidth="1042.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="22.0" prefWidth="775.0">
                      <children>
@@ -81,26 +98,119 @@
                   </HBox>
                   <HBox fx:id="pickupHBox" alignment="CENTER" prefHeight="72.0" prefWidth="775.0" spacing="34.0" visible="false">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="26.0" prefWidth="227.0" spacing="3.0">
+                        <GridPane prefHeight="62.0" prefWidth="1053.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="519.0" minWidth="10.0" prefWidth="319.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="519.0" minWidth="10.0" prefWidth="376.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="730.0" minWidth="10.0" prefWidth="394.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
                            <children>
-                              <Label text="*" textFill="#ff1b1b">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Choose Branch For Pickup:">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
+                              <VBox alignment="CENTER" prefHeight="62.0" prefWidth="506.0">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="62.0" prefWidth="104.0" spacing="3.0">
+                                       <children>
+                                          <Label id="stars" text="*" textFill="RED">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label text="Choose Branch For Pickup:">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <ComboBox fx:id="pickupBranchComboBox" prefHeight="35.0" prefWidth="296.0" promptText="Branch">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></ComboBox>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="64.0" prefWidth="518.0" GridPane.columnIndex="2">
+                                 <children>
+                                    <HBox alignment="TOP_CENTER" prefHeight="83.0" prefWidth="400.0" spacing="3.0">
+                                       <children>
+                                          <Label id="stars" text="*" textFill="RED">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label text="Pickup Time:">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="40.0" prefWidth="178.0" spacing="10.0">
+                                       <children>
+                                          <ComboBox fx:id="pickupHourComboBox" prefHeight="25.0" prefWidth="100.0" promptText="Hour">
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </ComboBox>
+                                          <Label alignment="TOP_CENTER" text=":">
+                                             <font>
+                                                <Font name="System Bold" size="22.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <ComboBox fx:id="pickupMinuteComboBox" prefHeight="25.0" prefWidth="131.0" promptText="Minute">
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </ComboBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" GridPane.columnIndex="1">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="40.0" prefWidth="364.0" spacing="3.0">
+                                       <children>
+                                          <Label id="stars" text="*" textFill="RED">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label text="Pickup Date:">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <DatePicker fx:id="pickupDatePicker" />
+                                 </children>
+                              </VBox>
                            </children>
-                        </HBox>
-                        <ComboBox fx:id="branchComboBox" prefHeight="25.0" prefWidth="231.0" promptText="select branch" />
+                        </GridPane>
                      </children>
                   </HBox>
                </children>
             </VBox>
-            <VBox fx:id="deliveryVBox" alignment="BOTTOM_CENTER" prefHeight="252.0" prefWidth="775.0" spacing="6.0">
+            <RadioButton fx:id="deliveryRadioButton" alignment="BOTTOM_LEFT" mnemonicParsing="false" onMouseClicked="#selectDeliveryEvent" prefHeight="55.0" prefWidth="197.0" selected="true" text="Delivery (15₪)" toggleGroup="$delivery">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/shippingIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </RadioButton>
+            <VBox fx:id="deliveryVBox" alignment="BOTTOM_CENTER" prefHeight="284.0" prefWidth="1052.0" spacing="6.0">
                <children>
                   <HBox prefHeight="22.0" prefWidth="775.0">
                      <children>
@@ -112,16 +222,16 @@
                         <Label fx:id="required" text="* All fields are required" textFill="#ff1b1b" />
                      </children>
                   </HBox>
-                  <GridPane hgap="15.0" maxWidth="-Infinity" prefHeight="180.0" prefWidth="751.0" vgap="10.0">
+                  <GridPane hgap="15.0" maxWidth="-Infinity" prefHeight="180.0" prefWidth="1050.0" vgap="10.0">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="0.0" prefWidth="131.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="656.0" minWidth="10.0" prefWidth="248.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="656.0" minWidth="0.0" prefWidth="135.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="656.0" minWidth="10.0" prefWidth="190.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="0.0" prefWidth="134.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="656.0" minWidth="10.0" prefWidth="350.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="656.0" minWidth="0.0" prefWidth="168.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="656.0" minWidth="10.0" prefWidth="335.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
@@ -129,14 +239,14 @@
                            <children>
                               <Label text="Delivery Date:">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
                            </children>
                         </HBox>
                         <Label text="Address:">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
                         <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="252.0" spacing="37.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -148,14 +258,14 @@
                            <children>
                               <Label text="Reciever Name:">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="40.0" prefWidth="178.0" spacing="10.0" GridPane.columnIndex="3">
+                        <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="178.0" spacing="10.0" GridPane.columnIndex="3">
                            <children>
-                              <ComboBox fx:id="hourComboBox" prefHeight="25.0" prefWidth="100.0" promptText="hour">
+                              <ComboBox fx:id="deliveryHourComboBox" prefHeight="25.0" prefWidth="100.0" promptText="Hour">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -168,7 +278,7 @@
                                     <Insets bottom="5.0" />
                                  </padding>
                               </Label>
-                              <ComboBox fx:id="minuteComboBox" prefHeight="25.0" prefWidth="131.0" promptText="minute">
+                              <ComboBox fx:id="deliveryMinuteComboBox" prefHeight="25.0" prefWidth="131.0" promptText="Minute">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -179,7 +289,7 @@
                            <children>
                               <Label text="Delivery Time:">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
                            </children>
@@ -188,7 +298,7 @@
                            <children>
                               <Label text="Reciever Phone:">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
                            </children>
@@ -202,34 +312,94 @@
                         <TextField fx:id="recieverPhoneField" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                            <children>
-                              <Label text="Region:">
+                              <Label text="Branch:">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
                            </children>
                         </HBox>
-                        <ComboBox fx:id="regionComboBox" prefHeight="25.0" prefWidth="89.0" promptText="Region" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="deliveryBranchComboBox" prefHeight="35.0" prefWidth="299.0" promptText="select branch" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></ComboBox>
                      </children>
                   </GridPane>
+                  <VBox>
+                     <children>
+                        <CheckBox fx:id="expressDeliveryCheckBox" mnemonicParsing="false" onMouseClicked="#selectExpressEvent" text="Express Delivery (30₪)">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/icons/megaExpressDeliveryIcon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </CheckBox>
+                        <Label text="* An express delivery will be prepared and sent to the reciever 3 hours after the order has been approved - it's lightning fast!" textFill="#2e3add" />
+                     </children>
+                  </VBox>
                </children>
             </VBox>
-            <HBox alignment="CENTER" prefHeight="103.0" prefWidth="775.0" spacing="59.0">
+            <HBox alignment="CENTER" prefHeight="76.0" prefWidth="1052.0" spacing="219.0">
                <children>
-                  <Button fx:id="backButton" mnemonicParsing="false" onMousePressed="#changeToGreetingCardScreen" text="Back">
+                  <Button id="backBtn" fx:id="backButton" mnemonicParsing="false" onMousePressed="#changeToGreetingCardScreen" text="Back To Greeting Card">
                      <cursor>
                         <Cursor fx:constant="HAND" />
-                     </cursor></Button>
-                  <Button fx:id="checkoutButton" mnemonicParsing="false" onMousePressed="#changeToCheckoutScreen" text="Checkout">
+                     </cursor>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/icons/backIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                  <VBox alignment="CENTER" prefHeight="65.0" prefWidth="117.0">
+                     <children>
+                        <Label text="Delivery Fee:">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="deliveryFeeLabel" text="15.0 $">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <Button id="continueButton" fx:id="checkoutButton" contentDisplay="RIGHT" mnemonicParsing="false" onMousePressed="#changeToCheckoutScreen" text="Proceed To Checkout">
                      <cursor>
                         <Cursor fx:constant="HAND" />
-                     </cursor></Button>
+                     </cursor>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/icons/paymentIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
                </children>
             </HBox>
          </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
       </VBox>
    </children>
    <padding>
-      <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+      <Insets bottom="40.0" left="20.0" right="20.0" top="20.0" />
    </padding>
 </VBox>

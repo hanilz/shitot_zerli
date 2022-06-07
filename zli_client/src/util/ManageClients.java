@@ -8,8 +8,14 @@ import java.util.HashMap;
 import client.ClientFormController;
 import entities.User;
 
+/**
+ *Handle common actions for all clients  
+ */
 public class ManageClients {
 	
+	/**
+	 * Disconnecting client from user and server
+	 */
 	public static void exitClient() {
 		try {
 			if (ClientFormController.client.isConnected()) {
@@ -19,7 +25,7 @@ public class ManageClients {
 					message.put("logout", User.getUserInstance().getIdUser());
 					User.getUserInstance().logout();
 				}
-				Object response = ClientFormController.client.accept(message);
+				ClientFormController.client.accept(message);
 				ClientFormController.client.closeConnection();
 				System.out.println("disconnected! yayyyy");
 			} else {
@@ -31,28 +37,34 @@ public class ManageClients {
 			ex.printStackTrace();
 		}
 	}
+	/**
+	 * @param type Type of user
+	 * @return default home screen of user by his type 
+	 */
 	public static ArrayList<Screens> getUserScreens(UserType type){//assumed user logged in 
 		switch(type) {
 		case CEO:
-			break;
+			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.VIEW_REPORTS}));
 		case CUSTOMER:
-			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.CATALOG}));
+			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.CATALOG,Screens.VIEW_ORDERS_CUSTOMER}));
+		case NEW_CUSTOMER:
+			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.CATALOG,Screens.VIEW_ORDERS_CUSTOMER}));
 		case CUSTOMER_SERVICE:
-			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.SURVEY_HOME,Screens.COMPLAINT_HOME}));
+			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.COMPLAINT_HOME,Screens.SURVEY_HOME,Screens.VIEW_SURVEY_ANALYSIS_RESULTS}));
 		case DELIVERY_COORDINATOR:
-			break;
+			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.DELIVER_ORDERS}));
 		case MARKETING_WORKER:
-			break;
+			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.EDIT_CATALOG}));
 		case SERVICE_EXPERT:
-			break;
+			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.VIEW_ANSWERED_SURVEYS}));
 		case STORE_MANGER:
-			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.MANAGE_USERS}));
+			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.MANAGE_USERS, Screens.REGISTER_CUSTMER,Screens.VIEW_ORDERS_MANAGER,Screens.VIEW_REPORTS,Screens.USER_PREMISSION}));
 		case STORE_WORKER:
-			break;
+			return new ArrayList<>(Arrays.asList(new Screens[] {Screens.CATALOG,Screens.SURVEY_HOME}));
 		default:
-			return null;
+			return new ArrayList<>();
 		}
-		return null;
 	}
+
 			
 }

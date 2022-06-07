@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: &quot;white&quot;;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.LandingScreenController">
+   <children>
+      <ImageView id="zliClientImage" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" />
+      <VBox id="connectToServerBox" alignment="CENTER" layoutX="280.0" layoutY="92.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="715.0" spacing="20.0">
+         <children>
+            <VBox alignment="TOP_CENTER">
+               <children>
+                  <Label id="welcome" alignment="CENTER" contentDisplay="CENTER" prefHeight="88.0" prefWidth="496.0" text="Welcome To Zer-Li!">
+                     <font>
+                        <Font name="System Bold" size="52.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="landingLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="65.0" prefWidth="525.0" text="The most exotic flowers at the tip of your fingers!">
+                     <font>
+                        <Font name="System Bold Italic" size="22.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <ImageView fx:id="zerliIconImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/icon.png" />
+               </image>
+            </ImageView>
+            <VBox alignment="BOTTOM_CENTER" prefHeight="203.0" prefWidth="715.0" spacing="12.0">
+               <children>
+                  <Button id="connectToIPButton" fx:id="startShoppingButton" mnemonicParsing="false" onMousePressed="#clickStartShoppingButton" prefHeight="45.0" prefWidth="243.0" text="Start Shopping">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font size="22.0" />
+                     </font></Button>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" />
+               </padding>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

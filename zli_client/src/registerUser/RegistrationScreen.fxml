@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox id="registrationVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../resources/css/RegistrationScreen.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="registerUser.RegistrationController">
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+   <children>
+      <GridPane prefHeight="99.0" prefWidth="980.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="100.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1066.0" minWidth="10.0" prefWidth="1060.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.0" minWidth="0.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="100.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="761.0" GridPane.columnIndex="1">
+               <children>
+                  <Label text="Customer Registration Form">
+                     <font>
+                        <Font name="System Bold" size="42.0" />
+                     </font>
+                  </Label>
+                  <Label text="Please fill the entire form to create a new custmer account">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <HBox id="homeHBox">
+               <children>
+                  <ImageView id="homeHBox" fx:id="homeImage" fitHeight="100.0" fitWidth="100.0" onMousePressed="#returnHome" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/catalog/home.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </children>
+            </HBox>
+         </children>
+      </GridPane>
+      <HBox alignment="CENTER" prefHeight="531.0" prefWidth="1260.0" spacing="70.0">
+         <children>
+            <VBox id="detailsVBox" alignment="TOP_CENTER" prefHeight="425.0" prefWidth="483.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="484.0" text="Customer Details">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Separator prefWidth="200.0" />
+                  <GridPane prefHeight="459.0" prefWidth="461.0">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="224.0" minWidth="10.0" prefWidth="215.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="257.0" minWidth="10.0" prefWidth="243.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="First Name:">
+                           <font>
+                              <Font name="System Bold" size="28.0" />
+                           </font>
+                        </Label>
+                        <Label text="Last Name:" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="28.0" />
+                           </font>
+                        </Label>
+                        <Label text="Personal ID:" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="System Bold" size="28.0" />
+                           </font>
+                        </Label>
+                        <Label text="Phone Number:" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="System Bold" size="28.0" />
+                           </font>
+                        </Label>
+                        <Label text="Email Address:" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="System Bold" size="28.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="firstNameLabel" promptText="enter first name here" GridPane.columnIndex="1" />
+                        <TextField fx:id="lastNameLabel" promptText="enter last name here" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <VBox prefHeight="55.0" prefWidth="243.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <Label text="* 9 Digits" textFill="BLUE" />
+                              <TextField fx:id="idLabel" promptText="example : 123456789" />
+                           </children>
+                           <padding>
+                              <Insets top="14.0" />
+                           </padding>
+                        </VBox>
+                        <VBox GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <children>
+                              <Label text="example: user@service.com" textFill="BLUE" />
+                              <TextField fx:id="emailLabel" promptText="example: user@service.com" />
+                           </children>
+                           <padding>
+                              <Insets top="14.0" />
+                           </padding>
+                        </VBox>
+                        <VBox GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <children>
+                              <Label text="* 9-10 Digits" textFill="BLUE" />
+                              <TextField fx:id="phoneLabel" promptText="0531234567" />
+                           </children>
+                           <padding>
+                              <Insets top="14.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </GridPane>
+               </children>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </VBox>
+            <VBox id="detailsVBox" alignment="TOP_CENTER" prefHeight="425.0" prefWidth="487.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="484.0" text="Customer Login Credentials">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Separator prefWidth="200.0" />
+                  <GridPane prefHeight="178.0" prefWidth="465.0">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Username:">
+                           <font>
+                              <Font name="System Bold" size="28.0" />
+                           </font>
+                        </Label>
+                        <Label text="Password:" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="28.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="usernameLabel" promptText="enter username here" GridPane.columnIndex="1" />
+                        <TextField fx:id="passwordLabel" promptText="enter password here" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="484.0" text="Default Payment Method">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Separator prefWidth="200.0" />
+                  <GridPane prefHeight="239.0" prefWidth="465.0">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Card Number:">
+                           <font>
+                              <Font name="System Bold" size="28.0" />
+                           </font>
+                        </Label>
+                        <Label text="Expiration Date:" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="28.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="cardNumberLabel" alignment="CENTER" prefHeight="25.0" prefWidth="118.0" promptText="example: 1111222233334444" GridPane.columnIndex="1" />
+                        <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <TextField fx:id="monthLabel" alignment="CENTER" promptText="mm" />
+                              <Label text="/" />
+                              <TextField fx:id="yearLabel" alignment="CENTER" promptText="yy" />
+                           </children>
+                        </HBox>
+                        <Label text="CVV:" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="System Bold" size="28.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="cvvLabel" alignment="CENTER" prefHeight="25.0" prefWidth="114.0" promptText="XXX" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="70.0" right="70.0" />
+                           </GridPane.margin>
+                        </TextField>
+                     </children>
+                  </GridPane>
+               </children>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </VBox>
+         </children>
+      </HBox>
+      <Label fx:id="errorLabel" text="*Please fill all the fields before submitting" textFill="RED" visible="false">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER" prefHeight="66.0" prefWidth="1260.0" spacing="600.0">
+         <children>
+            <Button fx:id="closeButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#returnHomebtn" text="Close and Cancel">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/deleteIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="completeRegistrationButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#createNewCustomer" text="Complete Registration">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/registerIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+         </children>
+      </HBox>
+   </children>
+</VBox>

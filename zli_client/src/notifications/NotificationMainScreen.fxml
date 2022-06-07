@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox id="notificationVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" spacing="10.0" stylesheets="@../resources/css/NotificationMainScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="notifications.NotificationController">
+   <children>
+      <Label text="Notification Center">
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font>
+      </Label>
+      <TabPane prefHeight="453.0" prefWidth="960.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="New Notifications">
+               <content>
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <VBox fx:id="newNotificationsVBox" alignment="TOP_CENTER" prefHeight="398.0" prefWidth="940.0" spacing="10.0">
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </content>
+            </Tab>
+          <Tab text="Read Notifications">
+               <content>
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <VBox fx:id="readNotificationsVBox" alignment="TOP_CENTER" prefHeight="405.0" prefWidth="940.0" spacing="10.0">
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <Separator prefWidth="200.0" />
+      <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeNotificationCenter" text="Close Window" />
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>

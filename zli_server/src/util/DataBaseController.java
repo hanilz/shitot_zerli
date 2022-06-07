@@ -12,7 +12,9 @@ import java.util.List;
  *
  */
 public class DataBaseController {
-	// TODO: make singleton
+	/**
+	 * DatabaseController is singleton, there is only one conn to connect the database.
+	 */
 	private static Connection conn = null;
 
 	/**
@@ -24,12 +26,17 @@ public class DataBaseController {
 	 * status of the connection of the database
 	 */
 	public static boolean isConnected = false;
-	
 
+	private DataBaseController() {
+	}
 
-	// private static PreparedStatement ps = null;
-
-	// private static ResultSet rs = null;
+	public static Connection getConn() {
+		if (conn == null) {
+			configDriver();
+			connect();
+		}
+		return conn;
+	}
 
 	/**
 	 * Clearing the current args from the list and adding the new information
@@ -58,7 +65,7 @@ public class DataBaseController {
 		String dbUsername = args.get(2);
 		String dbPassword = args.get(3);
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://" + ip + "/" + dbName + "?serverTimezone=IST&useSSL=false",
+			conn = DriverManager.getConnection("jdbc:mysql://" + ip + "/" + dbName + "?sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false&serverTimezone=IST&useSSL=false",
 					dbUsername, dbPassword); // URL, Username, Password+changed url with message "&useSSL=false"
 			buff.append("\nDatabase connection succeeded!\n");
 			isConnected = true;
@@ -69,6 +76,11 @@ public class DataBaseController {
 		return buff.toString();
 	}
 
+	/**
+	 * configures the driver for the JDBC API
+	 * @return String
+	 */
+	@SuppressWarnings("deprecation")
 	private static String configDriver() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
@@ -87,32 +99,15 @@ public class DataBaseController {
 	public static boolean Disconnect() {// not looking only for SQLException
 		if (!isConnected)
 			return true;// server was not connected to begin with
-//		if (rs != null) {
-//			try {
-//				rs.close();//closing ResultSet
-//			} catch (Exception e) {
-//				}
-//		}
-//		if (ps != null) {
-//			try {
-//				ps.close();//closing PreparedStatement
-//			} catch (Exception e) {
-//				}
-//		}
 		if (conn != null) {
 			try {
 				conn.close();// closing database connection
+				conn = null;
 			} catch (Exception e) {
 			}
 		}
 		isConnected = false;
 		return true;
-	}
-
-
-
-	public static Connection getConn() {
-		return conn;
 	}
 
 }
