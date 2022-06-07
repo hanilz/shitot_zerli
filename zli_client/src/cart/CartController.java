@@ -28,6 +28,9 @@ import javafx.util.Duration;
 import util.ManageScreens;
 import util.Screens;
 
+/**
+ * Cart screen controller class
+ */
 public class CartController implements Initializable {
 	private static Cart cart = Cart.getInstance();
 
@@ -59,6 +62,9 @@ public class CartController implements Initializable {
 
 	public static CartController instance;
 
+	/**
+	 * Initialize the Cart ScrollPane based on the ProductsBase in the cart.
+	 */
 	public void initCart() {
 		instance = this;
 		Set<ProductsBase> totalCart = cart.getCart().keySet();
@@ -75,6 +81,9 @@ public class CartController implements Initializable {
 		refreshTotalPrice();
 	}
 
+	/**
+	 * @return true if a field is empty, false otherwise
+	 */
 	private boolean areFieldsEmpty() {
 		boolean result = false;
 		for (Node node : cartItemVBox.getChildren())
@@ -88,16 +97,31 @@ public class CartController implements Initializable {
 		return result;
 	}
 
+	/**
+	 * Move to home screen.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void changeToHomeScreen(MouseEvent event) {
 		ManageScreens.home();
 	}
 
+	/**
+	 * Move to catalog screen.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void changeToCatalogScreen(MouseEvent event) {
 		ManageScreens.changeScreenTo(Screens.CATALOG);
 	}
 
+	/**
+	 * Attempt to move to GreetingCard Screen - if not logged in as user, open a
+	 * login popup.
+	 * @param event
+	 */
 	@FXML
 	void buy(MouseEvent event) {
 		if (areFieldsEmpty()) {
@@ -111,12 +135,18 @@ public class CartController implements Initializable {
 		changeToGreatingCard();
 	}
 
+	/**
+	 * Move to GreetingCard screen.
+	 */
 	public static void changeToGreatingCard() {
 		if (User.getUserInstance().isUserLoggedIn()) {
 			ManageScreens.changeScreenTo(Screens.GREETING_CARD);
 		}
 	}
 
+	/**
+	 * Show a warning label if one of the quantity labels is 0.
+	 */
 	void showFillAllQuantitiesLabel() {
 		fillAllQuantitiesField.setText("* Please fill all the fields of the quantities!");
 		PauseTransition pause = new PauseTransition(Duration.seconds(3));
@@ -124,6 +154,9 @@ public class CartController implements Initializable {
 		pause.play();
 	}
 
+	/**
+	 * Initialize the cart ScrollPane and show the first ProductBase's overview on the right.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		System.out.println(cart);
@@ -134,6 +167,10 @@ public class CartController implements Initializable {
 		}
 	}
 
+	/**
+	 * Create an overview of a productsBase and display it on the right side
+	 * @param product
+	 */
 	public static void createOverviewVBox(ProductsBase product) {
 		if (product instanceof CustomProduct) {
 			CartProductOverviewVBox overviewVBox = null;
@@ -160,9 +197,11 @@ public class CartController implements Initializable {
 			}
 			setOverviewVBox(overviewVBox);
 		}
-
 	}
 
+	/**
+	 * Refresh the total price and discount labels.
+	 */
 	public void refreshTotalPrice() {
 		priceLabel.setText(InputChecker.price(cart.getTotalPrice()));
 		discountLabel.setText(InputChecker.price(cart.getTotalDiscountPrice()));
@@ -179,6 +218,9 @@ public class CartController implements Initializable {
 		}
 	}
 
+	/**
+	 * If there is a product with a discount in the cart, display the discount label.
+	 */
 	private void initDiscountLabel() {
 		if (isDiscount()) {
 			discountLabel.setId("discountLabel");
@@ -192,6 +234,10 @@ public class CartController implements Initializable {
 		}
 	}
 
+	/**
+	 * Used in order to access non-static methods of cart controller in a static way.
+	 * @param command
+	 */
 	public static void connectionWithCartHBox(String command) {
 		if (command.contains("refresh total price"))
 			instance.refreshTotalPrice();
@@ -201,6 +247,10 @@ public class CartController implements Initializable {
 		}
 	}
 
+	/**
+	 * Clicking on this button empties the cart.
+	 * @param event
+	 */
 	@FXML
 	void emptyCart(MouseEvent event) {
 		cart.emptyCart();
@@ -209,10 +259,18 @@ public class CartController implements Initializable {
 		overviewPane.getChildren().clear();
 	}
 
+	/**
+	 * Set the overview VBox in the right side.
+	 * @param vBox the OverviewVBox
+	 */
 	public static void setOverviewVBox(VBox vBox) {
 		instance.setOverviewScrollPane(vBox);
 	}
 
+	/**
+	 * Clear the pane and load a new vbox
+	 * @param vBox
+	 */
 	private void setOverviewScrollPane(VBox vBox) {
 		overviewPane.getChildren().clear();
 		overviewPane.getChildren().add(vBox);
@@ -226,6 +284,10 @@ public class CartController implements Initializable {
 		cartItemVBox.getChildren().clear();
 	}
 
+	/**
+	 * Clear the cart overview Pane - called when a productsBase is removed from the cart.
+	 * @param product
+	 */
 	public void clearCartOverview(ProductsBase product) {
 		if (overviewPane.getChildren().isEmpty())
 			return;
@@ -239,6 +301,10 @@ public class CartController implements Initializable {
 			overviewPane.getChildren().clear();
 	}
 
+	/**
+	 * Go over all nodes in the cartVBox and check if any of them has a discount.
+	 * @return true if there is discount, false otherwise
+	 */
 	private boolean isDiscount() {
 		for (Node node : cartItemVBox.getChildren())
 			if (node instanceof CartHBox) {
@@ -249,6 +315,9 @@ public class CartController implements Initializable {
 		return false;
 	}
 
+	/**
+	 * @return true if discountLabel is in totalPriceVBox, false otherwise
+	 */
 	private boolean isDiscountInPrice() {
 		return totalPriceVBox.getChildren().contains(discountLabel);
 	}

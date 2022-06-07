@@ -23,6 +23,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import util.ManageScreens;
 
+/**
+ * Component class of cart, is used in the cartScreen to represent a
+ * ProductsBase which is in the cart.
+ */
 public class CartHBox extends HBox {
 	private Cart cart = Cart.getInstance();
 
@@ -48,55 +52,34 @@ public class CartHBox extends HBox {
 	private Button removeButton = new Button("X");
 	private double price;
 
+	/**
+	 * Constructor.
+	 * @param product
+	 * @param quantity
+	 */
 	public CartHBox(ProductsBase product, int quantity) {
 		this.product = product;
 		this.quantity = quantity;
-		setPrice(product.isDiscount() ? product.calculateDiscount(): product.getPrice());
+		setPrice(product.isDiscount() ? product.calculateDiscount() : product.getPrice());
 	}
 
+	/**
+	 * Set, load and add all nodes to the component.
+	 */
 	public void initHBox() {
-		this.setAlignment(Pos.CENTER);
-		this.setSpacing(20);
-		this.setPadding(new Insets(0, 0, 10, 0));
-		this.setPrefHeight(100);
-		this.setMinHeight(100);
+		setVBoxSize();
 
 		initImageProduct();
 
 		initProductDetailsVBox();
 
 		initViewContentsButton();
-		
+
 		initQuantityVBox();
 
 		initPriceDetailsVBox();
 
-		removeButton.setCursor(Cursor.HAND);
-		removeButton.setStyle("-fx-background-color : Red ; -fx-font-size:16 ; -fx-font-weight: bold");
-		removeButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				String prompt = "";
-				String title = "";
-				if(product instanceof CustomProduct) {
-					prompt = "Are you sure you want to remove this custom product from the cart?";
-					title = "Remove Custom Product From Cart";
-				}
-				else if (product instanceof Product) {
-					prompt = "Are you sure you want to remove this product from the cart?";
-					title = "Remove Product From Cart";
-				}
-				else {
-					prompt = "Are you sure you want to remove this item from the cart?";
-					title = "Remove Item From Cart";
-				}
-				if(ManageScreens.getYesNoDecisionAlert(title, "", prompt)) {
-					cart.removeFromCart(product);
-					CartController.connectionWithCartHBox("refresh cart");
-					CartController.instance.clearCartOverview(product);
-				}
-			}
-		});
+		initRemoveButton();
 
 		this.getChildren().add(imageHBox);
 		this.getChildren().add(idNameVBox);
@@ -106,6 +89,50 @@ public class CartHBox extends HBox {
 		this.setId("cartHbox");
 	}
 
+	/**
+	 * Set the size and spacing of the component.
+	 */
+	private void setVBoxSize() {
+		this.setAlignment(Pos.CENTER);
+		this.setSpacing(20);
+		this.setPadding(new Insets(0, 0, 10, 0));
+		this.setPrefHeight(100);
+		this.setMinHeight(100);
+	}
+
+	/**
+	 * Initialize the behavior of the remove button.
+	 */
+	private void initRemoveButton() {
+		removeButton.setCursor(Cursor.HAND);
+		removeButton.setStyle("-fx-background-color : Red ; -fx-font-size:16 ; -fx-font-weight: bold");
+		removeButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				String prompt = "";
+				String title = "";
+				if (product instanceof CustomProduct) {
+					prompt = "Are you sure you want to remove this custom product from the cart?";
+					title = "Remove Custom Product From Cart";
+				} else if (product instanceof Product) {
+					prompt = "Are you sure you want to remove this product from the cart?";
+					title = "Remove Product From Cart";
+				} else {
+					prompt = "Are you sure you want to remove this item from the cart?";
+					title = "Remove Item From Cart";
+				}
+				if (ManageScreens.getYesNoDecisionAlert(title, "", prompt)) {
+					cart.removeFromCart(product);
+					CartController.connectionWithCartHBox("refresh cart");
+					CartController.instance.clearCartOverview(product);
+				}
+			}
+		});
+	}
+
+	/**
+	 * Set the product details.
+	 */
 	private void initProductDetailsVBox() {
 		idLabel = new Label("CatID: " + product.getId());
 
@@ -132,14 +159,18 @@ public class CartHBox extends HBox {
 		priceVBox.setAlignment(Pos.CENTER);
 		priceVBox.setSpacing(10);
 		priceVBox.getChildren().add(originalPriceText);
-		if(product.isDiscount()) {
+		initDiscountLabel();
+
+		priceVBox.setPrefWidth(180);
+	}
+
+	private void initDiscountLabel() {
+		if (product.isDiscount()) {
 			discountLabel.setText(InputChecker.price(totalSumDiscountPrice));
 			originalPriceText.setId("originalPriceTxt");
 			discountLabel.setId("discountLabel");
 			priceVBox.getChildren().add(discountLabel);
 		}
-
-		priceVBox.setPrefWidth(180);
 	}
 
 	private void initQuantityVBox() {
@@ -147,7 +178,7 @@ public class CartHBox extends HBox {
 		quantityField.setAlignment(Pos.CENTER);
 		quantityField.setMinWidth(50);
 		quantityField.setPrefWidth(50);
-		
+
 		// force the field to be numeric only
 		quantityField.textProperty().addListener(new ChangeListener<String>() {
 			@Override
@@ -185,13 +216,16 @@ public class CartHBox extends HBox {
 		image.setFitHeight(80);
 		image.setFitWidth(100);
 		image.setPreserveRatio(true);
-		
+
 		imageHBox.getChildren().add(image);
 		imageHBox.setAlignment(Pos.CENTER);
 		imageHBox.setMinWidth(50);
 		imageHBox.setPrefHeight(50);
 	}
 
+	/**
+	 * Display the product overview of this productsBase.
+	 */
 	private void initViewContentsButton() {
 		this.setCursor(Cursor.HAND);
 		this.setOnMouseReleased(new EventHandler<MouseEvent>() {
@@ -201,15 +235,15 @@ public class CartHBox extends HBox {
 			}
 		});
 	}
-	
+
 	public double getTotalSumPrice() {
 		return totalSumPrice;
 	}
-	
+
 	public double getTotalSumDiscountPrice() {
 		return totalSumDiscountPrice;
 	}
-	
+
 	public TextField getQuantityField() {
 		return quantityField;
 	}

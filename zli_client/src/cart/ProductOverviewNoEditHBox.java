@@ -7,6 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
+/**
+ * Component class for displaying items of a product.
+ */
 public class ProductOverviewNoEditHBox extends CustomProductHBox {
 	private int quantity = 1;
 	private Label quantityLabel = new Label("Quantity:");
@@ -19,6 +22,9 @@ public class ProductOverviewNoEditHBox extends CustomProductHBox {
 		this.quantity = quantity;
 	}
 
+	/**
+	 * Display image, name, catID and quantity in the HBox.
+	 */
 	public void initHBox() {
 		this.setId("noEditHBox");
 		super.initHBox();
@@ -42,6 +48,9 @@ public class ProductOverviewNoEditHBox extends CustomProductHBox {
 		quantityVBox.getChildren().add(quantityAmountLabel);
 	}
 
+	/**
+	 * @return quantity
+	 */
 	public int getQuantity() {
 		return quantity;
 	}

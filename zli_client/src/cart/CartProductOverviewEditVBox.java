@@ -17,6 +17,9 @@ import javafx.scene.layout.HBox;
 import util.ManageScreens;
 import util.Screens;
 
+/**
+ * Component for editing a customProduct's items and products in the cart.
+ */
 public class CartProductOverviewEditVBox extends CartProductOverviewVBox {
 	private Button editCustomProductButton = new Button("Save Changes");
 	private Button editCustomProductInBuilderButton = new Button("Edit Product");
@@ -40,17 +43,24 @@ public class CartProductOverviewEditVBox extends CartProductOverviewVBox {
 		super.initTotalPriceHBox();
 
 		productImage.setFitHeight(100); // custom product image isn't that important
-		
+
 		initEditButtonsHBox();
 
 		this.getChildren().add(editButtonsHBox);
 		totalPriceLabel.setText("Custom Product Price:");
 	}
-	
-	
+
+	/**
+	 * Sets the edit buttons behavior.
+	 */
 	private void initEditButtonsHBox() {
 		editButtonsHBox.getChildren().add(editCustomProductButton);
 		editCustomProductButton.setOnAction(new EventHandler<ActionEvent>() {
+			/**
+			 * Get all the products and items in this vbox, save them in a new
+			 * CustomProduct, and replace that customProduct with the original
+			 * customProduct, which is in the cart.
+			 */
 			@Override
 			public void handle(ActionEvent e) {
 				HashMap<Item, Integer> items = new HashMap<>();
@@ -79,6 +89,12 @@ public class CartProductOverviewEditVBox extends CartProductOverviewVBox {
 		});
 
 		editCustomProductInBuilderButton.setOnAction(new EventHandler<ActionEvent>() {
+			/**
+			 * Go to custom product builder with the items and products of this
+			 * customProduct
+			 * 
+			 * @param e
+			 */
 			@Override
 			public void handle(ActionEvent e) {
 				Cart.getInstance().setProductToEdit(product);
@@ -91,6 +107,9 @@ public class CartProductOverviewEditVBox extends CartProductOverviewVBox {
 		editButtonsHBox.setSpacing(20);
 	}
 
+	/**
+	 * Set the products of this customProduct as HBoxes in the ScrollPane.
+	 */
 	private void initProductsHBoxes() {
 		CustomProduct customProduct = (CustomProduct) product;
 
@@ -102,6 +121,9 @@ public class CartProductOverviewEditVBox extends CartProductOverviewVBox {
 		}
 	}
 
+	/**
+	 * Set the items of this customProduct as HBoxes in the ScrollPane.
+	 */
 	private void initItemsHBoxes() {
 		for (Item currentItem : product.getItems().keySet()) {
 			ProductOverviewEditHBox productOverviewHBox = new ProductOverviewEditHBox(currentItem, this,
@@ -111,13 +133,21 @@ public class CartProductOverviewEditVBox extends CartProductOverviewVBox {
 		}
 	}
 
+	/**
+	 * Behavior for removing a HBox from the scrollpane - update the price.
+	 * 
+	 * @param productOverviewHBox
+	 */
 	public void removeHBoxFromOverview(ProductOverviewEditHBox productOverviewHBox) {
 		for (Node currentNode : itemsProductsVBox.getChildren()) {
 			if (currentNode instanceof ProductOverviewEditHBox) {
 				ProductOverviewEditHBox currentProductOverviewHBox = (ProductOverviewEditHBox) currentNode;
 				if (currentProductOverviewHBox == productOverviewHBox) {
-					addToTotalPrice(-currentProductOverviewHBox.getProduct().getPrice() * currentProductOverviewHBox.getQuantity(),
-							-currentProductOverviewHBox.getProduct().calculateDiscount() * currentProductOverviewHBox.getQuantity());
+					addToTotalPrice(
+							-currentProductOverviewHBox.getProduct().getPrice()
+									* currentProductOverviewHBox.getQuantity(),
+							-currentProductOverviewHBox.getProduct().calculateDiscount()
+									* currentProductOverviewHBox.getQuantity());
 					itemsProductsVBox.getChildren().remove(currentProductOverviewHBox);
 					break;
 				}
@@ -125,6 +155,11 @@ public class CartProductOverviewEditVBox extends CartProductOverviewVBox {
 		}
 	}
 
+	/**
+	 * Update price and discountPrice labels.
+	 * @param delta
+	 * @param discountDelta
+	 */
 	public void addToTotalPrice(double delta, double discountDelta) {
 		price += delta;
 		originalPriceTxt.setText(InputChecker.price(price));
