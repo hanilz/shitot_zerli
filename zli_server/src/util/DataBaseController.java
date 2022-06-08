@@ -37,6 +37,14 @@ public class DataBaseController {
 		}
 		return conn;
 	}
+	
+	public static Connection getDefultConn() {
+		if (conn == null) {
+			configDriver();
+			defultConnect();
+		}
+		return conn;
+	}
 
 	/**
 	 * Clearing the current args from the list and adding the new information
@@ -64,6 +72,19 @@ public class DataBaseController {
 		String dbName = args.get(1);
 		String dbUsername = args.get(2);
 		String dbPassword = args.get(3);
+		connectToDB(buff, ip, dbName, dbUsername, dbPassword);
+		return buff.toString();
+	}
+	
+	public static void defultConnect() {
+		String ip = "localhost";
+		String dbName = "zli";
+		String dbUsername = "root";
+		String dbPassword = "braude123";
+		connectToDB(new StringBuffer(), ip, dbName, dbUsername, dbPassword);
+	}
+
+	private static void connectToDB(StringBuffer buff, String ip, String dbName, String dbUsername, String dbPassword) {
 		try {
 			conn = DriverManager.getConnection("jdbc:mysql://" + ip + "/" + dbName + "?sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false&serverTimezone=IST&useSSL=false",
 					dbUsername, dbPassword); // URL, Username, Password+changed url with message "&useSSL=false"
@@ -73,7 +94,6 @@ public class DataBaseController {
 			buff.append("\nDatabase connection failed!\n");
 			isConnected = false;
 		}
-		return buff.toString();
 	}
 
 	/**
