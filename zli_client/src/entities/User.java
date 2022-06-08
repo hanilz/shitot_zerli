@@ -78,14 +78,12 @@ public class User implements Serializable {
 	 * Setting up the user in the client system
 	 */
 	public void login(int idUser, String username, int idAccount, UserType userType, double storeCredit) {
-		if (!isLogged) {
-			this.idUser = idUser;
-			this.username = username;
-			this.idAccount = idAccount;
-			this.userType = userType;
-			this.storeCredit = storeCredit;
-			isLogged = true;
-		}
+		this.idUser = idUser;
+		this.username = username;
+		this.idAccount = idAccount;
+		this.userType = userType;
+		this.storeCredit = storeCredit;
+		isLogged = true;
 	}
 
 	/**
