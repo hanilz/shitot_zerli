@@ -1072,22 +1072,6 @@ public class AnalayzeCommand {
 		return questions;
 	}
 
-	public static ArrayList<Report> selectAllReports() {
-		ArrayList<Report> reports = new ArrayList<>();
-		try {
-			Statement stmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT *, QUARTER(date) FROM reports;");
-			while (rs.next()) {
-				Report reportResult = new Report(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getInt(4),
-						rs.getInt(5));
-				reports.add(reportResult);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return reports;
-	}
-
 	public static boolean uploadFileToDB(File file,int idSurvey) {
 		Connection conn = DataBaseController.getConn();
 		PreparedStatement psmt;
