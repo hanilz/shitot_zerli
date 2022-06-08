@@ -50,7 +50,7 @@ public class ReportsController implements Initializable {
 	private Label noReportsLabel;
 
 	/**
-	 * comBox for selecting a qurater.
+	 * comBox for selecting a quarter.
 	 */
 	@FXML
 	private ComboBox<Integer> quraterComboBox;
@@ -386,13 +386,7 @@ public class ReportsController implements Initializable {
 							int index = getTableRow().getIndex();
 							Report selectedReport = getTableView().getItems().get(index);
 							selectedReport.setBranch(branchComboBox.getValue());
-							if (selectedReport.getType().equals("income histogram")
-									|| selectedReport.getType().equals("complaints"))
-								selectedReport.setDateRange(setDateRangeQuarterForQuery(selectedReport));
-							else {
-								selectedReport.setDateRange(setDateRangeCurrentMonthForQuery(selectedReport));
-								selectedReport.setMonth();
-							}
+							setDatesToReportType(selectedReport);
 							openSelectedReport(selectedReport);
 						});
 					}
@@ -413,6 +407,20 @@ public class ReportsController implements Initializable {
 		viewCol.setCellFactory(cellFactory);
 		reportsTable.getColumns().add(viewCol);
 
+	}
+	
+	public void setDatesToReportType(Report selectedReport) {
+		if (isReportHistogram(selectedReport))
+			selectedReport.setDateRange(setDateRangeQuarterForQuery(selectedReport));
+		else {
+			selectedReport.setDateRange(setDateRangeCurrentMonthForQuery(selectedReport));
+			selectedReport.setMonth();
+		}
+	}
+	
+	public boolean isReportHistogram(Report selectedReport) {
+		return selectedReport.getType().equals("income histogram")
+				|| selectedReport.getType().equals("complaints");
 	}
 
 	/**
@@ -438,6 +446,7 @@ public class ReportsController implements Initializable {
 	 * @return dateRange String based on the quarter.
 	 */
 	private String setDateRangeQuarterForQuery(Report selectedReport) {
+		if(selectedReport.getDateToString().isEmpty()) return "";
 		StringBuilder sb = new StringBuilder(selectedReport.getDateToString());
 		String dateRange = selectedReport.getDateToString().charAt(5) + "" + selectedReport.getDateToString().charAt(6);
 		switch (selectedReport.getQuarter()) {

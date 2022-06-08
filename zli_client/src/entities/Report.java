@@ -69,6 +69,12 @@ public class Report implements Serializable {
 		int currentMonth = Integer.parseInt(dateToString.substring(5,7));
 		this.month = Month.of(currentMonth).name();
 	}
+	
+	/*Constructor for testing ONLY*/
+	public Report(int quarter, String dateToString) {
+		this.quarter = quarter;
+		this.dateToString = dateToString;
+	}
 
 	public Report(int idBranch, String year, int quarter) {
 		this.idBranch = idBranch;
@@ -85,7 +91,7 @@ public class Report implements Serializable {
 		int currentMonth = Integer.parseInt(dateToString.substring(5,7));
 		this.month = Month.of(currentMonth).name();
 	}
-
+	
 	/**
 	 * Converts the integer of the current month to String.
 	 */

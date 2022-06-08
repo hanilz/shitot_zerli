@@ -178,9 +178,10 @@ public class GenerateReports {
 		setConnectionToDB();
 		Map<String, Integer> incomeData = new HashMap<>();
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			//Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement stmt = DataBaseController.getDefultConn().createStatement(); //for testing ONLY
 
-			ResultSet rs = selectStmt
+			ResultSet rs = stmt
 					.executeQuery("SELECT MONTHNAME(orders.date) as orders_month, SUM(orders.price) as totalInMonth\r\n"
 							+ "FROM orders\r\n" + "WHERE orders.date between " + report.getDateRange()
 							+ " and orders.idBranch = " + report.getIdBranch() + "\r\n" + "GROUP BY orders_month\r\n"
@@ -214,6 +215,22 @@ public class GenerateReports {
 			e.printStackTrace();
 		}
 		return totalSum;
+	}
+	
+	public static ArrayList<Report> selectAllReports() {
+		ArrayList<Report> reports = new ArrayList<>();
+		try {
+			Statement stmt = DataBaseController.getConn().createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT *, QUARTER(date) FROM reports;");
+			while (rs.next()) {
+				Report reportResult = new Report(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getInt(4),
+						rs.getInt(5));
+				reports.add(reportResult);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return reports;
 	}
 
 	public static int getCustomOrdersReport(Report report) {

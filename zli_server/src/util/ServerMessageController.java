@@ -114,7 +114,7 @@ public class ServerMessageController {
 			message.put("response", branchesPerManager);
 			break;
 		case FETCH_REPORTS:
-			ArrayList<Report> reports = AnalayzeCommand.selectAllReports();
+			ArrayList<Report> reports = GenerateReports.selectAllReports();
 			message.put("response", reports);
 			break;
 		case FETCH_PRODUCTS:
