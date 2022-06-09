@@ -31,7 +31,6 @@ public class GenerateReports {
 	}
 
 	public static boolean generateNewReports(ArrayList<String> reportsTypes, ArrayList<Branch> branches, Date date) {
-		Connection conn = DataBaseController.getConn();
 		String query = "insert into reports (type, date, idBranch) values ";
 		Statement stmt;
 		StringBuffer buffer = new StringBuffer(query);
@@ -45,7 +44,7 @@ public class GenerateReports {
 		buffer.delete(buffer.toString().length() - 2, buffer.toString().length());
 		buffer.append(";");
 		try {
-			stmt = conn.createStatement();
+			stmt = DataBaseController.conn.createStatement();
 			stmt.executeUpdate(buffer.toString());
 			return true;
 		} catch (SQLException e) {
@@ -55,14 +54,13 @@ public class GenerateReports {
 	}
 
 	public static boolean isGeneratedReports(Date date) {
-		Connection conn = DataBaseController.getConn();
 		Statement stmt;
 		java.sql.Timestamp currentDateTime = new java.sql.Timestamp(date.getTime());
 		String currentDate = currentDateTime.toString().substring(0, currentDateTime.toString().length() - 13);
 		String query = "SELECT date FROM zli.reports WHERE date BETWEEN '" + currentDate + "' AND '" + currentDate
 				+ " 23:59:59';";
 		try {
-			stmt = conn.createStatement();
+			stmt = DataBaseController.conn.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
 				if (rs.getString(1).contains(currentDate))
@@ -77,7 +75,7 @@ public class GenerateReports {
 	public static Map<String, Integer> getItemsIncomeReport(Report report) {
 		Map<String, Integer> incomeLabels = new HashMap<>();
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement selectStmt = DataBaseController.conn.createStatement();
 			ResultSet rs = selectStmt
 					.executeQuery("SELECT itemType, SUM(quantity*itemPrice) as totalSum FROM items JOIN "
 							+ " order_items ON items.itemId=order_items.idItem JOIN orders ON orders.idOrder"
@@ -97,7 +95,7 @@ public class GenerateReports {
 	public static Map<String, Integer> getProductsIncomeReport(Report report) {
 		Map<String, Integer> incomeLabels = new HashMap<>();
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement selectStmt = DataBaseController.conn.createStatement();
 			ResultSet rs = selectStmt
 					.executeQuery("SELECT productType, SUM(quantity*productPrice) as totalSum FROM products JOIN"
 							+ " order_products ON products.productId=order_products.idProduct JOIN orders ON"
@@ -117,7 +115,7 @@ public class GenerateReports {
 	public static Map<String, Integer> getItemsOrdersReport(Report report) {
 		Map<String, Integer> incomeLabels = new HashMap<>();
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement selectStmt = DataBaseController.conn.createStatement();
 			ResultSet rs = selectStmt.executeQuery(
 					"SELECT itemType, SUM(quantity) as totalQuantity FROM items JOIN order_items ON items.itemId=order_items.idItem JOIN orders ON orders.idOrder = order_items.idOrder AND orders.idBranch = "
 							+ report.getIdBranch() + " and orders.date between " + report.getDateRange()
@@ -136,7 +134,7 @@ public class GenerateReports {
 	public static Map<String, Integer> getProductsOrdersReport(Report report) {
 		Map<String, Integer> incomeLabels = new HashMap<>();
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement selectStmt = DataBaseController.conn.createStatement();
 			ResultSet rs = selectStmt.executeQuery(
 					"SELECT productType, SUM(quantity) as totalQuantity FROM products JOIN order_products ON products.productId=order_products.idProduct JOIN orders ON orders.idOrder = order_products.idOrder AND orders.idBranch = "
 							+ report.getIdBranch() + " and orders.date between " + report.getDateRange()
@@ -155,7 +153,7 @@ public class GenerateReports {
 	public static Map<String, Integer> getComplaintsReport(Report report) {
 		Map<String, Integer> complaintsData = new HashMap<>();
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement selectStmt = DataBaseController.conn.createStatement();
 			ResultSet rs = selectStmt.executeQuery(
 					"SELECT MONTHNAME(complaints.date) as complaint_month, count(complaints.idComplaint) as number_of_complaints\r\n"
 							+ "FROM complaints\r\n"
@@ -175,11 +173,10 @@ public class GenerateReports {
 
 	/* The method that we want to check! */
 	public static Map<String, Integer> getIncomeHistogramReport(Report report) {
-		setConnectionToDB();
 		Map<String, Integer> incomeData = new HashMap<>();
 		try {
 			//Statement selectStmt = DataBaseController.getConn().createStatement();
-			Statement stmt = DataBaseController.getDefultConn().createStatement(); //for testing ONLY
+			Statement stmt = DataBaseController.conn.createStatement(); //for testing ONLY
 
 			ResultSet rs = stmt
 					.executeQuery("SELECT MONTHNAME(orders.date) as orders_month, SUM(orders.price) as totalInMonth\r\n"
@@ -200,7 +197,7 @@ public class GenerateReports {
 	public static int getCustomIncomeReport(Report report) {
 		int totalSum = 0;
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement selectStmt = DataBaseController.conn.createStatement();
 			ResultSet rs = selectStmt
 					.executeQuery("SELECT SUM(order_custom_products.quantity*custom_products.price) as totalSum\r\n"
 							+ "FROM custom_products\r\n"
@@ -220,7 +217,7 @@ public class GenerateReports {
 	public static ArrayList<Report> selectAllReports() {
 		ArrayList<Report> reports = new ArrayList<>();
 		try {
-			Statement stmt = DataBaseController.getConn().createStatement();
+			Statement stmt = DataBaseController.conn.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT *, QUARTER(date) FROM reports;");
 			while (rs.next()) {
 				Report reportResult = new Report(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getInt(4),
@@ -236,7 +233,7 @@ public class GenerateReports {
 	public static int getCustomOrdersReport(Report report) {
 		int totalQuantity = 0;
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement selectStmt = DataBaseController.conn.createStatement();
 			ResultSet rs = selectStmt.executeQuery("SELECT SUM(order_custom_products.quantity) as totalQuantity\r\n"
 					+ "FROM custom_products\r\n"
 					+ "JOIN order_custom_products ON custom_products.id=order_custom_products.idCustomProduct\r\n"

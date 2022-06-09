@@ -125,6 +125,8 @@ public class CatalogController implements Initializable {
 	@FXML
 	void openLogin(MouseEvent event) {
 		if (!User.getUserInstance().isUserLoggedIn()) {
+			LoginScreenController instance = new LoginScreenController();
+			LoginScreenController.setInstance(instance);
 			LoginScreenController.loginFromCatalog();
 		} else {
 			User.getUserInstance().logout();
