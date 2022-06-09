@@ -43,7 +43,7 @@ class LoginScreenControllerTest {
 
 	@Test
 	void login_isUserInputValid_alreadyLoggedIn_returnsFalse() {
-		doReturn(true).when(loginScreenControllerMock).isUserLoggedIn(); // logged in
+		doReturn(true).when(loginScreenControllerMock).isUserLoggedIn();  // logged in
 		doNothing().when(loginScreenControllerMock).setError(any(String.class));
 		doNothing().when(loginScreenControllerMock).disableLoginButton(); // logged in
 

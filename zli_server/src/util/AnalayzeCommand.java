@@ -211,6 +211,8 @@ public class AnalayzeCommand {
 	 *  @return HashMap contains details of login
 	 */
 	public static HashMap<String, Object> loginUser(String username, String password) {
+		if(username == null || password == null)
+			throw new NullPointerException();
 		Status status = Status.NOT_REGISTERED;
 		HashMap<String, Object> login = new HashMap<>();
 		ResultSet rs;
