@@ -5,16 +5,16 @@ import static org.junit.Assert.fail;
 
 import java.util.HashMap;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import util.AnalayzeCommand;
 import util.DataBaseController;
 import util.Status;
 import util.UserType;
 
-class LoginTest {
+public class LoginTest {
 	// username and passwords for logins
 	private String userNotRegistered;
 	private String userAlreadyLoggedIn;
@@ -54,8 +54,8 @@ class LoginTest {
 	private HashMap<String, Object> expectedResponseNewLogInDeliveryCoordinator = new HashMap<>();
 	private HashMap<String, Object> expectedResponseNewLogInStoreWorker = new HashMap<>();
 
-	@BeforeEach
-	void setUp() throws Exception  {
+	@Before
+	public void setUp() throws Exception  {
 		DataBaseController.defultConnect();  // set up conn for tests
 		
 		setUpLogIns();
@@ -257,8 +257,8 @@ class LoginTest {
 		assertEquals(returnedResponse, expectedResponseNotRegistered);
 	}
 	
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 		logoutAllUsers();
 	}
 

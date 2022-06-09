@@ -78,7 +78,7 @@ public class DataBaseController {
 		String ip = "localhost";
 		String dbName = "zli";
 		String dbUsername = "root";
-		String dbPassword = "Hanil957486";
+		String dbPassword = "braude123";
 		connectToDB(new StringBuffer(), ip, dbName, dbUsername, dbPassword);
 	}
 
