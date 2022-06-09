@@ -130,6 +130,8 @@ public class CartController implements Initializable {
 		}
 		if (!User.getUserInstance().isUserLoggedIn())// guest tries to buy
 		{
+			LoginScreenController instance = new LoginScreenController();
+			LoginScreenController.setInstance(instance);
 			LoginScreenController.loginFromCart();// enable popup
 		}
 		changeToGreatingCard();

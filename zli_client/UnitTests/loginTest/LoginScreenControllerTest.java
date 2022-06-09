@@ -6,7 +6,6 @@ import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Method;
@@ -14,7 +13,6 @@ import java.util.HashMap;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 
@@ -142,7 +140,7 @@ class LoginScreenControllerTest {
 	void login_responseAction_NewLogIn_isCartTrue_fail() {
 		doNothing().when(loginScreenControllerMock).changeToLogin();
 		LoginScreenController.loginFromCart();
-		doReturn(false).when(loginScreenControllerMock).cartFlow(); // logged in
+		doReturn(false).when(loginScreenControllerMock).cartFlow(); // not customer
 		doNothing().when(loginScreenControllerMock).loginUser(any(String.class));
 		
 		boolean result = (boolean) loginScreenControllerMock.responseAction("Dolav", responseNewLogIn);
@@ -153,7 +151,7 @@ class LoginScreenControllerTest {
 	void login_responseAction_NewLogIn_isCartTrue_success() {
 		doNothing().when(loginScreenControllerMock).changeToLogin();
 		LoginScreenController.loginFromCart();
-		doReturn(true).when(loginScreenControllerMock).cartFlow(); // logged in
+		doReturn(true).when(loginScreenControllerMock).cartFlow(); // is customer
 		doNothing().when(loginScreenControllerMock).loginUser(any(String.class));
 
 		boolean result = loginScreenControllerMock.responseAction("Dolav", responseNewLogIn);

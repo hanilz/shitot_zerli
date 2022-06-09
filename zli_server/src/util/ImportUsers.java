@@ -42,7 +42,7 @@ public class ImportUsers {
 	 */
 	private static boolean importUserDetails() {
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement selectStmt = DataBaseController.conn.createStatement();
 			ResultSet rs = selectStmt.executeQuery(
 					"SELECT id_user,firstName, lastName, id, email, phoneNumber, idBranch FROM externaldb.external_users;");
 			while (rs.next()) {
@@ -65,7 +65,7 @@ public class ImportUsers {
 	 */
 	private static boolean importUsers() {
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement selectStmt = DataBaseController.conn.createStatement();
 			ResultSet rs = selectStmt
 					.executeQuery("SELECT username, password, userType, storeCredit FROM externaldb.external_users;");
 			while (rs.next()) {
@@ -87,7 +87,7 @@ public class ImportUsers {
 	 */
 	private static boolean isImported() {
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement selectStmt = DataBaseController.conn.createStatement();
 			ResultSet rs = selectStmt.executeQuery("SELECT id FROM zli.user_details;");
 			while (rs.next()) {
 				for (UserDetails currentUser : userDetails)
@@ -132,7 +132,7 @@ public class ImportUsers {
 						+ currentDetails.getEmail() + "','" + currentDetails.getPhoneNumber() + "'), ");
 			buffer.delete(buffer.toString().length() - 2, buffer.toString().length());
 			buffer.append(";");
-			stmt = DataBaseController.getConn().createStatement();
+			stmt = DataBaseController.conn.createStatement();
 			stmt.executeUpdate(buffer.toString());
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -167,7 +167,7 @@ public class ImportUsers {
 			}
 			buffer.delete(buffer.toString().length() - 2, buffer.toString().length());
 			buffer.append(";");
-			stmt = DataBaseController.getConn().createStatement();
+			stmt = DataBaseController.conn.createStatement();
 			stmt.executeUpdate(buffer.toString());
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -192,7 +192,7 @@ public class ImportUsers {
 						+ currentUser.getStoreCredit() + "), ");
 			buffer.delete(buffer.toString().length() - 2, buffer.toString().length());
 			buffer.append(";");
-			stmt = DataBaseController.getConn().createStatement();
+			stmt = DataBaseController.conn.createStatement();
 			stmt.executeUpdate(buffer.toString());
 		} catch (SQLException e) {
 			e.printStackTrace();

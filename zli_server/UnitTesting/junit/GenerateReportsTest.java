@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import entities.Report;
+import util.DataBaseController;
 import util.GenerateReports;
 
 class GenerateReportsTest {
@@ -32,6 +33,7 @@ class GenerateReportsTest {
 		
 		existingBranchData = getReportExistingBranchData();
 		complaintsData = getComplaintsData();
+		DataBaseController.defultConnect();
 	}
 
 	//checking functionality: getting data of an existing income histogram report

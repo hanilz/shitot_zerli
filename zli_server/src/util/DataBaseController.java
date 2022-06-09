@@ -15,7 +15,7 @@ public class DataBaseController {
 	/**
 	 * DatabaseController is singleton, there is only one conn to connect the database.
 	 */
-	private static Connection conn = null;
+	public static Connection conn = null;
 
 	/**
 	 * For saving the information that been given from the server screen
@@ -30,20 +30,18 @@ public class DataBaseController {
 	private DataBaseController() {
 	}
 
-	public static Connection getConn() {
+	public static void getConn() {
 		if (conn == null) {
 			configDriver();
 			connect();
 		}
-		return conn;
 	}
 	
-	public static Connection getDefultConn() {
+	public static void getDefultConn() {
 		if (conn == null) {
 			configDriver();
 			defultConnect();
 		}
-		return conn;
 	}
 
 	/**
@@ -80,7 +78,7 @@ public class DataBaseController {
 		String ip = "localhost";
 		String dbName = "zli";
 		String dbUsername = "root";
-		String dbPassword = "braude123";
+		String dbPassword = "Hanil957486";
 		connectToDB(new StringBuffer(), ip, dbName, dbUsername, dbPassword);
 	}
 
