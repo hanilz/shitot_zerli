@@ -263,7 +263,7 @@ public class AnalayzeCommand {
 			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, 0);
 			preparedStmt.setInt(2, idUser);
-			System.out.println(preparedStmt.executeUpdate());
+			preparedStmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();

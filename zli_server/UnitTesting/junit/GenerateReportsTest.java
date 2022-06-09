@@ -1,20 +1,20 @@
 package junit;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.fail;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import entities.Report;
 import util.DataBaseController;
 import util.GenerateReports;
 
-class GenerateReportsTest {
+public class GenerateReportsTest {
 
 	private Report reportExistingBranch;
 	private Report reportNotExistingBranch;
@@ -24,8 +24,8 @@ class GenerateReportsTest {
 	private Map<String, Integer> existingBranchData = new HashMap<>();
 	private Map<String, Integer> complaintsData = new HashMap<>();
 
-	@BeforeEach
-	void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		reportExistingBranch = new Report("'2022-04-01 00:00:00' and '2022-06-29 00:00:00'", "income histogram", 1);
 		reportNotExistingBranch = new Report("'2022-04-01 00:00:00' and '2022-06-31 00:00:00'", "income histogram", 4);
 		diffReportType = new Report("'2022-04-01 00:00:00' and '2022-06-29 00:00:00'", "complaints", 1);
@@ -40,7 +40,7 @@ class GenerateReportsTest {
 	//input data: object Report(DateRange: '2022-04-01 00:00:00' and '2022-06-29 00:00:00', ReportType: income histogram, idBranch = 1)
 	//expected result: HashMap<String, Integer> with data: (April, 25324), (May, 254092), (June, 19387)
 	@Test
-	void getIncomeHistogramReport_ExistingBranch() {
+	public void getIncomeHistogramReport_ExistingBranch() {
 		Map<String, Integer> expected = existingBranchData;
 		Map<String, Integer> result = GenerateReports.getIncomeHistogramReport(reportExistingBranch);
 		assertEquals(expected, result);
@@ -50,7 +50,7 @@ class GenerateReportsTest {
 	//input data: object Report(DateRange: '2022-04-01 00:00:00' and '2022-06-31 00:00:00', ReportType: income histogram, idBranch = 4)
 	//expected result: empty HashMap<String, Integer>
 	@Test
-	void getIncomeHistogramReport_BranchIsNotExist() {
+	public void getIncomeHistogramReport_BranchIsNotExist() {
 		Map<String, Integer> expected = new HashMap<>();
 		Map<String, Integer> result = GenerateReports.getIncomeHistogramReport(reportNotExistingBranch);
 		assertEquals(expected, result);
@@ -60,7 +60,7 @@ class GenerateReportsTest {
 	//input data: object Report(null)
 	//expected result: NullPointerException
 	@Test
-	void getIncomeHistogramReport_ReportIsNull() {
+	public void getIncomeHistogramReport_ReportIsNull() {
 		try {
 			GenerateReports.getIncomeHistogramReport(null);
 			fail("Did not caught the null pointer exception!");
@@ -72,7 +72,7 @@ class GenerateReportsTest {
 	//input data: object Report(DateRange: '2022-04-01 00:00:00' and '2022-06-29 00:00:00', ReportType: complaints, idBranch = 1)
 	//expected result: empty HashMap<String, Integer>
 	@Test
-	void getIncomeHistogramReport_diffrenetReportType() {
+	public void getIncomeHistogramReport_diffrenetReportType() {
 		Map<String, Integer> expected = complaintsData;
 		Map<String, Integer> result = GenerateReports.getIncomeHistogramReport(diffReportType);
 		assertNotEquals(expected, result);
@@ -82,7 +82,7 @@ class GenerateReportsTest {
 	//input data: object Report(DateRange: '2022-01-01 00:00:00' and '2022-03-29 00:00:00', ReportType: income histogram, idBranch = 3)
 	//expected result: empty HashMap<String, Integer>
 	@Test
-	void getIncomeHistogramReport_reportWithNoData() {
+	public void getIncomeHistogramReport_reportWithNoData() {
 		Map<String, Integer> expected = new HashMap<>();
 		Map<String, Integer> result = GenerateReports.getIncomeHistogramReport(reportNoData);
 		assertEquals(expected, result);
