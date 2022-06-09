@@ -85,7 +85,7 @@ class ReportsControllerTest {
 	}
 	
 	// checking functionality: check the dateToString of quarter 2 is between April-June
-	// input data: object Report(DateRange: "2022-06-29", quarter: 2)
+	// input data: object Report(dateToString: "2022-06-29", quarter: 2)
 	// expected result: string "'2022-04-01 00:00:00' and '2022-06-29 00:00:00'"
 	@Test
 	void setDateRangeQuarterForQuery_existingQuarterReport() {
@@ -99,7 +99,7 @@ class ReportsControllerTest {
 	}
 	
 	// checking functionality: check if the dateToString is empty for non existing quarter
-	// input data: object Report(DateRange: "2022-06-29", quarter: 5)
+	// input data: object Report(dateToString: "2022-06-29", quarter: 5)
 	// expected result: empty string
 	@Test
 	void setDateRangeQuarterForQuery_noteExistingQuarter() {
@@ -113,7 +113,7 @@ class ReportsControllerTest {
 	}
 	
 	// checking functionality: check if the dateToString is empty for existing quarter
-	// input data: object Report(DateRange: "", quarter: 1)
+	// input data: object Report(dateToString: "", quarter: 1)
 	// expected result: empty string
 	@Test
 	void setDateRangeQuarterForQuery_emptyReportWithNoDate() {
