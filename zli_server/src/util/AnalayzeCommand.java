@@ -54,7 +54,7 @@ public class AnalayzeCommand {
 		ArrayList<Product> products = new ArrayList<>();
 		HashMap<Integer, HashMap<Item, Integer>> products_items = new HashMap<>(); // {productID : items}
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement selectStmt = DataBaseController.conn.createStatement();
 			ResultSet rs = selectStmt.executeQuery(
 					"SELECT p.*, pi.quantity, i.* FROM products p JOIN product_items pi ON p.productID = pi.idProduct JOIN items i ON pi.idItem = i.itemID ORDER BY p.productID;");
 			while (rs.next()) {
@@ -101,7 +101,7 @@ public class AnalayzeCommand {
 	public static ArrayList<Item> selectAllItems() {
 		ArrayList<Item> items = new ArrayList<>();
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement selectStmt = DataBaseController.conn.createStatement();
 			ResultSet rs = selectStmt.executeQuery("SELECT * FROM items;");
 			while (rs.next()) {
 				int itemID = rs.getInt(1);
@@ -123,7 +123,7 @@ public class AnalayzeCommand {
 	public static ArrayList<Branch> selectAllBranches() {
 		ArrayList<Branch> branches = new ArrayList<>();
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement selectStmt = DataBaseController.conn.createStatement();
 			ResultSet rs = selectStmt.executeQuery("SELECT * FROM branches;");
 			while (rs.next()) {
 				int idBranch = rs.getInt(1);
@@ -143,7 +143,7 @@ public class AnalayzeCommand {
 	public static ArrayList<Branch> selectBranchesPerManager(int userId) {
 		ArrayList<Branch> branches = new ArrayList<>();
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement selectStmt = DataBaseController.conn.createStatement();
 			ResultSet rs = selectStmt.executeQuery("SELECT * FROM branches where idManager=" + userId + ";");
 			while (rs.next()) {
 				int idBranch = rs.getInt(1);
@@ -163,7 +163,7 @@ public class AnalayzeCommand {
 	public static void updateOrder(String orderNumber, String date, String color) {
 		try {
 			int sendOrderNumberDB = Integer.parseInt(orderNumber);
-			PreparedStatement stmt = DataBaseController.getConn()
+			PreparedStatement stmt = DataBaseController.conn
 					.prepareStatement("UPDATE orders SET color = ?, date = ? WHERE orderNumber = ?");
 			stmt.setString(1, color);
 			stmt.setString(2, date);
@@ -182,13 +182,11 @@ public class AnalayzeCommand {
 	 * @return User buttons that are used in the specific user home screen
 	 */
 	public static ArrayList<Screens> getUserHomeScreens(int userId, UserType userType) {
-		Connection conn;
 		ArrayList<Screens> userHomeScreens = new ArrayList<Screens>();
-		conn = DataBaseController.getConn();
 		ResultSet rs;
 		String query = "SELECT screen FROM user_screen WHERE idUser=?;";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, userId);
 			rs = preparedStmt.executeQuery();
 			if (!rs.next()) {
@@ -213,14 +211,14 @@ public class AnalayzeCommand {
 	 *  @return HashMap contains details of login
 	 */
 	public static HashMap<String, Object> loginUser(String username, String password) {
-		Connection conn;
+		if(username == null || password == null)
+			throw new NullPointerException();
 		Status status = Status.NOT_REGISTERED;
 		HashMap<String, Object> login = new HashMap<>();
-		conn = DataBaseController.getConn();
 		ResultSet rs;
 		String query = "SELECT * FROM users WHERE username=? AND password=?";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setString(1, username);
 			preparedStmt.setString(2, password);
 			rs = preparedStmt.executeQuery();
@@ -237,7 +235,7 @@ public class AnalayzeCommand {
 					login.put("userType", UserType.get(rs.getString(5)));
 					login.put("storeCredit", Double.parseDouble(rs.getString(8)));
 					query = "UPDATE users SET isLogin = ? WHERE username = ? AND password = ?";
-					preparedStmt = conn.prepareStatement(query);
+					preparedStmt = DataBaseController.conn.prepareStatement(query);
 					preparedStmt.setInt(1, 1);
 					preparedStmt.setString(2, username);
 					preparedStmt.setString(3, password);
@@ -260,14 +258,12 @@ public class AnalayzeCommand {
 	 * @return if logged out properly return true else false
 	 */
 	public static boolean logoutUser(int idUser) {
-		Connection conn;
-		conn = DataBaseController.getConn();
 		String query = "UPDATE users SET isLogin = ? WHERE idUser = ?";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, 0);
 			preparedStmt.setInt(2, idUser);
-			System.out.println(preparedStmt.executeUpdate());
+			preparedStmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -280,7 +276,7 @@ public class AnalayzeCommand {
 		System.out.println("getting all users");
 		ArrayList<ManageUsers> users = new ArrayList<>();
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement selectStmt = DataBaseController.conn.createStatement();
 			ResultSet rs = selectStmt.executeQuery(
 					"SELECT U.idUser, UD.firstName, UD.lastName, UD.id,U.userType, U.status FROM users U, user_details UD where U.idAccount = UD.idAccount AND (U.userType = 'CUSTOMER' OR U.userType = 'NEW_CUSTOMER' );");
 			while (rs.next()) {
@@ -307,7 +303,7 @@ public class AnalayzeCommand {
 		System.out.println("getting all employee");
 		ArrayList<ManageUsers> users = new ArrayList<>();
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement selectStmt = DataBaseController.conn.createStatement();
 			ResultSet rs = selectStmt.executeQuery(
 					"SELECT U.idUser, UD.firstName, UD.lastName, UD.id,U.userType, U.status FROM users U, user_details UD where U.idAccount = UD.idAccount AND U.userType!='CUSTOMER' AND U.userType!='NEW_CUSTOMER';");
 			while (rs.next()) {
@@ -330,14 +326,13 @@ public class AnalayzeCommand {
 	// this methods gets an Account id and changes the status of the user
 	public static String changeUserStatus(Object object) {
 		System.out.println("Changing user status, id: " + (int) object);
-		Connection conn = DataBaseController.getConn();
 		ResultSet rs;
 		int id = (Integer) object;
 		String response = "failed";
 		try {
 			// first we get the current user status
 			String query = "SELECT * FROM users WHERE idUser = ?";
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, id);
 			rs = preparedStmt.executeQuery();
 			if (!rs.next())
@@ -347,7 +342,7 @@ public class AnalayzeCommand {
 			// second we find the user again and change its status to be the inverse of the
 			// current status
 			query = "UPDATE users SET status = ? WHERE idUser = ?";
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			if (userStatus.equals("Active")) {
 				preparedStmt.setString(1, "Suspended");
 				response = "Suspended";
@@ -366,11 +361,9 @@ public class AnalayzeCommand {
 	}
 
 	public static boolean insertAccountPayment(AccountPayment accountPayment) {
-		Connection conn;
-		conn = DataBaseController.getConn();
 		String query = "INSERT INTO account_payment (fullName, cardNumber, cardDate, cardVCC, idUser) VALUES (?, ?, ?, ?, ?);";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setString(1, accountPayment.getFullName());
 			preparedStmt.setString(2, accountPayment.getCardNumber());
 			preparedStmt.setString(3, accountPayment.getCardDate());
@@ -390,11 +383,9 @@ public class AnalayzeCommand {
 	// insert new user into user_details table
 	public static int insertNewUserDetails(UserDetails userDetails) {
 		int idAccount = -1;
-		Connection conn;
-		conn = DataBaseController.getConn();
 		String query = "INSERT INTO user_details (firstName, lastName, id, email, phoneNumber) VALUES (?, ?, ?, ?, ?);";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 			preparedStmt.setString(1, userDetails.getFirstName());
 			preparedStmt.setString(2, userDetails.getLastName());
 			preparedStmt.setString(3, userDetails.getId());
@@ -414,11 +405,9 @@ public class AnalayzeCommand {
 	// insert new user into users table
 	public static int insertNewUser(String username, String password, int idAccount) {
 		int iduser = -1;
-		Connection conn;
-		conn = DataBaseController.getConn();
 		String query = "INSERT INTO users (username, password, idAccount) VALUES (?, ?, ?);";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 			preparedStmt.setString(1, username);
 			preparedStmt.setString(2, password);
 			preparedStmt.setInt(3, idAccount);
@@ -434,13 +423,11 @@ public class AnalayzeCommand {
 	}
 
 	public static int insertNewOrder(Order order) {
-		Connection conn;
 		int idOrder = -1;
-		conn = DataBaseController.getConn();
 		ResultSet rs = null;
 		String query = "INSERT INTO orders (price, greetingCard, dOrder, idBranch, status, paymentMethod, idUser) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 			preparedStmt.setDouble(1, order.getPrice());
 			preparedStmt.setString(2, order.getGreetingCard());
 			preparedStmt.setString(3, order.getdOrder());
@@ -468,9 +455,7 @@ public class AnalayzeCommand {
 		buff.deleteCharAt(buff.length() - 1);
 		buff.append(";");
 		try {
-			Connection conn;
-			conn = DataBaseController.getConn();
-			PreparedStatement preparedStmt = conn.prepareStatement(buff.toString());
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(buff.toString());
 			preparedStmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {
@@ -489,9 +474,7 @@ public class AnalayzeCommand {
 		buff.deleteCharAt(buff.length() - 1);
 		buff.append(";");
 		try {
-			Connection conn;
-			conn = DataBaseController.getConn();
-			PreparedStatement preparedStmt = conn.prepareStatement(buff.toString());
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(buff.toString());
 			preparedStmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {
@@ -501,14 +484,12 @@ public class AnalayzeCommand {
 	}
 
 	public static int insertNewDelivery(Delivery delivery, int idOrder, boolean isExpress) {
-		Connection conn;
 		ResultSet rs = null;
 		int idDelivery = -1;
 		LocalDateTime localDateTime = getNowPlus3Hours();
-		conn = DataBaseController.getConn();
 		String query = "INSERT INTO deliveries (address, receiverName, phoneNumber, deliveryDate, status, type, idOrder) VALUES (?, ?, ?, ?, ?, ?, ?);";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 			preparedStmt.setString(1, delivery.getAddress());
 			preparedStmt.setString(2, delivery.getReceiverName());
 			preparedStmt.setString(3, delivery.getPhoneNumber());
@@ -539,7 +520,7 @@ public class AnalayzeCommand {
 	public static HashMap<Integer, String> selectSurveys() {
 		HashMap<Integer, String> surveys = new HashMap<>();
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement selectStmt = DataBaseController.conn.createStatement();
 			ResultSet rs = selectStmt.executeQuery("SELECT s.idSurvey,s.surveyName FROM surveys s;");
 			while (rs.next()) {
 				int idSurvey = rs.getInt(1);
@@ -556,7 +537,7 @@ public class AnalayzeCommand {
 	public static HashMap<Integer, String> selectAnalyzedSurveys() {
 		HashMap<Integer, String> surveys = new HashMap<>();
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement selectStmt = DataBaseController.conn.createStatement();
 			ResultSet rs = selectStmt.executeQuery("SELECT s.idSurvey,s.surveyName FROM surveys s INNER JOIN blob_file_table bft ON bft.idSurvey = s.idSurvey;");
 			while (rs.next()) {
 				int idSurvey = rs.getInt(1);
@@ -572,11 +553,10 @@ public class AnalayzeCommand {
 
 	public static ArrayList<SurveyQuestion> getSurvey(int surveyID) {
 		ArrayList<SurveyQuestion> questions = new ArrayList<>();
-		Connection conn = DataBaseController.getConn();
 		String query = "SELECT * FROM survey_questions where idSurvey = ?;";
 		try {
-			// Statement selectStmt = DataBaseController.getConn().createStatement(); why???
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			// Statement selectStmt = DataBaseController.conn.createStatement(); why???
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, surveyID);
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
@@ -598,9 +578,7 @@ public class AnalayzeCommand {
 		buff.deleteCharAt(buff.length() - 1);
 		buff.append(";");
 		try {
-			Connection conn;
-			conn = DataBaseController.getConn();
-			PreparedStatement preparedStmt = conn.prepareStatement(buff.toString());
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(buff.toString());
 			preparedStmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {
@@ -610,11 +588,10 @@ public class AnalayzeCommand {
 	}
 
 	public static boolean submitComplaint(Complaint complaint) {
-		Connection conn = DataBaseController.getConn();
 		String query = "INSERT INTO complaints (idUser, orderId, reason, content) VALUES (?, ?, ?, ?)";
 		PreparedStatement preparedStmt;
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, complaint.getIdUser());
 			preparedStmt.setInt(2, complaint.getOrderID());
 			preparedStmt.setString(3, complaint.getComplaintReason());
@@ -629,11 +606,10 @@ public class AnalayzeCommand {
 	}
 
 	public static ArrayList<Complaint> getAllComplaintsForManager(Integer handlerID) {
-		Connection conn = DataBaseController.getConn();
 		ArrayList<Complaint> complaints = new ArrayList<>();
 		try {
 			String query = "SELECT C.*, TIMESTAMPDIFF(MINUTE, C.date, now()) AS 'diff_of_day' FROM complaints C WHERE C.idUser = ? AND (C.status = 'Active' OR C.status = 'Due');";
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, handlerID);
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
@@ -656,11 +632,10 @@ public class AnalayzeCommand {
 	}
 
 	public static ArrayList<Complaint> getAllComplaintsForServer() {
-		Connection conn = DataBaseController.getConn();
 		ArrayList<Complaint> complaints = new ArrayList<>();
 		try {
 			String query = "SELECT C.*, TIMESTAMPDIFF(MINUTE, C.date, now()) AS 'diff_of_day' FROM complaints C WHERE C.status = 'Active';";
-			Statement Stmt = conn.createStatement();
+			Statement Stmt = DataBaseController.conn.createStatement();
 			ResultSet rs = Stmt.executeQuery(query);
 			while (rs.next()) {
 				int complaintID = rs.getInt(1);
@@ -683,11 +658,9 @@ public class AnalayzeCommand {
 
 	// updates complaint status for complaint that are due
 	public static void updateComplaintsStatus(ArrayList<Complaint> complaintList) {
-		Connection conn;
-		conn = DataBaseController.getConn();
 		String query = "UPDATE complaints SET status = 'Due' WHERE idComplaint = ?";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query);
 			for (Complaint comp : complaintList) {
 				preparedStmt.setInt(1, comp.getComplaintID());
 				preparedStmt.executeUpdate();
@@ -698,11 +671,9 @@ public class AnalayzeCommand {
 	}
 
 	public static boolean updateItem(Item item) {
-		Connection conn;
-		conn = DataBaseController.getConn();
 		String query = "UPDATE items SET itemPrice=? , discount = ? WHERE itemID = ?";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setDouble(1, item.getPrice());
 			preparedStmt.setDouble(2, item.getDiscount());
 			preparedStmt.setInt(3, item.getId());
@@ -715,11 +686,9 @@ public class AnalayzeCommand {
 	}
 
 	public static boolean updateProduct(Product product) {
-		Connection conn;
-		conn = DataBaseController.getConn();
 		String query = "UPDATE products SET productPrice=?, productDescription=?, discount = ? WHERE productID = ?;";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setDouble(1, product.getPrice());
 			preparedStmt.setString(2, product.getProductDescription());
 			preparedStmt.setDouble(3, product.getDiscount());
@@ -734,11 +703,10 @@ public class AnalayzeCommand {
 
 	public static ArrayList<Integer> getOrderNumbers() {
 		ArrayList<Integer> orders = new ArrayList<>();
-		Connection conn = DataBaseController.getConn();
 		String query = "SELECT O.idOrder FROM orders O WHERE O.idOrder NOT IN (SELECT C.orderId FROM complaints C);";
 		Statement selectStmt;
 		try {
-			selectStmt = conn.createStatement();
+			selectStmt = DataBaseController.conn.createStatement();
 			ResultSet rs = selectStmt.executeQuery(query);
 			while (rs.next()) {
 				int idOrder = rs.getInt(1);
@@ -752,11 +720,9 @@ public class AnalayzeCommand {
 	}
 
 	public static boolean setComlaintClosedAndRefund(int complaintID, Double refund) {
-		Connection conn = DataBaseController.getConn();
 		String query = "UPDATE complaints c,orders o,users u SET c.status = 'Closed', o.refund = ?, u.storeCredit = u.storeCredit + ?  WHERE c.idUser = u.idUser AND c.orderID = o.idOrder AND c.idComplaint = ? ;";
-		// String query = "UPDATE FROM complaints WHERE idComplaint = ?;";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setDouble(1, refund);
 			preparedStmt.setDouble(2, refund);
 			preparedStmt.setInt(3, complaintID);
@@ -772,12 +738,11 @@ public class AnalayzeCommand {
 
 	public static Double getOrderPrice(Integer orderNum) {
 		double idOrder = -1;
-		Connection conn = DataBaseController.getConn();
 
 		String query = "SELECT O.price FROM orders O WHERE O.idOrder = ?;";
 
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, orderNum);
 			ResultSet rs = preparedStmt.executeQuery();
 			if (!rs.next()) {
@@ -792,11 +757,10 @@ public class AnalayzeCommand {
 	}
 
 	public static boolean deleteUserDetails(int idAccount) {
-		Connection conn = DataBaseController.getConn();
 		String query = "DELETE FROM user_details WHERE idAccount = ?;";
 		PreparedStatement preparedStmt;
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, idAccount);
 			preparedStmt.executeUpdate();
 			return true;
@@ -809,10 +773,9 @@ public class AnalayzeCommand {
 
 	public static ArrayList<ManagerOrderView> selectOrdersForManager(int mangerID) {
 		ArrayList<ManagerOrderView> orders = new ArrayList<>();
-		Connection conn = DataBaseController.getConn();
 		String query = "SELECT distinct o.idOrder, o.price, UD.firstName,UD.lastName,o.status,o.idUser,o.date AS orderDate, d.deliveryDate,d.type,o.lastModified,TIMESTAMPDIFF(minute,o.lastModified,d.deliveryDate) AS timeTillDelivery FROM zli.orders o, zli.branches b,zli.user_details UD,zli.users U,zli.orders, zli.deliveries d WHERE o.idBranch=b.idBranch AND b.idManager =? AND (o.status = 'Waiting for Approval' OR o.status = 'Waiting for Cancellation' ) AND U.idUser = o.idUser AND UD.idAccount=U.idAccount AND d.idOrder=o.idOrder;";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, mangerID);
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
@@ -838,10 +801,9 @@ public class AnalayzeCommand {
 	}
 
 	public static boolean approveOrder(int idOrder, String orderType) {
-		Connection conn = DataBaseController.getConn();
 		String query = "UPDATE orders SET status = 'Approved' WHERE idOrder = ? ;";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
 			int row = preparedStmt.executeUpdate();
 			if (row == 0)
@@ -850,7 +812,7 @@ public class AnalayzeCommand {
 				query = "UPDATE deliveries SET status = 'Awaiting Delivery' ,deliveryDate =DATE_ADD(now(),interval 3 hour) WHERE idOrder = ?;";
 			else
 				query = "UPDATE deliveries SET status = 'Awaiting Delivery' WHERE idOrder = ?;";
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
 			preparedStmt.executeUpdate();
 		} catch (SQLException e) {
@@ -861,21 +823,20 @@ public class AnalayzeCommand {
 	}
 
 	public static boolean cancelOrder(int idOrder, Double refund, int idUser) {
-		Connection conn = DataBaseController.getConn();
 		String query = "UPDATE orders SET status = 'Canceled', refund =? WHERE idOrder = ? ;";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setDouble(1, refund);
 			preparedStmt.setInt(2, idOrder);
 			int row = preparedStmt.executeUpdate();
 			if (row == 0)
 				return false;
 			query = "UPDATE deliveries SET deliveries.status = 'Canceled' WHERE idOrder = ?;";
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
 			preparedStmt.executeUpdate();
 			query = "UPDATE users SET storeCredit = storeCredit+? WHERE idUser = ?;";
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setDouble(1, refund);
 			preparedStmt.setInt(2, idUser);
 			preparedStmt.executeUpdate();
@@ -888,11 +849,10 @@ public class AnalayzeCommand {
 
 	public static ArrayList<Notification> getNotification(int idUser) {
 		ArrayList<Notification> notification = new ArrayList<>();
-		Connection conn = DataBaseController.getConn();
 		String query = "SELECT * FROM notifications WHERE idUser = ? ORDER BY idNotification DESC;";
 		try {
-			// Statement selectStmt = DataBaseController.getConn().createStatement(); why???
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			// Statement selectStmt = DataBaseController.conn.createStatement(); why???
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, idUser);
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
@@ -913,9 +873,7 @@ public class AnalayzeCommand {
 		buff.deleteCharAt(buff.length() - 1);
 		buff.append(";");
 		try {
-			Connection conn;
-			conn = DataBaseController.getConn();
-			PreparedStatement preparedStmt = conn.prepareStatement(buff.toString(), Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(buff.toString(), Statement.RETURN_GENERATED_KEYS);
 			preparedStmt.executeUpdate();
 			ResultSet rs = preparedStmt.getGeneratedKeys();
 			for (CustomProduct customProduct : customProducts) {
@@ -939,9 +897,7 @@ public class AnalayzeCommand {
 		buff.deleteCharAt(buff.length() - 1);
 		buff.append(";");
 		try {
-			Connection conn;
-			conn = DataBaseController.getConn();
-			PreparedStatement preparedStmt = conn.prepareStatement(buff.toString());
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(buff.toString());
 			preparedStmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -961,9 +917,7 @@ public class AnalayzeCommand {
 		buff.deleteCharAt(buff.length() - 1);
 		buff.append(";");
 		try {
-			Connection conn;
-			conn = DataBaseController.getConn();
-			PreparedStatement preparedStmt = conn.prepareStatement(buff.toString());
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(buff.toString());
 			preparedStmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -981,9 +935,7 @@ public class AnalayzeCommand {
 		buff.deleteCharAt(buff.length() - 1);
 		buff.append(";");
 		try {
-			Connection conn;
-			conn = DataBaseController.getConn();
-			PreparedStatement preparedStmt = conn.prepareStatement(buff.toString());
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(buff.toString());
 			preparedStmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -993,11 +945,10 @@ public class AnalayzeCommand {
 	}
 
 	public static boolean sendNotification(Integer idUser, String title) {
-		Connection conn = DataBaseController.getConn();
 		String query = "INSERT INTO notifications (idUser, title) VALUES (?, ?)";
 		PreparedStatement preparedStmt;
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, idUser);
 			preparedStmt.setString(2, title);
 			preparedStmt.executeUpdate();
@@ -1010,11 +961,10 @@ public class AnalayzeCommand {
 	}
 
 	public static boolean markReadNotification(int idNotification) {
-		Connection conn = DataBaseController.getConn();
 		String query = "UPDATE notifications SET isRead = 1 WHERE idNotification = ? ;";
 		PreparedStatement preparedStmt;
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, idNotification);
 			preparedStmt.executeUpdate();
 			return true;
@@ -1026,11 +976,10 @@ public class AnalayzeCommand {
 	}
 
 	public static boolean deleteNotification(int idNotification) {
-		Connection conn = DataBaseController.getConn();
 		String query = "DELETE FROM notifications WHERE idNotification = ?;";
 		PreparedStatement preparedStmt;
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, idNotification);
 			preparedStmt.executeUpdate();
 			return true;
@@ -1043,11 +992,10 @@ public class AnalayzeCommand {
 
 	public static ArrayList<QuestionAnswer> getSurveyAnswers(int idSurvey) {
 		ArrayList<QuestionAnswer> questions = new ArrayList<>();
-		Connection conn = DataBaseController.getConn();
 		String query = "SELECT sq.idSurveyQuestion,sq.question,sa.answer,COUNT(*) FROM zli.survey_answers sa JOIN zli.survey_questions sq ON sq.idSurveyQuestion = sa.idQuestion WHERE sq.idSurvey=? GROUP BY sa.idQuestion, sa.answer ORDER BY sa.idQuestion;";
 		PreparedStatement preparedStmt;
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, idSurvey);
 			ResultSet rs = preparedStmt.executeQuery();
 			int currentQuestion;
@@ -1072,28 +1020,11 @@ public class AnalayzeCommand {
 		return questions;
 	}
 
-	public static ArrayList<Report> selectAllReports() {
-		ArrayList<Report> reports = new ArrayList<>();
-		try {
-			Statement stmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT *, QUARTER(date) FROM reports;");
-			while (rs.next()) {
-				Report reportResult = new Report(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getInt(4),
-						rs.getInt(5));
-				reports.add(reportResult);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return reports;
-	}
-
 	public static boolean uploadFileToDB(File file,int idSurvey) {
-		Connection conn = DataBaseController.getConn();
 		PreparedStatement psmt;
 		try {
 			FileInputStream fis = new FileInputStream(file);
-			psmt = conn.prepareStatement("REPLACE INTO blob_file_table (idSurvey,idblobFile, blobFile) VALUES  (?,?,?);");
+			psmt = DataBaseController.conn.prepareStatement("REPLACE INTO blob_file_table (idSurvey,idblobFile, blobFile) VALUES  (?,?,?);");
 			psmt.setInt(1, idSurvey);
 			psmt.setString(2, file.getName()); //to use SurveyAnalysisFile, change to -> file.getPath()
 			psmt.setBlob(3, fis);
@@ -1118,8 +1049,7 @@ public class AnalayzeCommand {
 		ResultSet rs = null;
 		byte[] buffer = new byte[4096];
 		try {
-			Connection conn = DataBaseController.getConn();
-			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM blob_file_table;");
+			PreparedStatement stmt = DataBaseController.conn.prepareStatement("SELECT * FROM blob_file_table;");
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -1162,8 +1092,7 @@ public class AnalayzeCommand {
 		ResultSet rs = null;
 		byte[] buffer = new byte[4096];
 		try {
-			Connection conn = DataBaseController.getConn();
-			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM blob_file_table where idSurvey = ?;");
+			PreparedStatement stmt = DataBaseController.conn.prepareStatement("SELECT * FROM blob_file_table where idSurvey = ?;");
 			stmt.setInt(1, surveyID);
 			rs = stmt.executeQuery();
 
@@ -1197,169 +1126,10 @@ public class AnalayzeCommand {
 		return newFile;
 	}
 
-	public static Map<String, Integer> getItemsIncomeReport(Report report) {
-		Map<String, Integer> incomeLabels = new HashMap<>();
-		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = selectStmt
-					.executeQuery("SELECT itemType, SUM(quantity*itemPrice) as totalSum FROM items JOIN "
-							+ " order_items ON items.itemId=order_items.idItem JOIN orders ON orders.idOrder"
-							+ " = order_items.idOrder AND orders.idBranch = " + report.getIdBranch()
-							+ " and orders.date between " + report.getDateRange() + " GROUP BY itemType;");
-			while (rs.next()) {
-				String itemType = rs.getString(1);
-				int totalSum = rs.getInt(2);
-				incomeLabels.put(itemType, totalSum);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return incomeLabels;
-	}
-
-	public static Map<String, Integer> getProductsIncomeReport(Report report) {
-		Map<String, Integer> incomeLabels = new HashMap<>();
-		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = selectStmt
-					.executeQuery("SELECT productType, SUM(quantity*productPrice) as totalSum FROM products JOIN"
-							+ " order_products ON products.productId=order_products.idProduct JOIN orders ON"
-							+ " orders.idOrder = order_products.idOrder AND orders.idBranch = " + report.getIdBranch()
-							+ " and orders.date between " + report.getDateRange() + " GROUP BY " + " productType;");
-			while (rs.next()) {
-				String productType = rs.getString(1);
-				int totalSum = rs.getInt(2);
-				incomeLabels.put(productType, totalSum);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return incomeLabels;
-	}
-
-	public static Map<String, Integer> getItemsOrdersReport(Report report) {
-		Map<String, Integer> incomeLabels = new HashMap<>();
-		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = selectStmt.executeQuery(
-					"SELECT itemType, SUM(quantity) as totalQuantity FROM items JOIN order_items ON items.itemId=order_items.idItem JOIN orders ON orders.idOrder = order_items.idOrder AND orders.idBranch = "
-							+ report.getIdBranch() + " and orders.date between " + report.getDateRange()
-							+ " GROUP BY itemType;");
-			while (rs.next()) {
-				String productType = rs.getString(1);
-				int totalSum = rs.getInt(2);
-				incomeLabels.put(productType, totalSum);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return incomeLabels;
-	}
-
-	public static Map<String, Integer> getProductsOrdersReport(Report report) {
-		Map<String, Integer> incomeLabels = new HashMap<>();
-		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = selectStmt.executeQuery(
-					"SELECT productType, SUM(quantity) as totalQuantity FROM products JOIN order_products ON products.productId=order_products.idProduct JOIN orders ON orders.idOrder = order_products.idOrder AND orders.idBranch = "
-							+ report.getIdBranch() + " and orders.date between " + report.getDateRange()
-							+ " GROUP BY productType;");
-			while (rs.next()) {
-				String productType = rs.getString(1);
-				int totalSum = rs.getInt(2);
-				incomeLabels.put(productType, totalSum);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return incomeLabels;
-	}
-
-	public static Map<String, Integer> getComplaintsReport(Report report) {
-		Map<String, Integer> complaintsData = new HashMap<>();
-		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = selectStmt.executeQuery(
-					"SELECT MONTHNAME(complaints.date) as complaint_month, count(complaints.idComplaint) as number_of_complaints\r\n"
-							+ "FROM complaints\r\n"
-							+ "JOIN orders ON complaints.orderId = orders.idOrder and orders.idBranch = "
-							+ report.getIdBranch() + "\r\n" + "WHERE complaints.date between " + report.getDateRange()
-							+ "\r\n" + "GROUP BY complaint_month ORDER BY complaints.date;");
-			while (rs.next()) {
-				String month = rs.getString(1);
-				int totalComplaintCountPerMonth = rs.getInt(2);
-				complaintsData.put(month, totalComplaintCountPerMonth);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return complaintsData;
-	}
-
-	public static Map<String, Integer> getIncomeHistogramReport(Report report) {
-		Map<String, Integer> incomeData = new HashMap<>();
-		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
-
-			ResultSet rs = selectStmt
-					.executeQuery("SELECT MONTHNAME(orders.date) as orders_month, SUM(orders.price) as totalInMonth\r\n"
-							+ "FROM orders\r\n" + "WHERE orders.date between " + report.getDateRange()
-							+ " and orders.idBranch = " + report.getIdBranch() + "\r\n" + "GROUP BY orders_month\r\n"
-							+ "ORDER BY orders.date;");
-			while (rs.next()) {
-				String month = rs.getString(1);
-				int totalIncomePerMonth = rs.getInt(2);
-				incomeData.put(month, totalIncomePerMonth);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return incomeData;
-	}
-
-	public static int getCustomIncomeReport(Report report) {
-		int totalSum = 0;
-		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = selectStmt
-					.executeQuery("SELECT SUM(order_custom_products.quantity*custom_products.price) as totalSum\r\n"
-							+ "FROM custom_products\r\n"
-							+ "JOIN order_custom_products ON custom_products.id=order_custom_products.idCustomProduct\r\n"
-							+ "JOIN orders ON orders.idOrder = order_custom_products.idOrder and orders.idBranch = "
-							+ report.getIdBranch() + " and orders.date between " + report.getDateRange()
-							+ " GROUP BY orders.idBranch;");
-			while (rs.next()) {
-				totalSum = rs.getInt(1);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return totalSum;
-	}
-
-	public static int getCustomOrdersReport(Report report) {
-		int totalQuantity = 0;
-		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
-			ResultSet rs = selectStmt.executeQuery("SELECT SUM(order_custom_products.quantity) as totalQuantity\r\n"
-					+ "FROM custom_products\r\n"
-					+ "JOIN order_custom_products ON custom_products.id=order_custom_products.idCustomProduct\r\n"
-					+ "JOIN orders ON orders.idOrder = order_custom_products.idOrder and orders.idBranch = "
-					+ report.getIdBranch() + " and orders.date between " + report.getDateRange()
-					+ " GROUP BY orders.idBranch;");
-			while (rs.next()) {
-				totalQuantity = rs.getInt(1);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return totalQuantity;
-	}
-
 	public static ArrayList<CustomerOrderView> getCustomerOrders(int idUser) {
 		ArrayList<CustomerOrderView> cov = new ArrayList<>();
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement selectStmt = DataBaseController.conn.createStatement();
 			ResultSet rs = selectStmt.executeQuery(
 					"SELECT o.idOrder,o.status,d.status,o.date,d.deliveryDate,d.type,o.price FROM zli.orders o INNER JOIN deliveries d ON o.idOrder = d.idOrder WHERE o.idUser ="
 							+ idUser + " ORDER BY o.date DESC;");
@@ -1381,11 +1151,10 @@ public class AnalayzeCommand {
 	 */
 	public static HashMap<Product, Integer> getOrderProducts(int idOrder) {
 		HashMap<Product, Integer> product = new HashMap<>();
-		Connection conn = DataBaseController.getConn();
 		PreparedStatement preparedStmt;
 		String query = "SELECT * FROM zli.order_products op INNER JOIN zli.products p ON op.idProduct=p.productID WHERE op.idOrder=?;";
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
@@ -1400,11 +1169,10 @@ public class AnalayzeCommand {
 
 	private static HashMap<Item, Integer> getItemsForProduct(int producID) {
 		HashMap<Item, Integer> items = new HashMap<>();
-		Connection conn = DataBaseController.getConn();
 		PreparedStatement preparedStmt;
 		String query = "SELECT * FROM zli.items i JOIN product_items pi ON i.itemID=pi.idItem AND pi.idProduct = ?;";
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, producID);
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
@@ -1420,11 +1188,10 @@ public class AnalayzeCommand {
 	private static HashMap<Item, Integer> getCustomProductItems(int producID) {
 		//SELECT * FROM zli.items i JOIN product_items pi ON i.itemID=pi.idItem AND pi.idProduct = 5;
 		HashMap<Item, Integer> items = new HashMap<>();
-		Connection conn = DataBaseController.getConn();
 		PreparedStatement preparedStmt;
 		String query = "SELECT * FROM zli.items i JOIN custom_product_items cpi ON i.itemID=cpi.idItem AND cpi.idCustomProduct = ?;";
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, producID);
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
@@ -1440,11 +1207,10 @@ public class AnalayzeCommand {
 	
 	private static HashMap<Product, Integer> getCustomProductProducts(int producID) {
 		HashMap<Product, Integer> products = new HashMap<>();
-		Connection conn = DataBaseController.getConn();
 		PreparedStatement preparedStmt;
 		String query = "SELECT * FROM zli.products p JOIN custom_product_products cpp ON p.productID = cpp.idProduct AND cpp.idCustomProduct = ?;";
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, producID);
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
@@ -1465,11 +1231,10 @@ public class AnalayzeCommand {
 	 */
 	public static HashMap<Item, Integer> getOrderItems(int idOrder) {
 		HashMap<Item, Integer> items = new HashMap<>();
-		Connection conn = DataBaseController.getConn();
 		PreparedStatement preparedStmt;
 		String query = "SELECT * FROM zli.order_items oi INNER JOIN zli.items i ON oi.idItem =i.itemID WHERE oi.idOrder=?;";
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
@@ -1490,11 +1255,10 @@ public class AnalayzeCommand {
 	 */
 	public static HashMap<CustomProduct, Integer> getOrderCustomProducts(int idOrder) {
 		HashMap<CustomProduct, Integer> customProducts = new HashMap<>();
-		Connection conn = DataBaseController.getConn();
 		PreparedStatement preparedStmt;
 		String query = "SELECT * FROM zli.order_custom_products ocp INNER JOIN zli.custom_products cp ON ocp.idCustomProduct=cp.id WHERE ocp.idOrder=?;";
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
@@ -1509,11 +1273,10 @@ public class AnalayzeCommand {
 
 	public static ArrayList<AccountPayment> selectAccountPayments(int idUser) {
 		ArrayList<AccountPayment> accountPayments = new ArrayList<>();
-		Connection conn = DataBaseController.getConn();
 		PreparedStatement preparedStmt;
 		String query = "SELECT * FROM zli.account_payment ap WHERE ap.idUser=?;";
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, idUser);
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
@@ -1529,13 +1292,11 @@ public class AnalayzeCommand {
 	}
 
 	public static int insertNewPickup(Delivery pickup, int idOrder) {
-		Connection conn;
 		ResultSet rs = null;
 		int idDelivery = -1;
-		conn = DataBaseController.getConn();
 		String query = "INSERT INTO deliveries (deliveryDate, idOrder) VALUES (?, ?);";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 			preparedStmt.setString(1, pickup.getDeliveryDate());
 			preparedStmt.setInt(2, idOrder);
 			preparedStmt.executeUpdate();
@@ -1549,11 +1310,9 @@ public class AnalayzeCommand {
 	}
 
 	public static boolean updateUserTypeToCustomer(int idUser) {
-		Connection conn;
-		conn = DataBaseController.getConn();
 		String query = "UPDATE users SET userType = 'CUSTOMER' WHERE idUser = ?;";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, idUser);
 			preparedStmt.executeUpdate();
 		} catch (SQLException e) {
@@ -1568,11 +1327,10 @@ public class AnalayzeCommand {
 	 * @return If all screens were added to DB
 	 */
 	public static boolean insertScreens(Integer id, ArrayList<Screens> userScreen) {
-		Connection conn = DataBaseController.getConn();
 		String query = "DELETE FROM user_screen WHERE idUser = ?;";
 		PreparedStatement preparedStmt;
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, id);
 			preparedStmt.executeUpdate();
 		} catch (SQLException e) {
@@ -1582,7 +1340,7 @@ public class AnalayzeCommand {
 		for (Screens screen : userScreen) {
 			query = "INSERT INTO user_screen (idUser, screen) VALUES (?, ?);";
 			try {
-				preparedStmt = conn.prepareStatement(query);
+				preparedStmt = DataBaseController.conn.prepareStatement(query);
 				preparedStmt.setInt(1, id);
 				preparedStmt.setString(2, screen.toString());
 				preparedStmt.executeUpdate();
@@ -1595,11 +1353,9 @@ public class AnalayzeCommand {
 	}
 
 	public static boolean updateUserStoreCredit(double newStoreCredit, int idUser) {
-		Connection conn;
-		conn = DataBaseController.getConn();
 		String query = "UPDATE users SET storeCredit = ? WHERE idUser = ?;";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setDouble(1, newStoreCredit);
 			preparedStmt.setInt(2, idUser);
 			preparedStmt.executeUpdate();
@@ -1611,15 +1367,14 @@ public class AnalayzeCommand {
 	}
 
 	public static boolean cancelOrderRequest(int idOrder) {
-		Connection conn = DataBaseController.getConn();
 		String query = "UPDATE orders SET status = 'Waiting for Cancellation',lastModified = CURRENT_TIMESTAMP WHERE idOrder = ? ;";
 		PreparedStatement preparedStmt;
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
 			preparedStmt.executeUpdate();
 			query = "UPDATE deliveries SET status = 'Waiting for Cancellation' WHERE idOrder = ? ;";
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
 			preparedStmt.executeUpdate();
 			return true;
@@ -1631,11 +1386,10 @@ public class AnalayzeCommand {
 	}
 
 	public static boolean removeProductFromDB(int productId) {
-		Connection conn = DataBaseController.getConn();
 		String query = "DELETE FROM products WHERE productID = ?;";
 		PreparedStatement preparedStmt;
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, productId);
 			preparedStmt.executeUpdate();
 			return true;
@@ -1647,11 +1401,10 @@ public class AnalayzeCommand {
 	}
 
 	public static boolean removeItemFromDB(int itemId) {
-		Connection conn = DataBaseController.getConn();
 		String query = "DELETE FROM items WHERE itemID = ?;";
 		PreparedStatement preparedStmt;
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, itemId);
 			preparedStmt.executeUpdate();
 			return true;
@@ -1664,11 +1417,10 @@ public class AnalayzeCommand {
 
 	public static Product getSelectedProduct(Integer id) {
 		Product productResult = null;
-		Connection conn = DataBaseController.getConn();
 		String query = "SELECT * FROM PRODUCTS WHERE ProductID = ?;";
 		PreparedStatement preparedStmt;
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, id);
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
@@ -1694,11 +1446,10 @@ public class AnalayzeCommand {
 
 	public static Item getSelectedItem(Integer id) {
 		Item itemResult = null;
-		Connection conn = DataBaseController.getConn();
 		String query = "SELECT * FROM Items WHERE itemID = ?;";
 		PreparedStatement preparedStmt;
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, id);
 			ResultSet rs = preparedStmt.executeQuery();
 			while (rs.next()) {
@@ -1722,7 +1473,7 @@ public class AnalayzeCommand {
 	public static int getTotalRefunds(Report report) {
 		int totalRefund = 0;
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement selectStmt = DataBaseController.conn.createStatement();
 			ResultSet rs = selectStmt.executeQuery("SELECT SUM(refund) as totalRefund\r\n" + "FROM zli.orders\r\n"
 					+ "WHERE idBranch = " + report.getIdBranch() + " and orders.date between " + report.getDateRange()
 					+ " \r\n" + "GROUP BY idBRanch;");
@@ -1738,7 +1489,7 @@ public class AnalayzeCommand {
 	public static ArrayList<DeliveryCoordinatorView> fetchOrdersForDeliveryCoordinator() {
 		ArrayList<DeliveryCoordinatorView> dcv = new ArrayList<>();
 		try {
-			Statement selectStmt = DataBaseController.getConn().createStatement();
+			Statement selectStmt = DataBaseController.conn.createStatement();
 			String query = "SELECT o.idOrder,ud.firstName,ud.lastName ,d.address,d.deliveryDate ,u.idUser,d.type,TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP,d.deliveryDate) as timeTillDelivery,ud.id FROM (((zli.deliveries d INNER JOIN zli.orders o ON o.idOrder=d.idOrder) INNER JOIN zli.users u ON o.idUser=u.idUser) INNER JOIN zli.user_details ud ON u.idAccount=ud.idAccount) WHERE d.status='Awaiting Delivery';";
 			ResultSet rs = selectStmt.executeQuery(query);
 			while (rs.next()) {
@@ -1752,15 +1503,14 @@ public class AnalayzeCommand {
 	}
 
 	public static boolean markOrderAsDelivered(int idOrder) {
-		Connection conn = DataBaseController.getConn();
 		String query = "UPDATE orders SET status = 'Delivered',lastModified = CURRENT_TIMESTAMP WHERE idOrder = ? ;";
 		PreparedStatement preparedStmt;
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
 			preparedStmt.executeUpdate();
 			query = "UPDATE deliveries SET status = 'Delivered' WHERE idOrder = ? ;";
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
 			preparedStmt.executeUpdate();
 			return true;
@@ -1772,15 +1522,14 @@ public class AnalayzeCommand {
 	}
 
     	public static boolean refundUserForLateDelivery(int idUser, int idOrder) {
-		Connection conn = DataBaseController.getConn();
 		String query = "UPDATE orders SET refund = price, status = 'Delivered-Refunded' WHERE idOrder = ? ;";
 		PreparedStatement preparedStmt;
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
 			preparedStmt.executeUpdate();
 			query = "UPDATE users SET storeCredit = storeCredit + (SELECT price FROM orders WHERE idOrder = ?)  WHERE idUser = ? ;";
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.setInt(1, idOrder);
 			preparedStmt.setInt(2, idUser);
 			preparedStmt.executeUpdate();
@@ -1792,56 +1541,11 @@ public class AnalayzeCommand {
 		}
 	}
 
-	public static boolean generateNewReports(ArrayList<String> reportsTypes, ArrayList<Branch> branches, Date date) {
-		Connection conn = DataBaseController.getConn();
-		String query = "insert into reports (type, date, idBranch) values ";
-		Statement stmt;
-		StringBuffer buffer = new StringBuffer(query);
-		java.sql.Timestamp currentDateTime = new java.sql.Timestamp(date.getTime());
-		String currentDate = currentDateTime.toString().substring(0, currentDateTime.toString().length() - 4);
-		for (Branch currentBranch : branches) {
-			for (String currentType : reportsTypes) {
-				buffer.append("('" + currentType + "','" + currentDate + "'," + currentBranch.getIdBranch() + "), ");
-			}
-		}
-		buffer.delete(buffer.toString().length() - 2, buffer.toString().length());
-		buffer.append(";");
-		try {
-			stmt = conn.createStatement();
-			stmt.executeUpdate(buffer.toString());
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	public static boolean isGeneratedReports(Date date) {
-		Connection conn = DataBaseController.getConn();
-		Statement stmt;
-		java.sql.Timestamp currentDateTime = new java.sql.Timestamp(date.getTime());
-		String currentDate = currentDateTime.toString().substring(0, currentDateTime.toString().length() - 13);
-		String query = "SELECT date FROM zli.reports WHERE date BETWEEN '" + currentDate + "' AND '" + currentDate
-				+ " 23:59:59';";
-		try {
-			stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-			while (rs.next()) {
-				if (rs.getString(1).contains(currentDate))
-					return true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
 	public static int insertNewItemToDB(Item item) {
-		Connection conn = DataBaseController.getConn();
 		ResultSet rs;
 		String query = "INSERT INTO items (itemName, itemColor, itemPrice, itemType,imagePath) VALUES (?, ?, ?, ?, ?);";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 			preparedStmt.setString(1, item.getItemName());
 			preparedStmt.setString(2, item.getColor());
 			preparedStmt.setDouble(3, item.getPrice());
@@ -1858,12 +1562,11 @@ public class AnalayzeCommand {
 	}
 
 	public static int insertNewProductToDB(Product product) {
-		Connection conn = DataBaseController.getConn();
 		ResultSet rs;
 		int idInserted = -1;
 		String query = "INSERT INTO products (productName, flowerType, productColor, productPrice, productType, productDescription,imagePath) VALUES (?, ?, ?, ?, ?, ?, ?);";
 		try {
-			PreparedStatement preparedStmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			PreparedStatement preparedStmt = DataBaseController.conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 			preparedStmt.setString(1, product.getName());
 			preparedStmt.setString(2, product.getFlowerType());
 			preparedStmt.setString(3, product.getColor());
@@ -1876,7 +1579,7 @@ public class AnalayzeCommand {
 			if (rs.next())
 				idInserted = rs.getInt(1);
 			query = "INSERT INTO product_items (idItem, idProduct, quantity) VALUES (?, ?, ?);";
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			for (Item item : product.getItems().keySet()) {
 				preparedStmt.setInt(1, item.getId());
 				preparedStmt.setInt(2, idInserted);
@@ -1893,11 +1596,10 @@ public class AnalayzeCommand {
 	 * Disconnecting all user in DB
 	 */
 	public static void disconnectAllUser() {
-		Connection conn = DataBaseController.getConn();
 		String query = "UPDATE users SET isLogin=0;";
 		PreparedStatement preparedStmt;
 		try {
-			preparedStmt = conn.prepareStatement(query);
+			preparedStmt = DataBaseController.conn.prepareStatement(query);
 			preparedStmt.executeUpdate();
 		}
 		catch (SQLException e) {

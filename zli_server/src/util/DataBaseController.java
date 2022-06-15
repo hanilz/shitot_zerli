@@ -15,7 +15,7 @@ public class DataBaseController {
 	/**
 	 * DatabaseController is singleton, there is only one conn to connect the database.
 	 */
-	private static Connection conn = null;
+	public static Connection conn = null;
 
 	/**
 	 * For saving the information that been given from the server screen
@@ -30,12 +30,18 @@ public class DataBaseController {
 	private DataBaseController() {
 	}
 
-	public static Connection getConn() {
+	public static void getConn() {
 		if (conn == null) {
 			configDriver();
 			connect();
 		}
-		return conn;
+	}
+	
+	public static void getDefultConn() {
+		if (conn == null) {
+			configDriver();
+			defultConnect();
+		}
 	}
 
 	/**
@@ -64,6 +70,19 @@ public class DataBaseController {
 		String dbName = args.get(1);
 		String dbUsername = args.get(2);
 		String dbPassword = args.get(3);
+		connectToDB(buff, ip, dbName, dbUsername, dbPassword);
+		return buff.toString();
+	}
+	
+	public static void defultConnect() {
+		String ip = "localhost";
+		String dbName = "zli";
+		String dbUsername = "root";
+		String dbPassword = "braude123";
+		connectToDB(new StringBuffer(), ip, dbName, dbUsername, dbPassword);
+	}
+
+	private static void connectToDB(StringBuffer buff, String ip, String dbName, String dbUsername, String dbPassword) {
 		try {
 			conn = DriverManager.getConnection("jdbc:mysql://" + ip + "/" + dbName + "?sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false&serverTimezone=IST&useSSL=false",
 					dbUsername, dbPassword); // URL, Username, Password+changed url with message "&useSSL=false"
@@ -73,7 +92,6 @@ public class DataBaseController {
 			buff.append("\nDatabase connection failed!\n");
 			isConnected = false;
 		}
-		return buff.toString();
 	}
 
 	/**

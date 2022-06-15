@@ -63,19 +63,29 @@ public class LoginScreenController implements Initializable {
 
 	private static boolean isCart, isCatalog;
 
+	private static LoginScreenController instance;
 	/**
 	 * GUI Labels react to enter pressed if user already logged in disable login button
 	 * 
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		setInstance(this);
 		setTextBehaviour(usernameLabel);
 		setTextBehaviour(passwordLabel);
-		if (User.getUserInstance().isUserLoggedIn()) {// one user is already active in this client
-			loginButton.setDisable(true);// user logged in
+		if (isUserLoggedIn()) {// one user is already active in this client
+			disableLoginButton();
 			errorLabel.setText("You already logged in as " + User.getUserInstance().getUsername());
 			errorLabel.setTextFill(Paint.valueOf("RED"));
 		}
+	}
+
+	public static void setInstance(LoginScreenController loginInstance) {
+		instance = loginInstance;
+	}
+	
+	public boolean isUserLoggedIn() {
+		return User.getUserInstance().isUserLoggedIn();
 	}
 
 	/**
@@ -99,14 +109,18 @@ public class LoginScreenController implements Initializable {
 	 */
 	private boolean isUserInputValid(String username, String password) {
 		boolean isInputValid = false;
-		if (User.getUserInstance().isUserLoggedIn()) {
+		if (isUserLoggedIn()) {
 			setError("Already logged in");
-			loginButton.setDisable(true);
+			disableLoginButton();
 		} else if (username.equals("") || password.equals(""))
 			setError("Please enter Username and Password!");
 		else
 			isInputValid = true;
 		return isInputValid;
+	}
+
+	public void disableLoginButton() {
+		loginButton.setDisable(true);
 	}
 
 	/**
@@ -135,19 +149,22 @@ public class LoginScreenController implements Initializable {
 	 *                 Cart:Customers->Greeting Card,else = CANNOT LOG IN
 	 *                 Home:Every User->User Home
 	 */
-	private void responseAction(String username, HashMap<String, Object> response) {
+	public boolean responseAction(String username, HashMap<String, Object> response) {
+		boolean result = false;
 		switch ((Status) (response).get("response")) {
 		case NEW_LOG_IN:
 			loginUser(username);
 			if (isCart) {
-				cartFlow();
-			} else if (isCatalog)
+				return cartFlow();
+			} else if (isCatalog) {
 				catalogFlow();
-			else {
-				ManageScreens.home();
-				CloseWindow();
+				return true;
 			}
-			break;
+			else {
+				changeToHomeScreen();
+				CloseWindow();
+				return true;
+			}
 		case ALREADY_LOGGED_IN:
 			setError("User already logged in");
 			break;
@@ -158,14 +175,18 @@ public class LoginScreenController implements Initializable {
 			setError("User Suspended");
 			break;
 		}
+		return result;
+	}
 
+	public void changeToHomeScreen() {
+		ManageScreens.home();
 	}
 
 	/**
 	 * @param username Username given from GUI set all user data from DB and save as
 	 *                 current user
 	 */
-	private void loginUser(String username) {
+	public void loginUser(String username) {
 		int idUser = (Integer) response.get("idUser");
 		int idAccount = (Integer) response.get("idAccount");
 		UserType userType = (UserType) response.get("userType");
@@ -176,28 +197,42 @@ public class LoginScreenController implements Initializable {
 	/**
 	 * Login in cart screen only allows customers users to login and continue to
 	 * make a purchase
+	 * @return 
 	 */
-	private void cartFlow() {
-		if (User.getUserInstance().getType() != UserType.CUSTOMER
-				&& User.getUserInstance().getType() != UserType.NEW_CUSTOMER) {
+	public boolean cartFlow() {
+		if (isUserNotCustomer()) {
 			setError("Only Customers can buy from catalog");
-			User.getUserInstance().logout();
+			logout();
+			return false;
 		} else {
-			CartController.changeToGreatingCard();
+			changeToGreetingCard();
 			CloseWindow();
+			return true;
 		}
+	}
+
+	public void changeToGreetingCard() {
+		CartController.changeToGreatingCard();
+	}
+
+	public void logout() {
+		User.getUserInstance().logout();
+	}
+
+	public boolean isUserNotCustomer() {
+		return User.getUserInstance().getType() != UserType.CUSTOMER
+				&& User.getUserInstance().getType() != UserType.NEW_CUSTOMER;
 	}
 
 	/**
 	 * Login in catalog screen if customer stay in catalog else change send to home
 	 * screen
 	 */
-	private void catalogFlow() {
+	public void catalogFlow() {
 		if (User.getUserInstance().getType() == UserType.CUSTOMER) {
 			ManageScreens.changeScreenTo(Screens.CATALOG);
-			CloseWindow();
 		} else
-			ManageScreens.home();
+			changeToHomeScreen();
 		CloseWindow();
 	}
 
@@ -223,6 +258,10 @@ public class LoginScreenController implements Initializable {
 	{
 		isCart = isFromCart;
 		isCatalog = isFromCatalog;
+		instance.changeToLogin();
+	}
+
+	public void changeToLogin() {
 		ManageScreens.changeScreenTo(Screens.LOGIN);
 	}
 
@@ -237,7 +276,7 @@ public class LoginScreenController implements Initializable {
 	/**
 	 * Closing login popup
 	 */
-	private void CloseWindow() {
+	public void CloseWindow() {
 		ManageScreens.getPopupStage().close();
 	}
 
@@ -252,7 +291,7 @@ public class LoginScreenController implements Initializable {
 	/**
 	 * @param err=Error message present error message on GUI
 	 */
-	private void setError(String err) {
+	public void setError(String err) {
 		errorLabel.setText(err);
 		errorLabel.setTextFill(Paint.valueOf("RED"));
 	}
@@ -267,5 +306,4 @@ public class LoginScreenController implements Initializable {
 			}
 		});
 	}
-
 }

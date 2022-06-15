@@ -114,7 +114,7 @@ public class ServerMessageController {
 			message.put("response", branchesPerManager);
 			break;
 		case FETCH_REPORTS:
-			ArrayList<Report> reports = AnalayzeCommand.selectAllReports();
+			ArrayList<Report> reports = GenerateReports.selectAllReports();
 			message.put("response", reports);
 			break;
 		case FETCH_PRODUCTS:
@@ -334,41 +334,41 @@ public class ServerMessageController {
 			message.put("response", file);
 			break;
 		case GET_ITEMS_INCOME_REPORT:
-			Map<String, Integer> itemsIncomeLabels = AnalayzeCommand
+			Map<String, Integer> itemsIncomeLabels = GenerateReports
 					.getItemsIncomeReport((Report) message.get("selected report"));
 			message.put("response", itemsIncomeLabels);
 			break;
 		case GET_PRODUCTS_INCOME_REPORT:
-			Map<String, Integer> productsIncomeLabels = AnalayzeCommand
+			Map<String, Integer> productsIncomeLabels = GenerateReports
 					.getProductsIncomeReport((Report) message.get("selected report"));
 			message.put("response", productsIncomeLabels);
 			break;
 		case GET_ITEMS_ORDERS_REPORT:
-			Map<String, Integer> itemsOrdersLabels = AnalayzeCommand
+			Map<String, Integer> itemsOrdersLabels = GenerateReports
 					.getItemsOrdersReport((Report) message.get("selected report"));
 			message.put("response", itemsOrdersLabels);
 			break;
 		case GET_PRODUCTS_ORDERS_REPORT:
-			Map<String, Integer> productsOrdersLabels = AnalayzeCommand
+			Map<String, Integer> productsOrdersLabels = GenerateReports
 					.getProductsOrdersReport((Report) message.get("selected report"));
 			message.put("response", productsOrdersLabels);
 			break;
 		case GET_COMPLAINT_REPORT:
-			Map<String, Integer> complaintsReportAxis = AnalayzeCommand
+			Map<String, Integer> complaintsReportAxis = GenerateReports
 					.getComplaintsReport((Report) message.get("selected report"));
 			message.put("response", complaintsReportAxis);
 			break;
 		case GET_INCOME_HISTOGRAM_REPORT:
-			Map<String, Integer> incomeHistogramReportAxis = AnalayzeCommand
+			Map<String, Integer> incomeHistogramReportAxis = GenerateReports
 					.getIncomeHistogramReport((Report) message.get("selected report"));
 			message.put("response", incomeHistogramReportAxis);
 			break;
 		case GET_CUSTOM_INCOME_REPORT:
-			Integer customIncome = AnalayzeCommand.getCustomIncomeReport((Report) message.get("selected report"));
+			Integer customIncome = GenerateReports.getCustomIncomeReport((Report) message.get("selected report"));
 			message.put("response", customIncome);
 			break;
 		case GET_CUSTOM_ORDERS_REPORT:
-			Integer customOrders = AnalayzeCommand.getCustomOrdersReport((Report) message.get("selected report"));
+			Integer customOrders = GenerateReports.getCustomOrdersReport((Report) message.get("selected report"));
 			message.put("response", customOrders);
 			break;
 		case FETCH_ORDERS_FOR_CLIENT:

@@ -19,6 +19,7 @@ import util.AnalayzeCommand;
 import util.ClientDetails;
 import util.Commands;
 import util.DataBaseController;
+import util.GenerateReports;
 import util.NotificationType;
 import util.ServerMessageController;
 
@@ -210,7 +211,7 @@ public class ServerController extends AbstractServer implements Runnable {
 		ArrayList<String> reportsType = new ArrayList<String>(
 				Arrays.asList("income", "orders", "complaints", "income histogram"));
 		ArrayList<Branch> branches = AnalayzeCommand.selectAllBranches();
-		AnalayzeCommand.generateNewReports(reportsType, branches, currentDate);
+		GenerateReports.generateNewReports(reportsType, branches, currentDate);
 	}
 
 	/**
@@ -234,7 +235,7 @@ public class ServerController extends AbstractServer implements Runnable {
 	 * @return true or false depeding if the reports are already generated.
 	 */
 	private boolean isGenerated(Date currentDate) {
-		return AnalayzeCommand.isGeneratedReports(currentDate);
+		return GenerateReports.isGeneratedReports(currentDate);
 	}
 
 	/**
