@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" stylesheets="@../resources/ServerScreen.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ServerFormController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" stylesheets="@../resources/ServerScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ServerFormController">
    <children>
       <ImageView fitHeight="600.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -84,7 +84,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <PasswordField fx:id="DBPasswordTextField" text="Almogal013" />
+                        <PasswordField fx:id="DBPasswordTextField" />
                      </children>
                   </HBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
