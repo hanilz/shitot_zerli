@@ -20,7 +20,7 @@ We support many different user-roles, like customers, managers, workers, deliver
 
 It uses an OCSF client-server framework that establishes a TCP connection between a client and the server.
 
-JavaFX with SceneBuilder were used to design and develop the UI/UX of the application.
+JavaFX with SceneBuilder were used to design and develop the UI/UX and the frontend of the application.
 
 MySQL with JDBC served as the database for this project.
 
